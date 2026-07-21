@@ -1,27 +1,53 @@
-# Sepah News RSS sync
+# RSS sync (Sepah + Artesh)
 
 `sync-rss.mjs` keeps `/data/events.json` up to date automatically by watching
-the official Sepah News RSS feed for new statements about Operation Nasr 2 /
-Sa'eqeh.
+two official RSS feeds for new statements about Operation Nasr 2 / Sa'eqeh:
+Sepah News (`sepahnews.ir`) and the Islamic Republic of Iran Army's own news
+site (`aja.ir`). Both sources share the exact same extraction/validation
+pipeline below (`processItems`) — only the fetch transport, relevance
+keywords, and how `code` is derived differ per source (see `SOURCES` in
+`sync-rss.mjs`).
+
+## Sources
+
+| id       | Feed                                                          | Transport                                | `code`                    |
+|----------|----------------------------------------------------------------|-------------------------------------------|----------------------------|
+| `sepah`  | `https://sepahnews.ir/fa/rss/allnews`                          | Direct fetch                              | Numeric, parsed from `<link>` |
+| `artesh` | `https://www.aja.ir/portal/rsspage/?fa-ir/news/45459/45608/اخبار` | Via the Iranian VPS proxy (aja.ir is unreachable directly from GitHub Actions) | Always empty — aja.ir article links carry only a GUID, which never appears as a human-visible reference number, so `code` is left blank the same way existing manually-entered Artesh events already are |
+
+Artesh article pages (Sigma Portal CMS) have no per-article `<description>`
+text in the RSS feed (only an `<img>` tag) and no HTML meta/time date
+fields, so relevance filtering there works off the `<title>` alone and the
+publish date always comes from `<pubDate>` — see `ARTESH_RELEVANCE_KEYWORDS`/
+`ARTESH_ACTION_KEYWORDS` in `sync-rss.mjs`. The article body itself lives in
+a `<span class="Content">` element (`extractSpanContent`), found via a real
+HTML parser rather than a regex, since it's nested several spans deep and
+sits next to a decoy `<td class="Content">` one level up.
 
 ## What it does
 
+For each source in turn:
+
 1. Before touching the fresh feed at all, retries every entry currently in
-   `/data/pending-review.json` directly by its own stored `link` (and
-   `pubDate`, captured when it was first flagged) — fetch the article page,
-   ask the model, validate, same as step 4 onward below. This is what lets a
-   pending item recover even after it has aged out of the feed's ~100-item
-   window (the RSS feed only ever returns recent items, so an old pending
-   item can otherwise never be matched again by the steps below). An item
-   resolved this way is skipped if it also happens to still be in the fresh
-   feed this run, to avoid double-processing it.
-2. Fetches `https://sepahnews.ir/fa/rss/allnews` with a clearly identifying
-   User-Agent (`Nasr2DashboardBot/1.0`).
-3. Skips any item already recorded in `/data/seen-guids.json`, or already
-   resolved by step 1 above this run.
-4. Filters the rest by keyword relevance: a broad keyword (اطلاعیه، نصر ۲،
-   نصر۲، صاعقه، موج، پایگاه، کد خبر) **and** a military-action keyword
-   (منهدم، تخریب، اصابت، حمله، ضربه، انهدام، سرنگون، شلیک، منفجر، etc.) must
+   `/data/pending-review.json` **for that source** directly by its own
+   stored `link` (and `pubDate`, captured when it was first flagged) — fetch
+   the article page, ask the model, validate, same as step 4 onward below.
+   This is what lets a pending item recover even after it has aged out of
+   the feed's ~100-item window (the RSS feed only ever returns recent items,
+   so an old pending item can otherwise never be matched again by the steps
+   below). An item resolved this way is skipped if it also happens to still
+   be in the fresh feed this run, to avoid double-processing it.
+2. Fetches the source's RSS feed (via its own transport — see Sources above)
+   with a clearly identifying User-Agent (`Nasr2DashboardBot/1.0`) for the
+   direct-fetch case.
+3. Skips any item whose namespaced guid (`<sourceId>:<guid>`) is already
+   recorded in `/data/seen-guids.json`, or already resolved by step 1 above
+   this run. Namespacing keeps the two sources' guids from ever colliding —
+   `seen-guids.json`/`pending-review.json` entries predating multi-source
+   support are treated as legacy `sepah:` entries automatically on read, no
+   migration script needed.
+4. Filters the rest by keyword relevance (per-source keyword lists — see
+   Sources above): a broad keyword **and** a military-action keyword must
    both be present — a broad-keyword-only match (an administrative notice
    about fake/impersonation pages, a political speech, etc.) doesn't
    qualify. Irrelevant items are marked seen and otherwise ignored. If an
@@ -29,7 +55,8 @@ Sa'eqeh.
    irrelevant on a retry, it's removed from pending-review (and its Issue
    closed) instead of being left there indefinitely.
 5. For each relevant item, derives the fields the RSS `<description>` is too
-   terse to give a model reliably, instead of asking the model to guess them:
+   terse (or, for Artesh, entirely absent) to give a model reliably, instead
+   of asking the model to guess them:
    - `dateG` comes straight from the item's `<pubDate>` (RFC 822), and `dateP`
      (Persian display date) is derived from `dateG` using the same
      Tir-1-1405 = 2026-06-22 epoch the rest of the project uses (the inverse
@@ -39,16 +66,22 @@ Sa'eqeh.
      fallback tries to read a publish date directly off the article page —
      a `<meta property="article:published_time">` tag, a `<time>` element,
      or a visible Jalali date in the page text — and stores it back onto the
-     pending entry so future runs don't repeat the fallback. If that also
-     finds nothing, the item goes to pending-review as before.
-   - `code` is parsed directly out of the item's `<link>` URL (pattern
-     `/news/(\d+)/`).
+     pending entry so future runs don't repeat the fallback (Artesh pages
+     have none of these, so this fallback is a no-op there in practice). If
+     that also finds nothing, the item goes to pending-review as before.
+   - `code` is derived per source — parsed out of the Sepah item's `<link>`
+     URL (pattern `/news/(\d+)/`), always empty for Artesh (see Sources
+     above).
+   - `source` is set to the source's own id directly (`sepah`/`artesh`), not
+     trusted from the model, the same way `dateG`/`dateP`/`code` are.
    - The full article page (the `<link>` URL) is fetched and its main text
-     content extracted (HTML stripped), and that full text — not just the
-     short RSS `<description>` — is what's passed to the model, so it can
-     recover wave/phase numbers and fuller target/weapon/outcome detail. If
-     the page fetch fails or times out, the item goes to pending-review
-     instead of crashing the run.
+     content extracted — HTML-stripped for Sepah, or the `<span
+     class="Content">` element's text for Artesh — and that full text, not
+     just the short/absent RSS `<description>`, is what's passed to the
+     model, so it can recover wave/phase numbers and fuller target/weapon/
+     outcome detail. If the page fetch fails or times out, or (for Artesh)
+     the expected content element isn't found, the item goes to
+     pending-review instead of crashing the run.
 6. Asks an LLM (via [OpenRouter](https://openrouter.ai), model
    `openrouter/free`, structured JSON-schema output) to extract only what it
    can reliably read from the article text — wave, force, source, location,
@@ -113,13 +146,23 @@ Runs via `.github/workflows/sync-sepahnews.yml` every 6 hours
 (`0 */6 * * *`), plus on-demand via the "Run workflow" button
 (`workflow_dispatch`) in the Actions tab.
 
-## Required secret
+## Required secrets
 
-The workflow needs an OpenRouter API key in **Settings → Secrets and
-variables → Actions → New repository secret**, named `OPENROUTER_API_KEY`.
-This script cannot create that secret itself — add it manually before the
-first scheduled run (or the run will fail on the OpenRouter request and
-nothing will be committed).
+The workflow needs the following in **Settings → Secrets and variables →
+Actions → New repository secret**. This script cannot create them itself —
+add them manually before the first scheduled run:
+
+- `OPENROUTER_API_KEY` — an OpenRouter API key. Without it, every run fails
+  on the OpenRouter request and nothing is committed (both sources).
+- `AJA_PROXY_URL` — the Iranian VPS proxy's base URL (e.g.
+  `http://<ip>:<port>`) that fetches aja.ir on GitHub Actions' behalf, since
+  aja.ir is unreachable directly from GitHub Actions. Without it, the
+  Artesh source fails entirely on every run (falls back to the code's
+  built-in default proxy address, which may not stay valid) — Sepah is
+  unaffected, since one source failing entirely doesn't stop the other from
+  syncing (see `main()`'s per-source try/catch in `sync-rss.mjs`).
+- `AJA_PROXY_SECRET` — the `X-Proxy-Secret` header value the proxy expects.
+  Without it, every Artesh proxy request is rejected; Sepah is unaffected.
 
 `GITHUB_TOKEN` (used for committing and opening review issues) is provided
 automatically by GitHub Actions — no setup needed, but the workflow does
@@ -148,8 +191,10 @@ coordinates. To resolve one:
 
 ```sh
 npm ci
-OPENROUTER_API_KEY=... node scripts/sync-rss.mjs
+OPENROUTER_API_KEY=... AJA_PROXY_URL=... AJA_PROXY_SECRET=... node scripts/sync-rss.mjs
 ```
 
-Network access to `sepahnews.ir` and `openrouter.ai` is required; there is
-no offline/dry-run mode.
+Network access to `sepahnews.ir`, the aja.ir proxy, and `openrouter.ai` is
+required; there is no offline/dry-run mode. (`AJA_PROXY_URL` defaults to the
+proxy address baked into `sync-rss.mjs` if unset, but `AJA_PROXY_SECRET`
+must be provided or every Artesh request is rejected.)

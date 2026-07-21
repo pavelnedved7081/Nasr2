@@ -21,6 +21,9 @@ import {
   isRelevant,
   extractPubDateFromArticleHtml,
   extractArticleBody,
+  extractSpanContent,
+  extractArteshCode,
+  proxyFetch,
 } from './sync-rss.mjs';
 
 const LOCATIONS = {
@@ -1034,6 +1037,243 @@ test('a pending item still within the RSS window is not double-processed by both
   assert.equal(events.length, 1);
 });
 
+// --- Multi-source support: Artesh (aja.ir) ---
+
+// A minimal but structurally faithful reconstruction of a real aja.ir article page (Sigma
+// Portal), based on the raw HTML captured during the aja.ir structure investigation: a decoy
+// outer <td class="Content"> wraps the whole news template (title/summary/body), and the real
+// body lives in a separately-nested <span class="Content">, deeply wrapped in more spans/divs,
+// followed by the rating-widget ("امتیاز دهی") and print-page-link noise that must never leak in.
+const ARTESH_SAMPLE_HTML = `<!doctype html><html><body>
+<table><tr><td class="Content" style="white-space:normal;text-align:justify;">
+  <h5 style="color:#3366ff;">سه پایگاه مهم آمریکا در کویت، هدف حملات پهپادهای انهدامی ارتش قرار گرفت</h5><br />
+  <span class="Summary" style="text-align:justify;"></span><br />
+  <span class="Content" style="padding:6px;font-family:Tahoma;text-align:justify;"><div style="text-align:justify"><span style="font-size:11pt"><span style="line-height:200%"><span style="direction:rtl">در نوزدهمین مرحله عملیات صاعقه، بامداد امروز، پایگاه‌های آمریکایی احمدالجابر، العدیری و کمپ عریفجان در کویت، هدف پهپادهای انهدامی ارتش جمهوری اسلامی ایران قرار گرفت.</span></span></span></div></span><hr style="color:#eef;" />
+  <div id="WebPartC_x_ObjectComment_Control_Output_Panel" class="MainCommentWrapper">
+    <span id="WebPartC_x_lblTitle">امتیاز دهی</span>
+    <a href="/PrintPage/PrintPage.aspx?ID=x">نسخه قابل چاپ</a>
+  </div>
+</td></tr></table>
+</body></html>`;
+
+test('extractSpanContent extracts only the <span class="Content"> body text, skipping the decoy outer <td class="Content">', () => {
+  const text = extractSpanContent(ARTESH_SAMPLE_HTML);
+  assert.ok(
+    text.includes('در نوزدهمین مرحله عملیات صاعقه'),
+    `expected the real body text to survive, got: ${text}`
+  );
+  assert.ok(text.includes('احمدالجابر'), 'expected the target detail to survive');
+});
+
+test('extractSpanContent excludes trailing rating-widget/print-link noise that lives outside the span', () => {
+  const text = extractSpanContent(ARTESH_SAMPLE_HTML);
+  assert.ok(!text.includes('امتیاز دهی'), 'trailing rating-widget noise leaked into the extracted body');
+  assert.ok(!text.includes('نسخه قابل چاپ'), 'trailing print-page link leaked into the extracted body');
+});
+
+test('extractSpanContent excludes the <h5> title, which sits outside <span class="Content"> too', () => {
+  const text = extractSpanContent(ARTESH_SAMPLE_HTML);
+  assert.ok(!text.includes('سه پایگاه مهم آمریکا'), 'the page title leaked into the extracted body');
+});
+
+test('extractSpanContent returns null when no <span class="Content"> element is present (unrecognized page structure)', () => {
+  const html = '<html><body><p>یک صفحه کاملاً متفاوت بدون هیچ نشانه‌ای از ساختار شناخته‌شده</p></body></html>';
+  assert.equal(extractSpanContent(html), null);
+});
+
+test('extractSpanContent treats an outer <td class="Content"> alone (no inner span) as not found, rather than matching the decoy', () => {
+  const html = '<html><body><td class="Content"><p>فقط دکوی بیرونی</p></td></body></html>';
+  assert.equal(extractSpanContent(html), null);
+});
+
+test('extractSpanContent returns null for non-string/empty input', () => {
+  assert.equal(extractSpanContent(''), null);
+  assert.equal(extractSpanContent(undefined), null);
+  assert.equal(extractSpanContent(null), null);
+});
+
+test('extractArteshCode always returns an empty string (Artesh links carry no news-code)', () => {
+  assert.equal(extractArteshCode(), '');
+  assert.equal(extractArteshCode('https://www.aja.ir/Home/ShowPage.aspx?ID=abc'), '');
+});
+
+test('proxyFetch wraps the target URL through the proxy base URL and sends the X-Proxy-Secret header', async () => {
+  const originalFetch = globalThis.fetch;
+  let capturedUrl;
+  let capturedHeaders;
+  globalThis.fetch = async (url, opts) => {
+    capturedUrl = String(url);
+    capturedHeaders = opts?.headers;
+    return { ok: true, text: async () => 'proxied body' };
+  };
+  try {
+    const target = 'https://www.aja.ir/Home/ShowPage.aspx?Object=news&ID=abc';
+    const result = await proxyFetch(target);
+    assert.equal(result, 'proxied body');
+    assert.equal(capturedUrl, `http://109.122.250.213:8787/?url=${encodeURIComponent(target)}`);
+    assert.ok('X-Proxy-Secret' in capturedHeaders, 'expected the X-Proxy-Secret header to be sent');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('proxyFetch throws on a non-2xx response from the proxy', async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => ({ ok: false, status: 502, text: async () => 'bad gateway' });
+  try {
+    await assert.rejects(() => proxyFetch('https://www.aja.ir/x'), /proxy fetch failed: 502/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('processItems overrides the model-supplied source field with sourceId (source is derived, not trusted from the model)', async () => {
+  const events = [];
+  const pendingReview = [];
+  const item = {
+    guid: 'guid-source-override',
+    link: 'https://www.aja.ir/Home/ShowPage.aspx?ID=guid-source-override',
+    title: 'خبر ارتش',
+    pubDate: 'Wed, 08 Jul 2026 08:00:00 +0330',
+  };
+
+  await processItems([item], {
+    locations: LOCATIONS,
+    events,
+    pendingReview,
+    seenSet: new Set(),
+    systemPrompt: 'test',
+    nextId: 1,
+    sourceId: 'artesh',
+    isRelevantFn: () => true, // relevance filtering isn't what this test is about
+    // The model mistakenly reports "sepah" — processItems must not trust it.
+    extractEventFn: async () => validExtraction({ source: 'sepah' }),
+    fetchArticleTextFn: async () => 'متن ارتش',
+    openPendingReviewIssueFn: async () => {},
+  });
+
+  assert.equal(events.length, 1);
+  assert.equal(events[0].source, 'artesh');
+});
+
+test('processItems namespaces guids per sourceId, so two sources sharing a bare guid and a seenSet do not false-positive-skip each other', async () => {
+  const events = [];
+  const pendingReview = [];
+  const seenSet = new Set();
+
+  const sepahItem = rssItem('guid-collide');
+  const arteshItem = {
+    guid: 'guid-collide',
+    link: 'https://www.aja.ir/Home/ShowPage.aspx?ID=guid-collide',
+    title: 'خبر ارتش با همان guid خام',
+    pubDate: 'Wed, 08 Jul 2026 08:00:00 +0330',
+  };
+
+  const run1 = await processItems([sepahItem], {
+    locations: LOCATIONS,
+    events,
+    pendingReview,
+    seenSet,
+    systemPrompt: 'test',
+    nextId: 1,
+    sourceId: 'sepah',
+    extractEventFn: async () => validExtraction({ source: 'sepah' }),
+    fetchArticleTextFn: async () => 'متن سپاه',
+    openPendingReviewIssueFn: async () => {},
+  });
+  // Mirrors what main() does between sources: only fully-resolved guids get marked seen.
+  for (const g of run1.newGuids) seenSet.add(g);
+
+  const run2 = await processItems([arteshItem], {
+    locations: LOCATIONS,
+    events,
+    pendingReview,
+    seenSet,
+    systemPrompt: 'test',
+    nextId: 2,
+    sourceId: 'artesh',
+    isRelevantFn: () => true, // relevance filtering isn't what this test is about
+    extractEventFn: async () => validExtraction({ source: 'artesh' }),
+    fetchArticleTextFn: async () => 'متن ارتش',
+    openPendingReviewIssueFn: async () => {},
+  });
+
+  assert.deepEqual(run1.newGuids, ['sepah:guid-collide']);
+  assert.deepEqual(
+    run2.newGuids,
+    ['artesh:guid-collide'],
+    'the artesh item must not be treated as already-seen just because its bare guid matches a sepah guid already in seenSet'
+  );
+  assert.equal(events.length, 2);
+  assert.equal(events[0].source, 'sepah');
+  assert.equal(events[1].source, 'artesh');
+});
+
+test('main() end-to-end: syncs Sepah and Artesh independently in the same run, tagging events with the correct source, deriving code per source, and namespacing seen-guids without cross-contamination', async (t) => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'nasr2-sync-multi-test-'));
+  t.after(() => fs.rm(tmpDir, { recursive: true, force: true }));
+
+  await fs.writeFile(path.join(tmpDir, 'locations.json'), JSON.stringify(LOCATIONS));
+  await fs.writeFile(path.join(tmpDir, 'events.json'), '[]');
+  await fs.writeFile(path.join(tmpDir, 'seen-guids.json'), '[]');
+  await fs.writeFile(path.join(tmpDir, 'pending-review.json'), '[]');
+
+  const sepahRssXml = `<?xml version="1.0"?>
+<rss><channel>
+  <item><guid>guid-sepah</guid><link>https://sepahnews.ir/fa/news/36159/one</link><title>اطلاعیه نصر ۲</title><description>موج اول عملیات صاعقه، پایگاه دشمن منهدم شد</description><pubDate>Wed, 08 Jul 2026 08:00:00 +0330</pubDate></item>
+</channel></rss>`;
+
+  const arteshGuid = 'c9d90bbb-c976-4da3-8e98-2ce3f9e3018a';
+  const arteshRssXml = `<?xml version="1.0"?>
+<rss><channel>
+  <item><guid>${arteshGuid}</guid><link>https://www.aja.ir//Home/ShowPage.aspx?Object=news&amp;ID=${arteshGuid}</link><title>سه پایگاه مهم آمریکا در کویت، هدف حملات پهپادهای انهدامی ارتش قرار گرفت</title><description>&lt;img src="x.jpg"/&gt;</description><pubDate>Wed, 08 Jul 2026 08:00:00 +0330</pubDate></item>
+</channel></rss>`;
+
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url, opts) => {
+    const u = String(url);
+    if (u.includes('sepahnews.ir/fa/rss')) return { ok: true, text: async () => sepahRssXml };
+    if (u.includes('sepahnews.ir/fa/news/36159/')) {
+      return { ok: true, text: async () => '<html><body><p>متن کامل خبر با جزئیات موج و هدف</p></body></html>' };
+    }
+    if (u.includes('109.122.250.213:8787')) {
+      const target = decodeURIComponent(u.split('url=')[1]);
+      if (target.includes('rsspage')) return { ok: true, text: async () => arteshRssXml };
+      return { ok: true, text: async () => ARTESH_SAMPLE_HTML };
+    }
+    if (u.includes('openrouter.ai')) {
+      const body = JSON.parse(opts?.body ?? '{}');
+      const userContent = body.messages.find((m) => m.role === 'user')?.content || '';
+      const source = userContent.includes('نوزدهم') ? 'artesh' : 'sepah';
+      return {
+        ok: true,
+        json: async () => ({ choices: [{ message: { content: JSON.stringify(validExtraction({ source })) } }] }),
+      };
+    }
+    throw new Error(`unexpected fetch to ${url}`);
+  };
+
+  try {
+    await assert.doesNotReject(() => main({ dataDir: tmpDir }));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+
+  const events = JSON.parse(await fs.readFile(path.join(tmpDir, 'events.json'), 'utf8'));
+  const seenGuids = JSON.parse(await fs.readFile(path.join(tmpDir, 'seen-guids.json'), 'utf8'));
+
+  assert.equal(events.length, 2);
+  assert.deepEqual(events.map((e) => e.source).sort(), ['artesh', 'sepah']);
+
+  const sepahEvent = events.find((e) => e.source === 'sepah');
+  const arteshEvent = events.find((e) => e.source === 'artesh');
+  assert.equal(sepahEvent.code, '36159');
+  assert.equal(arteshEvent.code, '', 'Artesh events must have no code');
+
+  assert.ok(seenGuids.includes('sepah:guid-sepah'));
+  assert.ok(seenGuids.includes(`artesh:${arteshGuid}`));
+});
+
 // --- Full pipeline integration test (Phase 2 style: real fs read/write against a temp data dir) ---
 
 test('main() end-to-end: pubDate/link-derived date+code land in events.json, article fetch failure lands in pending-review.json, run succeeds', async (t) => {
@@ -1051,6 +1291,11 @@ test('main() end-to-end: pubDate/link-derived date+code land in events.json, art
   <item><guid>guid-good</guid><link>https://sepahnews.ir/fa/news/36159/two</link><title>اطلاعیه نصر ۲ دو</title><description>موج دوم عملیات صاعقه، پایگاه دشمن منهدم شد</description><pubDate>Wed, 08 Jul 2026 08:00:00 +0330</pubDate></item>
 </channel></rss>`;
 
+  // Empty Artesh feed: this test only exercises the Sepah source's behavior; the aja.ir proxy
+  // fetch just needs a well-formed (empty) response so the multi-source loop in main() runs both
+  // sources cleanly, without the "one bad source" fallback path masking what's being tested here.
+  const emptyRssXml = '<?xml version="1.0"?><rss><channel></channel></rss>';
+
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async (url, opts) => {
     const u = String(url);
@@ -1062,6 +1307,9 @@ test('main() end-to-end: pubDate/link-derived date+code land in events.json, art
     }
     if (u.includes('sepahnews.ir/fa/news/36159/')) {
       return { ok: true, text: async () => '<html><body><p>متن کامل خبر با جزئیات موج و هدف</p></body></html>' };
+    }
+    if (u.includes('109.122.250.213:8787')) {
+      return { ok: true, text: async () => emptyRssXml };
     }
     if (u.includes('openrouter.ai')) {
       const body = JSON.parse(opts?.body ?? '{}');
@@ -1085,10 +1333,11 @@ test('main() end-to-end: pubDate/link-derived date+code land in events.json, art
   const events = JSON.parse(await fs.readFile(path.join(tmpDir, 'events.json'), 'utf8'));
 
   assert.equal(pendingReview.length, 1);
-  assert.equal(pendingReview[0].guid, 'guid-fetch-fails');
+  assert.equal(pendingReview[0].guid, 'sepah:guid-fetch-fails');
 
   assert.equal(events.length, 1);
   assert.equal(events[0].dateG, '2026-07-08');
   assert.equal(events[0].dateP, '۱۷ تیر ۱۴۰۵');
   assert.equal(events[0].code, '36159');
+  assert.equal(events[0].source, 'sepah');
 });

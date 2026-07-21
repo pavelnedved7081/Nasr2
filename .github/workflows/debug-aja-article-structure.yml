@@ -1,0 +1,37 @@
+name: Debug aja.ir article structure
+
+on:
+  workflow_dispatch:
+    inputs:
+      proxySecret:
+        description: 'X-Proxy-Secret header value expected by the Iranian VPS proxy'
+        required: true
+        type: string
+      proxyBaseUrl:
+        description: 'Iranian VPS proxy base URL'
+        required: true
+        type: string
+        default: "http://109.122.250.213:8787"
+      rssUrl:
+        description: 'aja.ir (Artesh) RSS feed URL, used to locate cross-check samples'
+        required: true
+        type: string
+        default: "https://www.aja.ir/portal/rsspage/?fa-ir/news/45459/45608/اخبار"
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch and analyze aja.ir article page structure via proxy
+        run: node scripts/debug-aja-article-structure.mjs "${{ inputs.proxySecret }}" "${{ inputs.proxyBaseUrl }}" "${{ inputs.rssUrl }}"
