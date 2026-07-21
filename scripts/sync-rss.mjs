@@ -39,11 +39,17 @@ const PERSIAN_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 function persianToLatinDigits(str) {
   return String(str).replace(/[۰-۹]/g, (d) => String(PERSIAN_DIGITS.indexOf(d)));
 }
+function latinToPersianDigits(str) {
+  return String(str).replace(/[0-9]/g, (d) => PERSIAN_DIGITS[Number(d)]);
+}
 
 function isJalaliLeapYear(year) {
   // 33-year cycle approximation, adequate for near-term years around 1405.
   const cycle = [1, 5, 9, 13, 17, 22, 26, 30];
   return cycle.includes(((year % 33) + 33) % 33);
+}
+function jalaliYearLength(year) {
+  return isJalaliLeapYear(year) ? 366 : 365;
 }
 
 function jalaliDayOfYear(year, monthIdx, day) {
@@ -81,6 +87,84 @@ export function jalaliToGregorian(dateP) {
   return epoch.toISOString().slice(0, 10);
 }
 
+/** Convert a Gregorian 'YYYY-MM-DD' string to a Jalali date string like "۱۷ تیر ۱۴۰۵" (inverse of jalaliToGregorian). */
+export function gregorianToJalali(dateG) {
+  const target = new Date(dateG + 'T00:00:00Z');
+  const epoch = new Date(TIR_1_1405_EPOCH + 'T00:00:00Z');
+  const deltaDays = Math.round((target.getTime() - epoch.getTime()) / 86400000);
+
+  let year = 1405;
+  let doy = TIR_1_1405_DAY_OF_YEAR + deltaDays;
+
+  while (doy > jalaliYearLength(year)) {
+    doy -= jalaliYearLength(year);
+    year += 1;
+  }
+  while (doy < 1) {
+    year -= 1;
+    doy += jalaliYearLength(year);
+  }
+
+  const table = isJalaliLeapYear(year) ? JALALI_MONTH_DAYS_LEAP : JALALI_MONTH_DAYS_COMMON;
+  let monthIdx = 0;
+  let day = doy;
+  while (day > table[monthIdx]) {
+    day -= table[monthIdx];
+    monthIdx += 1;
+  }
+
+  return `${latinToPersianDigits(day)} ${JALALI_MONTHS[monthIdx]} ${latinToPersianDigits(year)}`;
+}
+
+/** Parse an RSS <pubDate> (RFC 822 date, e.g. "Wed, 08 Jul 2026 08:00:00 +0330") into a Gregorian
+ *  'YYYY-MM-DD' string, or null if missing/unparseable. */
+export function pubDateToDateG(pubDate) {
+  if (typeof pubDate !== 'string' || pubDate.trim() === '') return null;
+  const parsed = new Date(pubDate);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed.toISOString().slice(0, 10);
+}
+
+/** Extract the numeric news code from a Sepah News article URL, e.g.
+ *  "https://sepahnews.ir/fa/news/36159/some-slug" -> "36159". Returns '' if no match. */
+export function extractCodeFromLink(link) {
+  if (typeof link !== 'string') return '';
+  const m = link.match(/\/news\/(\d+)\//);
+  return m ? m[1] : '';
+}
+
+const ARTICLE_FETCH_TIMEOUT_MS = 10000;
+
+function stripHtml(html) {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<nav[\s\S]*?<\/nav>/gi, ' ')
+    .replace(/<header[\s\S]*?<\/header>/gi, ' ')
+    .replace(/<footer[\s\S]*?<\/footer>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Fetch an article page and return its stripped text content. Throws on timeout/non-2xx/network error. */
+export async function fetchArticleText(link, { timeoutMs = ARTICLE_FETCH_TIMEOUT_MS } = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(link, { headers: { 'User-Agent': USER_AGENT }, signal: controller.signal });
+    if (!res.ok) throw new Error(`article fetch failed: ${res.status}`);
+    const html = await res.text();
+    return stripHtml(html);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function readJson(dataDir, name, fallback) {
   try {
     return JSON.parse(await fs.readFile(path.join(dataDir, name), 'utf8'));
@@ -115,7 +199,7 @@ function buildSystemPrompt(locations) {
   const locList = Object.entries(locations)
     .map(([id, loc]) => `  - ${id}: ${loc.name} (${loc.country})`)
     .join('\n');
-  return `شما یک استخراج‌کنندهٔ داده هستید. یک قطعه خبر فارسی از سپاه‌نیوز دریافت می‌کنید که ممکن است دربارهٔ یک حملهٔ مشخص در عملیات «نصر ۲» یا «صاعقه» باشد.
+  return `شما یک استخراج‌کنندهٔ داده هستید. متن کامل یک خبر فارسی از سپاه‌نیوز دریافت می‌کنید که ممکن است دربارهٔ یک حملهٔ مشخص در عملیات «نصر ۲» یا «صاعقه» باشد.
 
 فقط از میان این مکان‌های معتبر (شناسه: نام) انتخاب کنید — هیچ شناسهٔ دیگری یا مختصات جدید نسازید:
 ${locList}
@@ -125,7 +209,7 @@ ${locList}
 منابع معتبر: sepah (سپاه پاسداران), artesh (ارتش جمهوری اسلامی)
 
 خروجی باید دقیقاً این ساختار JSON را داشته باشد:
-{wave, force, source, loc, loc_raw_text, target, weapon, outcome, code, dateP, time}
+{wave, force, source, loc, loc_raw_text, target, weapon, outcome, time}
 
 اگر متن به‌روشنی یک حملهٔ مشخص با مکان معین را توصیف نمی‌کند، یا مکانِ ذکرشده با هیچ‌یک از شناسه‌های بالا مطابقت ندارد، فیلد "loc" را null بگذارید و در عوض عبارت مکانی که در متن یافتید را در "loc_raw_text" برگردانید — هرگز شناسه یا مختصات حدسی نسازید.`;
 }
@@ -143,16 +227,14 @@ function eventJsonSchema() {
       target: { type: 'string' },
       weapon: { type: 'string' },
       outcome: { type: 'string' },
-      code: { type: 'string' },
-      dateP: { type: 'string' },
       time: { type: 'string' },
     },
-    required: ['wave', 'force', 'source', 'loc', 'loc_raw_text', 'target', 'weapon', 'outcome', 'code', 'dateP', 'time'],
+    required: ['wave', 'force', 'source', 'loc', 'loc_raw_text', 'target', 'weapon', 'outcome', 'time'],
   };
 }
 
-async function extractEvent(item, systemPrompt) {
-  const userContent = `عنوان: ${item.title || ''}\n\nمتن: ${item.description || ''}`;
+async function extractEvent(item, systemPrompt, articleText) {
+  const userContent = `عنوان: ${item.title || ''}\n\nمتن: ${articleText || ''}`;
   const res = await fetch(OPENROUTER_URL, {
     method: 'POST',
     headers: {
@@ -182,7 +264,12 @@ async function extractEvent(item, systemPrompt) {
   return JSON.parse(content);
 }
 
-/** Validate a model extraction. Returns {ok, errors}. */
+/**
+ * Validate a merged extraction: the model's fields (wave, force, source, loc, target, weapon,
+ * outcome) plus dateG/dateP/code, which are derived independently from the RSS <pubDate> and
+ * <link> (see pubDateToDateG/gregorianToJalali/extractCodeFromLink) and attached by the caller
+ * before validation — the model is never asked for date or code. Returns {ok, errors}.
+ */
 export function validateExtraction(ex, locations) {
   const errors = [];
   if (!ex || typeof ex !== 'object') return { ok: false, errors: ['not an object'] };
@@ -280,9 +367,15 @@ function computeMeta(events) {
 
 /**
  * Processes RSS items one at a time, appending to `events` or `pendingReview` in place.
- * Each item is isolated in its own try/catch so one bad extraction (unparseable date,
- * malformed JSON, an unexpected throw anywhere in the pipeline) can't abort the run —
- * it's logged and routed to pending-review instead, and the loop moves on.
+ * Each item is isolated in its own try/catch so one bad extraction (unparseable/missing
+ * pubDate, a failed article-page fetch, malformed JSON, an unexpected throw anywhere in the
+ * pipeline) can't abort the run — it's logged and routed to pending-review instead, and the
+ * loop moves on.
+ *
+ * date/code are derived independently rather than asked of the model: dateG comes from the
+ * RSS <pubDate>, dateP is derived from dateG, and code is parsed out of the item's <link>. The
+ * model only ever supplies wave/force/source/loc/loc_raw_text/target/weapon/outcome/time, from
+ * the full article page text (not just the terse RSS <description>).
  */
 export async function processItems(items, {
   locations,
@@ -293,6 +386,10 @@ export async function processItems(items, {
   nextId,
   extractEventFn = extractEvent,
   openPendingReviewIssueFn = openPendingReviewIssue,
+  fetchArticleTextFn = fetchArticleText,
+  pubDateToDateGFn = pubDateToDateG,
+  gregorianToJalaliFn = gregorianToJalali,
+  extractCodeFromLinkFn = extractCodeFromLink,
 }) {
   const newGuids = [];
   let newEventsCount = 0;
@@ -312,7 +409,17 @@ export async function processItems(items, {
       let extraction = null;
       let errors = [];
       try {
-        extraction = await extractEventFn(item, systemPrompt);
+        const dateG = pubDateToDateGFn(item.pubDate);
+        if (!dateG) throw new Error(`missing/unparseable pubDate: "${item.pubDate ?? ''}"`);
+        const dateP = gregorianToJalaliFn(dateG);
+        const code = extractCodeFromLinkFn(item.link);
+
+        const articleText = await fetchArticleTextFn(item.link);
+
+        extraction = await extractEventFn(item, systemPrompt, articleText);
+        extraction.dateG = dateG;
+        extraction.dateP = dateP;
+        extraction.code = code;
         ({ ok: extraction.__ok, errors } = validateExtraction(extraction, locations));
       } catch (err) {
         errors = [`extraction failed: ${err.message}`];
@@ -333,10 +440,9 @@ export async function processItems(items, {
         continue;
       }
 
-      const dateG = jalaliToGregorian(extraction.dateP);
       events.push({
         id: id++,
-        dateG,
+        dateG: extraction.dateG,
         dateP: extraction.dateP,
         time: extraction.time || '',
         wave: extraction.wave,

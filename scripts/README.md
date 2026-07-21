@@ -11,28 +11,43 @@ Sa'eqeh.
 2. Skips any item already recorded in `/data/seen-guids.json`.
 3. Filters the rest by keyword relevance (اطلاعیه، نصر ۲، نصر۲، صاعقه، موج،
    پایگاه، کد خبر). Irrelevant items are marked seen and otherwise ignored.
-4. For each relevant item, asks an LLM (via [OpenRouter](https://openrouter.ai),
-   model `openrouter/free`, structured JSON-schema output) to extract a
-   structured event — wave, force, source, location, target, weapon, outcome,
-   code, Persian date, time — using the location ids in
+4. For each relevant item, derives the fields the RSS `<description>` is too
+   terse to give a model reliably, instead of asking the model to guess them:
+   - `dateG` comes straight from the item's `<pubDate>` (RFC 822), and `dateP`
+     (Persian display date) is derived from `dateG` using the same
+     Tir-1-1405 = 2026-06-22 epoch the rest of the project uses (the inverse
+     of the Gregorian-to-Jalali conversion). If `<pubDate>` is missing or
+     unparseable, the item goes straight to pending-review.
+   - `code` is parsed directly out of the item's `<link>` URL (pattern
+     `/news/(\d+)/`).
+   - The full article page (the `<link>` URL) is fetched and its main text
+     content extracted (HTML stripped), and that full text — not just the
+     short RSS `<description>` — is what's passed to the model, so it can
+     recover wave/phase numbers and fuller target/weapon/outcome detail. If
+     the page fetch fails or times out, the item goes to pending-review
+     instead of crashing the run.
+5. Asks an LLM (via [OpenRouter](https://openrouter.ai), model
+   `openrouter/free`, structured JSON-schema output) to extract only what it
+   can reliably read from the article text — wave, force, source, location,
+   target, weapon, outcome, time — using the location ids in
    `/data/locations.json` as the only valid set. If the model can't confidently
    match a known location, it returns `loc: null` plus `loc_raw_text` instead
    of guessing.
-5. Validates every extraction (non-empty required fields, valid
-   force/source, `loc` must exist in `locations.json`). Anything that
-   validates cleanly is appended to `/data/events.json` with a new
-   sequential id; the Persian date is converted to a Gregorian `dateG` using
-   the same Tir-1-1405 = 2026-06-22 epoch the rest of the project uses.
-   `target`/`weapon`/`outcome` are stored as `{fa, en: "", ar: ""}` — EN/AR
-   translation for bot-added events is still a manual follow-up.
-6. Anything that fails validation, or has no resolvable location, is appended
+6. Validates every extraction (non-empty required fields, valid
+   force/source, `loc` must exist in `locations.json`, plus the
+   independently-derived `dateG`/`dateP`/`code` attached before validation).
+   Anything that validates cleanly is appended to `/data/events.json` with a
+   new sequential id. `target`/`weapon`/`outcome` are stored as
+   `{fa, en: "", ar: ""}` — EN/AR translation for bot-added events is still a
+   manual follow-up.
+7. Anything that fails validation, or has no resolvable location, is appended
    to `/data/pending-review.json` (with the raw item title/link and the
    model's partial extraction) instead of `events.json`, and a GitHub Issue
    titled `Pending review: <item title>` labeled `needs-review` is opened so
    a human can place it by hand.
-7. Recomputes `/data/meta.json` (date ranges + `last_synced`) whenever new
+8. Recomputes `/data/meta.json` (date ranges + `last_synced`) whenever new
    events were added.
-8. Updates `/data/seen-guids.json` with every item processed this run
+9. Updates `/data/seen-guids.json` with every item processed this run
    (accepted, pending, and irrelevant alike), so nothing is re-fetched or
    re-flagged on the next run.
 
