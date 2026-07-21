@@ -337,8 +337,127 @@ test('processItems isolates a throw from openPendingReviewIssueFn (e.g. GitHub A
   );
 
   assert.equal(events.length, 1);
-  assert.ok(pendingReview.length >= 1);
-  assert.ok(pendingReview.every((e) => e.guid === 'guid-issue-fails'));
+  assert.equal(pendingReview.length, 1);
+  assert.equal(pendingReview[0].guid, 'guid-issue-fails');
+  assert.equal(pendingReview[0].issue_number, null);
+});
+
+// --- processItems: pending-review retry/dedup regression tests ---
+
+test('processItems does not add a pending item\'s guid to newGuids, so it is never marked seen', async () => {
+  const items = [rssItem('guid-pending', { pubDate: 'not a date' })];
+  const events = [];
+  const pendingReview = [];
+
+  const { newGuids, pendingCount } = await processItems(items, {
+    locations: LOCATIONS,
+    events,
+    pendingReview,
+    seenSet: new Set(),
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => validExtraction(),
+    fetchArticleTextFn: async () => 'متن',
+    openPendingReviewIssueFn: async () => 101,
+  });
+
+  assert.equal(pendingCount, 1);
+  assert.equal(newGuids.includes('guid-pending'), false);
+  assert.equal(pendingReview.length, 1);
+  assert.equal(pendingReview[0].issue_number, 101);
+});
+
+test('a pending item that succeeds on a later processItems() call moves to events.json and its guid is added to seen-guids', async () => {
+  const events = [];
+  const pendingReview = [];
+  const seenSet = new Set();
+  const closedIssues = [];
+
+  // Run 1: bad pubDate -> routed to pending-review, guid never added to seenSet.
+  const run1 = await processItems([rssItem('guid-retry', { pubDate: 'not a date' })], {
+    locations: LOCATIONS,
+    events,
+    pendingReview,
+    seenSet,
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => validExtraction(),
+    fetchArticleTextFn: async () => 'متن',
+    openPendingReviewIssueFn: async () => 55,
+  });
+
+  assert.equal(run1.newGuids.includes('guid-retry'), false);
+  assert.equal(pendingReview.length, 1);
+  assert.equal(seenSet.has('guid-retry'), false);
+
+  // Run 2: same guid, now with a valid pubDate -> should succeed and resolve the pending entry.
+  const run2 = await processItems([rssItem('guid-retry')], {
+    locations: LOCATIONS,
+    events,
+    pendingReview,
+    seenSet,
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => validExtraction(),
+    fetchArticleTextFn: async () => 'متن',
+    openPendingReviewIssueFn: async () => { throw new Error('should not open a new issue for an already-pending item'); },
+    closePendingReviewIssueFn: async (issueNumber, comment) => {
+      closedIssues.push({ issueNumber, comment });
+    },
+  });
+
+  assert.equal(run2.resolvedCount, 1);
+  assert.equal(pendingReview.length, 0);
+  assert.equal(events.length, 1);
+  assert.ok(run2.newGuids.includes('guid-retry'));
+  assert.equal(closedIssues.length, 1);
+  assert.equal(closedIssues[0].issueNumber, 55);
+  assert.equal(closedIssues[0].comment, 'Resolved automatically on retry.');
+});
+
+test('no duplicate GitHub Issue is opened for an item still pending across two runs', async () => {
+  const events = [];
+  const pendingReview = [];
+  const seenSet = new Set();
+  let issuesOpened = 0;
+  const openFn = async () => {
+    issuesOpened++;
+    return 77;
+  };
+
+  // Run 1: fails -> opens one issue.
+  await processItems([rssItem('guid-still-pending', { pubDate: 'not a date' })], {
+    locations: LOCATIONS,
+    events,
+    pendingReview,
+    seenSet,
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => validExtraction(),
+    fetchArticleTextFn: async () => 'متن',
+    openPendingReviewIssueFn: openFn,
+  });
+
+  assert.equal(issuesOpened, 1);
+  assert.equal(pendingReview.length, 1);
+  assert.equal(pendingReview[0].issue_number, 77);
+
+  // Run 2: same guid, still fails -> must update the existing entry, not open a second issue.
+  await processItems([rssItem('guid-still-pending', { pubDate: 'still not a date' })], {
+    locations: LOCATIONS,
+    events,
+    pendingReview,
+    seenSet,
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => validExtraction(),
+    fetchArticleTextFn: async () => 'متن',
+    openPendingReviewIssueFn: openFn,
+  });
+
+  assert.equal(issuesOpened, 1, 'a second run on the same still-pending guid must not open another issue');
+  assert.equal(pendingReview.length, 1);
+  assert.equal(pendingReview[0].issue_number, 77);
 });
 
 // --- Full pipeline integration test (Phase 2 style: real fs read/write against a temp data dir) ---
