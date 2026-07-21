@@ -1,0 +1,18 @@
+{
+  "sepah": {
+    "label_fa": "سپاه پاسداران (عملیات نصر ۲)",
+    "label_en": "IRGC (Operation Nasr 2)",
+    "label_ar": "الحرس الثوري الإيراني (عملية نصر ٢)",
+    "short_fa": "سپاه",
+    "short_en": "IRGC",
+    "short_ar": "الحرس الثوري"
+  },
+  "artesh": {
+    "label_fa": "ارتش جمهوری اسلامی (عملیات صاعقه)",
+    "label_en": "Islamic Republic Army (Operation Sa'eqeh)",
+    "label_ar": "الجيش الإيراني (عملية الصاعقة)",
+    "short_fa": "ارتش",
+    "short_en": "Army",
+    "short_ar": "الجيش"
+  }
+}

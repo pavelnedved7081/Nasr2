@@ -220,10 +220,20 @@
   .stat-mini span{font-size:9px;color:var(--text-2);}
 
   .disclaimer{font-size:10.5px;color:var(--text-2);line-height:1.7;padding:10px 0 4px;}
+
+  /* ---------------- Loading overlay ---------------- */
+  .load-overlay{
+    position:fixed;inset:0;z-index:2000;
+    background:var(--bg-0);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-1);font-size:13px;letter-spacing:.3px;
+  }
+  .load-overlay.hide{display:none;}
 </style>
 </head>
 <body>
 
+<div class="load-overlay" id="loadOverlay">Loading…</div>
 <div id="map"></div>
 
 <div class="topbar">
@@ -234,7 +244,10 @@
       <p>Sepah News — Mobile Edition</p>
     </div>
   </div>
-  <div class="tb-live"><span class="dot-pulse"></span>Jul 8–21, 2026</div>
+  <div class="tb-live" style="flex-direction:column;align-items:flex-end;gap:2px;padding:6px 10px;">
+    <div style="display:flex;align-items:center;gap:5px;"><span class="dot-pulse"></span><span id="dateRangeBadge">—</span></div>
+    <div id="lastUpdated" style="font-size:8.5px;color:var(--text-2);"></div>
+  </div>
 </div>
 <a href="index.html?view=all" style="position:fixed;z-index:600;top:calc(64px + var(--safe-t));left:50%;transform:translateX(-50%);font-size:9.5px;color:var(--text-2);background:rgba(20,27,36,.9);border:1px solid var(--line);border-radius:20px;padding:6px 10px;text-decoration:none;">All versions</a>
 
@@ -300,176 +313,73 @@
 
 <script>
 /* =========================================================
-   Data — same dataset as the Persian dashboard, translated.
-   Note: every entry reflects an official IRGC (Sepah) claim
-   and has no independent verification.
+   Data — loaded from /data (same dataset as the Persian dashboard,
+   translated). Note: every entry reflects an official IRGC (Sepah)
+   or Islamic Republic Army claim and has no independent verification.
    ========================================================= */
 
-const LOC = {
-  princeHassan: {name:'Prince Hassan Airbase', country:'jordan', lat:30.2833, lng:36.0833},
-  alAzraq:      {name:'Al Azraq Airbase',      country:'jordan', lat:31.9328, lng:36.8206},
-  arifjan:      {name:'Camp Arifjan',          country:'kuwait', lat:28.8956, lng:48.1633},
-  aliAlSalem:   {name:'Ali Al Salem Airbase',  country:'kuwait', lat:29.3469, lng:47.5213},
-  ahmadAlJaber: {name:'Ahmad Al Jaber Airbase', country:'kuwait', lat:28.9358, lng:47.7981},
-  minaAbdullah: {name:'Mina Abdullah (KGL logistics hub)', country:'kuwait', lat:29.0500, lng:48.1333},
-  shuaiba:      {name:'Shuaiba Pier',          country:'kuwait', lat:29.0450, lng:48.1550},
-  alAhmadi:     {name:'Al-Ahmadi Port',        country:'kuwait', lat:29.0769, lng:48.1364},
-  kuwaitCity:   {name:'Signals/comms center (Kuwait)', country:'kuwait', lat:29.3759, lng:47.9774},
-  minaSalman:   {name:'Mina Salman Port',      country:'bahrain', lat:26.2000, lng:50.6100},
-  jufair:       {name:'Jufair Base (5th Fleet HQ)', country:'bahrain', lat:26.2285, lng:50.6083},
-  sheikhIsa:    {name:'Sheikh Isa Airbase',    country:'bahrain', lat:25.9167, lng:50.5833},
-  batelco:      {name:'Batelco Data Center (Manama)', country:'bahrain', lat:26.2235, lng:50.5876},
-  alUdeid:      {name:'Al Udeid Airbase',      country:'qatar', lat:25.1174, lng:51.3160},
-  duqm:         {name:'Duqm Port',             country:'oman', lat:19.6667, lng:57.7000},
-  ghanam:       {name:'Ghanam area (Musandam)', country:'oman', lat:26.1500, lng:56.3000},
-  salamah:      {name:'Salamah Rocks',         country:'oman', lat:23.5880, lng:58.5450},
-  tanf:         {name:'Al-Tanf Base',          country:'syria', lat:33.4864, lng:38.2131},
-  hormuz:       {name:'Strait of Hormuz',      country:'hormuz', lat:26.5000, lng:56.2500},
-};
+let LOC, COUNTRY, SOURCE, FORCE, EVENTS, DATES, DATE_LABEL, DATE_LABEL_FULL, META;
 
-const COUNTRY = {
-  jordan:  {label:'Jordan',  color:'#c9503f'},
-  kuwait:  {label:'Kuwait',  color:'#d99a3f'},
-  bahrain: {label:'Bahrain', color:'#3a9188'},
-  qatar:   {label:'Qatar',   color:'#8b6fb0'},
-  oman:    {label:'Oman',    color:'#4d80c9'},
-  syria:   {label:'Syria',   color:'#b8683f'},
-  hormuz:  {label:'Strait of Hormuz', color:'#5c6b7d'},
-};
+async function loadData(){
+  const [locRaw, countryRaw, sourceRaw, forceRaw, eventsRaw, meta] = await Promise.all([
+    fetch('data/locations.json').then(r=>r.json()),
+    fetch('data/countries.json').then(r=>r.json()),
+    fetch('data/sources.json').then(r=>r.json()),
+    fetch('data/forces.json').then(r=>r.json()),
+    fetch('data/events.json').then(r=>r.json()),
+    fetch('data/meta.json').then(r=>r.json()),
+  ]);
 
-const FORCE = {
-  ground:    'Ground',
-  naval:     'Naval',
-  aerospace: 'Aerospace',
-  joint:     'Joint',
-  unknown:   'Unspecified',
-};
+  LOC = locRaw;
 
-function ev(id, dateG, dateP, time, wave, force, loc, target, weapon, outcome, code){
-  return {id, dateG, dateP, time, wave, force,
-          country: LOC[loc].country, locName: LOC[loc].name,
-          lat: LOC[loc].lat, lng: LOC[loc].lng,
-          target, weapon, outcome, code};
+  COUNTRY = {};
+  for(const [k,v] of Object.entries(countryRaw)) COUNTRY[k] = {label:v.label_en, color:v.color};
+
+  SOURCE = {};
+  for(const [k,v] of Object.entries(sourceRaw)) SOURCE[k] = {label:v.label_en, short:v.short_en};
+
+  FORCE = {};
+  for(const [k,v] of Object.entries(forceRaw)) FORCE[k] = v.label_en;
+
+  // Ids 47-91 were added after this dashboard's EN translations were last synced;
+  // their target/weapon/outcome text is not yet translated and will render empty.
+  EVENTS = eventsRaw.map(e=>({
+    id:e.id, dateG:e.dateG, dateP:e.dateP, time:e.time, wave:e.wave, force:e.force,
+    source:e.source, country:LOC[e.loc].country, locName:LOC[e.loc].name,
+    lat:LOC[e.loc].lat, lng:LOC[e.loc].lng,
+    target:e.target.en, weapon:e.weapon.en, outcome:e.outcome.en, code:e.code,
+  }));
+
+  META = meta;
+  DATES = [...new Set(EVENTS.map(e=>e.dateG))].sort();
+  DATE_LABEL = {};
+  EVENTS.forEach(e=>{
+    const d = new Date(e.dateG+'T00:00:00');
+    DATE_LABEL[e.dateG] = d.toLocaleDateString('en-US',{month:'short', day:'numeric'});
+  });
+  DATE_LABEL_FULL = {};
+  EVENTS.forEach(e=>{
+    const d = new Date(e.dateG+'T00:00:00');
+    DATE_LABEL_FULL[e.dateG] = d.toLocaleDateString('en-US',{month:'long', day:'numeric', year:'numeric'});
+  });
 }
-
-const EVENTS = [
-  ev(1,'2026-07-08','17 Tir 1405','07:00','Initial response','joint','minaSalman',
-     'Military facilities at the 5th Naval Region and Mina Salman port','Missiles & drones (joint strike, 85 points)','Claimed partial destruction of facilities','36024'),
-  ev(2,'2026-07-08','17 Tir 1405','07:00','Initial response','joint','aliAlSalem',
-     'Ali Al Salem Airbase; one MQ-9 drone downed','Missiles & drones','Claimed drone shootdown and facility damage','36024'),
-  ev(3,'2026-07-09','18 Tir 1405','05:36','Phase 1','joint','arifjan',
-     'Infrastructure at Camp Arifjan','Missiles & drones','Claimed infrastructure destroyed','36028'),
-  ev(4,'2026-07-09','18 Tir 1405','05:36','Phase 1','joint','aliAlSalem',
-     'Infrastructure at Ali Al Salem base','Missiles & drones','Claimed infrastructure destroyed','36028'),
-  ev(5,'2026-07-09','18 Tir 1405','05:36','Phase 1','joint','jufair',
-     'Infrastructure at Jufair base','Missiles & drones','Claimed infrastructure destroyed','36028'),
-  ev(6,'2026-07-09','18 Tir 1405','05:36','Phase 1','joint','sheikhIsa',
-     'Infrastructure at Sheikh Isa base','Missiles & drones','Claimed infrastructure destroyed','36028'),
-  ev(7,'2026-07-09','18 Tir 1405','16:28','Phase 2','aerospace','alAzraq',
-     'Command-and-control center and Al Azraq Airbase','10 ballistic missiles','Claimed command center destroyed','36036'),
-  ev(8,'2026-07-12','21 Tir 1405','06:22','Phase 1 (day 2)','aerospace','princeHassan',
-     'Command-and-control center and MQ-9 drone hangars, Prince Hassan Airbase','Ballistic missiles','Claimed command center and drone hangars destroyed','36077'),
-  ev(9,'2026-07-12','21 Tir 1405','07:05','Phase 2','aerospace','alUdeid',
-     'Fighter maintenance center and command center, Al Udeid Airbase','Ballistic missiles','Claimed maintenance and command centers destroyed','36078'),
-  ev(10,'2026-07-12','21 Tir 1405','07:05','—','naval','hormuz',
-     'Second vessel disabled in the Strait of Hormuz','Direct hit','Claimed vessel disabled','36078'),
-  ev(11,'2026-07-12','21 Tir 1405','07:26','Phase 3','aerospace','duqm',
-     'Naval logistics support and refueling platforms, Duqm Port','Heavy strike (type unspecified)','Claimed facilities destroyed','36079'),
-  ev(12,'2026-07-13','22 Tir 1405','14:45','Statement 1','aerospace','princeHassan',
-     'Missile depots and fuel tanks, Prince Hassan Airbase','Missiles & drones','Set ablaze','36092'),
-  ev(13,'2026-07-13','22 Tir 1405','14:46','Statement 2 / Phase 2','aerospace','sheikhIsa',
-     'Helicopter maintenance center, P-8 aircraft hangar, drone C2 center — Sheikh Isa','Unspecified','Claimed destroyed','36093'),
-  ev(14,'2026-07-13','22 Tir 1405','14:46','Statement 3 / Phase 3','aerospace','aliAlSalem',
-     'Fuel tanks and Patriot air-defense battery, Ali Al Salem','Unspecified','Claimed fully destroyed','36094'),
-  ev(15,'2026-07-13','22 Tir 1405','14:46','Statement 3','aerospace','ahmadAlJaber',
-     'FPS long-range radar system, Ahmad Al Jaber base','Unspecified','Claimed fully destroyed','36094'),
-  ev(16,'2026-07-13','22 Tir 1405','14:46','Statement 4 / Phase 4','ground','aliAlSalem',
-     'HIMARS missile platforms and ammunition depot (Kuwait)','Missiles & drones','Set ablaze and destroyed','36095'),
-  ev(17,'2026-07-13','22 Tir 1405','14:47','Statement 5 / Phase 5','naval','jufair',
-     'US military facilities and infrastructure at Jufair','Missiles & drones','Claimed widespread fires','36096'),
-  ev(18,'2026-07-13','22 Tir 1405','14:47','Statement 5','naval','ghanam',
-     'FPS long-range air radar and vessel-detection radar, Oman','Missiles & drones','Claimed destroyed','36096'),
-  ev(19,'2026-07-14','23 Tir 1405','04:39','Statement 6','naval','hormuz',
-     'Two "trespassing" supertankers struck in the Strait of Hormuz','Direct hit / mining','Two vessels disabled','36107'),
-  ev(20,'2026-07-14','23 Tir 1405','05:19','Statement 7 / Wave 2','naval','jufair',
-     'Weapons supply depot, satellite comms center, personnel housing — Jufair','Missiles & drones','Claimed targets struck','36108'),
-  ev(21,'2026-07-14','23 Tir 1405','06:56','Statement 8 / Wave 2','joint','minaSalman',
-     '5th Fleet fuel tanks, Patriot radar, air-control radar and C-RAM, Bahrain','Missiles & drones','Claimed fully destroyed','36109'),
-  ev(22,'2026-07-14','23 Tir 1405','08:04','Statement 9 / Wave 2','aerospace','alAzraq',
-     'Facilities at the occupied airbase in Jordan','Ballistic missiles','Claimed punitive strike on deployed forces','36110'),
-  ev(23,'2026-07-14','23 Tir 1405','22:15','Statement 10 / Wave 3','aerospace','sheikhIsa',
-     'Weapons/aircraft-parts storage hangar, Sheikh Isa','Missiles & drones','Claimed destroyed','36128'),
-  ev(24,'2026-07-14','23 Tir 1405','22:15','Statement 10 / Wave 3','aerospace','aliAlSalem',
-     'MQ-9 drone staging ramp, Ali Al Salem','Drone strike','Claimed destroyed, several drones damaged','36128'),
-  ev(25,'2026-07-15','24 Tir 1405','05:18','Statement 11 / Wave 4','ground','minaAbdullah',
-     'KGL logistics support center, Mina Abdullah','Unspecified','Set ablaze and destroyed','36131'),
-  ev(26,'2026-07-15','24 Tir 1405','05:35','Statement 12 / Wave 5','naval','jufair',
-     'NSI management center, command center, parts warehouse and 5th Fleet fuel tanks','Unspecified','Claimed struck and destroyed','36132'),
-  ev(27,'2026-07-15','24 Tir 1405','18:18','Wave 6','aerospace','alAzraq',
-     'F-15 / F-16 / F-35 hangars and strategic MQ-9 drones','Unspecified','Claimed hangars fully destroyed','36145'),
-  ev(28,'2026-07-15','24 Tir 1405','18:24','Wave 7','ground','aliAlSalem',
-     'Satellite comms center, missile/air-defense radar, Patriot complex, supply depot, HIMARS launchers','Missiles & drones','Claimed targets destroyed and suppressed','36147'),
-  ev(29,'2026-07-16','25 Tir 1405','06:52','Wave 8','naval','aliAlSalem',
-     'C-RAM early-warning radar and troop staging area, Ali Al Salem','Missiles & drones (combined op)','Claimed targets struck','36152'),
-  ev(30,'2026-07-17','26 Tir 1405','09:01','Wave 9','naval','aliAlSalem',
-     'Satellite comms center and early-warning radar, Ali Al Salem','Missiles & drones','Claimed destroyed','36160'),
-  ev(31,'2026-07-17','26 Tir 1405','09:01','Wave 9','naval','shuaiba',
-     'US personnel pier, Shuaiba','Missiles & drones','Claimed destroyed','36160'),
-  ev(32,'2026-07-17','26 Tir 1405','09:01','Wave 10','naval','sheikhIsa',
-     'Air-surveillance radar and fuel pumping station, Sheikh Isa','Unspecified','Claimed fully destroyed','36161'),
-  ev(33,'2026-07-17','26 Tir 1405','09:01','Wave 11','aerospace','tanf',
-     'Special-operations command center, radar and helicopters, Al-Tanf','Unspecified','Claimed radar system and several helicopters destroyed','36162'),
-  ev(34,'2026-07-17','26 Tir 1405','09:01','Wave 12 (est.)','ground','aliAlSalem',
-     'Enemy base in Kuwait (brief statement)','Unspecified','Set ablaze','36163'),
-  ev(35,'2026-07-17','26 Tir 1405','09:07','Statement 21 / Wave 13','naval','salamah',
-     'Naval control radar, Salamah Rocks','Unspecified','Claimed destroyed','36164'),
-  ev(36,'2026-07-17','26 Tir 1405','09:07','Statement 21 / Wave 13','naval','ghanam',
-     'US air-control radar, Ghanam area','Unspecified','Claimed destroyed','36164'),
-  ev(37,'2026-07-17','26 Tir 1405','11:51','Statement 23 / Wave 15','ground','aliAlSalem',
-     'HIMARS platform/missiles, troop staging area and allied irregular positions','Drones & missiles','Claimed destroyed with casualties','36166'),
-  ev(38,'2026-07-17','26 Tir 1405','11:51','Wave 16','aerospace','alUdeid',
-     'Long-range radar system and strategic refueling aircraft, Al Udeid','Unspecified','Claimed fully destroyed / seriously damaged','36166'),
-  ev(39,'2026-07-17','26 Tir 1405','11:51','Wave 17','naval','sheikhIsa',
-     'Unmanned surface vessel (Shahed/"Shampad") depot, Sheikh Isa','Ballistic missiles & drones','Claimed widespread fires','36166'),
-  ev(40,'2026-07-17','26 Tir 1405','11:51','Wave 17','naval','batelco',
-     'Main AI data center (Batelco), Bahrain','Ballistic missiles & drones','Claimed fully destroyed','36166'),
-  ev(41,'2026-07-17','26 Tir 1405','11:51','Wave 18','ground','arifjan',
-     'Ground-forces support center, Camp Arifjan','Combined ground assault','Claimed personnel casualties','36166'),
-  ev(42,'2026-07-17','26 Tir 1405','11:51','Wave 18','ground','aliAlSalem',
-     'Radar at Ali Al Salem base','Drone strike','Claimed radar destroyed','36166'),
-  ev(43,'2026-07-17','26 Tir 1405','11:51','Wave 19','naval','alAhmadi',
-     'Fuel-supply pier for the US fleet, Al-Ahmadi Port','Drones & missiles','Claimed targeted','36166'),
-  ev(44,'2026-07-17','26 Tir 1405','11:51','Wave 19','naval','sheikhIsa',
-     'Fighter-jet staging area, Sheikh Isa','Drones & missiles','Claimed targeted','36166'),
-  ev(45,'2026-07-17','26 Tir 1405','11:51','Wave 19','naval','kuwaitCity',
-     'US signals/communications center, Kuwait','Unspecified','Claimed destroyed','36166'),
-  ev(46,'2026-07-17','26 Tir 1405','11:51','Wave 20','aerospace','alAzraq',
-     'Fighter shelters and large parking ramp, Al Azraq','Missiles & drones (simultaneous)','Claimed 2 fighters and 3 aircraft destroyed','36166'),
-];
-
-const DATES = [...new Set(EVENTS.map(e=>e.dateG))].sort();
-const DATE_LABEL = {};
-EVENTS.forEach(e=>{
-  const d = new Date(e.dateG+'T00:00:00');
-  DATE_LABEL[e.dateG] = d.toLocaleDateString('en-US',{month:'short', day:'numeric'});
-});
-const DATE_LABEL_FULL = {};
-EVENTS.forEach(e=>{
-  const d = new Date(e.dateG+'T00:00:00');
-  DATE_LABEL_FULL[e.dateG] = d.toLocaleDateString('en-US',{month:'long', day:'numeric', year:'numeric'});
-});
 
 /* ---------------- state ---------------- */
 let state = {
-  dateIdx: DATES.length-1,
+  dateIdx: 0,
   mode: 'cumulative',
-  countries: new Set(Object.keys(COUNTRY)),
-  forces: new Set(Object.keys(FORCE)),
+  countries: new Set(),
+  forces: new Set(),
   selectedId: null,
   playing: false,
   playTimer: null,
   expanded: false,
 };
+function initState(){
+  state.dateIdx = DATES.length-1;
+  state.countries = new Set(Object.keys(COUNTRY));
+  state.forces = new Set(Object.keys(FORCE));
+}
 
 /* ---------------- map init ---------------- */
 const map = L.map('map', {zoomControl:false, attributionControl:false})
@@ -732,10 +642,22 @@ function renderAll(){
   document.getElementById('ssMeta').textContent = `${dayCount} today · ${cumCount} cumulative`;
 }
 
-renderStats();
-renderChips();
-renderForceToggle();
-renderAll();
+async function init(){
+  await loadData();
+  initState();
+  document.getElementById('dateRangeBadge').textContent = META.date_range_en;
+  document.getElementById('lastUpdated').textContent =
+    'Last updated: ' + new Intl.DateTimeFormat('en-US', {dateStyle:'short', timeStyle:'short', timeZone:'UTC'}).format(new Date(META.last_synced));
+
+  renderStats();
+  renderChips();
+  renderForceToggle();
+  renderAll();
+
+  document.getElementById('loadOverlay').classList.add('hide');
+  fixMapSize();
+}
+init();
 
 /* Leaflet sizing fix — container may be 0×0 at first paint */
 function fixMapSize(){ map.invalidateSize(); }

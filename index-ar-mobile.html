@@ -220,10 +220,20 @@
   .stat-mini span{font-size:9.5px;color:var(--text-2);}
 
   .disclaimer{font-size:10.5px;color:var(--text-2);line-height:1.8;padding:10px 0 4px;}
+
+  /* ---------------- Loading overlay ---------------- */
+  .load-overlay{
+    position:fixed;inset:0;z-index:2000;
+    background:var(--bg-0);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-1);font-size:13px;letter-spacing:.3px;
+  }
+  .load-overlay.hide{display:none;}
 </style>
 </head>
 <body>
 
+<div class="load-overlay" id="loadOverlay">جارٍ التحميل…</div>
 <div id="map"></div>
 
 <div class="topbar">
@@ -234,7 +244,10 @@
       <p>وكالة سباه نيوز — نسخة الجوال</p>
     </div>
   </div>
-  <div class="tb-live"><span class="dot-pulse"></span>٨–٢١ يوليو</div>
+  <div class="tb-live" style="flex-direction:column;align-items:flex-end;gap:2px;padding:6px 10px;">
+    <div style="display:flex;align-items:center;gap:5px;"><span class="dot-pulse"></span><span id="dateRangeBadge">—</span></div>
+    <div id="lastUpdated" style="font-size:8.5px;color:var(--text-2);"></div>
+  </div>
 </div>
 <a href="index.html?view=all" style="position:fixed;z-index:600;top:calc(64px + var(--safe-t));left:50%;transform:translateX(-50%);font-size:9.5px;color:var(--text-2);background:rgba(20,27,36,.9);border:1px solid var(--line);border-radius:20px;padding:6px 10px;text-decoration:none;">كل النسخ</a>
 
@@ -300,154 +313,12 @@
 
 <script>
 /* =========================================================
-   البيانات — نفس مجموعة بيانات لوحة نصر ٢، مترجمة إلى العربية.
-   ملاحظة: جميع البنود تعكس ادعاءات رسمية صادرة عن الحرس الثوري
-   الإيراني (سباه) ولا تحمل أي تحقق مستقل.
+   البيانات — محمّلة من مجلد /data (نفس مجموعة بيانات لوحة نصر ٢،
+   مترجمة إلى العربية). ملاحظة: جميع البنود تعكس ادعاءات رسمية صادرة
+   عن الحرس الثوري الإيراني أو الجيش الإيراني ولا تحمل أي تحقق مستقل.
    ========================================================= */
 
-const LOC = {
-  princeHassan: {name:'قاعدة الأمير حسن الجوية', country:'jordan', lat:30.2833, lng:36.0833},
-  alAzraq:      {name:'قاعدة الأزرق الجوية',     country:'jordan', lat:31.9328, lng:36.8206},
-  arifjan:      {name:'معسكر عريفجان',           country:'kuwait', lat:28.8956, lng:48.1633},
-  aliAlSalem:   {name:'قاعدة علي السالم الجوية',  country:'kuwait', lat:29.3469, lng:47.5213},
-  ahmadAlJaber: {name:'قاعدة أحمد الجابر الجوية', country:'kuwait', lat:28.9358, lng:47.7981},
-  minaAbdullah: {name:'ميناء عبدالله (مركز KGL اللوجستي)', country:'kuwait', lat:29.0500, lng:48.1333},
-  shuaiba:      {name:'رصيف الشعيبة',            country:'kuwait', lat:29.0450, lng:48.1550},
-  alAhmadi:     {name:'ميناء الأحمدي',            country:'kuwait', lat:29.0769, lng:48.1364},
-  kuwaitCity:   {name:'مركز الاتصالات (الكويت)',   country:'kuwait', lat:29.3759, lng:47.9774},
-  minaSalman:   {name:'ميناء سلمان',              country:'bahrain', lat:26.2000, lng:50.6100},
-  jufair:       {name:'قاعدة الجفير (مقر الأسطول الخامس)', country:'bahrain', lat:26.2285, lng:50.6083},
-  sheikhIsa:    {name:'قاعدة الشيخ عيسى الجوية',   country:'bahrain', lat:25.9167, lng:50.5833},
-  batelco:      {name:'مركز بيانات بتلكو (المنامة)', country:'bahrain', lat:26.2235, lng:50.5876},
-  alUdeid:      {name:'قاعدة العديد الجوية',      country:'qatar', lat:25.1174, lng:51.3160},
-  duqm:         {name:'ميناء الدقم',              country:'oman', lat:19.6667, lng:57.7000},
-  ghanam:       {name:'منطقة غنم (مسندم)',        country:'oman', lat:26.1500, lng:56.3000},
-  salamah:      {name:'صخور سلامة',              country:'oman', lat:23.5880, lng:58.5450},
-  tanf:         {name:'قاعدة التنف',              country:'syria', lat:33.4864, lng:38.2131},
-  hormuz:       {name:'مضيق هرمز',               country:'hormuz', lat:26.5000, lng:56.2500},
-};
-
-const COUNTRY = {
-  jordan:  {label:'الأردن',  color:'#c9503f'},
-  kuwait:  {label:'الكويت',  color:'#d99a3f'},
-  bahrain: {label:'البحرين', color:'#3a9188'},
-  qatar:   {label:'قطر',    color:'#8b6fb0'},
-  oman:    {label:'عُمان',   color:'#4d80c9'},
-  syria:   {label:'سوريا',  color:'#b8683f'},
-  hormuz:  {label:'مضيق هرمز', color:'#5c6b7d'},
-};
-
-const FORCE = {
-  ground:    'بري',
-  naval:     'بحري',
-  aerospace: 'جوفضائي',
-  joint:     'مشترك',
-  unknown:   'غير محدد',
-};
-
-function ev(id, dateG, dateP, time, wave, force, loc, target, weapon, outcome, code){
-  return {id, dateG, dateP, time, wave, force,
-          country: LOC[loc].country, locName: LOC[loc].name,
-          lat: LOC[loc].lat, lng: LOC[loc].lng,
-          target, weapon, outcome, code};
-}
-
-const EVENTS = [
-  ev(1,'2026-07-08','١٧ تير ١٤٠٥','٠٧:٠٠','الرد الأولي','joint','minaSalman',
-     'منشآت عسكرية في المنطقة البحرية الخامسة وميناء سلمان','صواريخ وطائرات مسيّرة (عملية مشتركة استهدفت ٨٥ نقطة)','ادعاء تدمير جزء من المنشآت','٣٦٠٢٤'),
-  ev(2,'2026-07-08','١٧ تير ١٤٠٥','٠٧:٠٠','الرد الأولي','joint','aliAlSalem',
-     'قاعدة علي السالم الجوية؛ إسقاط طائرة مسيّرة من طراز MQ-9','صواريخ وطائرات مسيّرة','ادعاء إسقاط الطائرة المسيّرة وإلحاق أضرار بالمنشآت','٣٦٠٢٤'),
-  ev(3,'2026-07-09','١٨ تير ١٤٠٥','٠٥:٣٦','المرحلة الأولى','joint','arifjan',
-     'البنية التحتية لمعسكر عريفجان','صواريخ وطائرات مسيّرة','ادعاء تدمير البنية التحتية','٣٦٠٢٨'),
-  ev(4,'2026-07-09','١٨ تير ١٤٠٥','٠٥:٣٦','المرحلة الأولى','joint','aliAlSalem',
-     'البنية التحتية لقاعدة علي السالم','صواريخ وطائرات مسيّرة','ادعاء تدمير البنية التحتية','٣٦٠٢٨'),
-  ev(5,'2026-07-09','١٨ تير ١٤٠٥','٠٥:٣٦','المرحلة الأولى','joint','jufair',
-     'البنية التحتية لقاعدة الجفير','صواريخ وطائرات مسيّرة','ادعاء تدمير البنية التحتية','٣٦٠٢٨'),
-  ev(6,'2026-07-09','١٨ تير ١٤٠٥','٠٥:٣٦','المرحلة الأولى','joint','sheikhIsa',
-     'البنية التحتية لقاعدة الشيخ عيسى','صواريخ وطائرات مسيّرة','ادعاء تدمير البنية التحتية','٣٦٠٢٨'),
-  ev(7,'2026-07-09','١٨ تير ١٤٠٥','١٦:٢٨','المرحلة الثانية','aerospace','alAzraq',
-     'مركز القيادة والسيطرة وقاعدة الأزرق الجوية','١٠ صواريخ باليستية','ادعاء تدمير مركز القيادة','٣٦٠٣٦'),
-  ev(8,'2026-07-12','٢١ تير ١٤٠٥','٠٦:٢٢','المرحلة الأولى (اليوم الثاني)','aerospace','princeHassan',
-     'مركز القيادة والسيطرة وحظائر طائرات MQ-9، قاعدة الأمير حسن','صواريخ باليستية','ادعاء تدمير مركز القيادة وحظائر الطائرات المسيّرة','٣٦٠٧٧'),
-  ev(9,'2026-07-12','٢١ تير ١٤٠٥','٠٧:٠٥','المرحلة الثانية','aerospace','alUdeid',
-     'مركز صيانة المقاتلات ومركز القيادة، قاعدة العديد','صواريخ باليستية','ادعاء تدمير مراكز الصيانة والقيادة','٣٦٠٧٨'),
-  ev(10,'2026-07-12','٢١ تير ١٤٠٥','٠٧:٠٥','—','naval','hormuz',
-     'تعطيل ناقلة نفط ثانية «متجاوزة» في مضيق هرمز','إصابة مباشرة','ادعاء تعطيل الناقلة','٣٦٠٧٨'),
-  ev(11,'2026-07-12','٢١ تير ١٤٠٥','٠٧:٢٦','المرحلة الثالثة','aerospace','duqm',
-     'الدعم اللوجستي للسفن ومنصات التزود بالوقود، ميناء الدقم','ضربة قوية (نوع غير محدد)','ادعاء تدمير المنشآت','٣٦٠٧٩'),
-  ev(12,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٥','البيان رقم ١','aerospace','princeHassan',
-     'مستودعات الصواريخ وخزانات الوقود، قاعدة الأمير حسن','صواريخ وطائرات مسيّرة','أُضرمت فيها النيران','٣٦٠٩٢'),
-  ev(13,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٦','البيان رقم ٢ / المرحلة الثانية','aerospace','sheikhIsa',
-     'مركز صيانة المروحيات وحظيرة طائرات P-8 ومركز التحكم بالطائرات المسيّرة، الشيخ عيسى','غير محدد','ادعاء التدمير','٣٦٠٩٣'),
-  ev(14,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٦','البيان رقم ٣ / المرحلة الثالثة','aerospace','aliAlSalem',
-     'خزانات الوقود ومنظومة باتريوت للدفاع الجوي، علي السالم','غير محدد','ادعاء التدمير الكامل','٣٦٠٩٤'),
-  ev(15,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٦','البيان رقم ٣','aerospace','ahmadAlJaber',
-     'منظومة رادار FPS بعيدة المدى، قاعدة أحمد الجابر','غير محدد','ادعاء التدمير الكامل','٣٦٠٩٤'),
-  ev(16,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٦','البيان رقم ٤ / المرحلة الرابعة','ground','aliAlSalem',
-     'منصات صواريخ هيمارس ومستودع الذخيرة (الكويت)','صواريخ وطائرات مسيّرة','أُضرمت فيها النيران ودُمّرت','٣٦٠٩٥'),
-  ev(17,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٧','البيان رقم ٥ / المرحلة الخامسة','naval','jufair',
-     'منشآت وبنية تحتية للقوات الأمريكية في الجفير','صواريخ وطائرات مسيّرة','ادعاء اندلاع حرائق واسعة','٣٦٠٩٦'),
-  ev(18,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٧','البيان رقم ٥','naval','ghanam',
-     'رادار جوي بعيد المدى ورادار كشف السفن، عُمان','صواريخ وطائرات مسيّرة','ادعاء التدمير','٣٦٠٩٦'),
-  ev(19,'2026-07-14','٢٣ تير ١٤٠٥','٠٤:٣٩','البيان رقم ٦','naval','hormuz',
-     'إصابة ناقلتي نفط عملاقتين «متجاوزتين» في مضيق هرمز','إصابة مباشرة / تلغيم','تعطّل الناقلتين','٣٦١٠٧'),
-  ev(20,'2026-07-14','٢٣ تير ١٤٠٥','٠٥:١٩','البيان رقم ٧ / الموجة ٢','naval','jufair',
-     'مستودع دعم تسليحي ومركز اتصالات فضائية وسكن للقوات، الجفير','صواريخ وطائرات مسيّرة','ادعاء إصابة الأهداف','٣٦١٠٨'),
-  ev(21,'2026-07-14','٢٣ تير ١٤٠٥','٠٦:٥٦','البيان رقم ٨ / الموجة ٢','joint','minaSalman',
-     'خزانات وقود الأسطول الخامس، رادار باتريوت، رادار مراقبة جوية ومنظومة C-RAM، البحرين','صواريخ وطائرات مسيّرة','ادعاء التدمير الكامل','٣٦١٠٩'),
-  ev(22,'2026-07-14','٢٣ تير ١٤٠٥','٠٨:٠٤','البيان رقم ٩ / الموجة ٢','aerospace','alAzraq',
-     'منشآت القاعدة الجوية الواقعة تحت الاحتلال في الأردن','صواريخ باليستية','ادعاء معاقبة القوات المتمركزة','٣٦١١٠'),
-  ev(23,'2026-07-14','٢٣ تير ١٤٠٥','٢٢:١٥','البيان رقم ١٠ / الموجة ٣','aerospace','sheikhIsa',
-     'حظيرة تخزين الأسلحة وقطع غيار الطائرات/السفن، الشيخ عيسى','صواريخ وطائرات مسيّرة','ادعاء التدمير','٣٦١٢٨'),
-  ev(24,'2026-07-14','٢٣ تير ١٤٠٥','٢٢:١٥','البيان رقم ١٠ / الموجة ٣','aerospace','aliAlSalem',
-     'منصة تجهيز طائرات MQ-9 المسيّرة، علي السالم','ضربة بطائرة مسيّرة','ادعاء التدمير وإلحاق أضرار بعدة طائرات مسيّرة','٣٦١٢٨'),
-  ev(25,'2026-07-15','٢٤ تير ١٤٠٥','٠٥:١٨','البيان رقم ١١ / الموجة ٤','ground','minaAbdullah',
-     'مركز الدعم اللوجستي KGL، ميناء عبدالله','غير محدد','أُضرم فيه الحريق ودُمّر','٣٦١٣١'),
-  ev(26,'2026-07-15','٢٤ تير ١٤٠٥','٠٥:٣٥','البيان رقم ١٢ / الموجة ٥','naval','jufair',
-     'مركز إدارة NSI ومركز القيادة ومستودع القطع وخزانات وقود الأسطول الخامس','غير محدد','ادعاء الإصابة والتدمير','٣٦١٣٢'),
-  ev(27,'2026-07-15','٢٤ تير ١٤٠٥','١٨:١٨','الموجة ٦','aerospace','alAzraq',
-     'حظائر مقاتلات F-15 وF-16 وF-35 وطائرات MQ-9 الاستراتيجية','غير محدد','ادعاء تدمير الحظائر بالكامل','٣٦١٤٥'),
-  ev(28,'2026-07-15','٢٤ تير ١٤٠٥','١٨:٢٤','الموجة ٧','ground','aliAlSalem',
-     'مركز الاتصالات الفضائية ورادار الدفاع الصاروخي-الجوي ومجمع باتريوت ومستودع الدعم ومنصات هيمارس','صواريخ وطائرات مسيّرة','ادعاء تدمير الأهداف وقمعها','٣٦١٤٧'),
-  ev(29,'2026-07-16','٢٥ تير ١٤٠٥','٠٦:٥٢','الموجة ٨','naval','aliAlSalem',
-     'رادار الإنذار المبكر C-RAM ونقطة تجمع للقوات، علي السالم','صواريخ وطائرات مسيّرة (عملية مركبة)','ادعاء إصابة الأهداف','٣٦١٥٢'),
-  ev(30,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠١','الموجة ٩','naval','aliAlSalem',
-     'مركز الاتصالات الفضائية ورادار الإنذار المبكر، علي السالم','صواريخ وطائرات مسيّرة','ادعاء التدمير','٣٦١٦٠'),
-  ev(31,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠١','الموجة ٩','naval','shuaiba',
-     'رصيف تمركز الجنود الأمريكيين، الشعيبة','صواريخ وطائرات مسيّرة','ادعاء التدمير','٣٦١٦٠'),
-  ev(32,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠١','الموجة ١٠','naval','sheikhIsa',
-     'رادار المراقبة الجوية ومحطة ضخ الوقود، الشيخ عيسى','غير محدد','ادعاء التدمير الكامل','٣٦١٦١'),
-  ev(33,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠١','الموجة ١١','aerospace','tanf',
-     'مركز قيادة العمليات الخاصة والرادار والمروحيات، التنف','غير محدد','ادعاء تدمير منظومة الرادار وعدة مروحيات','٣٦١٦٢'),
-  ev(34,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠١','الموجة ١٢ (تقديري)','ground','aliAlSalem',
-     'قاعدة العدو في الكويت (بيان مقتضب)','غير محدد','أُضرمت فيها النيران','٣٦١٦٣'),
-  ev(35,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠٧','البيان رقم ٢١ / الموجة ١٣','naval','salamah',
-     'رادار المراقبة البحرية، صخور سلامة','غير محدد','ادعاء التدمير','٣٦١٦٤'),
-  ev(36,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠٧','البيان رقم ٢١ / الموجة ١٣','naval','ghanam',
-     'رادار المراقبة الجوية الأمريكي، منطقة غنم','غير محدد','ادعاء التدمير','٣٦١٦٤'),
-  ev(37,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','البيان رقم ٢٣ / الموجة ١٥','ground','aliAlSalem',
-     'منصة وصواريخ هيمارس، ونقطة تمركز قوات ومواقع لقوى «معادية للثورة»','طائرات مسيّرة وصواريخ','ادعاء التدمير وسقوط قتلى','٣٦١٦٦'),
-  ev(38,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٦','aerospace','alUdeid',
-     'منظومة رادار بعيدة المدى وطائرة تزود بالوقود استراتيجية، العديد','غير محدد','ادعاء التدمير الكامل وإلحاق أضرار جسيمة','٣٦١٦٦'),
-  ev(39,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٧','naval','sheikhIsa',
-     'مستودع الزوارق المسيّرة السطحية، الشيخ عيسى','صواريخ باليستية وطائرات مسيّرة','ادعاء اندلاع حرائق واسعة','٣٦١٦٦'),
-  ev(40,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٧','naval','batelco',
-     'مركز الذكاء الاصطناعي الرئيسي (بتلكو)، البحرين','صواريخ باليستية وطائرات مسيّرة','ادعاء التدمير الكامل','٣٦١٦٦'),
-  ev(41,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٨','ground','arifjan',
-     'مركز دعم القوات البرية، معسكر عريفجان','هجوم بري مركب','ادعاء سقوط قتلى بين القوات','٣٦١٦٦'),
-  ev(42,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٨','ground','aliAlSalem',
-     'رادار قاعدة علي السالم','ضربة بطائرة مسيّرة','ادعاء تدمير الرادار','٣٦١٦٦'),
-  ev(43,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٩','naval','alAhmadi',
-     'رصيف تزويد الأسطول الأمريكي بالوقود، ميناء الأحمدي','طائرات مسيّرة وصواريخ','ادعاء استهداف الرصيف','٣٦١٦٦'),
-  ev(44,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٩','naval','sheikhIsa',
-     'نقطة تجمع المقاتلات الحربية، الشيخ عيسى','طائرات مسيّرة وصواريخ','ادعاء استهداف النقطة','٣٦١٦٦'),
-  ev(45,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٩','naval','kuwaitCity',
-     'مركز الإشارة والاتصالات الأمريكي، الكويت','غير محدد','ادعاء التدمير','٣٦١٦٦'),
-  ev(46,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ٢٠','aerospace','alAzraq',
-     'ملاجئ المقاتلات ومنصة وقوف كبرى، الأزرق','صواريخ وطائرات مسيّرة (متزامنة)','ادعاء تدمير مقاتلتين وثلاث طائرات','٣٦١٦٦'),
-];
-
-const DATES = [...new Set(EVENTS.map(e=>e.dateG))].sort();
+let LOC, COUNTRY, SOURCE, FORCE, EVENTS, DATES, DATE_LABEL, DATE_LABEL_FULL, META;
 
 const AR_INDIC = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
 function toArabicIndic(n){ return String(n).replace(/[0-9]/g, d=>AR_INDIC[d]); }
@@ -460,21 +331,60 @@ function gregFull(dateG){
   const d = new Date(dateG+'T00:00:00');
   return `${toArabicIndic(d.getDate())} ${AR_MONTHS[d.getMonth()]} ${toArabicIndic(d.getFullYear())}`;
 }
-const DATE_LABEL = {};
-const DATE_LABEL_FULL = {};
-DATES.forEach(d=>{ DATE_LABEL[d]=gregShort(d); DATE_LABEL_FULL[d]=gregFull(d); });
+
+async function loadData(){
+  const [locRaw, countryRaw, sourceRaw, forceRaw, eventsRaw, meta] = await Promise.all([
+    fetch('data/locations.json').then(r=>r.json()),
+    fetch('data/countries.json').then(r=>r.json()),
+    fetch('data/sources.json').then(r=>r.json()),
+    fetch('data/forces.json').then(r=>r.json()),
+    fetch('data/events.json').then(r=>r.json()),
+    fetch('data/meta.json').then(r=>r.json()),
+  ]);
+
+  LOC = locRaw;
+
+  COUNTRY = {};
+  for(const [k,v] of Object.entries(countryRaw)) COUNTRY[k] = {label:v.label_ar, color:v.color};
+
+  SOURCE = {};
+  for(const [k,v] of Object.entries(sourceRaw)) SOURCE[k] = {label:v.label_ar, short:v.short_ar};
+
+  FORCE = {};
+  for(const [k,v] of Object.entries(forceRaw)) FORCE[k] = v.label_ar;
+
+  // المعرّفات ٤٧-٩١ أُضيفت بعد آخر مزامنة لترجمات هذه اللوحة إلى العربية؛
+  // نصوص target/weapon/outcome الخاصة بها لم تُترجم بعد وستظهر فارغة.
+  EVENTS = eventsRaw.map(e=>({
+    id:e.id, dateG:e.dateG, dateP:e.dateP, time:e.time, wave:e.wave, force:e.force,
+    source:e.source, country:LOC[e.loc].country, locName:LOC[e.loc].name,
+    lat:LOC[e.loc].lat, lng:LOC[e.loc].lng,
+    target:e.target.ar, weapon:e.weapon.ar, outcome:e.outcome.ar, code:e.code,
+  }));
+
+  META = meta;
+  DATES = [...new Set(EVENTS.map(e=>e.dateG))].sort();
+  DATE_LABEL = {};
+  DATE_LABEL_FULL = {};
+  DATES.forEach(d=>{ DATE_LABEL[d]=gregShort(d); DATE_LABEL_FULL[d]=gregFull(d); });
+}
 
 /* ---------------- state ---------------- */
 let state = {
-  dateIdx: DATES.length-1,
+  dateIdx: 0,
   mode: 'cumulative',
-  countries: new Set(Object.keys(COUNTRY)),
-  forces: new Set(Object.keys(FORCE)),
+  countries: new Set(),
+  forces: new Set(),
   selectedId: null,
   playing: false,
   playTimer: null,
   expanded: false,
 };
+function initState(){
+  state.dateIdx = DATES.length-1;
+  state.countries = new Set(Object.keys(COUNTRY));
+  state.forces = new Set(Object.keys(FORCE));
+}
 
 /* ---------------- map init ---------------- */
 const map = L.map('map', {zoomControl:false, attributionControl:false})
@@ -737,10 +647,22 @@ function renderAll(){
   document.getElementById('ssMeta').textContent = `${dayCount} حدث اليوم · ${cumCount} تراكمي`;
 }
 
-renderStats();
-renderChips();
-renderForceToggle();
-renderAll();
+async function init(){
+  await loadData();
+  initState();
+  document.getElementById('dateRangeBadge').textContent = META.date_range_ar;
+  document.getElementById('lastUpdated').textContent =
+    'آخر تحديث: ' + new Intl.DateTimeFormat('ar-EG', {dateStyle:'short', timeStyle:'short', timeZone:'UTC'}).format(new Date(META.last_synced));
+
+  renderStats();
+  renderChips();
+  renderForceToggle();
+  renderAll();
+
+  document.getElementById('loadOverlay').classList.add('hide');
+  fixMapSize();
+}
+init();
 
 /* Leaflet sizing fix — container may be 0×0 at first paint */
 function fixMapSize(){ map.invalidateSize(); }

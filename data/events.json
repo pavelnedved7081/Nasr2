@@ -1,0 +1,2368 @@
+[
+  {
+    "id": 1,
+    "dateG": "2026-07-08",
+    "dateP": "۱۷ تیر ۱۴۰۵",
+    "time": "۰۷:۰۰",
+    "wave": "پاسخ اولیه (پیش از نام‌گذاری موج)",
+    "force": "joint",
+    "source": "sepah",
+    "loc": "minaSalman",
+    "target": {
+      "fa": "تأسیسات نظامی در منطقه پنجم دریایی و بندر سلمان",
+      "en": "Military facilities at the 5th Naval Region and Mina Salman port",
+      "ar": "منشآت عسكرية في المنطقة البحرية الخامسة وميناء سلمان"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد (عملیات مشترک ۸۵ نقطه‌ای)",
+      "en": "Missiles & drones (joint strike, 85 points)",
+      "ar": "صواريخ وطائرات مسيّرة (عملية مشتركة استهدفت ٨٥ نقطة)"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام بخشی از تأسیسات",
+      "en": "Claimed partial destruction of facilities",
+      "ar": "ادعاء تدمير جزء من المنشآت"
+    },
+    "code": "۳۶۰۲۴"
+  },
+  {
+    "id": 2,
+    "dateG": "2026-07-08",
+    "dateP": "۱۷ تیر ۱۴۰۵",
+    "time": "۰۷:۰۰",
+    "wave": "پاسخ اولیه",
+    "force": "joint",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "پایگاه هوایی علی‌السالم؛ سرنگونی یک فروند پهپاد MQ-9",
+      "en": "Ali Al Salem Airbase; one MQ-9 drone downed",
+      "ar": "قاعدة علي السالم الجوية؛ إسقاط طائرة مسيّرة من طراز MQ-9"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای سرنگونی پهپاد و آسیب به تأسیسات",
+      "en": "Claimed drone shootdown and facility damage",
+      "ar": "ادعاء إسقاط الطائرة المسيّرة وإلحاق أضرار بالمنشآت"
+    },
+    "code": "۳۶۰۲۴"
+  },
+  {
+    "id": 3,
+    "dateG": "2026-07-09",
+    "dateP": "۱۸ تیر ۱۴۰۵",
+    "time": "۰۵:۳۶",
+    "wave": "مرحله ۱ (پاسخ تنبیهی)",
+    "force": "joint",
+    "source": "sepah",
+    "loc": "arifjan",
+    "target": {
+      "fa": "زیرساخت پایگاه استعماری عریفجان",
+      "en": "Infrastructure at Camp Arifjan",
+      "ar": "البنية التحتية لمعسكر عريفجان"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام زیرساخت",
+      "en": "Claimed infrastructure destroyed",
+      "ar": "ادعاء تدمير البنية التحتية"
+    },
+    "code": "۳۶۰۲۸"
+  },
+  {
+    "id": 4,
+    "dateG": "2026-07-09",
+    "dateP": "۱۸ تیر ۱۴۰۵",
+    "time": "۰۵:۳۶",
+    "wave": "مرحله ۱",
+    "force": "joint",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "زیرساخت پایگاه علی‌السالم",
+      "en": "Infrastructure at Ali Al Salem base",
+      "ar": "البنية التحتية لقاعدة علي السالم"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام زیرساخت",
+      "en": "Claimed infrastructure destroyed",
+      "ar": "ادعاء تدمير البنية التحتية"
+    },
+    "code": "۳۶۰۲۸"
+  },
+  {
+    "id": 5,
+    "dateG": "2026-07-09",
+    "dateP": "۱۸ تیر ۱۴۰۵",
+    "time": "۰۵:۳۶",
+    "wave": "مرحله ۱",
+    "force": "joint",
+    "source": "sepah",
+    "loc": "jufair",
+    "target": {
+      "fa": "زیرساخت پایگاه جفیر",
+      "en": "Infrastructure at Jufair base",
+      "ar": "البنية التحتية لقاعدة الجفير"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام زیرساخت",
+      "en": "Claimed infrastructure destroyed",
+      "ar": "ادعاء تدمير البنية التحتية"
+    },
+    "code": "۳۶۰۲۸"
+  },
+  {
+    "id": 6,
+    "dateG": "2026-07-09",
+    "dateP": "۱۸ تیر ۱۴۰۵",
+    "time": "۰۵:۳۶",
+    "wave": "مرحله ۱",
+    "force": "joint",
+    "source": "sepah",
+    "loc": "sheikhIsa",
+    "target": {
+      "fa": "زیرساخت پایگاه شیخ عیسی",
+      "en": "Infrastructure at Sheikh Isa base",
+      "ar": "البنية التحتية لقاعدة الشيخ عيسى"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام زیرساخت",
+      "en": "Claimed infrastructure destroyed",
+      "ar": "ادعاء تدمير البنية التحتية"
+    },
+    "code": "۳۶۰۲۸"
+  },
+  {
+    "id": 7,
+    "dateG": "2026-07-09",
+    "dateP": "۱۸ تیر ۱۴۰۵",
+    "time": "۱۶:۲۸",
+    "wave": "مرحله ۲",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "مرکز فرماندهی‌وکنترل و پایگاه هوایی الازرق",
+      "en": "Command-and-control center and Al Azraq Airbase",
+      "ar": "مركز القيادة والسيطرة وقاعدة الأزرق الجوية"
+    },
+    "weapon": {
+      "fa": "۱۰ فروند موشک بالستیک",
+      "en": "10 ballistic missiles",
+      "ar": "١٠ صواريخ باليستية"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام مرکز فرماندهی",
+      "en": "Claimed command center destroyed",
+      "ar": "ادعاء تدمير مركز القيادة"
+    },
+    "code": "۳۶۰۳۶"
+  },
+  {
+    "id": 8,
+    "dateG": "2026-07-12",
+    "dateP": "۲۱ تیر ۱۴۰۵",
+    "time": "۰۶:۲۲",
+    "wave": "مرحله ۱ (روز دوم درگیری)",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "princeHassan",
+    "target": {
+      "fa": "مرکز فرماندهی‌وکنترل و آشیانه پهپادهای MQ-9، پایگاه پرنس حسن",
+      "en": "Command-and-control center and MQ-9 drone hangars, Prince Hassan Airbase",
+      "ar": "مركز القيادة والسيطرة وحظائر طائرات MQ-9، قاعدة الأمير حسن"
+    },
+    "weapon": {
+      "fa": "موشک بالستیک",
+      "en": "Ballistic missiles",
+      "ar": "صواريخ باليستية"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام مرکز فرماندهی و آشیانه پهپاد",
+      "en": "Claimed command center and drone hangars destroyed",
+      "ar": "ادعاء تدمير مركز القيادة وحظائر الطائرات المسيّرة"
+    },
+    "code": "۳۶۰۷۷"
+  },
+  {
+    "id": 9,
+    "dateG": "2026-07-12",
+    "dateP": "۲۱ تیر ۱۴۰۵",
+    "time": "۰۷:۰۵",
+    "wave": "مرحله ۲",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "alUdeid",
+    "target": {
+      "fa": "مرکز تعمیر جنگنده‌ها و مرکز فرماندهی، پایگاه العدید",
+      "en": "Fighter maintenance center and command center, Al Udeid Airbase",
+      "ar": "مركز صيانة المقاتلات ومركز القيادة، قاعدة العديد"
+    },
+    "weapon": {
+      "fa": "موشک بالستیک",
+      "en": "Ballistic missiles",
+      "ar": "صواريخ باليستية"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام مراکز تعمیر و فرماندهی",
+      "en": "Claimed maintenance and command centers destroyed",
+      "ar": "ادعاء تدمير مراكز الصيانة والقيادة"
+    },
+    "code": "۳۶۰۷۸"
+  },
+  {
+    "id": 10,
+    "dateG": "2026-07-12",
+    "dateP": "۲۱ تیر ۱۴۰۵",
+    "time": "۰۷:۰۵",
+    "wave": "—",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "hormuz",
+    "target": {
+      "fa": "توقف دومین شناور متخلف در تنگه هرمز",
+      "en": "Second vessel disabled in the Strait of Hormuz",
+      "ar": "تعطيل ناقلة نفط ثانية «متجاوزة» في مضيق هرمز"
+    },
+    "weapon": {
+      "fa": "اصابت مستقیم",
+      "en": "Direct hit",
+      "ar": "إصابة مباشرة"
+    },
+    "outcome": {
+      "fa": "ادعای متوقف‌سازی شناور",
+      "en": "Claimed vessel disabled",
+      "ar": "ادعاء تعطيل الناقلة"
+    },
+    "code": "۳۶۰۷۸"
+  },
+  {
+    "id": 11,
+    "dateG": "2026-07-12",
+    "dateP": "۲۱ تیر ۱۴۰۵",
+    "time": "۰۷:۲۶",
+    "wave": "مرحله ۳",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "duqm",
+    "target": {
+      "fa": "پشتیبانی لجستیکی ناوها و سکوهای سوخت‌گیری، بندر دُقم",
+      "en": "Naval logistics support and refueling platforms, Duqm Port",
+      "ar": "الدعم اللوجستي للسفن ومنصات التزود بالوقود، ميناء الدقم"
+    },
+    "weapon": {
+      "fa": "حمله سنگین (نوع نامشخص)",
+      "en": "Heavy strike (type unspecified)",
+      "ar": "ضربة قوية (نوع غير محدد)"
+    },
+    "outcome": {
+      "fa": "ادعای درهم‌کوبیدن تأسیسات",
+      "en": "Claimed facilities destroyed",
+      "ar": "ادعاء تدمير المنشآت"
+    },
+    "code": "۳۶۰۷۹"
+  },
+  {
+    "id": 12,
+    "dateG": "2026-07-13",
+    "dateP": "۲۲ تیر ۱۴۰۵",
+    "time": "۱۴:۴۵",
+    "wave": "اطلاعیه ۱",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "princeHassan",
+    "target": {
+      "fa": "زاغه‌های موشکی و مخازن سوخت، پایگاه پرنس حسن",
+      "en": "Missile depots and fuel tanks, Prince Hassan Airbase",
+      "ar": "مستودعات الصواريخ وخزانات الوقود، قاعدة الأمير حسن"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "به آتش کشیده شد",
+      "en": "Set ablaze",
+      "ar": "أُضرمت فيها النيران"
+    },
+    "code": "۳۶۰۹۲"
+  },
+  {
+    "id": 13,
+    "dateG": "2026-07-13",
+    "dateP": "۲۲ تیر ۱۴۰۵",
+    "time": "۱۴:۴۶",
+    "wave": "اطلاعیه ۲ / مرحله ۲",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "sheikhIsa",
+    "target": {
+      "fa": "مرکز تعمیر بالگرد، آشیانه هواپیمای P-8 و مرکز کنترل پهپادی، شیخ عیسی",
+      "en": "Helicopter maintenance center, P-8 aircraft hangar, drone C2 center — Sheikh Isa",
+      "ar": "مركز صيانة المروحيات وحظيرة طائرات P-8 ومركز التحكم بالطائرات المسيّرة، الشيخ عيسى"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام",
+      "en": "Claimed destroyed",
+      "ar": "ادعاء التدمير"
+    },
+    "code": "۳۶۰۹۳"
+  },
+  {
+    "id": 14,
+    "dateG": "2026-07-13",
+    "dateP": "۲۲ تیر ۱۴۰۵",
+    "time": "۱۴:۴۶",
+    "wave": "اطلاعیه ۳ / مرحله ۳",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "مخازن سوخت و پدافند پاتریوت، علی‌السالم",
+      "en": "Fuel tanks and Patriot air-defense battery, Ali Al Salem",
+      "ar": "خزانات الوقود ومنظومة باتريوت للدفاع الجوي، علي السالم"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام کامل",
+      "en": "Claimed fully destroyed",
+      "ar": "ادعاء التدمير الكامل"
+    },
+    "code": "۳۶۰۹۴"
+  },
+  {
+    "id": 15,
+    "dateG": "2026-07-13",
+    "dateP": "۲۲ تیر ۱۴۰۵",
+    "time": "۱۴:۴۶",
+    "wave": "اطلاعیه ۳",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "ahmadAlJaber",
+    "target": {
+      "fa": "سامانه راداری راهبردی FPS، پایگاه احمد الجابر",
+      "en": "FPS long-range radar system, Ahmad Al Jaber base",
+      "ar": "منظومة رادار FPS بعيدة المدى، قاعدة أحمد الجابر"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام کامل",
+      "en": "Claimed fully destroyed",
+      "ar": "ادعاء التدمير الكامل"
+    },
+    "code": "۳۶۰۹۴"
+  },
+  {
+    "id": 16,
+    "dateG": "2026-07-13",
+    "dateP": "۲۲ تیر ۱۴۰۵",
+    "time": "۱۴:۴۶",
+    "wave": "اطلاعیه ۴ / مرحله ۴",
+    "force": "ground",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "سکوهای موشکی هایمارس و زاغه مهمات (کویت)",
+      "en": "HIMARS missile platforms and ammunition depot (Kuwait)",
+      "ar": "منصات صواريخ هيمارس ومستودع الذخيرة (الكويت)"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "به آتش کشیده و منهدم شد",
+      "en": "Set ablaze and destroyed",
+      "ar": "أُضرمت فيها النيران ودُمّرت"
+    },
+    "code": "۳۶۰۹۵"
+  },
+  {
+    "id": 17,
+    "dateG": "2026-07-13",
+    "dateP": "۲۲ تیر ۱۴۰۵",
+    "time": "۱۴:۴۷",
+    "wave": "اطلاعیه ۵ / مرحله ۵",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "jufair",
+    "target": {
+      "fa": "تأسیسات و زیرساخت ارتش آمریکا در جفیر",
+      "en": "US military facilities and infrastructure at Jufair",
+      "ar": "منشآت وبنية تحتية للقوات الأمريكية في الجفير"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای آتش‌سوزی گسترده",
+      "en": "Claimed widespread fires",
+      "ar": "ادعاء اندلاع حرائق واسعة"
+    },
+    "code": "۳۶۰۹۶"
+  },
+  {
+    "id": 18,
+    "dateG": "2026-07-13",
+    "dateP": "۲۲ تیر ۱۴۰۵",
+    "time": "۱۴:۴۷",
+    "wave": "اطلاعیه ۵",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "ghanam",
+    "target": {
+      "fa": "رادار دوربرد هوایی FPS و رادار کشف شناوری، عمان",
+      "en": "FPS long-range air radar and vessel-detection radar, Oman",
+      "ar": "رادار جوي بعيد المدى ورادار كشف السفن، عُمان"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام",
+      "en": "Claimed destroyed",
+      "ar": "ادعاء التدمير"
+    },
+    "code": "۳۶۰۹۶"
+  },
+  {
+    "id": 19,
+    "dateG": "2026-07-14",
+    "dateP": "۲۳ تیر ۱۴۰۵",
+    "time": "۰۴:۳۹",
+    "wave": "اطلاعیه ۶ (بدون شماره موج)",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "hormuz",
+    "target": {
+      "fa": "اصابت به دو فروند ابرنفتکش متخلف در تنگه هرمز",
+      "en": "Two \"trespassing\" supertankers struck in the Strait of Hormuz",
+      "ar": "إصابة ناقلتي نفط عملاقتين «متجاوزتين» في مضيق هرمز"
+    },
+    "weapon": {
+      "fa": "اصابت مستقیم / مین‌گذاری",
+      "en": "Direct hit / mining",
+      "ar": "إصابة مباشرة / تلغيم"
+    },
+    "outcome": {
+      "fa": "از کار افتادن دو شناور",
+      "en": "Two vessels disabled",
+      "ar": "تعطّل الناقلتين"
+    },
+    "code": "۳۶۱۰۷"
+  },
+  {
+    "id": 20,
+    "dateG": "2026-07-14",
+    "dateP": "۲۳ تیر ۱۴۰۵",
+    "time": "۰۵:۱۹",
+    "wave": "اطلاعیه ۷ / موج ۲",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "jufair",
+    "target": {
+      "fa": "انبار پشتیبانی تسلیحاتی، مرکز ارتباط ماهواره‌ای و اقامتگاه نیروها، جفیر",
+      "en": "Weapons supply depot, satellite comms center, personnel housing — Jufair",
+      "ar": "مستودع دعم تسليحي ومركز اتصالات فضائية وسكن للقوات، الجفير"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای درهم‌کوبیدن اهداف",
+      "en": "Claimed targets struck",
+      "ar": "ادعاء إصابة الأهداف"
+    },
+    "code": "۳۶۱۰۸"
+  },
+  {
+    "id": 21,
+    "dateG": "2026-07-14",
+    "dateP": "۲۳ تیر ۱۴۰۵",
+    "time": "۰۶:۵۶",
+    "wave": "اطلاعیه ۸ / موج ۲ (مرحله ۲)",
+    "force": "joint",
+    "source": "sepah",
+    "loc": "minaSalman",
+    "target": {
+      "fa": "مخازن سوخت ناوگان پنجم، رادار پاتریوت، رادار کنترل هوایی و C-RAM، بحرین",
+      "en": "5th Fleet fuel tanks, Patriot radar, air-control radar and C-RAM, Bahrain",
+      "ar": "خزانات وقود الأسطول الخامس، رادار باتريوت، رادار مراقبة جوية ومنظومة C-RAM، البحرين"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام کامل",
+      "en": "Claimed fully destroyed",
+      "ar": "ادعاء التدمير الكامل"
+    },
+    "code": "۳۶۱۰۹"
+  },
+  {
+    "id": 22,
+    "dateG": "2026-07-14",
+    "dateP": "۲۳ تیر ۱۴۰۵",
+    "time": "۰۸:۰۴",
+    "wave": "اطلاعیه ۹ / موج ۲ (مرحله ۳)",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "تأسیسات پایگاه هوایی تحت اشغال در اردن",
+      "en": "Facilities at the occupied airbase in Jordan",
+      "ar": "منشآت القاعدة الجوية الواقعة تحت الاحتلال في الأردن"
+    },
+    "weapon": {
+      "fa": "موشک بالستیک",
+      "en": "Ballistic missiles",
+      "ar": "صواريخ باليستية"
+    },
+    "outcome": {
+      "fa": "ادعای مجازات نیروهای مستقر",
+      "en": "Claimed punitive strike on deployed forces",
+      "ar": "ادعاء معاقبة القوات المتمركزة"
+    },
+    "code": "۳۶۱۱۰"
+  },
+  {
+    "id": 23,
+    "dateG": "2026-07-14",
+    "dateP": "۲۳ تیر ۱۴۰۵",
+    "time": "۲۲:۱۵",
+    "wave": "اطلاعیه ۱۰ / موج ۳",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "sheikhIsa",
+    "target": {
+      "fa": "سوله نگهداری تسلیحات و قطعات شناور/هواگرد، شیخ عیسی",
+      "en": "Weapons/aircraft-parts storage hangar, Sheikh Isa",
+      "ar": "حظيرة تخزين الأسلحة وقطع غيار الطائرات/السفن، الشيخ عيسى"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام",
+      "en": "Claimed destroyed",
+      "ar": "ادعاء التدمير"
+    },
+    "code": "۳۶۱۲۸"
+  },
+  {
+    "id": 24,
+    "dateG": "2026-07-14",
+    "dateP": "۲۳ تیر ۱۴۰۵",
+    "time": "۲۲:۱۵",
+    "wave": "اطلاعیه ۱۰ / موج ۳",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "رمپ استقرار پهپادهای MQ-9، علی‌السالم",
+      "en": "MQ-9 drone staging ramp, Ali Al Salem",
+      "ar": "منصة تجهيز طائرات MQ-9 المسيّرة، علي السالم"
+    },
+    "weapon": {
+      "fa": "پهپاد",
+      "en": "Drone strike",
+      "ar": "ضربة بطائرة مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام و آسیب به چند پهپاد",
+      "en": "Claimed destroyed, several drones damaged",
+      "ar": "ادعاء التدمير وإلحاق أضرار بعدة طائرات مسيّرة"
+    },
+    "code": "۳۶۱۲۸"
+  },
+  {
+    "id": 25,
+    "dateG": "2026-07-15",
+    "dateP": "۲۴ تیر ۱۴۰۵",
+    "time": "۰۵:۱۸",
+    "wave": "اطلاعیه ۱۱ / موج ۴",
+    "force": "ground",
+    "source": "sepah",
+    "loc": "minaAbdullah",
+    "target": {
+      "fa": "مرکز آماد و پشتیبانی KGL، میناء عبدالله",
+      "en": "KGL logistics support center, Mina Abdullah",
+      "ar": "مركز الدعم اللوجستي KGL، ميناء عبدالله"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "به آتش کشیده و منهدم شد",
+      "en": "Set ablaze and destroyed",
+      "ar": "أُضرم فيه الحريق ودُمّر"
+    },
+    "code": "۳۶۱۳۱"
+  },
+  {
+    "id": 26,
+    "dateG": "2026-07-15",
+    "dateP": "۲۴ تیر ۱۴۰۵",
+    "time": "۰۵:۳۵",
+    "wave": "اطلاعیه ۱۲ / موج ۵",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "jufair",
+    "target": {
+      "fa": "مرکز مدیریت NSI، مرکز فرماندهی، انبار قطعات و مخازن سوخت ناوگان پنجم",
+      "en": "NSI management center, command center, parts warehouse and 5th Fleet fuel tanks",
+      "ar": "مركز إدارة NSI ومركز القيادة ومستودع القطع وخزانات وقود الأسطول الخامس"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "درهم‌کوبیده و منهدم شد",
+      "en": "Claimed struck and destroyed",
+      "ar": "ادعاء الإصابة والتدمير"
+    },
+    "code": "۳۶۱۳۲"
+  },
+  {
+    "id": 27,
+    "dateG": "2026-07-15",
+    "dateP": "۲۴ تیر ۱۴۰۵",
+    "time": "۱۸:۱۸",
+    "wave": "موج ۶",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "آشیانه جنگنده‌های F-15 / F-16 / F-35 و پهپادهای راهبردی MQ-9",
+      "en": "F-15 / F-16 / F-35 hangars and strategic MQ-9 drones",
+      "ar": "حظائر مقاتلات F-15 وF-16 وF-35 وطائرات MQ-9 الاستراتيجية"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام کامل آشیانه‌ها",
+      "en": "Claimed hangars fully destroyed",
+      "ar": "ادعاء تدمير الحظائر بالكامل"
+    },
+    "code": "۳۶۱۴۵"
+  },
+  {
+    "id": 28,
+    "dateG": "2026-07-15",
+    "dateP": "۲۴ تیر ۱۴۰۵",
+    "time": "۱۸:۲۴",
+    "wave": "موج ۷",
+    "force": "ground",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "مرکز ارتباط ماهواره‌ای، رادار موشکی-هوایی، مجتمع پاتریوت، انبار پشتیبانی و پرتابگرهای هایمارس",
+      "en": "Satellite comms center, missile/air-defense radar, Patriot complex, supply depot, HIMARS launchers",
+      "ar": "مركز الاتصالات الفضائية ورادار الدفاع الصاروخي-الجوي ومجمع باتريوت ومستودع الدعم ومنصات هيمارس"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام و سرکوب اهداف",
+      "en": "Claimed targets destroyed and suppressed",
+      "ar": "ادعاء تدمير الأهداف وقمعها"
+    },
+    "code": "۳۶۱۴۷"
+  },
+  {
+    "id": 29,
+    "dateG": "2026-07-16",
+    "dateP": "۲۵ تیر ۱۴۰۵",
+    "time": "۰۶:۵۲",
+    "wave": "موج ۸",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "رادار پیش‌هشدار C-RAM و محل تجمع نیروها، علی‌السالم",
+      "en": "C-RAM early-warning radar and troop staging area, Ali Al Salem",
+      "ar": "رادار الإنذار المبكر C-RAM ونقطة تجمع للقوات، علي السالم"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد (عملیات ترکیبی)",
+      "en": "Missiles & drones (combined op)",
+      "ar": "صواريخ وطائرات مسيّرة (عملية مركبة)"
+    },
+    "outcome": {
+      "fa": "ادعای درهم‌کوبیدن اهداف",
+      "en": "Claimed targets struck",
+      "ar": "ادعاء إصابة الأهداف"
+    },
+    "code": "۳۶۱۵۲"
+  },
+  {
+    "id": 30,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۰۹:۰۱",
+    "wave": "موج ۹",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "مرکز ارتباط ماهواره‌ای و رادار پیش‌هشدار، علی‌السالم",
+      "en": "Satellite comms center and early-warning radar, Ali Al Salem",
+      "ar": "مركز الاتصالات الفضائية ورادار الإنذار المبكر، علي السالم"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام",
+      "en": "Claimed destroyed",
+      "ar": "ادعاء التدمير"
+    },
+    "code": "۳۶۱۶۰"
+  },
+  {
+    "id": 31,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۰۹:۰۱",
+    "wave": "موج ۹",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "shuaiba",
+    "target": {
+      "fa": "اسکله نظامیان آمریکایی، شعیبه",
+      "en": "US personnel pier, Shuaiba",
+      "ar": "رصيف تمركز الجنود الأمريكيين، الشعيبة"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "Missiles & drones",
+      "ar": "صواريخ وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام",
+      "en": "Claimed destroyed",
+      "ar": "ادعاء التدمير"
+    },
+    "code": "۳۶۱۶۰"
+  },
+  {
+    "id": 32,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۰۹:۰۱",
+    "wave": "موج ۱۰",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "sheikhIsa",
+    "target": {
+      "fa": "رادار پایش هوایی و ایستگاه پمپاژ سوخت، شیخ عیسی",
+      "en": "Air-surveillance radar and fuel pumping station, Sheikh Isa",
+      "ar": "رادار المراقبة الجوية ومحطة ضخ الوقود، الشيخ عيسى"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام کامل",
+      "en": "Claimed fully destroyed",
+      "ar": "ادعاء التدمير الكامل"
+    },
+    "code": "۳۶۱۶۱"
+  },
+  {
+    "id": 33,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۰۹:۰۱",
+    "wave": "موج ۱۱",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "tanf",
+    "target": {
+      "fa": "مرکز فرماندهی عملیات ویژه، رادار و بالگردهای عملیات ویژه، التنف",
+      "en": "Special-operations command center, radar and helicopters, Al-Tanf",
+      "ar": "مركز قيادة العمليات الخاصة والرادار والمروحيات، التنف"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام سامانه راداری و چند بالگرد",
+      "en": "Claimed radar system and several helicopters destroyed",
+      "ar": "ادعاء تدمير منظومة الرادار وعدة مروحيات"
+    },
+    "code": "۳۶۱۶۲"
+  },
+  {
+    "id": 34,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۰۹:۰۱",
+    "wave": "موج ۱۲ (تخمینی)",
+    "force": "ground",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "پایگاه دشمن در کویت (شرح مختصر)",
+      "en": "Enemy base in Kuwait (brief statement)",
+      "ar": "قاعدة العدو في الكويت (بيان مقتضب)"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "به آتش کشیده شد",
+      "en": "Set ablaze",
+      "ar": "أُضرمت فيها النيران"
+    },
+    "code": "۳۶۱۶۳"
+  },
+  {
+    "id": 35,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۰۹:۰۷",
+    "wave": "اطلاعیه ۲۱ / موج ۱۳",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "salamah",
+    "target": {
+      "fa": "رادار کنترل دریایی، صخره‌های سلامه",
+      "en": "Naval control radar, Salamah Rocks",
+      "ar": "رادار المراقبة البحرية، صخور سلامة"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام",
+      "en": "Claimed destroyed",
+      "ar": "ادعاء التدمير"
+    },
+    "code": "۳۶۱۶۴"
+  },
+  {
+    "id": 36,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۰۹:۰۷",
+    "wave": "اطلاعیه ۲۱ / موج ۱۳",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "ghanam",
+    "target": {
+      "fa": "رادار کنترل هوایی آمریکا، منطقه غنم",
+      "en": "US air-control radar, Ghanam area",
+      "ar": "رادار المراقبة الجوية الأمريكي، منطقة غنم"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام",
+      "en": "Claimed destroyed",
+      "ar": "ادعاء التدمير"
+    },
+    "code": "۳۶۱۶۴"
+  },
+  {
+    "id": 37,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۱۱:۵۱",
+    "wave": "اطلاعیه ۲۳ / موج ۱۵",
+    "force": "ground",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "سکو و موشک‌های هایمارس، محل استقرار نیرو و «ضدانقلاب مزدور»",
+      "en": "HIMARS platform/missiles, troop staging area and allied irregular positions",
+      "ar": "منصة وصواريخ هيمارس، ونقطة تمركز قوات ومواقع لقوى «معادية للثورة»"
+    },
+    "weapon": {
+      "fa": "پهپاد و موشک",
+      "en": "Drones & missiles",
+      "ar": "طائرات مسيّرة وصواريخ"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام و تلفات",
+      "en": "Claimed destroyed with casualties",
+      "ar": "ادعاء التدمير وسقوط قتلى"
+    },
+    "code": "۳۶۱۶۶"
+  },
+  {
+    "id": 38,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۱۱:۵۱",
+    "wave": "موج ۱۶",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "alUdeid",
+    "target": {
+      "fa": "سامانه راداری برد بلند و هواپیمای سوخت‌رسان راهبردی، العدید",
+      "en": "Long-range radar system and strategic refueling aircraft, Al Udeid",
+      "ar": "منظومة رادار بعيدة المدى وطائرة تزود بالوقود استراتيجية، العديد"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام کامل و آسیب جدی",
+      "en": "Claimed fully destroyed / seriously damaged",
+      "ar": "ادعاء التدمير الكامل وإلحاق أضرار جسيمة"
+    },
+    "code": "۳۶۱۶۶"
+  },
+  {
+    "id": 39,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۱۱:۵۱",
+    "wave": "موج ۱۷",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "sheikhIsa",
+    "target": {
+      "fa": "دپوی شناورهای بدون‌سرنشین (شمپاد)، شیخ عیسی",
+      "en": "Unmanned surface vessel (Shahed/\"Shampad\") depot, Sheikh Isa",
+      "ar": "مستودع الزوارق المسيّرة السطحية، الشيخ عيسى"
+    },
+    "weapon": {
+      "fa": "موشک بالستیک و پهپاد",
+      "en": "Ballistic missiles & drones",
+      "ar": "صواريخ باليستية وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای آتش‌سوزی گسترده",
+      "en": "Claimed widespread fires",
+      "ar": "ادعاء اندلاع حرائق واسعة"
+    },
+    "code": "۳۶۱۶۶"
+  },
+  {
+    "id": 40,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۱۱:۵۱",
+    "wave": "موج ۱۷",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "batelco",
+    "target": {
+      "fa": "مرکز اصلی هوش مصنوعی (باتلکو)، بحرین",
+      "en": "Main AI data center (Batelco), Bahrain",
+      "ar": "مركز الذكاء الاصطناعي الرئيسي (بتلكو)، البحرين"
+    },
+    "weapon": {
+      "fa": "موشک بالستیک و پهپاد",
+      "en": "Ballistic missiles & drones",
+      "ar": "صواريخ باليستية وطائرات مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای تخریب کامل",
+      "en": "Claimed fully destroyed",
+      "ar": "ادعاء التدمير الكامل"
+    },
+    "code": "۳۶۱۶۶"
+  },
+  {
+    "id": 41,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۱۱:۵۱",
+    "wave": "موج ۱۸",
+    "force": "ground",
+    "source": "sepah",
+    "loc": "arifjan",
+    "target": {
+      "fa": "مرکز پشتیبانی نیروی زمینی، عریفجان",
+      "en": "Ground-forces support center, Camp Arifjan",
+      "ar": "مركز دعم القوات البرية، معسكر عريفجان"
+    },
+    "weapon": {
+      "fa": "حمله ترکیبی زمینی",
+      "en": "Combined ground assault",
+      "ar": "هجوم بري مركب"
+    },
+    "outcome": {
+      "fa": "ادعای تلفات نیرو",
+      "en": "Claimed personnel casualties",
+      "ar": "ادعاء سقوط قتلى بين القوات"
+    },
+    "code": "۳۶۱۶۶"
+  },
+  {
+    "id": 42,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۱۱:۵۱",
+    "wave": "موج ۱۸",
+    "force": "ground",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "رادار پایگاه علی‌السالم",
+      "en": "Radar at Ali Al Salem base",
+      "ar": "رادار قاعدة علي السالم"
+    },
+    "weapon": {
+      "fa": "پهپاد",
+      "en": "Drone strike",
+      "ar": "ضربة بطائرة مسيّرة"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام رادار",
+      "en": "Claimed radar destroyed",
+      "ar": "ادعاء تدمير الرادار"
+    },
+    "code": "۳۶۱۶۶"
+  },
+  {
+    "id": 43,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۱۱:۵۱",
+    "wave": "موج ۱۹",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "alAhmadi",
+    "target": {
+      "fa": "اسکله پشتیبانی سوخت ناوگان آمریکا، بندر الاحمدی",
+      "en": "Fuel-supply pier for the US fleet, Al-Ahmadi Port",
+      "ar": "رصيف تزويد الأسطول الأمريكي بالوقود، ميناء الأحمدي"
+    },
+    "weapon": {
+      "fa": "پهپاد و موشک",
+      "en": "Drones & missiles",
+      "ar": "طائرات مسيّرة وصواريخ"
+    },
+    "outcome": {
+      "fa": "ادعای هدف قرارگیری",
+      "en": "Claimed targeted",
+      "ar": "ادعاء استهداف الرصيف"
+    },
+    "code": "۳۶۱۶۶"
+  },
+  {
+    "id": 44,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۱۱:۵۱",
+    "wave": "موج ۱۹",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "sheikhIsa",
+    "target": {
+      "fa": "محل تجمع پرنده‌های جنگی، شیخ عیسی",
+      "en": "Fighter-jet staging area, Sheikh Isa",
+      "ar": "نقطة تجمع المقاتلات الحربية، الشيخ عيسى"
+    },
+    "weapon": {
+      "fa": "پهپاد و موشک",
+      "en": "Drones & missiles",
+      "ar": "طائرات مسيّرة وصواريخ"
+    },
+    "outcome": {
+      "fa": "ادعای هدف قرارگیری",
+      "en": "Claimed targeted",
+      "ar": "ادعاء استهداف النقطة"
+    },
+    "code": "۳۶۱۶۶"
+  },
+  {
+    "id": 45,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۱۱:۵۱",
+    "wave": "موج ۱۹",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "kuwaitCity",
+    "target": {
+      "fa": "مرکز سیگنالی و مخابراتی آمریکا، کویت",
+      "en": "US signals/communications center, Kuwait",
+      "ar": "مركز الإشارة والاتصالات الأمريكي، الكويت"
+    },
+    "weapon": {
+      "fa": "نامشخص",
+      "en": "Unspecified",
+      "ar": "غير محدد"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام",
+      "en": "Claimed destroyed",
+      "ar": "ادعاء التدمير"
+    },
+    "code": "۳۶۱۶۶"
+  },
+  {
+    "id": 46,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "۱۱:۵۱",
+    "wave": "موج ۲۰",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "شیلترهای جنگنده و رمپ توقف بزرگ، الازرق",
+      "en": "Fighter shelters and large parking ramp, Al Azraq",
+      "ar": "ملاجئ المقاتلات ومنصة وقوف كبرى، الأزرق"
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد (همزمان)",
+      "en": "Missiles & drones (simultaneous)",
+      "ar": "صواريخ وطائرات مسيّرة (متزامنة)"
+    },
+    "outcome": {
+      "fa": "ادعای انهدام کامل ۲ جنگنده و ۳ هواگرد",
+      "en": "Claimed 2 fighters and 3 aircraft destroyed",
+      "ar": "ادعاء تدمير مقاتلتين وثلاث طائرات"
+    },
+    "code": "۳۶۱۶۶"
+  },
+  {
+    "id": 47,
+    "dateG": "2026-07-20",
+    "dateP": "۲۹ تیر ۱۴۰۵",
+    "time": "۰۴:۴۴",
+    "wave": "—",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "hormuz",
+    "target": {
+      "fa": "دو نفتکش متخلف، جنوب تنگه هرمز",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "انفجار (بدون اشاره به مکانیسم)",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "از حرکت باز ماندند",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۲۲"
+  },
+  {
+    "id": 48,
+    "dateG": "2026-07-20",
+    "dateP": "۲۹ تیر ۱۴۰۵",
+    "time": "۰۵:۰۴",
+    "wave": "موج ۲۱",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "aqaba",
+    "target": {
+      "fa": "هواپیماهای ترابری C17 و هواپیماهای فرماندهی‌کنترل P8، فرودگاه عقبه",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک بالستیک",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای خسارت سنگین",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۲۳"
+  },
+  {
+    "id": 49,
+    "dateG": "2026-07-20",
+    "dateP": "۲۹ تیر ۱۴۰۵",
+    "time": "۰۶:۵۱",
+    "wave": "موج ۲۲",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "رادار اخطار اولیه، سوله تجهیزات و قطعات هوایی و آشیانه پهپادهای MQ-9، علی‌السالم",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای انهدام رادار و آتش‌سوزی چند پهپاد",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۲۵"
+  },
+  {
+    "id": 50,
+    "dateG": "2026-07-20",
+    "dateP": "۲۹ تیر ۱۴۰۵",
+    "time": "۱۶:۳۹",
+    "wave": "موج ۲۳ / مرحله ۱",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "sakhir",
+    "target": {
+      "fa": "سوله‌های نگهداری و تعمیرات پهپادی واحدهای آمریکایی، فرودگاه الصخیر",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "حمله دریایی ترکیبی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای انهدام سوله‌ها",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۲۸"
+  },
+  {
+    "id": 51,
+    "dateG": "2026-07-20",
+    "dateP": "۲۹ تیر ۱۴۰۵",
+    "time": "۱۶:۳۹",
+    "wave": "موج ۲۳ / مرحله ۲",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "minaSalman",
+    "target": {
+      "fa": "سوله‌های آماده‌سازی شناورهای TF-59، بندر سلمان",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "حمله دریایی ترکیبی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای تخریب و خسارت به شناورها",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۲۸"
+  },
+  {
+    "id": 52,
+    "dateG": "2026-07-20",
+    "dateP": "۲۹ تیر ۱۴۰۵",
+    "time": "۱۶:۳۹",
+    "wave": "موج ۲۳ / مرحله ۳",
+    "force": "ground",
+    "source": "sepah",
+    "loc": "arifjan",
+    "target": {
+      "fa": "سوله‌های استقرار و پشتیبانی تکاوران دریایی ویژه، عریفجان",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "آتش‌افروزی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای انهدام کامل",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۲۸"
+  },
+  {
+    "id": 53,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "۰۴:۲۶",
+    "wave": "—",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "hormuz",
+    "target": {
+      "fa": "دو نفتکش متخلف دیگر، جنوب تنگه هرمز",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "انفجار",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "توقف شناورها با آتش‌سوزی گسترده",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۳۵"
+  },
+  {
+    "id": 54,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "۰۴:۳۲",
+    "wave": "موج ۲۴ / مرحله ۱",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "muharraq",
+    "target": {
+      "fa": "سامانه پدافندی و رادار آمریکایی، المحرق",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای تخریب کامل",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۳۶"
+  },
+  {
+    "id": 55,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "۰۴:۳۲",
+    "wave": "موج ۲۴",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "rifa",
+    "target": {
+      "fa": "سامانه پدافند هوایی پاتریوت، الرفاع",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "حمله همزمان موشکی و پهپادی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای نابودی کامل",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۳۶"
+  },
+  {
+    "id": 56,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "۰۵:۰۰",
+    "wave": "موج ۲۴ / مرحله ۲",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "kuwaitCity",
+    "target": {
+      "fa": "سایت راداری برد بلند، مرکز مخابراتی، سامانه دریافت ماهواره‌ای و رادار دفاع موشکی، کویت",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای انهدام",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۳۷"
+  },
+  {
+    "id": 57,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "۰۵:۰۷",
+    "wave": "موج ۲۴",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "ahmadAlJaber",
+    "target": {
+      "fa": "رادار هشدار اولیه، رادار دفاع موشکی، رادار FPS-117، پدافند پاتریوت و سامانه ارتباط ماهواره‌ای، احمد الجابر",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک و پهپاد",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای انهدام کامل",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۳۸"
+  },
+  {
+    "id": 58,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "۰۵:۰۷",
+    "wave": "موج ۲۴",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "آشیانه پهپادهای MQ-9، علی‌السالم",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای انهدام یا آسیب چند پهپاد",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۳۸"
+  },
+  {
+    "id": 59,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "۰۹:۰۰",
+    "wave": "موج ۲۴ (ادامه)",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "سامانه راداری دفاع موشکی و یک فروند اف-۱۵ داخل شیلتر، اردن",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای انهدام رادار و جنگنده",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۳۹"
+  },
+  {
+    "id": 60,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "۰۹:۲۵",
+    "wave": "—",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "awsBahrain",
+    "target": {
+      "fa": "زیرساخت مرکزی داده‌های آمازون (AWS)، بحرین",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک کروز",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای ویرانی کامل",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۴۰"
+  },
+  {
+    "id": 61,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "۰۹:۲۸",
+    "wave": "موج ۲۴ (ادامه)",
+    "force": "ground",
+    "source": "sepah",
+    "loc": "rukban",
+    "target": {
+      "fa": "مجتمع استقرار نیروهای زمینی آمریکا، منطقه الرکبان اردن",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "حمله زمینی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای کشته‌شدن تعدادی نیرو",
+      "en": "",
+      "ar": ""
+    },
+    "code": "۳۶۲۴۱"
+  },
+  {
+    "id": 62,
+    "dateG": "2026-07-09",
+    "dateP": "۱۸ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "ادامه حملات",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "سامانه پاتریوت ارتش آمریکا، کویت",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 63,
+    "dateG": "2026-07-09",
+    "dateP": "۱۸ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "ادامه حملات",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "alUdeid",
+    "target": {
+      "fa": "آنتن ماهواره‌ای (سایت اخطار اولیه)، قطر",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 64,
+    "dateG": "2026-07-09",
+    "dateP": "۱۸ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "ادامه حملات",
+    "force": "naval",
+    "source": "artesh",
+    "loc": "jufair",
+    "target": {
+      "fa": "مخازن سوخت ارتش آمریکا، بحرین",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 65,
+    "dateG": "2026-07-12",
+    "dateP": "۲۱ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "ادامه حملات",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "سامانه پاتریوت، انبار مهمات و سایت رادار، کویت",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 66,
+    "dateG": "2026-07-12",
+    "dateP": "۲۱ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "ادامه حملات",
+    "force": "naval",
+    "source": "artesh",
+    "loc": "jufair",
+    "target": {
+      "fa": "سامانه ارتباطی و سایت راداری، بحرین",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 67,
+    "dateG": "2026-07-13",
+    "dateP": "۲۲ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "—",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "kuwaitCity",
+    "target": {
+      "fa": "محل استقرار و پشتیبانی نیروهای آمریکایی، کویت",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 68,
+    "dateG": "2026-07-13",
+    "dateP": "۲۲ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "دفاع هوایی داخلی",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "bandarAbbas",
+    "target": {
+      "fa": "پهپاد متخاصم «لوکاس»",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک زمین‌به‌هوا",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "سرنگون شد",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 69,
+    "dateG": "2026-07-14",
+    "dateP": "۲۳ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "—",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "kuwaitCity",
+    "target": {
+      "fa": "سامانه‌های ارتباطی، مخازن سوخت، پاتریوت، برج مراقبت و انبار مهمات، کویت",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 70,
+    "dateG": "2026-07-14",
+    "dateP": "۲۳ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "—",
+    "force": "naval",
+    "source": "artesh",
+    "loc": "northIndianOcean",
+    "target": {
+      "fa": "شناور متخاصم دشمن آمریکایی",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک کروز ساحل‌به‌دریا",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 71,
+    "dateG": "2026-07-15",
+    "dateP": "۲۴ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۷ عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "محل استقرار جنگنده‌های اف-۱۸، ساختمان اسکان و سوله تجهیزات، الازرق",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 72,
+    "dateG": "2026-07-15",
+    "dateP": "۲۴ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۸ عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "محل استقرار جنگنده‌های اف-۱۸ و سوله‌های تجهیزاتی (بار دوم)، الازرق",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 73,
+    "dateG": "2026-07-16",
+    "dateP": "۲۵ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۹ عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "سایت راداری ثابت، سامانه ارتباط و مخازن سوخت، الازرق",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 74,
+    "dateG": "2026-07-16",
+    "dateP": "۲۵ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۰ عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "سامانه‌های راداری، پدافند پاتریوت و مخازن سوخت، علی‌السالم",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی آرش",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 75,
+    "dateG": "2026-07-16",
+    "dateP": "۲۵ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۰ عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "sheikhIsa",
+    "target": {
+      "fa": "رادارهای سوپرهاوک، تاسیسات و سامانه‌های پاتریوت، شیخ عیسی",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ادعای آسیب جدی",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 76,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۱ عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "sakhir",
+    "target": {
+      "fa": "محل استقرار هواپیماهای شناسایی P8 و بالگردها، الصخیر",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی آرش",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 77,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۲ عملیات صاعقه",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "kuwaitCity",
+    "target": {
+      "fa": "مراکز پشتیبانی لجستیکی نیروهای آمریکایی، کویت",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی آرش",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 78,
+    "dateG": "2026-07-18",
+    "dateP": "۲۷ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۳ عملیات صاعقه",
+    "force": "naval",
+    "source": "artesh",
+    "loc": "northIndianOcean",
+    "target": {
+      "fa": "شناور متخاصم دشمن، شمال اقیانوس هند",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک کروز ساحل‌به‌دریا",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 79,
+    "dateG": "2026-07-18",
+    "dateP": "۲۷ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۴ عملیات صاعقه",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "udairi",
+    "target": {
+      "fa": "انبار مهمات، اردوگاه العدیری",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 80,
+    "dateG": "2026-07-18",
+    "dateP": "۲۷ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۴ عملیات صاعقه",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "ساختمان‌های ستاد، انبارهای مهمات و چند پل ارتباطی، علی‌السالم",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 81,
+    "dateG": "2026-07-18",
+    "dateP": "۲۷ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۴ عملیات صاعقه",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "مخازن سوخت، الازرق",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 82,
+    "dateG": "2026-07-18",
+    "dateP": "۲۷ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۵ عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "sheikhIsa",
+    "target": {
+      "fa": "آشیانه و پارکینگ هواپیماها، مخازن سوخت و چند پل ارتباطی، شیخ عیسی",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 83,
+    "dateG": "2026-07-19",
+    "dateP": "۲۸ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۶ عملیات صاعقه",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "udairi",
+    "target": {
+      "fa": "انبار مهمات، اردوگاه العدیری",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 84,
+    "dateG": "2026-07-19",
+    "dateP": "۲۸ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۶ عملیات صاعقه",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "رادار پاتریوت و رادار هوایی، علی‌السالم",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 85,
+    "dateG": "2026-07-19",
+    "dateP": "۲۸ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۷ عملیات صاعقه",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "udairi",
+    "target": {
+      "fa": "انبار مهمات (بار دوم)، اردوگاه العدیری",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 86,
+    "dateG": "2026-07-19",
+    "dateP": "۲۸ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۷ عملیات صاعقه",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "سوله‌های تجهیزات و نفرات (بار دوم)، علی‌السالم",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 87,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۸ عملیات صاعقه",
+    "force": "ground",
+    "source": "artesh",
+    "loc": "arifjan",
+    "target": {
+      "fa": "سامانه‌های موشکی هایمارس، عریفجان",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک زمین‌به‌زمین",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 88,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۹ عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "arifjan",
+    "target": {
+      "fa": "ساختمان‌های اداری و آنتن‌های جهت‌یاب، عریفجان",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 89,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۹ عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "udairi",
+    "target": {
+      "fa": "پارکینگ گروهی بالگردها، اردوگاه العدیری",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 90,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۱۹ عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "ahmadAlJaber",
+    "target": {
+      "fa": "ساختمان استقرار نیروها، احمد الجابر",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 91,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "مرحله ۲۰ عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "sheikhIsa",
+    "target": {
+      "fa": "محل اسکان و استقرار نیروها، شیخ عیسی",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد انهدامی آرش (چند مرحله)",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفت",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  }
+]

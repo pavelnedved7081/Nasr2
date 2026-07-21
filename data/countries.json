@@ -1,0 +1,50 @@
+{
+  "jordan": {
+    "label_fa": "اردن",
+    "label_en": "Jordan",
+    "label_ar": "الأردن",
+    "color": "#c9503f"
+  },
+  "kuwait": {
+    "label_fa": "کویت",
+    "label_en": "Kuwait",
+    "label_ar": "الكويت",
+    "color": "#d99a3f"
+  },
+  "bahrain": {
+    "label_fa": "بحرین",
+    "label_en": "Bahrain",
+    "label_ar": "البحرين",
+    "color": "#3a9188"
+  },
+  "qatar": {
+    "label_fa": "قطر",
+    "label_en": "Qatar",
+    "label_ar": "قطر",
+    "color": "#8b6fb0"
+  },
+  "oman": {
+    "label_fa": "عمان",
+    "label_en": "Oman",
+    "label_ar": "عُمان",
+    "color": "#4d80c9"
+  },
+  "syria": {
+    "label_fa": "سوریه",
+    "label_en": "Syria",
+    "label_ar": "سوريا",
+    "color": "#b8683f"
+  },
+  "hormuz": {
+    "label_fa": "تنگه هرمز / دریای عمان",
+    "label_en": "Strait of Hormuz",
+    "label_ar": "مضيق هرمز",
+    "color": "#5c6b7d"
+  },
+  "iran": {
+    "label_fa": "ایران (پدافند داخلی)",
+    "label_en": "Iran (domestic air defense)",
+    "label_ar": "إيران (الدفاع الجوي الداخلي)",
+    "color": "#4f9d6e"
+  }
+}
