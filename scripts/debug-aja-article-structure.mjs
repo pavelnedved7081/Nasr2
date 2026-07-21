@@ -45,8 +45,10 @@ const CLOSING_CANDIDATES = [
   'دیدگاه کاربران',
   'اخبار مشابه',
 ];
+// Sigma Portal (aja.ir's CMS) wraps the article body in a plain <span class="Content"> rather
+// than a div/section/article, so the tag-name allowlist here is intentionally broad.
 const CONTAINER_RE =
-  /<(div|section|article)\b[^>]*(?:class|id)\s*=\s*["'][^"']*(?:content|body|matn|متن|article|story|news[-_]?text|desc|PageContent|MainContent)[^"']*["'][^>]*>/gi;
+  /<(div|section|article|span|td)\b[^>]*(?:class|id)\s*=\s*["'][^"']*(?:content|body|matn|متن|article|story|news[-_]?text|desc|PageContent|MainContent)[^"']*["'][^>]*>/gi;
 
 function stripHtmlGeneric(html) {
   return html

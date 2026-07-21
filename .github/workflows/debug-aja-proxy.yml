@@ -32,9 +32,3 @@ jobs:
 
       - name: Fetch aja.ir through the Cloudflare Worker proxy
         run: node scripts/debug-aja-proxy.mjs "${{ inputs.workerUrl }}" "${{ inputs.targetUrl }}" "${{ inputs.proxySecret }}"
-
-      - name: TEMP - install dependencies
-        run: npm install
-
-      - name: TEMP - run article-structure investigation script
-        run: node scripts/debug-aja-article-structure.mjs "${{ inputs.proxySecret }}" "${{ inputs.workerUrl }}"
