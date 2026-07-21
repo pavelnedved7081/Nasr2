@@ -1,0 +1,28 @@
+name: Debug article text
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'Sepah News article URL to fetch'
+        required: true
+        type: string
+        default: "https://sepahnews.ir/fa/news/36167/سامانه-راداری-برد-بلند-و-چندین-فروند-هواپیمای-راهبردی-سوخت‌رسان-آمریکا-منهدم-گردید"
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch and print article text
+        run: node scripts/debug-article-text.mjs "${{ inputs.url }}"
