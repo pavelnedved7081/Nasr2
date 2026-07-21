@@ -286,12 +286,14 @@ export function validateExtraction(ex, locations) {
   return { ok: errors.length === 0, errors };
 }
 
+/** Opens a needs-review GitHub Issue for a pending item. Returns the issue number, or null if
+ *  issue creation was skipped (no token) or failed. */
 async function openPendingReviewIssue(item, extraction, errors) {
   const token = process.env.GITHUB_TOKEN;
   const repoSlug = process.env.GITHUB_REPOSITORY;
   if (!token || !repoSlug) {
     console.warn('GITHUB_TOKEN/GITHUB_REPOSITORY not set; skipping issue creation');
-    return;
+    return null;
   }
   const body = [
     `**RSS item title:** ${item.title || '(none)'}`,
@@ -323,6 +325,42 @@ async function openPendingReviewIssue(item, extraction, errors) {
   });
   if (!res.ok) {
     console.warn(`Failed to open GitHub issue: ${res.status} ${await res.text()}`);
+    return null;
+  }
+  const created = await res.json();
+  return created?.number ?? null;
+}
+
+/** Closes a previously-opened pending-review Issue (with a comment) once the item has resolved
+ *  on a later retry. Best-effort: warns and returns on failure rather than throwing, so it can
+ *  never take down a run that otherwise succeeded. */
+async function closePendingReviewIssue(issueNumber, comment) {
+  const token = process.env.GITHUB_TOKEN;
+  const repoSlug = process.env.GITHUB_REPOSITORY;
+  if (!token || !repoSlug || !issueNumber) return;
+
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json',
+    'Accept': 'application/vnd.github+json',
+  };
+
+  const commentRes = await fetch(`https://api.github.com/repos/${repoSlug}/issues/${issueNumber}/comments`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ body: comment }),
+  });
+  if (!commentRes.ok) {
+    console.warn(`Failed to comment on issue #${issueNumber}: ${commentRes.status} ${await commentRes.text()}`);
+  }
+
+  const closeRes = await fetch(`https://api.github.com/repos/${repoSlug}/issues/${issueNumber}`, {
+    method: 'PATCH',
+    headers,
+    body: JSON.stringify({ state: 'closed', state_reason: 'completed' }),
+  });
+  if (!closeRes.ok) {
+    console.warn(`Failed to close issue #${issueNumber}: ${closeRes.status} ${await closeRes.text()}`);
   }
 }
 
@@ -376,6 +414,14 @@ function computeMeta(events) {
  * RSS <pubDate>, dateP is derived from dateG, and code is parsed out of the item's <link>. The
  * model only ever supplies wave/force/source/loc/loc_raw_text/target/weapon/outcome/time, from
  * the full article page text (not just the terse RSS <description>).
+ *
+ * A GUID is only added to `seenSet`/`newGuids` (and thus to seen-guids.json) once it's fully
+ * resolved: added to events, or confidently classified irrelevant. Items routed to
+ * pending-review are never marked seen, so they're retried from scratch on every subsequent
+ * run until they succeed or a human resolves them by hand. Pending items already present in
+ * `pendingReview` (from an earlier run) are matched by guid and updated in place rather than
+ * appended again, and no second GitHub Issue is opened for them; the existing `issue_number` is
+ * carried over so a later success can close it.
  */
 export async function processItems(items, {
   locations,
@@ -386,6 +432,7 @@ export async function processItems(items, {
   nextId,
   extractEventFn = extractEvent,
   openPendingReviewIssueFn = openPendingReviewIssue,
+  closePendingReviewIssueFn = closePendingReviewIssue,
   fetchArticleTextFn = fetchArticleText,
   pubDateToDateGFn = pubDateToDateG,
   gregorianToJalaliFn = gregorianToJalali,
@@ -394,7 +441,39 @@ export async function processItems(items, {
   const newGuids = [];
   let newEventsCount = 0;
   let pendingCount = 0;
+  let resolvedCount = 0;
   let id = nextId;
+
+  async function routeToPending(item, guid, extraction, errors) {
+    const existingIdx = pendingReview.findIndex((p) => p.guid === guid);
+    if (existingIdx !== -1) {
+      // Already flagged in a previous run: refresh the record but don't open a duplicate Issue.
+      const existing = pendingReview[existingIdx];
+      pendingReview[existingIdx] = {
+        ...existing,
+        raw_extraction: extraction ? { ...extraction, __ok: undefined } : null,
+        errors,
+        last_checked_at: new Date().toISOString(),
+      };
+    } else {
+      let issueNumber = null;
+      try {
+        issueNumber = await openPendingReviewIssueFn(item, extraction, errors);
+      } catch (err) {
+        console.warn(`sync-rss: failed to open pending-review issue (guid=${guid}): ${err.message}`);
+      }
+      pendingReview.push({
+        title: item.title || '',
+        link: item.link || '',
+        guid,
+        raw_extraction: extraction ? { ...extraction, __ok: undefined } : null,
+        errors,
+        added_at: new Date().toISOString(),
+        issue_number: issueNumber ?? null,
+      });
+    }
+    pendingCount++;
+  }
 
   for (const item of items) {
     const guid = itemGuid(item);
@@ -426,18 +505,16 @@ export async function processItems(items, {
       }
 
       if (!extraction || !extraction.__ok) {
-        pendingReview.push({
-          title: item.title || '',
-          link: item.link || '',
-          guid,
-          raw_extraction: extraction ? { ...extraction, __ok: undefined } : null,
-          errors,
-          added_at: new Date().toISOString(),
-        });
-        await openPendingReviewIssueFn(item, extraction, errors);
-        pendingCount++;
-        newGuids.push(guid);
+        await routeToPending(item, guid, extraction, errors);
         continue;
+      }
+
+      const existingIdx = pendingReview.findIndex((p) => p.guid === guid);
+      let resolvedIssueNumber = null;
+      if (existingIdx !== -1) {
+        resolvedIssueNumber = pendingReview[existingIdx].issue_number;
+        pendingReview.splice(existingIdx, 1);
+        resolvedCount++;
       }
 
       events.push({
@@ -456,22 +533,17 @@ export async function processItems(items, {
       });
       newEventsCount++;
       newGuids.push(guid);
+
+      if (resolvedIssueNumber) {
+        await closePendingReviewIssueFn(resolvedIssueNumber, 'Resolved automatically on retry.');
+      }
     } catch (err) {
       console.error(`sync-rss: unexpected error processing item (guid=${guid}):`, err);
-      pendingReview.push({
-        title: item.title || '',
-        link: item.link || '',
-        guid,
-        raw_extraction: null,
-        errors: [`unexpected error: ${err.message}`],
-        added_at: new Date().toISOString(),
-      });
-      pendingCount++;
-      newGuids.push(guid);
+      await routeToPending(item, guid, null, [`unexpected error: ${err.message}`]);
     }
   }
 
-  return { newGuids, newEventsCount, pendingCount };
+  return { newGuids, newEventsCount, pendingCount, resolvedCount };
 }
 
 export async function main({ dataDir = DATA } = {}) {
@@ -492,7 +564,7 @@ export async function main({ dataDir = DATA } = {}) {
   const systemPrompt = buildSystemPrompt(locations);
   const nextId = events.reduce((max, e) => Math.max(max, e.id), 0) + 1;
 
-  const { newGuids, newEventsCount, pendingCount } = await processItems(items, {
+  const { newGuids, newEventsCount, pendingCount, resolvedCount } = await processItems(items, {
     locations, events, pendingReview, seenSet, systemPrompt, nextId,
   });
 
@@ -503,15 +575,15 @@ export async function main({ dataDir = DATA } = {}) {
     await writeJson(dataDir, 'events.json', events);
     await writeJson(dataDir, 'meta.json', computeMeta(events));
   }
-  if (pendingCount > 0) {
+  if (pendingCount > 0 || resolvedCount > 0) {
     await writeJson(dataDir, 'pending-review.json', pendingReview);
   }
 
-  console.log(`Processed ${items.length} RSS items: ${newEventsCount} new events, ${pendingCount} pending review, ${newGuids.length - newEventsCount - pendingCount} irrelevant.`);
+  console.log(`Processed ${items.length} RSS items: ${newEventsCount} new events (${resolvedCount} resolved from pending), ${pendingCount} pending review, ${newGuids.length - newEventsCount} irrelevant.`);
 
   const outFile = process.env.GITHUB_OUTPUT;
   if (outFile) {
-    await fs.appendFile(outFile, `new_events_count=${newEventsCount}\npending_count=${pendingCount}\n`);
+    await fs.appendFile(outFile, `new_events_count=${newEventsCount}\npending_count=${pendingCount}\nresolved_count=${resolvedCount}\n`);
   }
 }
 

@@ -44,12 +44,20 @@ Sa'eqeh.
    to `/data/pending-review.json` (with the raw item title/link and the
    model's partial extraction) instead of `events.json`, and a GitHub Issue
    titled `Pending review: <item title>` labeled `needs-review` is opened so
-   a human can place it by hand.
+   a human can place it by hand. The issue number is stored on the pending
+   entry (`issue_number`) so later runs can find it.
 8. Recomputes `/data/meta.json` (date ranges + `last_synced`) whenever new
    events were added.
-9. Updates `/data/seen-guids.json` with every item processed this run
-   (accepted, pending, and irrelevant alike), so nothing is re-fetched or
-   re-flagged on the next run.
+9. Updates `/data/seen-guids.json` only with items that were **fully
+   resolved** this run — added to `events.json`, or confidently classified
+   irrelevant by the keyword filter. Items routed to `pending-review.json`
+   are deliberately *not* marked seen, so they're retried from scratch on
+   every subsequent run until they validate or a human resolves them by
+   hand. An item already present in `pending-review.json` from an earlier
+   run is matched by guid: if it fails again, its entry is refreshed in
+   place (no second Issue is opened); if it now succeeds, it's moved into
+   `events.json`, its guid is added to `seen-guids.json`, and its Issue is
+   closed with a "Resolved automatically on retry." comment.
 
 ## Schedule
 
