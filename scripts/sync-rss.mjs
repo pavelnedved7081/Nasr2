@@ -388,11 +388,24 @@ function extractBraceSubstring(text) {
 }
 
 /**
+ * Last-resort repair for JS-object-literal-style output (e.g. {wave: "24", force: "aerospace"}) —
+ * valid JS syntax but invalid JSON, since its keys aren't quoted. Quotes any identifier-like token
+ * that sits in a key position (immediately after "{" or "," and immediately before ":") and isn't
+ * already quoted; an already-quoted key's opening quote means the identifier pattern itself won't
+ * match there, so real JSON is left untouched.
+ */
+function quoteBareKeys(text) {
+  return text.replace(/([{,]\s*)([A-Za-z_$][A-Za-z0-9_$]*)(\s*:)/g, '$1"$2"$3');
+}
+
+/**
  * Parses a model's JSON response, tolerating common wrapping: a ```/```json code fence, and/or
  * prose before or after the JSON object (e.g. "We need to..." followed by the object). Tries the
  * raw content first, then the fence-stripped version, then the substring between the first "{"
- * and the last "}" (of both the raw and fence-stripped text). If every attempt fails, throws the
- * error from the last attempt — a genuine extraction failure that should route to pending-review.
+ * and the last "}" (of both the raw and fence-stripped text). If all of those fail, makes one more
+ * last-resort pass over the same candidates with quoteBareKeys() applied, to recover JS-object-
+ * literal-style output with unquoted keys. If every attempt fails, throws the error from the last
+ * attempt — a genuine extraction failure that should route to pending-review.
  */
 export function parseModelJson(content) {
   const candidates = [content];
@@ -416,6 +429,15 @@ export function parseModelJson(content) {
       lastErr = err;
     }
   }
+
+  for (const candidate of candidates) {
+    try {
+      return JSON.parse(quoteBareKeys(candidate));
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+
   throw lastErr;
 }
 
@@ -635,12 +657,43 @@ function computeMeta(events) {
   };
 }
 
+function buildEventRecord(id, extraction) {
+  return {
+    id,
+    dateG: extraction.dateG,
+    dateP: extraction.dateP,
+    time: extraction.time || '',
+    wave: extraction.wave,
+    force: extraction.force,
+    source: extraction.source,
+    loc: extraction.loc,
+    target: { fa: extraction.target, en: '', ar: '' },
+    weapon: { fa: extraction.weapon, en: '', ar: '' },
+    outcome: { fa: extraction.outcome, en: '', ar: '' },
+    code: extraction.code || '',
+  };
+}
+
 /**
- * Processes RSS items one at a time, appending to `events` or `pendingReview` in place.
- * Each item is isolated in its own try/catch so one bad extraction (unparseable/missing
+ * Processes pending-review entries (retried directly by their own stored `link`) and fresh RSS
+ * items, appending to `events` or `pendingReview` in place.
+ *
+ * Runs in two phases:
+ *  1. Every entry currently in `pendingReview` is retried directly, using its own stored `link`
+ *     (and `pubDate`, captured when it was first flagged) — independent of whether it still
+ *     appears in the current RSS fetch. This is what lets a pending item recover even after it
+ *     has aged out of the feed's ~100-item window, which the fresh-feed pass below can never
+ *     reach again on its own.
+ *  2. The fresh RSS feed is processed as before. An item whose guid was already resolved in
+ *     phase 1 is skipped here (it's already in `events`; reprocessing it would create a
+ *     duplicate). An item that's still pending after phase 1 (e.g. phase 1 failed on stale
+ *     stored data) is *not* skipped — if it's still within the feed's window, this fresh-item
+ *     pass gets another chance at it with up-to-date data, same as before this fix.
+ *
+ * Each item/entry is isolated in its own try/catch so one bad extraction (unparseable/missing
  * pubDate, a failed article-page fetch, malformed JSON, an unexpected throw anywhere in the
- * pipeline) can't abort the run — it's logged and routed to pending-review instead, and the
- * loop moves on.
+ * pipeline) can't abort the run — it's logged and routed to pending-review instead, and
+ * processing moves on.
  *
  * date/code are derived independently rather than asked of the model: dateG comes from the
  * RSS <pubDate>, dateP is derived from dateG, and code is parsed out of the item's <link>. The
@@ -649,11 +702,11 @@ function computeMeta(events) {
  *
  * A GUID is only added to `seenSet`/`newGuids` (and thus to seen-guids.json) once it's fully
  * resolved: added to events, or confidently classified irrelevant. Items routed to
- * pending-review are never marked seen, so they're retried from scratch on every subsequent
- * run until they succeed or a human resolves them by hand. Pending items already present in
- * `pendingReview` (from an earlier run) are matched by guid and updated in place rather than
- * appended again, and no second GitHub Issue is opened for them; the existing `issue_number` is
- * carried over so a later success can close it.
+ * pending-review are never marked seen, so they're retried on every subsequent run until they
+ * succeed or a human resolves them by hand. Pending items already present in `pendingReview`
+ * (from an earlier run) are matched by guid and updated in place rather than appended again,
+ * and no second GitHub Issue is opened for them; the existing `issue_number` is carried over so
+ * a later success can close it.
  */
 export async function processItems(items, {
   locations,
@@ -693,6 +746,9 @@ export async function processItems(items, {
       const existing = pendingReview[existingIdx];
       pendingReview[existingIdx] = {
         ...existing,
+        title: item.title || existing.title || '',
+        link: item.link || existing.link || '',
+        pubDate: item.pubDate || existing.pubDate || null,
         raw_extraction: extraction ? { ...extraction, __ok: undefined } : null,
         errors,
         ...extra,
@@ -709,6 +765,7 @@ export async function processItems(items, {
         title: item.title || '',
         link: item.link || '',
         guid,
+        pubDate: item.pubDate || null,
         raw_extraction: extraction ? { ...extraction, __ok: undefined } : null,
         errors,
         ...extra,
@@ -719,9 +776,84 @@ export async function processItems(items, {
     pendingCount++;
   }
 
+  /** Runs fetch → model extraction → location resolution → validation for one item. Never throws:
+   *  any failure is captured into `errors` and reported back so the caller can route to pending. */
+  async function attemptExtraction(item) {
+    let extraction = null;
+    let errors = [];
+    let locInfo = null;
+    try {
+      const dateG = pubDateToDateGFn(item.pubDate);
+      if (!dateG) throw new Error(`missing/unparseable pubDate: "${item.pubDate ?? ''}"`);
+      const dateP = gregorianToJalaliFn(dateG);
+      const code = extractCodeFromLinkFn(item.link);
+
+      const articleText = await fetchArticleTextFn(item.link);
+
+      extraction = await extractEventFn(item, systemPrompt, articleText);
+      extraction.dateG = dateG;
+      extraction.dateP = dateP;
+      extraction.code = code;
+
+      locInfo = resolveLocationFn(extraction.loc, extraction.loc_raw_text, locations, countries);
+      extraction.loc = locInfo.resolvedLoc;
+
+      ({ ok: extraction.__ok, errors } = validateExtraction(extraction, locations));
+    } catch (err) {
+      errors = [`extraction failed: ${err.message}`];
+    }
+    return { extraction, errors, locInfo };
+  }
+
+  /** Attempts extraction for one item/guid and routes the result to events or pending-review.
+   *  Returns true if the item resolved into `events`. */
+  async function tryResolveOrRoute(item, guid) {
+    try {
+      const { extraction, errors, locInfo } = await attemptExtraction(item);
+
+      if (!extraction || !extraction.__ok) {
+        await routeToPending(item, guid, extraction, errors, locInfo);
+        return false;
+      }
+
+      const existingIdx = pendingReview.findIndex((p) => p.guid === guid);
+      let resolvedIssueNumber = null;
+      if (existingIdx !== -1) {
+        resolvedIssueNumber = pendingReview[existingIdx].issue_number;
+        pendingReview.splice(existingIdx, 1);
+        resolvedCount++;
+      }
+
+      events.push(buildEventRecord(id++, extraction));
+      newEventsCount++;
+      newGuids.push(guid);
+
+      if (resolvedIssueNumber) {
+        await closePendingReviewIssueFn(resolvedIssueNumber, 'Resolved automatically on retry.');
+      }
+      return true;
+    } catch (err) {
+      console.error(`sync-rss: unexpected error processing item (guid=${guid}):`, err);
+      await routeToPending(item, guid, null, [`unexpected error: ${err.message}`]);
+      return false;
+    }
+  }
+
+  // Phase 1: retry every pending-review entry directly by its own stored link/pubDate, before
+  // touching the fresh feed at all — see the function-level doc comment above.
+  const resolvedThisRun = new Set();
+  for (const pending of [...pendingReview]) {
+    const guid = pending.guid;
+    if (!guid) continue;
+    const pseudoItem = { guid, link: pending.link, title: pending.title, pubDate: pending.pubDate ?? null };
+    const resolved = await tryResolveOrRoute(pseudoItem, guid);
+    if (resolved) resolvedThisRun.add(guid);
+  }
+
+  // Phase 2: process the fresh RSS feed as before.
   for (const item of items) {
     const guid = itemGuid(item);
-    if (!guid || seenSet.has(guid)) continue;
+    if (!guid || seenSet.has(guid) || resolvedThisRun.has(guid)) continue;
 
     if (!isRelevant(item)) {
       // A previously-pending item can be reclassified as irrelevant once a filter change (e.g. the
@@ -741,68 +873,7 @@ export async function processItems(items, {
       continue;
     }
 
-    try {
-      let extraction = null;
-      let errors = [];
-      let locInfo = null;
-      try {
-        const dateG = pubDateToDateGFn(item.pubDate);
-        if (!dateG) throw new Error(`missing/unparseable pubDate: "${item.pubDate ?? ''}"`);
-        const dateP = gregorianToJalaliFn(dateG);
-        const code = extractCodeFromLinkFn(item.link);
-
-        const articleText = await fetchArticleTextFn(item.link);
-
-        extraction = await extractEventFn(item, systemPrompt, articleText);
-        extraction.dateG = dateG;
-        extraction.dateP = dateP;
-        extraction.code = code;
-
-        locInfo = resolveLocationFn(extraction.loc, extraction.loc_raw_text, locations, countries);
-        extraction.loc = locInfo.resolvedLoc;
-
-        ({ ok: extraction.__ok, errors } = validateExtraction(extraction, locations));
-      } catch (err) {
-        errors = [`extraction failed: ${err.message}`];
-      }
-
-      if (!extraction || !extraction.__ok) {
-        await routeToPending(item, guid, extraction, errors, locInfo);
-        continue;
-      }
-
-      const existingIdx = pendingReview.findIndex((p) => p.guid === guid);
-      let resolvedIssueNumber = null;
-      if (existingIdx !== -1) {
-        resolvedIssueNumber = pendingReview[existingIdx].issue_number;
-        pendingReview.splice(existingIdx, 1);
-        resolvedCount++;
-      }
-
-      events.push({
-        id: id++,
-        dateG: extraction.dateG,
-        dateP: extraction.dateP,
-        time: extraction.time || '',
-        wave: extraction.wave,
-        force: extraction.force,
-        source: extraction.source,
-        loc: extraction.loc,
-        target: { fa: extraction.target, en: '', ar: '' },
-        weapon: { fa: extraction.weapon, en: '', ar: '' },
-        outcome: { fa: extraction.outcome, en: '', ar: '' },
-        code: extraction.code || '',
-      });
-      newEventsCount++;
-      newGuids.push(guid);
-
-      if (resolvedIssueNumber) {
-        await closePendingReviewIssueFn(resolvedIssueNumber, 'Resolved automatically on retry.');
-      }
-    } catch (err) {
-      console.error(`sync-rss: unexpected error processing item (guid=${guid}):`, err);
-      await routeToPending(item, guid, null, [`unexpected error: ${err.message}`]);
-    }
+    await tryResolveOrRoute(item, guid);
   }
 
   return { newGuids, newEventsCount, pendingCount, resolvedCount };

@@ -6,10 +6,20 @@ Sa'eqeh.
 
 ## What it does
 
-1. Fetches `https://sepahnews.ir/fa/rss/allnews` with a clearly identifying
+1. Before touching the fresh feed at all, retries every entry currently in
+   `/data/pending-review.json` directly by its own stored `link` (and
+   `pubDate`, captured when it was first flagged) — fetch the article page,
+   ask the model, validate, same as step 4 onward below. This is what lets a
+   pending item recover even after it has aged out of the feed's ~100-item
+   window (the RSS feed only ever returns recent items, so an old pending
+   item can otherwise never be matched again by the steps below). An item
+   resolved this way is skipped if it also happens to still be in the fresh
+   feed this run, to avoid double-processing it.
+2. Fetches `https://sepahnews.ir/fa/rss/allnews` with a clearly identifying
    User-Agent (`Nasr2DashboardBot/1.0`).
-2. Skips any item already recorded in `/data/seen-guids.json`.
-3. Filters the rest by keyword relevance: a broad keyword (اطلاعیه، نصر ۲،
+3. Skips any item already recorded in `/data/seen-guids.json`, or already
+   resolved by step 1 above this run.
+4. Filters the rest by keyword relevance: a broad keyword (اطلاعیه، نصر ۲،
    نصر۲، صاعقه، موج، پایگاه، کد خبر) **and** a military-action keyword
    (منهدم، تخریب، اصابت، حمله، ضربه، انهدام، سرنگون، شلیک، منفجر، etc.) must
    both be present — a broad-keyword-only match (an administrative notice
@@ -18,7 +28,7 @@ Sa'eqeh.
    item previously stuck in `pending-review.json` is reclassified as
    irrelevant on a retry, it's removed from pending-review (and its Issue
    closed) instead of being left there indefinitely.
-4. For each relevant item, derives the fields the RSS `<description>` is too
+5. For each relevant item, derives the fields the RSS `<description>` is too
    terse to give a model reliably, instead of asking the model to guess them:
    - `dateG` comes straight from the item's `<pubDate>` (RFC 822), and `dateP`
      (Persian display date) is derived from `dateG` using the same
@@ -33,17 +43,20 @@ Sa'eqeh.
      recover wave/phase numbers and fuller target/weapon/outcome detail. If
      the page fetch fails or times out, the item goes to pending-review
      instead of crashing the run.
-5. Asks an LLM (via [OpenRouter](https://openrouter.ai), model
+6. Asks an LLM (via [OpenRouter](https://openrouter.ai), model
    `openrouter/free`, structured JSON-schema output) to extract only what it
    can reliably read from the article text — wave, force, source, location,
    target, weapon, outcome, time — using the location ids in
    `/data/locations.json` as the only valid set. If the model can't confidently
    match a known location, it returns `loc: null` plus `loc_raw_text` instead
-   of guessing. The model's raw JSON response is parsed tolerantly: a
-   ` ```json ` code fence or leading/trailing prose around the object is
-   stripped/extracted before parsing (`parseModelJson`); only a response with
-   no recoverable JSON object at all counts as a genuine extraction failure.
-6. Resolves `loc`/`loc_raw_text` against the gazetteer with a
+   of guessing. The model's raw JSON response is parsed tolerantly
+   (`parseModelJson`): a ` ```json ` code fence or leading/trailing prose
+   around the object is stripped/extracted first; if that still doesn't parse,
+   a last-resort repair pass quotes bare (unquoted) object keys to recover
+   JS-object-literal-style output like `{wave: "1", force: "ground"}` (valid
+   JS, invalid JSON); only a response with no recoverable JSON object even
+   after that counts as a genuine extraction failure.
+7. Resolves `loc`/`loc_raw_text` against the gazetteer with a
    normalization/fuzzy-match layer (`resolveLocation`) before validating:
    diacritics, zero-width characters (ZWNJ-vs-space), and letter variants are
    normalized on both sides; a small typo in `loc` (edit distance ≤ 2) or a
@@ -54,7 +67,7 @@ Sa'eqeh.
    crash or a false location match. Anything still unresolved keeps the
    fuzzy-match candidates considered (id + edit distance) on the
    pending-review entry (`loc_candidates`) for a human reviewer.
-7. Validates every extraction: non-empty required fields (`wave` is exempt —
+8. Validates every extraction: non-empty required fields (`wave` is exempt —
    many real statements don't mention one, and a missing/empty `wave`
    defaults to `"—"`, matching the convention already used in
    `events.json`), valid force/source, `loc` must exist in `locations.json`
@@ -66,22 +79,25 @@ Sa'eqeh.
    validates cleanly is appended to `/data/events.json` with a new sequential
    id. `target`/`weapon`/`outcome` are stored as `{fa, en: "", ar: ""}` —
    EN/AR translation for bot-added events is still a manual follow-up.
-8. Anything that fails validation, or has no resolvable location, is appended
-   to `/data/pending-review.json` (with the raw item title/link and the
-   model's partial extraction) instead of `events.json`, and a GitHub Issue
-   titled `Pending review: <item title>` labeled `needs-review` is opened so
-   a human can place it by hand. The issue number is stored on the pending
-   entry (`issue_number`) so later runs can find it.
-9. Recomputes `/data/meta.json` (date ranges + `last_synced`) whenever new
+9. Anything that fails validation, or has no resolvable location, is appended
+   to `/data/pending-review.json` (with the raw item title/link/pubDate and
+   the model's partial extraction) instead of `events.json`, and a GitHub
+   Issue titled `Pending review: <item title>` labeled `needs-review` is
+   opened so a human can place it by hand. The issue number is stored on the
+   pending entry (`issue_number`) so later runs can find it. The `link` and
+   `pubDate` captured here are exactly what step 1 above uses to retry the
+   item directly on future runs, independent of the fresh RSS fetch.
+10. Recomputes `/data/meta.json` (date ranges + `last_synced`) whenever new
    events were added.
-10. Updates `/data/seen-guids.json` only with items that were **fully
+11. Updates `/data/seen-guids.json` only with items that were **fully
    resolved** this run — added to `events.json`, or confidently classified
    irrelevant by the keyword filter. Items routed to `pending-review.json`
-   are deliberately *not* marked seen, so they're retried from scratch on
-   every subsequent run until they validate or a human resolves them by
-   hand. An item already present in `pending-review.json` from an earlier
-   run is matched by guid: if it fails again, its entry is refreshed in
-   place (no second Issue is opened); if it now succeeds, it's moved into
+   are deliberately *not* marked seen, so they're retried on every subsequent
+   run (both directly by link, per step 1, and via the fresh feed if still
+   within its window) until they validate or a human resolves them by hand.
+   An item already present in `pending-review.json` from an earlier run is
+   matched by guid: if it fails again, its entry is refreshed in place (no
+   second Issue is opened); if it now succeeds, it's moved into
    `events.json`, its guid is added to `seen-guids.json`, and its Issue is
    closed with a "Resolved automatically on retry." comment.
 
