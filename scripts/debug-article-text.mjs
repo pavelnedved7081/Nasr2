@@ -26,9 +26,9 @@ try {
   const userContent = `عنوان: ${title}\n\nمتن: ${articleText}`;
 
   console.log(`link: ${link}`);
-  console.log(`fetched ${articleText.length} chars of stripped article text`);
-  console.log('--- userContent that would be sent to the model (first 2000 chars) ---');
-  console.log(userContent.slice(0, 2000));
+  console.log(`fetched ${articleText.length} chars of cleaned article text (noise stripped)`);
+  console.log('--- userContent that would be sent to the model (full) ---');
+  console.log(userContent);
 } catch (err) {
   console.error(`fetchArticleText failed for ${link}: ${err.message}`);
   process.exit(1);
