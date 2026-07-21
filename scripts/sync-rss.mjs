@@ -81,16 +81,24 @@ export function jalaliToGregorian(dateP) {
   return epoch.toISOString().slice(0, 10);
 }
 
-async function readJson(name, fallback) {
+async function readJson(dataDir, name, fallback) {
   try {
-    return JSON.parse(await fs.readFile(path.join(DATA, name), 'utf8'));
+    return JSON.parse(await fs.readFile(path.join(dataDir, name), 'utf8'));
   } catch (err) {
     if (err.code === 'ENOENT') return fallback;
     throw err;
   }
 }
-async function writeJson(name, value) {
-  await fs.writeFile(path.join(DATA, name), JSON.stringify(value, null, 2) + '\n');
+async function writeJson(dataDir, name, value) {
+  await fs.writeFile(path.join(dataDir, name), JSON.stringify(value, null, 2) + '\n');
+}
+
+/** Does `dateP` look like a Jalali date string (day + Persian month name + year), e.g. "۳۰ تیر ۱۴۰۵"? */
+export function isValidJalaliDateString(dateP) {
+  if (typeof dateP !== 'string' || dateP.trim() === '') return false;
+  const normalized = persianToLatinDigits(dateP).trim();
+  const m = normalized.match(/^(\d{1,2})\s+(\S+)\s+(\d{3,4})$/);
+  return m ? JALALI_MONTHS.includes(m[2]) : false;
 }
 
 function itemGuid(item) {
@@ -187,6 +195,7 @@ export function validateExtraction(ex, locations) {
   if (ex.source && !VALID_SOURCES.includes(ex.source)) errors.push(`invalid source: ${ex.source}`);
   if (ex.loc != null && !(ex.loc in locations)) errors.push(`unknown loc id: ${ex.loc}`);
   if (ex.loc == null) errors.push('loc is null');
+  if (!isValidJalaliDateString(ex.dateP)) errors.push(`unparseable date: ${ex.dateP}`);
   return { ok: errors.length === 0, errors };
 }
 
@@ -269,27 +278,26 @@ function computeMeta(events) {
   };
 }
 
-export async function main() {
-  const locations = await readJson('locations.json', {});
-  const events = await readJson('events.json', []);
-  const seenGuids = await readJson('seen-guids.json', []);
-  const pendingReview = await readJson('pending-review.json', []);
-  const seenSet = new Set(seenGuids);
-
-  const res = await fetch(RSS_URL, { headers: { 'User-Agent': USER_AGENT } });
-  if (!res.ok) throw new Error(`RSS fetch failed: ${res.status}`);
-  const xml = await res.text();
-  const parser = new XMLParser({ ignoreAttributes: false });
-  const feed = parser.parse(xml);
-  const rawItems = feed?.rss?.channel?.item;
-  const items = Array.isArray(rawItems) ? rawItems : rawItems ? [rawItems] : [];
-
+/**
+ * Processes RSS items one at a time, appending to `events` or `pendingReview` in place.
+ * Each item is isolated in its own try/catch so one bad extraction (unparseable date,
+ * malformed JSON, an unexpected throw anywhere in the pipeline) can't abort the run —
+ * it's logged and routed to pending-review instead, and the loop moves on.
+ */
+export async function processItems(items, {
+  locations,
+  events,
+  pendingReview,
+  seenSet,
+  systemPrompt,
+  nextId,
+  extractEventFn = extractEvent,
+  openPendingReviewIssueFn = openPendingReviewIssue,
+}) {
   const newGuids = [];
   let newEventsCount = 0;
   let pendingCount = 0;
-
-  const systemPrompt = buildSystemPrompt(locations);
-  let nextId = events.reduce((max, e) => Math.max(max, e.id), 0) + 1;
+  let id = nextId;
 
   for (const item of items) {
     const guid = itemGuid(item);
@@ -300,58 +308,97 @@ export async function main() {
       continue;
     }
 
-    let extraction = null;
-    let errors = [];
     try {
-      extraction = await extractEvent(item, systemPrompt);
-      ({ ok: extraction.__ok, errors } = validateExtraction(extraction, locations));
-    } catch (err) {
-      errors = [`extraction failed: ${err.message}`];
-    }
+      let extraction = null;
+      let errors = [];
+      try {
+        extraction = await extractEventFn(item, systemPrompt);
+        ({ ok: extraction.__ok, errors } = validateExtraction(extraction, locations));
+      } catch (err) {
+        errors = [`extraction failed: ${err.message}`];
+      }
 
-    if (!extraction || !extraction.__ok) {
+      if (!extraction || !extraction.__ok) {
+        pendingReview.push({
+          title: item.title || '',
+          link: item.link || '',
+          guid,
+          raw_extraction: extraction ? { ...extraction, __ok: undefined } : null,
+          errors,
+          added_at: new Date().toISOString(),
+        });
+        await openPendingReviewIssueFn(item, extraction, errors);
+        pendingCount++;
+        newGuids.push(guid);
+        continue;
+      }
+
+      const dateG = jalaliToGregorian(extraction.dateP);
+      events.push({
+        id: id++,
+        dateG,
+        dateP: extraction.dateP,
+        time: extraction.time || '',
+        wave: extraction.wave,
+        force: extraction.force,
+        source: extraction.source,
+        loc: extraction.loc,
+        target: { fa: extraction.target, en: '', ar: '' },
+        weapon: { fa: extraction.weapon, en: '', ar: '' },
+        outcome: { fa: extraction.outcome, en: '', ar: '' },
+        code: extraction.code || '',
+      });
+      newEventsCount++;
+      newGuids.push(guid);
+    } catch (err) {
+      console.error(`sync-rss: unexpected error processing item (guid=${guid}):`, err);
       pendingReview.push({
         title: item.title || '',
         link: item.link || '',
         guid,
-        raw_extraction: extraction ? { ...extraction, __ok: undefined } : null,
-        errors,
+        raw_extraction: null,
+        errors: [`unexpected error: ${err.message}`],
         added_at: new Date().toISOString(),
       });
-      await openPendingReviewIssue(item, extraction, errors);
       pendingCount++;
       newGuids.push(guid);
-      continue;
     }
-
-    const dateG = jalaliToGregorian(extraction.dateP);
-    events.push({
-      id: nextId++,
-      dateG,
-      dateP: extraction.dateP,
-      time: extraction.time || '',
-      wave: extraction.wave,
-      force: extraction.force,
-      source: extraction.source,
-      loc: extraction.loc,
-      target: { fa: extraction.target, en: '', ar: '' },
-      weapon: { fa: extraction.weapon, en: '', ar: '' },
-      outcome: { fa: extraction.outcome, en: '', ar: '' },
-      code: extraction.code || '',
-    });
-    newEventsCount++;
-    newGuids.push(guid);
   }
+
+  return { newGuids, newEventsCount, pendingCount };
+}
+
+export async function main({ dataDir = DATA } = {}) {
+  const locations = await readJson(dataDir, 'locations.json', {});
+  const events = await readJson(dataDir, 'events.json', []);
+  const seenGuids = await readJson(dataDir, 'seen-guids.json', []);
+  const pendingReview = await readJson(dataDir, 'pending-review.json', []);
+  const seenSet = new Set(seenGuids);
+
+  const res = await fetch(RSS_URL, { headers: { 'User-Agent': USER_AGENT } });
+  if (!res.ok) throw new Error(`RSS fetch failed: ${res.status}`);
+  const xml = await res.text();
+  const parser = new XMLParser({ ignoreAttributes: false });
+  const feed = parser.parse(xml);
+  const rawItems = feed?.rss?.channel?.item;
+  const items = Array.isArray(rawItems) ? rawItems : rawItems ? [rawItems] : [];
+
+  const systemPrompt = buildSystemPrompt(locations);
+  const nextId = events.reduce((max, e) => Math.max(max, e.id), 0) + 1;
+
+  const { newGuids, newEventsCount, pendingCount } = await processItems(items, {
+    locations, events, pendingReview, seenSet, systemPrompt, nextId,
+  });
 
   if (newGuids.length) {
-    await writeJson('seen-guids.json', [...seenGuids, ...newGuids]);
+    await writeJson(dataDir, 'seen-guids.json', [...seenGuids, ...newGuids]);
   }
   if (newEventsCount > 0) {
-    await writeJson('events.json', events);
-    await writeJson('meta.json', computeMeta(events));
+    await writeJson(dataDir, 'events.json', events);
+    await writeJson(dataDir, 'meta.json', computeMeta(events));
   }
   if (pendingCount > 0) {
-    await writeJson('pending-review.json', pendingReview);
+    await writeJson(dataDir, 'pending-review.json', pendingReview);
   }
 
   console.log(`Processed ${items.length} RSS items: ${newEventsCount} new events, ${pendingCount} pending review, ${newGuids.length - newEventsCount - pendingCount} irrelevant.`);
