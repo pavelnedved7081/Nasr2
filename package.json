@@ -4,7 +4,8 @@
   "type": "module",
   "description": "Automation scripts for the Nasr 2 dashboard (see scripts/README.md)",
   "scripts": {
-    "sync-rss": "node scripts/sync-rss.mjs"
+    "sync-rss": "node scripts/sync-rss.mjs",
+    "test": "node --test scripts/*.test.mjs"
   },
   "dependencies": {
     "fast-xml-parser": "^4.5.0"
