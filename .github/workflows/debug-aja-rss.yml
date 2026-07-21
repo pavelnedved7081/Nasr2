@@ -24,5 +24,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Network diagnostics for aja.ir
+        continue-on-error: true
+        run: |
+          echo "--- DNS resolution ---"
+          getent hosts www.aja.ir || true
+          getent hosts aja.ir || true
+          echo "--- curl -v https://www.aja.ir/ (10s timeout) ---"
+          curl -v --max-time 10 https://www.aja.ir/ -o /dev/null || true
+          echo "--- curl -v https://aja.ir/ (10s timeout, no www) ---"
+          curl -v --max-time 10 https://aja.ir/ -o /dev/null || true
+          echo "--- curl -v http://www.aja.ir/ (plain HTTP, 10s timeout) ---"
+          curl -v --max-time 10 http://www.aja.ir/ -o /dev/null || true
+
       - name: Fetch and print RSS + sample article structure
         run: node scripts/debug-aja-rss.mjs "${{ inputs.rssUrl }}"
