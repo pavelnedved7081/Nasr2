@@ -257,6 +257,22 @@ test('parseModelJson still throws on genuinely non-JSON content', () => {
   assert.throws(() => parseModelJson('I cannot determine the event from this text.'));
 });
 
+// --- Bug B: repair JS-object-literal-style output (unquoted keys) ---
+
+test('parseModelJson repairs a JS-object-literal-style response with unquoted keys (last-resort fallback)', () => {
+  const jsLiteral = '{wave: "24", force: "aerospace", loc: null, count: 3}';
+  assert.deepEqual(parseModelJson(jsLiteral), { wave: '24', force: 'aerospace', loc: null, count: 3 });
+});
+
+test('parseModelJson repairs unquoted keys even wrapped in a code fence with prose', () => {
+  const wrapped = 'Here is the event:\n```json\n{wave: "1", force: "ground", source: "sepah"}\n```';
+  assert.deepEqual(parseModelJson(wrapped), { wave: '1', force: 'ground', source: 'sepah' });
+});
+
+test('parseModelJson does not double-quote keys that are already quoted', () => {
+  assert.deepEqual(parseModelJson('{"a": 1, "b": 2}'), { a: 1, b: 2 });
+});
+
 // --- Fix 2: fuzzy location matching ---
 
 test('resolveLocation matches an exact location id', () => {
@@ -775,6 +791,103 @@ test('no duplicate GitHub Issue is opened for an item still pending across two r
   assert.equal(issuesOpened, 1, 'a second run on the same still-pending guid must not open another issue');
   assert.equal(pendingReview.length, 1);
   assert.equal(pendingReview[0].issue_number, 77);
+});
+
+// --- Bug A: retry pending items directly by their stored link, independent of the RSS window ---
+
+test('a pending item whose link is no longer in the fresh RSS fetch still gets retried and can resolve', async () => {
+  const events = [];
+  const pendingReview = [
+    {
+      title: 'رادار کشف و کنترل هوایی و ایستگاه پمپاژ مخازن سوخت جنگنده‌های دشمن در بحرین منهدم گردید',
+      link: 'https://sepahnews.ir/fa/news/36159/aged-out-item',
+      guid: 'guid-aged-out',
+      pubDate: 'Wed, 08 Jul 2026 08:00:00 +0330',
+      raw_extraction: null,
+      errors: ['unparseable date: null'],
+      added_at: '2026-07-21T15:30:16.612Z',
+      issue_number: 88,
+    },
+  ];
+  const seenSet = new Set();
+  const closedIssues = [];
+  const fetchedLinks = [];
+
+  // The fresh RSS fetch does NOT include this item's guid/link at all (it aged out of the feed's
+  // ~100-item window) — only an unrelated item is present.
+  const freshItems = [rssItem('guid-unrelated')];
+
+  const { newGuids, resolvedCount, newEventsCount } = await processItems(freshItems, {
+    locations: LOCATIONS,
+    countries: COUNTRIES,
+    events,
+    pendingReview,
+    seenSet,
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => validExtraction(),
+    fetchArticleTextFn: async (link) => {
+      fetchedLinks.push(link);
+      return 'متن کامل خبر با جزئیات موج و هدف';
+    },
+    openPendingReviewIssueFn: async () => { throw new Error('should not open a new issue for an already-pending item'); },
+    closePendingReviewIssueFn: async (issueNumber, comment) => {
+      closedIssues.push({ issueNumber, comment });
+    },
+  });
+
+  assert.ok(fetchedLinks.includes('https://sepahnews.ir/fa/news/36159/aged-out-item'));
+  assert.equal(events.length, 2); // the aged-out pending item + the unrelated fresh item
+  assert.equal(newEventsCount, 2);
+  assert.equal(resolvedCount, 1);
+  assert.equal(pendingReview.length, 0);
+  assert.ok(newGuids.includes('guid-aged-out'));
+  assert.equal(closedIssues.length, 1);
+  assert.equal(closedIssues[0].issueNumber, 88);
+});
+
+test('a pending item still within the RSS window is not double-processed by both the retry pass and the fresh-feed pass', async () => {
+  const events = [];
+  let extractCalls = 0;
+  const pendingReview = [
+    {
+      title: 'اطلاعیه نصر ۲',
+      link: 'https://sepahnews.ir/fa/news/36159/guid-still-in-window',
+      guid: 'guid-still-in-window',
+      pubDate: 'Wed, 08 Jul 2026 08:00:00 +0330',
+      raw_extraction: null,
+      errors: ['some earlier error'],
+      added_at: '2026-07-21T15:30:16.612Z',
+      issue_number: 12,
+    },
+  ];
+  const seenSet = new Set();
+
+  // The same guid is ALSO still present in the fresh RSS feed this run.
+  const freshItems = [rssItem('guid-still-in-window')];
+
+  const { resolvedCount, newEventsCount } = await processItems(freshItems, {
+    locations: LOCATIONS,
+    countries: COUNTRIES,
+    events,
+    pendingReview,
+    seenSet,
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => {
+      extractCalls++;
+      return validExtraction();
+    },
+    fetchArticleTextFn: async () => 'متن کامل خبر',
+    openPendingReviewIssueFn: async () => { throw new Error('should not open a new issue'); },
+    closePendingReviewIssueFn: async () => {},
+  });
+
+  assert.equal(extractCalls, 1, 'the item should only be extracted once, not once per phase');
+  assert.equal(newEventsCount, 1);
+  assert.equal(resolvedCount, 1);
+  assert.equal(pendingReview.length, 0);
+  assert.equal(events.length, 1);
 });
 
 // --- Full pipeline integration test (Phase 2 style: real fs read/write against a temp data dir) ---
