@@ -2754,5 +2754,109 @@
       "ar": ""
     },
     "code": "36167"
+  },
+  {
+    "id": 107,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "morning",
+    "wave": "—",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "sheikhIsa",
+    "target": {
+      "fa": "United States military",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "drone",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "ongoing attack",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 108,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "today morning",
+    "wave": "9",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "arifjan",
+    "target": {
+      "fa": "US military bases",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "drone",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "unknown",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 109,
+    "dateG": "2026-07-19",
+    "dateP": "۲۸ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "—",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "udairi",
+    "target": {
+      "fa": "US military bases",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "drone",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "damage inflicted",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
+  },
+  {
+    "id": 110,
+    "dateG": "2026-07-18",
+    "dateP": "۲۷ تیر ۱۴۰۵",
+    "time": "ساعاتی قبل",
+    "wave": "پانزدهم عملیات صاعقه",
+    "force": "aerospace",
+    "source": "artesh",
+    "loc": "sheikhIsa",
+    "target": {
+      "fa": "آشیانه و پارکینگ هواپیماها، مخازن سوخت ارتش تروریستی آمریکا در پایگاه شیخ عیسی و چند پل ارتباطی",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپادهای انهدامی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "هدف قرار گرفتن",
+      "en": "",
+      "ar": ""
+    },
+    "code": ""
   }
 ]
