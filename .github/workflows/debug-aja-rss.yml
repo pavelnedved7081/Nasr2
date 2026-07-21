@@ -1,0 +1,28 @@
+name: Debug aja.ir RSS
+
+on:
+  workflow_dispatch:
+    inputs:
+      rssUrl:
+        description: 'aja.ir (Artesh) RSS feed URL'
+        required: true
+        type: string
+        default: "https://www.aja.ir/portal/rsspage/?fa-ir/news/45459/45608/اخبار"
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch and print RSS + sample article structure
+        run: node scripts/debug-aja-rss.mjs "${{ inputs.rssUrl }}"
