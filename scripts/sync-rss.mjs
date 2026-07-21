@@ -159,18 +159,92 @@ function stripHtml(html) {
     .trim();
 }
 
-/** Fetch an article page and return its stripped text content. Throws on timeout/non-2xx/network error. */
-export async function fetchArticleText(link, { timeoutMs = ARTICLE_FETCH_TIMEOUT_MS } = {}) {
+/** Fetch an article page and return its raw HTML (unlike fetchArticleText, which strips markup).
+ *  Used by the pubDate fallback (extractPubDateFromArticleHtml), which needs the meta
+ *  tags/attributes that plain-text stripping discards. Throws on timeout/non-2xx/network error. */
+export async function fetchArticleHtml(link, { timeoutMs = ARTICLE_FETCH_TIMEOUT_MS } = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const res = await fetch(link, { headers: { 'User-Agent': USER_AGENT }, signal: controller.signal });
     if (!res.ok) throw new Error(`article fetch failed: ${res.status}`);
-    const html = await res.text();
-    return stripHtml(html);
+    return await res.text();
   } finally {
     clearTimeout(timer);
   }
+}
+
+/** Fetch an article page and return its stripped text content. Throws on timeout/non-2xx/network error. */
+export async function fetchArticleText(link, opts) {
+  return stripHtml(await fetchArticleHtml(link, opts));
+}
+
+const META_PUBLISHED_TIME_PROPS = [
+  'article:published_time',
+  'og:article:published_time',
+  'article:publish_date',
+  'pubdate',
+  'publishdate',
+  'date',
+];
+
+/** Returns the `content="..."` value of the first `<meta>` tag in `html` whose `property`/`name`
+ *  attribute (case-insensitively) is one of `props`, or null if none matches. */
+function extractMetaContent(html, props) {
+  const wanted = new Set(props.map((p) => p.toLowerCase()));
+  for (const tag of html.match(/<meta\b[^>]*>/gi) || []) {
+    const propMatch = tag.match(/\b(?:property|name)\s*=\s*["']([^"']+)["']/i);
+    const contentMatch = tag.match(/\bcontent\s*=\s*["']([^"']*)["']/i);
+    if (propMatch && contentMatch && wanted.has(propMatch[1].toLowerCase())) {
+      return contentMatch[1];
+    }
+  }
+  return null;
+}
+
+/** Returns the first `<time>` element's `datetime` attribute (if present) and stripped inner
+ *  text, or null if the page has no `<time>` element. */
+function extractTimeElement(html) {
+  const withDatetime = html.match(/<time\b[^>]*\bdatetime\s*=\s*["']([^"']+)["'][^>]*>([\s\S]*?)<\/time>/i);
+  if (withDatetime) return { datetime: withDatetime[1], text: stripHtml(withDatetime[2]) };
+  const bare = html.match(/<time\b[^>]*>([\s\S]*?)<\/time>/i);
+  if (bare) return { datetime: null, text: stripHtml(bare[1]) };
+  return null;
+}
+
+const JALALI_DATE_IN_TEXT_RE = new RegExp(`([۰-۹]{1,2})\\s+(${JALALI_MONTHS.join('|')})\\s+([۰-۹]{2,4})`);
+
+/** Finds the first Persian-digit Jalali date (e.g. "۱۷ تیر ۱۴۰۵") in free text, or null. */
+function findJalaliDateInText(text) {
+  const m = typeof text === 'string' ? text.match(JALALI_DATE_IN_TEXT_RE) : null;
+  return m ? m[0] : null;
+}
+
+/**
+ * Attempts to recover a publish date directly from a fetched article page's raw HTML, for
+ * pending-review entries whose stored pubDate is missing (e.g. flagged before pubDate-capture
+ * existed on pending entries, so there's no RSS <pubDate> left to retry with). Tries, in order:
+ * a `<meta property="article:published_time">`-style tag, a `<time>` element's `datetime`
+ * attribute or inner text, and a Jalali date string in the page's visible text. Returns a string
+ * parseable by pubDateToDateG(), or null if nothing was found.
+ */
+export function extractPubDateFromArticleHtml(html) {
+  if (typeof html !== 'string' || html === '') return null;
+
+  const metaContent = extractMetaContent(html, META_PUBLISHED_TIME_PROPS);
+  if (metaContent && pubDateToDateG(metaContent)) return metaContent;
+
+  const timeEl = extractTimeElement(html);
+  if (timeEl) {
+    if (timeEl.datetime && pubDateToDateG(timeEl.datetime)) return timeEl.datetime;
+    const jalaliFromTime = findJalaliDateInText(timeEl.text);
+    if (jalaliFromTime) return jalaliToGregorian(jalaliFromTime);
+  }
+
+  const jalaliInBody = findJalaliDateInText(stripHtml(html).slice(0, 4000));
+  if (jalaliInBody) return jalaliToGregorian(jalaliInBody);
+
+  return null;
 }
 
 async function readJson(dataDir, name, fallback) {
@@ -720,6 +794,8 @@ export async function processItems(items, {
   openPendingReviewIssueFn = openPendingReviewIssue,
   closePendingReviewIssueFn = closePendingReviewIssue,
   fetchArticleTextFn = fetchArticleText,
+  fetchArticleHtmlFn = fetchArticleHtml,
+  extractPubDateFromArticleHtmlFn = extractPubDateFromArticleHtml,
   pubDateToDateGFn = pubDateToDateG,
   gregorianToJalaliFn = gregorianToJalali,
   extractCodeFromLinkFn = extractCodeFromLink,
@@ -783,7 +859,23 @@ export async function processItems(items, {
     let errors = [];
     let locInfo = null;
     try {
-      const dateG = pubDateToDateGFn(item.pubDate);
+      let dateG = pubDateToDateGFn(item.pubDate);
+      if (!dateG && (item.pubDate === null || item.pubDate === undefined || item.pubDate === '')) {
+        // No stored pubDate to retry with (e.g. a pending entry flagged before pubDate-capture
+        // existed): fall back to reading a publish date off the article page itself, and persist
+        // it onto `item` so routeToPending() saves it and future runs don't repeat this fallback.
+        try {
+          const html = await fetchArticleHtmlFn(item.link);
+          const fallbackPubDate = extractPubDateFromArticleHtmlFn(html);
+          const fallbackDateG = fallbackPubDate ? pubDateToDateGFn(fallbackPubDate) : null;
+          if (fallbackDateG) {
+            dateG = fallbackDateG;
+            item.pubDate = fallbackPubDate;
+          }
+        } catch (fallbackErr) {
+          console.warn(`sync-rss: pubDate fallback failed for ${item.link}: ${fallbackErr.message}`);
+        }
+      }
       if (!dateG) throw new Error(`missing/unparseable pubDate: "${item.pubDate ?? ''}"`);
       const dateP = gregorianToJalaliFn(dateG);
       const code = extractCodeFromLinkFn(item.link);

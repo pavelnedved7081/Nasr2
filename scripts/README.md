@@ -33,8 +33,14 @@ Sa'eqeh.
    - `dateG` comes straight from the item's `<pubDate>` (RFC 822), and `dateP`
      (Persian display date) is derived from `dateG` using the same
      Tir-1-1405 = 2026-06-22 epoch the rest of the project uses (the inverse
-     of the Gregorian-to-Jalali conversion). If `<pubDate>` is missing or
-     unparseable, the item goes straight to pending-review.
+     of the Gregorian-to-Jalali conversion). If `<pubDate>` is present but
+     unparseable, the item goes straight to pending-review. If it's missing
+     entirely (a pending entry flagged before pubDate-capture existed), a
+     fallback tries to read a publish date directly off the article page —
+     a `<meta property="article:published_time">` tag, a `<time>` element,
+     or a visible Jalali date in the page text — and stores it back onto the
+     pending entry so future runs don't repeat the fallback. If that also
+     finds nothing, the item goes to pending-review as before.
    - `code` is parsed directly out of the item's `<link>` URL (pattern
      `/news/(\d+)/`).
    - The full article page (the `<link>` URL) is fetched and its main text

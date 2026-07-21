@@ -19,6 +19,7 @@ import {
   levenshtein,
   looksGarbled,
   isRelevant,
+  extractPubDateFromArticleHtml,
 } from './sync-rss.mjs';
 
 const LOCATIONS = {
@@ -438,6 +439,109 @@ test('processItems routes an item with missing/unparseable pubDate to pending-re
   assert.ok(pendingReview[0].errors.some((e) => e.includes('pubDate')));
 });
 
+// --- pubDate fallback: extracting a publish date from the article page itself ---
+// (item news/36159 was pended before pubDate-capture existed on pending entries, so its stored
+// pubDate is permanently null — there's nothing to retry with unless we read it off the page.)
+
+test('extractPubDateFromArticleHtml picks up a <meta property="article:published_time"> tag', () => {
+  const html = `<!doctype html><html><head>
+    <meta property="og:title" content="some title">
+    <meta property="article:published_time" content="2026-07-17T13:32:20+03:30">
+  </head><body>...</body></html>`;
+  assert.equal(extractPubDateFromArticleHtml(html), '2026-07-17T13:32:20+03:30');
+});
+
+test('extractPubDateFromArticleHtml falls back to a <time datetime> attribute when no meta tag is present', () => {
+  const html = `<html><body><time datetime="2026-07-17">۱۷ تیر</time></body></html>`;
+  assert.equal(extractPubDateFromArticleHtml(html), '2026-07-17');
+});
+
+test('extractPubDateFromArticleHtml falls back to a visible Jalali date in the page text', () => {
+  const html = `<html><body><div class="date">۱۷ تیر ۱۴۰۵</div><p>متن خبر</p></body></html>`;
+  assert.equal(extractPubDateFromArticleHtml(html), jalaliToGregorian('۱۷ تیر ۱۴۰۵'));
+});
+
+test('extractPubDateFromArticleHtml returns null when no date is found anywhere on the page', () => {
+  const html = `<html><body><p>متن خبر بدون تاریخ</p></body></html>`;
+  assert.equal(extractPubDateFromArticleHtml(html), null);
+});
+
+test('processItems recovers a missing stored pubDate from the article page and resolves the item', async () => {
+  const items = [rssItem('guid-missing-pubdate', { pubDate: null })];
+  const events = [];
+  const pendingReview = [];
+
+  const result = await processItems(items, {
+    locations: LOCATIONS,
+    events,
+    pendingReview,
+    seenSet: new Set(),
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => validExtraction(),
+    fetchArticleTextFn: async () => 'متن کامل خبر',
+    fetchArticleHtmlFn: async () =>
+      `<html><head><meta property="article:published_time" content="2026-07-17T13:32:20+03:30"></head><body></body></html>`,
+    openPendingReviewIssueFn: async () => {},
+  });
+
+  assert.equal(events.length, 1);
+  assert.equal(events[0].dateG, '2026-07-17');
+  assert.equal(result.pendingCount, 0);
+});
+
+test('processItems persists the recovered pubDate onto the pending entry when extraction still fails otherwise', async () => {
+  const items = [rssItem('guid-missing-pubdate-still-pending', { pubDate: null })];
+  const events = [];
+  const pendingReview = [];
+
+  await processItems(items, {
+    locations: LOCATIONS,
+    events,
+    pendingReview,
+    seenSet: new Set(),
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => validExtraction({ target: '' }), // missing required field -> stays pending
+    fetchArticleTextFn: async () => 'متن کامل خبر',
+    fetchArticleHtmlFn: async () =>
+      `<html><head><meta property="article:published_time" content="2026-07-17T13:32:20+03:30"></head><body></body></html>`,
+    openPendingReviewIssueFn: async () => {},
+  });
+
+  assert.equal(events.length, 0);
+  assert.equal(pendingReview.length, 1);
+  assert.equal(pendingReview[0].pubDate, '2026-07-17T13:32:20+03:30');
+});
+
+test('processItems leaves the item in pending-review without crashing when the article page has no recoverable date', async () => {
+  const items = [rssItem('guid-missing-pubdate-unrecoverable', { pubDate: null })];
+  const events = [];
+  const pendingReview = [];
+
+  await assert.doesNotReject(() =>
+    processItems(items, {
+      locations: LOCATIONS,
+      events,
+      pendingReview,
+      seenSet: new Set(),
+      systemPrompt: 'test',
+      nextId: 1,
+      extractEventFn: async () => {
+        throw new Error('model should not be called: pubDate is still unrecoverable');
+      },
+      fetchArticleTextFn: async () => 'متن',
+      fetchArticleHtmlFn: async () => '<html><body><p>متن خبر بدون تاریخ</p></body></html>',
+      openPendingReviewIssueFn: async () => {},
+    })
+  );
+
+  assert.equal(events.length, 0);
+  assert.equal(pendingReview.length, 1);
+  assert.equal(pendingReview[0].pubDate, null);
+  assert.ok(pendingReview[0].errors.some((e) => e.includes('pubDate')));
+});
+
 test('processItems degrades to pending-review (not a crash) when the article page fetch fails', async () => {
   const items = [rssItem('guid-fetch-fails'), rssItem('guid-good')];
   const events = [];
@@ -662,6 +766,7 @@ test('processItems removes an item from pending-review (and closes its issue) if
     nextId: 1,
     extractEventFn: async () => { throw new Error('should not be called for an irrelevant item'); },
     fetchArticleTextFn: async () => { throw new Error('should not be called for an irrelevant item'); },
+    fetchArticleHtmlFn: async () => { throw new Error('pubDate fallback fetch should be caught, not crash the run'); },
     openPendingReviewIssueFn: async () => { throw new Error('should not open an issue for an irrelevant item'); },
     closePendingReviewIssueFn: async (issueNumber, comment) => {
       closedIssues.push({ issueNumber, comment });
