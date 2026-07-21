@@ -1,1 +1,374 @@
-[]
+[
+  {
+    "title": "هلاکت تعدادی سرباز در هدف قرار گرفتن مجتمع محل استقرار نیروهای ارتش تروریست و کودک‌کش آمریکا در منطقه‌ی الرُکبان اردن",
+    "link": "https://sepahnews.ir/fa/news/36241/هلاکت-تعدادی-سرباز-در-هدف-قرار-گرفتن-مجتمع-محل-استقرار-نیروهای-ارتش-تروریست-و-کودک‌کش-آمریکا-در-منطقه‌ی-الرُکبان-اردن",
+    "guid": "https://sepahnews.ir/fa/news/36241/هلاکت-تعدادی-سرباز-در-هدف-قرار-گرفتن-مجتمع-محل-استقرار-نیروهای-ارتش-تروریست-و-کودک‌کش-آمریکا-در-منطقه‌ی-الرُکبان-اردن",
+    "raw_extraction": {
+      "wave": "24",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": "rukban",
+      "loc_raw_text": "منطقه الرکبان اردن",
+      "target": "مجتمع محل استقرار نیروهای ارتش تروریست و کودک‌کش آمریکا",
+      "weapon": "",
+      "outcome": "هلاکت تعدادی سرباز",
+      "code": "",
+      "dateP": "",
+      "time": ""
+    },
+    "errors": [
+      "missing/empty required field: weapon",
+      "unparseable date: "
+    ],
+    "added_at": "2026-07-21T15:11:23.312Z"
+  },
+  {
+    "title": "تخریب سامانه راداری دفاع موشکی و انهدام یک فروند هواپیمای اف 15 در داخل شیلتر در اردن",
+    "link": "https://sepahnews.ir/fa/news/36239/تخریب-سامانه-راداری-دفاع-موشکی-و-انهدام-یک-فروند-هواپیمای-اف-15-در-داخل-شیلتر-در-اردن",
+    "guid": "https://sepahnews.ir/fa/news/36239/تخریب-سامانه-راداری-دفاع-موشکی-و-انهدام-یک-فروند-هواپیمای-اف-15-در-داخل-شیلتر-در-اردن",
+    "raw_extraction": {
+      "wave": "24",
+      "force": "ground",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "پایگاه آمریکایی در اردن",
+      "target": "پایگاه آمریکایی (Us base)",
+      "weapon": "",
+      "outcome": "تخریب سامانه راداری دفاع موشکی و انهدام یک فروند هواپیمای اف ۱۵",
+      "code": "نصر ۲",
+      "dateP": "",
+      "time": ""
+    },
+    "errors": [
+      "missing/empty required field: weapon",
+      "loc is null",
+      "unparseable date: "
+    ],
+    "added_at": "2026-07-21T15:12:25.791Z"
+  },
+  {
+    "title": "پاکسازی راداری منطقه در ادامه شب سیاه سامانه ها و رادارهای آمریکایی",
+    "link": "https://sepahnews.ir/fa/news/36238/پاکسازی-راداری-منطقه-در-ادامه-شب-سیاه-سامانه-ها-و-رادارهای-آمریکایی",
+    "guid": "https://sepahnews.ir/fa/news/36238/پاکسازی-راداری-منطقه-در-ادامه-شب-سیاه-سامانه-ها-و-رادارهای-آمریکایی",
+    "raw_extraction": {
+      "wave": "null",
+      "force": "ground",
+      "source": "sepah",
+      "loc": "ahmadAlJaber",
+      "loc_raw_text": "پایگاه احمد الجابر کویت",
+      "target": "US early warning radar, ballistic missile defense radar system, FPS117 radar, Patriot defense system, satellite communications of US Air Defense",
+      "weapon": "null",
+      "outcome": "destroyed",
+      "code": "null",
+      "dateP": "null",
+      "time": "null"
+    },
+    "errors": [
+      "unparseable date: null"
+    ],
+    "added_at": "2026-07-21T15:12:40.404Z"
+  },
+  {
+    "title": "شب سیاه رادارها و سامانه های پدافند هوایی آمریکا در منطقه",
+    "link": "https://sepahnews.ir/fa/news/36236/شب-سیاه-رادارها-و-سامانه-های-پدافند-هوایی-آمریکا-در-منطقه",
+    "guid": "https://sepahnews.ir/fa/news/36236/شب-سیاه-رادارها-و-سامانه-های-پدافند-هوایی-آمریکا-در-منطقه",
+    "raw_extraction": {
+      "wave": 24,
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": "muharraq",
+      "loc_raw_text": "المحرق بحر.devices",
+      "target": "یک سامانه پدافندی و یک رادار آمریکایی",
+      "weapon": "شب سیاهی",
+      "outcome": "destroyed",
+      "code": "مبارک یا رقیه (س)",
+      "dateP": null,
+      "time": null
+    },
+    "errors": [
+      "missing/empty required field: wave",
+      "unparseable date: null"
+    ],
+    "added_at": "2026-07-21T15:12:53.062Z"
+  },
+  {
+    "title": "ضربات سنگین دریادلان نیروی دریایی سپاه به ارتش کودک‌کش آمریکا با حمله همزمان در سه محور",
+    "link": "https://sepahnews.ir/fa/news/36228/ضربات-سنگین-دریادلان-نیروی-دریایی-سپاه-به-ارتش-کودک‌کش-آمریکا-با-حمله-همزمان-در-سه-محور",
+    "guid": "https://sepahnews.ir/fa/news/36228/ضربات-سنگین-دریادلان-نیروی-دریایی-سپاه-به-ارتش-کودک‌کش-آمریکا-با-حمله-همزمان-در-سه-محور",
+    "raw_extraction": {
+      "wave": "But 23",
+      "force": "naval",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "منطقه",
+      "target": "نیروی تروریستی آمریکایی",
+      "weapon": "",
+      "outcome": "جایج ganglia سنگین",
+      "code": "یraiقیه (س)",
+      "dateP": "",
+      "time": ""
+    },
+    "errors": [
+      "missing/empty required field: weapon",
+      "loc is null",
+      "unparseable date: "
+    ],
+    "added_at": "2026-07-21T15:13:27.157Z"
+  },
+  {
+    "title": "سامانه رادار اخطار اولیه دشمن آمریکایی، یک سوله تجهیزات و قطعات هوایی و یک آشیانه پهپادهای MQ9 آمریکا مورد اصابت قرار گرفتند",
+    "link": "https://sepahnews.ir/fa/news/36225/سامانه-رادار-اخطار-اولیه-دشمن-آمریکایی-یک-سوله-تجهیزات-و-قطعات-هوایی-و-یک-آشیانه-پهپادهای-mq9-آمریکا-مورد-اصابت-قرار-گرفتند",
+    "guid": "https://sepahnews.ir/fa/news/36225/سامانه-رادار-اخطار-اولیه-دشمن-آمریکایی-یک-سوله-تجهیزات-و-قطعات-هوایی-و-یک-آشیانه-پهپادهای-mq9-آمریکا-مورد-اصابت-قرار-گرفتند",
+    "raw_extraction": {
+      "code": "unknown",
+      "dateP": "unknown",
+      "force": "aerospace",
+      "loc": "aliAlSalem",
+      "loc_raw_text": "پایگاه علی السالم",
+      "target": "سامانه رادار اخطار اولیه، سوله تجهیزات و قطعات هوایی و آشیانه پهپادهای MQ9 آمریکا",
+      "weapon": "پهپاد",
+      "outcome": "انهدام کامل سامانه رادار و اصابت به سوله تجهیزات و آشیانه پهپادها و آتش گرفتن پهپادها",
+      "wave": "unknown",
+      "source": "sepah"
+    },
+    "errors": [
+      "unparseable date: unknown"
+    ],
+    "added_at": "2026-07-21T15:13:41.204Z"
+  },
+  {
+    "title": "قدردانی سپاه از اطلاعات مردم اردن؛ هواپیماهای بزرگ ترابری C17 و هواپیماهای فرمانده کنترل P8 ارتش متجاوز امریکا در فرودگاه عقبه هدف موشک بالستیک قرار گرفتند",
+    "link": "https://sepahnews.ir/fa/news/36223/قدردانی-سپاه-از-اطلاعات-مردم-اردن-هواپیماهای-بزرگ-ترابری-c17-و-هواپیماهای-فرمانده-کنترل-p8-ارتش-متجاوز-امریکا-در-فرودگاه-عقبه-هدف-موشک-بالستیک-قرار-گرفتند",
+    "guid": "https://sepahnews.ir/fa/news/36223/قدردانی-سپاه-از-اطلاعات-مردم-اردن-هواپیماهای-بزرگ-ترابری-c17-و-هواپیماهای-فرمانده-کنترل-p8-ارتش-متجاوز-امریکا-در-فرودگاه-عقبه-هدف-موشک-بالستیک-قرار-گرفتند",
+    "raw_extraction": {
+      "wave": "موج ۲۱",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": "aqaba",
+      "loc_raw_text": "فرودگاه عقبه",
+      "target": "هاواپیماهای بزرگ ترابری C17 و هواپیماهای فرمانده کنترل P8 ارتش متجاوز امریکا",
+      "weapon": "مShaک‌های بالستیک",
+      "outcome": "به تعدادی از آنهاخسارت سنگین وارد کردند",
+      "code": " niew",
+      "dateP": " Нью",
+      "time": " Нью"
+    },
+    "errors": [
+      "unparseable date:  Нью"
+    ],
+    "added_at": "2026-07-21T15:13:54.485Z"
+  },
+  {
+    "title": "بیانیه رسمی درباره صفحات جعلی منتسب به سپاه پاسداران انقلاب اسلامی",
+    "link": "https://sepahnews.ir/fa/news/36211/بیانیه-رسمی-درباره-صفحات-جعلی-منتسب-به-سپاه-پاسداران-انقلاب-اسلامی",
+    "guid": "https://sepahnews.ir/fa/news/36211/بیانیه-رسمی-درباره-صفحات-جعلی-منتسب-به-سپاه-پاسداران-انقلاب-اسلامی",
+    "raw_extraction": {
+      "wave": null,
+      "force": "unknown",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": null,
+      "target": null,
+      "weapon": null,
+      "outcome": null,
+      "code": null,
+      "dateP": null,
+      "time": null
+    },
+    "errors": [
+      "missing/empty required field: wave",
+      "missing/empty required field: target",
+      "missing/empty required field: weapon",
+      "missing/empty required field: outcome",
+      "loc is null",
+      "unparseable date: null"
+    ],
+    "added_at": "2026-07-21T15:14:00.924Z"
+  },
+  {
+    "title": "منحدراً كبيراً لتوقف الطائرات في القاعدة الأمريكية في الأزرق بالأردن",
+    "link": "https://sepahnews.ir/fa/news/36199/منحدراً-كبيراً-لتوقف-الطائرات-في-القاعدة-الأمريكية-في-الأزرق-بالأردن",
+    "guid": "https://sepahnews.ir/fa/news/36199/منحدراً-كبيراً-لتوقف-الطائرات-في-القاعدة-الأمريكية-في-الأزرق-بالأردن",
+    "raw_extraction": {
+      "wave": "20",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": "alAzraq",
+      "loc_raw_text": "القاعدة الأمريكية في الأزرق بالأردن",
+      "target": "aircraft shelters and a large aircraft parking ramp",
+      "weapon": "rockets and UAVs",
+      "outcome": "destruction of at least two fighter jets and three US aircraft, with serious damage to others",
+      "code": "يا أبا الفضل العباس (ع)",
+      "dateP": "",
+      "time": ""
+    },
+    "errors": [
+      "unparseable date: "
+    ],
+    "added_at": "2026-07-21T15:14:27.692Z"
+  },
+  {
+    "title": "ملت ایران با حفظ وحدت و ذوب‌شدگی در ولایت، پیروز جنگ موجودیتی‌ هستند/در قاموس ایرانیان، تسلیم معنایی ندارد",
+    "link": "https://sepahnews.ir/fa/news/36197/ملت-ایران-با-حفظ-وحدت-و-ذوب‌شدگی-در-ولایت-پیروز-جنگ-موجودیتی‌-هستنددر-قاموس-ایرانیان-تسلیم-معنایی-ندارد",
+    "guid": "https://sepahnews.ir/fa/news/36197/ملت-ایران-با-حفظ-وحدت-و-ذوب‌شدگی-در-ولایت-پیروز-جنگ-موجودیتی‌-هستنددر-قاموس-ایرانیان-تسلیم-معنایی-ندارد",
+    "raw_extraction": {
+      "wave": "null",
+      "force": "naval",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "استان زنجان",
+      "target": "null",
+      "weapon": "null",
+      "outcome": "null",
+      "code": "null",
+      "dateP": "null",
+      "time": "null"
+    },
+    "errors": [
+      "loc is null",
+      "unparseable date: null"
+    ],
+    "added_at": "2026-07-21T15:14:37.772Z"
+  },
+  {
+    "title": "حمله کوبنده و همزمان موشکی و پهپادی به شیلترهای جنگنده‌ها و یک رمپ بزرگ توقف در پایگاه آمریکا در الازرق اردن",
+    "link": "https://sepahnews.ir/fa/news/36188/حمله-کوبنده-و-همزمان-موشکی-و-پهپادی-به-شیلترهای-جنگنده‌ها-و-یک-رمپ-بزرگ-توقف-در-پایگاه-آمریکا-در-الازرق-اردن",
+    "guid": "https://sepahnews.ir/fa/news/36188/حمله-کوبنده-و-همزمان-موشکی-و-پهپادی-به-شیلترهای-جنگنده‌ها-و-یک-رمپ-بزرگ-توقف-در-پایگاه-آمریکا-در-الازرق-اردن",
+    "raw_extraction": {
+      "wave": "20",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": "alAzraq",
+      "loc_raw_text": "الازرق اردن",
+      "target": "fighter jet shelters and a large stop ramp at US base in alAzraq",
+      "weapon": "missile, drone",
+      "outcome": "destroyed at least 2 fighter jets and 3 US drones, caused significant damage to several others",
+      "code": "مبارک یا ابوالفضل العباس (ع)",
+      "dateP": "null",
+      "time": "null"
+    },
+    "errors": [
+      "unparseable date: null"
+    ],
+    "added_at": "2026-07-21T15:15:14.983Z"
+  },
+  {
+    "title": "اسکله پشتیبانی سوخت ناوگان آمریکا، محل تجمع پرنده‌های جنگی دشمن، مرکز داده‌های اطلاعاتی دشمن، یک مرکز سیگنالی و مخابراتی آمریکا درهم کوبیده شدند",
+    "link": "https://sepahnews.ir/fa/news/36187/اسکله-پشتیبانی-سوخت-ناوگان-آمریکا-محل-تجمع-پرنده‌های-جنگی-دشمن-مرکز-داده‌های-اطلاعاتی-دشمن-یک-مرکز-سیگنالی-و-مخابراتی-آمریکا-درهم-کوبیده-شدند",
+    "guid": "https://sepahnews.ir/fa/news/36187/اسکله-پشتیبانی-سوخت-ناوگان-آمریکا-محل-تجمع-پرنده‌های-جنگی-دشمن-مرکز-داده‌های-اطلاعاتی-دشمن-یک-مرکز-سیگنالی-و-مخابراتی-آمریکا-درهم-کوبیده-شدند",
+    "raw_extraction": {
+      "wave": "19",
+      "force": "naval",
+      "source": "sepah",
+      "loc": "kuwaitCity",
+      "loc_raw_text": "اسamorphismos الأمثلة دادگاه آمریکا، موقع تجمع پرندگان جنگی دشمن، مرکز داده‌های اطلاعاتی دشمن، یک مرکز سیگنالی و مخابراتی آمریکا درهم کوبیده شدند",
+      "target": "unknown",
+      "weapon": "unknown",
+      "outcome": "قرارداد",
+      "code": "",
+      "dateP": "",
+      "time": ""
+    },
+    "errors": [
+      "unparseable date: "
+    ],
+    "added_at": "2026-07-21T15:15:34.234Z"
+  },
+  {
+    "title": "کشورهای میزبان نظامیان متجاوز آمریکا آماده دریافت پاسخ متناظر باشند",
+    "link": "https://sepahnews.ir/fa/news/36186/کشورهای-میزبان-نظامیان-متجاوز-آمریکا-آماده-دریافت-پاسخ-متناظر-باشند",
+    "guid": "https://sepahnews.ir/fa/news/36186/کشورهای-میزبان-نظامیان-متجاوز-آمریکا-آماده-دریافت-پاسخ-متناظر-باشند",
+    "raw_extraction": null,
+    "errors": [
+      "extraction failed: Unexpected token '`', \"```json\n{\n\"... is not valid JSON"
+    ],
+    "added_at": "2026-07-21T15:16:05.121Z"
+  },
+  {
+    "title": "دپوی شمپاد های آمریکایی (شناورهای بدون سرنشین) در بحرین در هم کوبیده شد",
+    "link": "https://sepahnews.ir/fa/news/36183/دپوی-شمپاد-های-آمریکایی-شناورهای-بدون-سرنشین-در-بحرین-در-هم-کوبیده-شد",
+    "guid": "https://sepahnews.ir/fa/news/36183/دپوی-شمپاد-های-آمریکایی-شناورهای-بدون-سرنشین-در-بحرین-در-هم-کوبیده-شد",
+    "raw_extraction": null,
+    "errors": [
+      "extraction failed: Unexpected end of JSON input"
+    ],
+    "added_at": "2026-07-21T15:29:07.347Z"
+  },
+  {
+    "title": "یک فروند پهپاد آئروویرنمنت آرکیو-۱۱ در منطقه رامشیر منهدم شد",
+    "link": "https://sepahnews.ir/fa/news/36168/یک-فروند-پهپاد-آئروویرنمنت-آرکیو-۱۱-در-منطقه-رامشیر-منهدم-شد",
+    "guid": "https://sepahnews.ir/fa/news/36168/یک-فروند-پهپاد-آئروویرنمنت-آرکیو-۱۱-در-منطقه-رامشیر-منهدم-شد",
+    "raw_extraction": null,
+    "errors": [
+      "extraction failed: Unexpected token '`', \"```json\n{\n\"... is not valid JSON"
+    ],
+    "added_at": "2026-07-21T15:29:19.829Z"
+  },
+  {
+    "title": "سامانه راداری برد بلند و چندین فروند هواپیمای راهبردی سوخت‌رسان آمریکا منهدم گردید",
+    "link": "https://sepahnews.ir/fa/news/36167/سامانه-راداری-برد-بلند-و-چندین-فروند-هواپیمای-راهبردی-سوخت‌رسان-آمریکا-منهدم-گردید",
+    "guid": "https://sepahnews.ir/fa/news/36167/سامانه-راداری-برد-بلند-و-چندین-فروند-هواپیمای-راهبردی-سوخت‌رسان-آمریکا-منهدم-گردید",
+    "raw_extraction": {
+      "wave": "null",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": "alUdeid",
+      "loc_raw_text": "پایگاه هوایی آمریکا در العدید قطر",
+      "target": "US long-range radar system and several refueling tanker aircraft at Al Udeid Air Base",
+      "weapon": "null",
+      "outcome": "Long-range radar completely destroyed; several refueling tanker aircraft destroyed; others seriously damaged",
+      "code": "null",
+      "dateP": "null",
+      "time": "null"
+    },
+    "errors": [
+      "unparseable date: null"
+    ],
+    "added_at": "2026-07-21T15:29:27.515Z"
+  },
+  {
+    "title": "پایگاه دشمن در کویت در پاسخ به جنایت ارتش آمریکا، در به شهادت رساندن مردم غیر نظامی به آتش کشیده شد",
+    "link": "https://sepahnews.ir/fa/news/36163/پایگاه-دشمن-در-کویت-در-پاسخ-به-جنایت-ارتش-آمریکا-در-به-شهادت-رساندن-مردم-غیر-نظامی-به-آتش-کشیده-شد",
+    "guid": "https://sepahnews.ir/fa/news/36163/پایگاه-دشمن-در-کویت-در-پاسخ-به-جنایت-ارتش-آمریکا-در-به-شهادت-رساندن-مردم-غیر-نظامی-به-آتش-کشیده-شد",
+    "raw_extraction": {
+      "wave": "null",
+      "force": "unknown",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "پایگاه دشمن در کویت",
+      "target": "enemy base in Kuwait",
+      "weapon": "null",
+      "outcome": "null",
+      "code": "null",
+      "dateP": "null",
+      "time": "null"
+    },
+    "errors": [
+      "loc is null",
+      "unparseable date: null"
+    ],
+    "added_at": "2026-07-21T15:29:39.717Z"
+  },
+  {
+    "title": "رادار کشف و کنترل هوایی و ایستگاه پمپاژ مخازن سوخت جنگنده‌های دشمن در بحرین به طور کامل منهدم گردید",
+    "link": "https://sepahnews.ir/fa/news/36159/رادار-کشف-و-کنترل-هوایی-و-ایستگاه-پمپاژ-مخازن-سوخت-جنگنده‌های-دشمن-در-بحرین-به-طور-کامل-منهدم-گردید",
+    "guid": "https://sepahnews.ir/fa/news/36159/رادار-کشف-و-کنترل-هوایی-و-ایستگاه-پمپاژ-مخازن-سوخت-جنگنده‌های-دشمن-در-بحرین-به-طور-کامل-منهدم-گردید",
+    "raw_extraction": {
+      "wave": "null",
+      "force": "unknown",
+      "source": "sepah",
+      "loc": "sheikhIsa",
+      "loc_raw_text": "پایگاه شیخ عیسی بحرین",
+      "target": "رادار کشف و کنترل هوایی و ایستگاه پمپاژ مخازن سوخت",
+      "weapon": "null",
+      "outcome": "destroyed",
+      "code": "null",
+      "dateP": "null",
+      "time": "null"
+    },
+    "errors": [
+      "unparseable date: null"
+    ],
+    "added_at": "2026-07-21T15:30:16.612Z"
+  }
+]
