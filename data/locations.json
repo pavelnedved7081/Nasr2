@@ -1,0 +1,170 @@
+{
+  "princeHassan": {
+    "name": "پایگاه هوایی پرنس حسن",
+    "country": "jordan",
+    "lat": 30.2833,
+    "lng": 36.0833
+  },
+  "alAzraq": {
+    "name": "پایگاه هوایی الازرق",
+    "country": "jordan",
+    "lat": 31.9328,
+    "lng": 36.8206
+  },
+  "aqaba": {
+    "name": "فرودگاه عقبه",
+    "country": "jordan",
+    "lat": 29.6116,
+    "lng": 35.0182
+  },
+  "rukban": {
+    "name": "منطقه الرکبان",
+    "country": "jordan",
+    "lat": 33.15,
+    "lng": 38.2
+  },
+  "arifjan": {
+    "name": "کمپ عریفجان",
+    "country": "kuwait",
+    "lat": 28.8956,
+    "lng": 48.1633
+  },
+  "aliAlSalem": {
+    "name": "پایگاه هوایی علی‌السالم",
+    "country": "kuwait",
+    "lat": 29.3469,
+    "lng": 47.5213
+  },
+  "ahmadAlJaber": {
+    "name": "پایگاه هوایی احمد الجابر",
+    "country": "kuwait",
+    "lat": 28.9358,
+    "lng": 47.7981
+  },
+  "minaAbdullah": {
+    "name": "میناء عبدالله (مرکز KGL)",
+    "country": "kuwait",
+    "lat": 29.05,
+    "lng": 48.1333
+  },
+  "shuaiba": {
+    "name": "اسکله شعیبه",
+    "country": "kuwait",
+    "lat": 29.045,
+    "lng": 48.155
+  },
+  "alAhmadi": {
+    "name": "بندر الاحمدی",
+    "country": "kuwait",
+    "lat": 29.0769,
+    "lng": 48.1364
+  },
+  "kuwaitCity": {
+    "name": "مرکز مخابراتی (کویت)",
+    "country": "kuwait",
+    "lat": 29.3759,
+    "lng": 47.9774
+  },
+  "udairi": {
+    "name": "اردوگاه العدیری",
+    "country": "kuwait",
+    "lat": 29.6667,
+    "lng": 47.4833
+  },
+  "minaSalman": {
+    "name": "بندر سلمان",
+    "country": "bahrain",
+    "lat": 26.2,
+    "lng": 50.61
+  },
+  "jufair": {
+    "name": "پایگاه جفیر (ناوگان پنجم)",
+    "country": "bahrain",
+    "lat": 26.2285,
+    "lng": 50.6083
+  },
+  "sheikhIsa": {
+    "name": "پایگاه هوایی شیخ عیسی",
+    "country": "bahrain",
+    "lat": 25.9167,
+    "lng": 50.5833
+  },
+  "batelco": {
+    "name": "مرکز داده باتلکو (منامه)",
+    "country": "bahrain",
+    "lat": 26.2235,
+    "lng": 50.5876
+  },
+  "sakhir": {
+    "name": "فرودگاه الصخیر",
+    "country": "bahrain",
+    "lat": 25.9186,
+    "lng": 50.4794
+  },
+  "muharraq": {
+    "name": "المحرق",
+    "country": "bahrain",
+    "lat": 26.2572,
+    "lng": 50.6119
+  },
+  "rifa": {
+    "name": "الرفاع",
+    "country": "bahrain",
+    "lat": 26.13,
+    "lng": 50.555
+  },
+  "awsBahrain": {
+    "name": "مرکز داده آمازون (AWS)، بحرین",
+    "country": "bahrain",
+    "lat": 26.1932,
+    "lng": 50.6462
+  },
+  "alUdeid": {
+    "name": "پایگاه هوایی العدید",
+    "country": "qatar",
+    "lat": 25.1174,
+    "lng": 51.316
+  },
+  "duqm": {
+    "name": "بندر دُقم",
+    "country": "oman",
+    "lat": 19.6667,
+    "lng": 57.7
+  },
+  "ghanam": {
+    "name": "منطقهٔ غنم (مسندم)",
+    "country": "oman",
+    "lat": 26.15,
+    "lng": 56.3
+  },
+  "salamah": {
+    "name": "صخره‌های سلامه",
+    "country": "oman",
+    "lat": 23.588,
+    "lng": 58.545
+  },
+  "tanf": {
+    "name": "پایگاه التنف",
+    "country": "syria",
+    "lat": 33.4864,
+    "lng": 38.2131
+  },
+  "hormuz": {
+    "name": "تنگه هرمز",
+    "country": "hormuz",
+    "lat": 26.5,
+    "lng": 56.25
+  },
+  "northIndianOcean": {
+    "name": "شمال اقیانوس هند",
+    "country": "hormuz",
+    "lat": 15,
+    "lng": 65
+  },
+  "bandarAbbas": {
+    "name": "بندرعباس (پدافند هوایی)",
+    "country": "iran",
+    "lat": 27.1865,
+    "lng": 56.2808
+  }
+}

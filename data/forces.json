@@ -1,0 +1,27 @@
+{
+  "ground": {
+    "label_fa": "زمینی",
+    "label_en": "Ground",
+    "label_ar": "بري"
+  },
+  "naval": {
+    "label_fa": "دریایی",
+    "label_en": "Naval",
+    "label_ar": "بحري"
+  },
+  "aerospace": {
+    "label_fa": "هوافضا",
+    "label_en": "Aerospace",
+    "label_ar": "جوفضائي"
+  },
+  "joint": {
+    "label_fa": "مشترک",
+    "label_en": "Joint",
+    "label_ar": "مشترك"
+  },
+  "unknown": {
+    "label_fa": "نامشخص",
+    "label_en": "Unspecified",
+    "label_ar": "غير محدد"
+  }
+}
