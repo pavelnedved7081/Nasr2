@@ -23,6 +23,14 @@ const OPENROUTER_MODEL = 'openrouter/free';
 
 const RELEVANCE_KEYWORDS = ['اطلاعیه', 'نصر ۲', 'نصر۲', 'صاعقه', 'موج', 'پایگاه', 'کد خبر'];
 
+// A relevant item must ALSO mention one of these to qualify — otherwise a broad-keyword-only
+// match (e.g. an "اطلاعیه" that's really an administrative notice, or a "موج"-mentioning political
+// speech) is not treated as an operational statement. See isRelevant().
+const ACTION_KEYWORDS = [
+  'منهدم', 'هدف قرار', 'به آتش کشید', 'تخریب', 'اصابت',
+  'حمله', 'حملات', 'ضربه', 'ضربات', 'انهدام', 'سرنگون', 'شلیک', 'منفجر',
+];
+
 const VALID_FORCES = ['ground', 'naval', 'aerospace', 'joint', 'unknown'];
 const VALID_SOURCES = ['sepah', 'artesh'];
 
@@ -190,9 +198,143 @@ function itemGuid(item) {
   return guid || item.link || item.title;
 }
 
-function isRelevant(item) {
+const ZERO_WIDTH_RANGE = /[​‌‍‎‏﻿]/g;
+const ARABIC_DIACRITICS_RANGE = /[ً-ْٰۖ-ۭ]/g;
+
+/**
+ * Normalizes a location id/name/model-supplied string for fuzzy comparison: strips diacritics
+ * (Latin combining marks and Arabic tashkeel) and zero-width characters (unifying ZWNJ, which
+ * Persian compound names commonly use in place of a space, with an actual space), folds a few
+ * Arabic/Persian letter variants to their Persian equivalent, lowercases (for Latin chars), and
+ * collapses whitespace.
+ */
+export function normalizeLocText(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(ARABIC_DIACRITICS_RANGE, '')
+    .replace(ZERO_WIDTH_RANGE, ' ')
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ة/g, 'ه')
+    .replace(/[يى]/g, 'ی')
+    .replace(/ك/g, 'ک')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Standard Levenshtein edit distance between two strings. */
+export function levenshtein(a, b) {
+  const m = a.length;
+  const n = b.length;
+  if (m === 0) return n;
+  if (n === 0) return m;
+  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i - 1] === b[j - 1]
+        ? dp[i - 1][j - 1]
+        : 1 + Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]);
+    }
+  }
+  return dp[m][n];
+}
+
+const FUZZY_LOC_EDIT_DISTANCE_MAX = 2;
+const FUZZY_COUNTRY_EDIT_DISTANCE_MAX = 1;
+
+// Generic locational descriptor words that a location's canonical name may include (e.g. "پایگاه
+// هوایی علی‌السالم") but that loc_raw_text often omits (e.g. "پایگاه علی السالم") — stripped out
+// before the substring-containment fallback so the comparison focuses on the distinctive part of
+// the name (e.g. "علی السالم") instead of requiring the full descriptive phrase verbatim.
+const GENERIC_LOCATION_WORDS = new Set(
+  ['پایگاه', 'هوایی', 'فرودگاه', 'منطقه', 'منطقهٔ', 'کمپ', 'اسکله', 'بندر', 'مرکز', 'اردوگاه',
+    'میناء', 'ایستگاه', 'داده', 'مخابراتی', 'پدافند', 'ناوگان', 'پنجم'].map(normalizeLocText)
+);
+
+/** Tokens of a normalized location name with generic descriptor words/punctuation stripped out. */
+function coreLocationTokens(normName) {
+  return normName
+    .replace(/[()]/g, ' ')
+    .split(/\s+/)
+    .filter((t) => t && !GENERIC_LOCATION_WORDS.has(t));
+}
+
+/**
+ * Resolves a model-supplied `loc`/`loc_raw_text` pair against the location gazetteer, tolerating
+ * the failure modes seen in real model output:
+ *  - an exact match (after normalization) against a location id or name — the common case.
+ *  - a small typo in the id (edit distance <= 2), e.g. "alAzrag" for "alAzraq".
+ *  - `loc_raw_text` mentioning a known location's Persian name as a substring, e.g. loc came back
+ *    null but loc_raw_text says "پایگاه علی السالم و جزيره بوبیان" (contains aliAlSalem's name,
+ *    modulo the space-vs-ZWNJ difference normalization unifies).
+ *  - the model mistakenly put a country name/id in `loc` instead of a specific location id (e.g.
+ *    "jordan", or a close typo of it like "jordain") — resolves to `{ resolvedLoc: null,
+ *    countryMatch: <country id> }` rather than a crash or a false location match, so loc_raw_text
+ *    can carry the country-level info for a human reviewer.
+ * Returns `{ resolvedLoc, countryMatch, candidates }`, where `candidates` are the location-id
+ * fuzzy-match candidates considered (id + edit distance, closest first) — useful to attach to a
+ * pending-review entry even when no match was confident enough to accept.
+ */
+export function resolveLocation(loc, locRawText, locations, countries) {
+  const normLoc = normalizeLocText(loc);
+  const normRawText = normalizeLocText(locRawText);
+
+  const locEntries = Object.entries(locations || {}).map(([id, l]) => ({
+    id,
+    normId: normalizeLocText(id),
+    normName: normalizeLocText(l?.name),
+  }));
+
+  if (normLoc) {
+    const exact = locEntries.find((l) => l.normId === normLoc || (l.normName && l.normName === normLoc));
+    if (exact) return { resolvedLoc: exact.id, countryMatch: null, candidates: [] };
+  }
+
+  let candidates = [];
+  if (normLoc) {
+    candidates = locEntries
+      .map((l) => ({ id: l.id, distance: levenshtein(normLoc, l.normId) }))
+      .sort((a, b) => a.distance - b.distance);
+    const best = candidates[0];
+    if (best && best.distance <= FUZZY_LOC_EDIT_DISTANCE_MAX) {
+      return { resolvedLoc: best.id, countryMatch: null, candidates };
+    }
+  }
+
+  if (normRawText) {
+    const substringMatch = locEntries.find((l) => {
+      if (!l.normName) return false;
+      if (normRawText.includes(l.normName)) return true;
+      const core = coreLocationTokens(l.normName);
+      return core.length > 0 && core.every((t) => normRawText.includes(t));
+    });
+    if (substringMatch) return { resolvedLoc: substringMatch.id, countryMatch: null, candidates };
+  }
+
+  if (normLoc) {
+    for (const [countryId, country] of Object.entries(countries || {})) {
+      const labels = [countryId, country?.label_fa, country?.label_en, country?.label_ar]
+        .filter(Boolean)
+        .map(normalizeLocText);
+      const isCountryMatch = labels.some(
+        (label) => label === normLoc || levenshtein(normLoc, label) <= FUZZY_COUNTRY_EDIT_DISTANCE_MAX
+      );
+      if (isCountryMatch) return { resolvedLoc: null, countryMatch: countryId, candidates };
+    }
+  }
+
+  return { resolvedLoc: null, countryMatch: null, candidates };
+}
+
+export function isRelevant(item) {
   const haystack = `${item.title || ''} ${item.description || ''}`;
-  return RELEVANCE_KEYWORDS.some((kw) => haystack.includes(kw));
+  const hasBroadMatch = RELEVANCE_KEYWORDS.some((kw) => haystack.includes(kw));
+  const hasActionMatch = ACTION_KEYWORDS.some((kw) => haystack.includes(kw));
+  return hasBroadMatch && hasActionMatch;
 }
 
 function buildSystemPrompt(locations) {
@@ -233,6 +375,50 @@ function eventJsonSchema() {
   };
 }
 
+/** Strips a leading/trailing ``` or ```json code fence, if present. */
+function stripCodeFence(text) {
+  return text.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
+}
+
+/** Returns the substring from the first "{" to the last "}", or null if no brace pair is found. */
+function extractBraceSubstring(text) {
+  const first = text.indexOf('{');
+  const last = text.lastIndexOf('}');
+  return first !== -1 && last > first ? text.slice(first, last + 1) : null;
+}
+
+/**
+ * Parses a model's JSON response, tolerating common wrapping: a ```/```json code fence, and/or
+ * prose before or after the JSON object (e.g. "We need to..." followed by the object). Tries the
+ * raw content first, then the fence-stripped version, then the substring between the first "{"
+ * and the last "}" (of both the raw and fence-stripped text). If every attempt fails, throws the
+ * error from the last attempt — a genuine extraction failure that should route to pending-review.
+ */
+export function parseModelJson(content) {
+  const candidates = [content];
+
+  const fenceStripped = stripCodeFence(content);
+  if (fenceStripped !== content) candidates.push(fenceStripped);
+
+  const braceSubstring = extractBraceSubstring(content);
+  if (braceSubstring) candidates.push(braceSubstring);
+
+  if (fenceStripped !== content) {
+    const fencedBraceSubstring = extractBraceSubstring(fenceStripped);
+    if (fencedBraceSubstring) candidates.push(fencedBraceSubstring);
+  }
+
+  let lastErr;
+  for (const candidate of candidates) {
+    try {
+      return JSON.parse(candidate);
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr;
+}
+
 async function extractEvent(item, systemPrompt, articleText) {
   const userContent = `عنوان: ${item.title || ''}\n\nمتن: ${articleText || ''}`;
   const res = await fetch(OPENROUTER_URL, {
@@ -261,19 +447,62 @@ async function extractEvent(item, systemPrompt, articleText) {
   const body = await res.json();
   const content = body?.choices?.[0]?.message?.content;
   if (!content) throw new Error('OpenRouter response had no message content');
-  return JSON.parse(content);
+  return parseModelJson(content);
+}
+
+// Hebrew has no legitimate reason to appear anywhere in this Persian-language pipeline's output;
+// its presence alone is a strong signal of corrupted/garbled model output.
+const HEBREW_RANGE = /[֐-׿]/;
+// Other scripts that have no business appearing in Persian Sepah News text either: Cyrillic,
+// Devanagari, Malayalam, Thai, Georgian, Japanese kana, CJK ideographs, Hangul syllables.
+const OTHER_UNUSUAL_SCRIPT_RANGE =
+  /[Ѐ-ӿऀ-ॿഀ-ൿ฀-๿Ⴀ-ჿ぀-ヿ一-鿿가-힯]/;
+const PERSIAN_ARABIC_LETTER_RANGE = /[؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]/;
+const LATIN_LETTER_RANGE = /[A-Za-z]/;
+// Stripped from each token before checking for same-token script mixing, so that legitimate
+// abbreviations followed directly by Persian punctuation (e.g. "MQ-9،") aren't misflagged.
+const PUNCT_TO_STRIP = /[،؛؟٪ـ«»"'`.,!:;()[\]{}/]/g;
+
+/**
+ * Heuristically flags target/weapon/outcome text as corrupted/garbled model output: text
+ * containing Hebrew-range characters or other scripts with no business in Persian Sepah News
+ * text (Cyrillic, Devanagari, Malayalam, CJK, etc.), or a single "word" (whitespace-delimited
+ * token) that mixes Persian/Arabic letters directly against Latin letters with no separator
+ * (e.g. "میش奸", "تحریمейystème", "آochyانه") — the signature of a model response that degenerated
+ * mid-token. Doesn't flag a field that's simply written entirely in English (e.g. "destroyed"),
+ * since that's a legitimate (if untranslated) value, not corruption.
+ */
+export function looksGarbled(text) {
+  if (typeof text !== 'string' || text === '') return false;
+  if (HEBREW_RANGE.test(text)) return true;
+  if (OTHER_UNUSUAL_SCRIPT_RANGE.test(text)) return true;
+  const tokens = text.split(/\s+/);
+  for (const token of tokens) {
+    const cleaned = token.replace(PUNCT_TO_STRIP, '');
+    if (PERSIAN_ARABIC_LETTER_RANGE.test(cleaned) && LATIN_LETTER_RANGE.test(cleaned)) return true;
+  }
+  return false;
 }
 
 /**
  * Validate a merged extraction: the model's fields (wave, force, source, loc, target, weapon,
  * outcome) plus dateG/dateP/code, which are derived independently from the RSS <pubDate> and
  * <link> (see pubDateToDateG/gregorianToJalali/extractCodeFromLink) and attached by the caller
- * before validation — the model is never asked for date or code. Returns {ok, errors}.
+ * before validation — the model is never asked for date or code. `loc` is expected to already
+ * have gone through resolveLocation() (fuzzy/country-mixup resolution) by the time it reaches
+ * here. Returns {ok, errors}.
  */
 export function validateExtraction(ex, locations) {
   const errors = [];
   if (!ex || typeof ex !== 'object') return { ok: false, errors: ['not an object'] };
-  for (const field of ['wave', 'force', 'source', 'target', 'weapon', 'outcome']) {
+
+  // wave is commonly absent from real statements (existing events.json uses "—" for this); default
+  // rather than fail validation on it alone.
+  if (typeof ex.wave !== 'string' || ex.wave.trim() === '') {
+    ex.wave = '—';
+  }
+
+  for (const field of ['force', 'source', 'target', 'weapon', 'outcome']) {
     if (typeof ex[field] !== 'string' || ex[field].trim() === '') {
       errors.push(`missing/empty required field: ${field}`);
     }
@@ -283,6 +512,9 @@ export function validateExtraction(ex, locations) {
   if (ex.loc != null && !(ex.loc in locations)) errors.push(`unknown loc id: ${ex.loc}`);
   if (ex.loc == null) errors.push('loc is null');
   if (!isValidJalaliDateString(ex.dateP)) errors.push(`unparseable date: ${ex.dateP}`);
+  if (looksGarbled(`${ex.target || ''} ${ex.weapon || ''} ${ex.outcome || ''}`)) {
+    errors.push('target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)');
+  }
   return { ok: errors.length === 0, errors };
 }
 
@@ -425,6 +657,7 @@ function computeMeta(events) {
  */
 export async function processItems(items, {
   locations,
+  countries = {},
   events,
   pendingReview,
   seenSet,
@@ -437,6 +670,7 @@ export async function processItems(items, {
   pubDateToDateGFn = pubDateToDateG,
   gregorianToJalaliFn = gregorianToJalali,
   extractCodeFromLinkFn = extractCodeFromLink,
+  resolveLocationFn = resolveLocation,
 }) {
   const newGuids = [];
   let newEventsCount = 0;
@@ -444,7 +678,15 @@ export async function processItems(items, {
   let resolvedCount = 0;
   let id = nextId;
 
-  async function routeToPending(item, guid, extraction, errors) {
+  async function routeToPending(item, guid, extraction, errors, locInfo) {
+    const extra = {};
+    if (locInfo && locInfo.candidates && locInfo.candidates.length) {
+      extra.loc_candidates = locInfo.candidates.slice(0, 5);
+    }
+    if (locInfo && locInfo.countryMatch) {
+      extra.loc_country_match = locInfo.countryMatch;
+    }
+
     const existingIdx = pendingReview.findIndex((p) => p.guid === guid);
     if (existingIdx !== -1) {
       // Already flagged in a previous run: refresh the record but don't open a duplicate Issue.
@@ -453,6 +695,7 @@ export async function processItems(items, {
         ...existing,
         raw_extraction: extraction ? { ...extraction, __ok: undefined } : null,
         errors,
+        ...extra,
         last_checked_at: new Date().toISOString(),
       };
     } else {
@@ -468,6 +711,7 @@ export async function processItems(items, {
         guid,
         raw_extraction: extraction ? { ...extraction, __ok: undefined } : null,
         errors,
+        ...extra,
         added_at: new Date().toISOString(),
         issue_number: issueNumber ?? null,
       });
@@ -480,6 +724,19 @@ export async function processItems(items, {
     if (!guid || seenSet.has(guid)) continue;
 
     if (!isRelevant(item)) {
+      // A previously-pending item can be reclassified as irrelevant once a filter change (e.g. the
+      // action-keyword requirement) tightens; don't leave it orphaned in pending-review forever.
+      const existingIdx = pendingReview.findIndex((p) => p.guid === guid);
+      if (existingIdx !== -1) {
+        const [removed] = pendingReview.splice(existingIdx, 1);
+        resolvedCount++;
+        if (removed.issue_number) {
+          await closePendingReviewIssueFn(
+            removed.issue_number,
+            'Resolved automatically: item reclassified as not relevant on retry.'
+          );
+        }
+      }
       newGuids.push(guid);
       continue;
     }
@@ -487,6 +744,7 @@ export async function processItems(items, {
     try {
       let extraction = null;
       let errors = [];
+      let locInfo = null;
       try {
         const dateG = pubDateToDateGFn(item.pubDate);
         if (!dateG) throw new Error(`missing/unparseable pubDate: "${item.pubDate ?? ''}"`);
@@ -499,13 +757,17 @@ export async function processItems(items, {
         extraction.dateG = dateG;
         extraction.dateP = dateP;
         extraction.code = code;
+
+        locInfo = resolveLocationFn(extraction.loc, extraction.loc_raw_text, locations, countries);
+        extraction.loc = locInfo.resolvedLoc;
+
         ({ ok: extraction.__ok, errors } = validateExtraction(extraction, locations));
       } catch (err) {
         errors = [`extraction failed: ${err.message}`];
       }
 
       if (!extraction || !extraction.__ok) {
-        await routeToPending(item, guid, extraction, errors);
+        await routeToPending(item, guid, extraction, errors, locInfo);
         continue;
       }
 
@@ -548,6 +810,7 @@ export async function processItems(items, {
 
 export async function main({ dataDir = DATA } = {}) {
   const locations = await readJson(dataDir, 'locations.json', {});
+  const countries = await readJson(dataDir, 'countries.json', {});
   const events = await readJson(dataDir, 'events.json', []);
   const seenGuids = await readJson(dataDir, 'seen-guids.json', []);
   const pendingReview = await readJson(dataDir, 'pending-review.json', []);
@@ -565,7 +828,7 @@ export async function main({ dataDir = DATA } = {}) {
   const nextId = events.reduce((max, e) => Math.max(max, e.id), 0) + 1;
 
   const { newGuids, newEventsCount, pendingCount, resolvedCount } = await processItems(items, {
-    locations, events, pendingReview, seenSet, systemPrompt, nextId,
+    locations, countries, events, pendingReview, seenSet, systemPrompt, nextId,
   });
 
   if (newGuids.length) {
