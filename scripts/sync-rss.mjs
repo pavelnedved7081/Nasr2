@@ -11,12 +11,12 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { XMLParser } from 'fast-xml-parser';
+import { parse as parseHtml } from 'node-html-parser';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
 
-const RSS_URL = 'https://sepahnews.ir/fa/rss/allnews';
 const USER_AGENT = 'Nasr2DashboardBot/1.0 (+https://github.com/pavelnedved7081/Nasr2)';
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const OPENROUTER_MODEL = 'openrouter/free';
@@ -29,6 +29,20 @@ const RELEVANCE_KEYWORDS = ['اطلاعیه', 'نصر ۲', 'نصر۲', 'صاعق
 const ACTION_KEYWORDS = [
   'منهدم', 'هدف قرار', 'به آتش کشید', 'تخریب', 'اصابت',
   'حمله', 'حملات', 'ضربه', 'ضربات', 'انهدام', 'سرنگون', 'شلیک', 'منفجر',
+];
+
+const ARTESH_RELEVANCE_KEYWORDS = ['صاعقه', 'ارتش', 'پدافند', 'پهپاد'];
+
+// Artesh (aja.ir) RSS items' <description> only ever contains an <img> tag, never text (confirmed
+// during the aja.ir structure investigation), so unlike Sepah, the relevance filter has only the
+// item's <title> to work with. Real titles don't always contain an explicit destruction verb —
+// e.g. "سامانه‌های موشکی هیمارس در کویت هدف موشک‌های زمین به زمین ارتش" has no verb at all beyond
+// "هدف" — so the bare word "هدف" is included here even though it's more generic than the others.
+// A false positive from that just lands an unrelated item in pending-review (visible to a human,
+// self-correcting) rather than the worse failure mode of a relevant item being silently discarded
+// as "irrelevant" with no article text to have caught it on.
+const ARTESH_ACTION_KEYWORDS = [
+  'منهدم', 'هدف قرار', 'به آتش کشید', 'تخریب', 'اصابت', 'انهدام', 'آماج', 'هدف',
 ];
 
 const VALID_FORCES = ['ground', 'naval', 'aerospace', 'joint', 'unknown'];
@@ -141,6 +155,15 @@ export function extractCodeFromLink(link) {
   return m ? m[1] : '';
 }
 
+/** Artesh (aja.ir) article links carry no numeric news-code — the only identifier is a GUID, and
+ *  it only ever appears in page-plumbing contexts (comment-widget data-ids, print-page links),
+ *  never as a human-visible reference number (confirmed during the aja.ir structure
+ *  investigation) — so `code` is deliberately left empty, same as existing manually-entered
+ *  Artesh events. */
+export function extractArteshCode() {
+  return '';
+}
+
 const ARTICLE_FETCH_TIMEOUT_MS = 10000;
 
 function stripHtml(html) {
@@ -168,6 +191,33 @@ export async function fetchArticleHtml(link, { timeoutMs = ARTICLE_FETCH_TIMEOUT
   try {
     const res = await fetch(link, { headers: { 'User-Agent': USER_AGENT }, signal: controller.signal });
     if (!res.ok) throw new Error(`article fetch failed: ${res.status}`);
+    return await res.text();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// aja.ir (Artesh) is unreachable directly from GitHub Actions (and this held true even from an
+// interactive session's own network), so both its RSS feed and every article page instead go
+// through an Iranian VPS proxy that fetches on our behalf. Address/secret are config — env vars,
+// with only the (non-secret) address defaulted — not embedded in logic, so they're easy to swap
+// if the VPS ever changes.
+const AJA_PROXY_BASE_URL = process.env.AJA_PROXY_URL || 'http://109.122.250.213:8787';
+const AJA_PROXY_SECRET = process.env.AJA_PROXY_SECRET || '';
+
+/** Fetches `url` through the aja.ir proxy (see AJA_PROXY_BASE_URL/AJA_PROXY_SECRET above); used
+ *  as the transport for both the Artesh RSS feed and every Artesh article page. Same timeout/
+ *  error-handling contract as fetchArticleHtml. Throws on timeout/non-2xx/network error. */
+export async function proxyFetch(url, { timeoutMs = ARTICLE_FETCH_TIMEOUT_MS } = {}) {
+  const proxiedUrl = `${AJA_PROXY_BASE_URL.replace(/\/$/, '')}/?url=${encodeURIComponent(url)}`;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(proxiedUrl, {
+      headers: { 'X-Proxy-Secret': AJA_PROXY_SECRET },
+      signal: controller.signal,
+    });
+    if (!res.ok) throw new Error(`proxy fetch failed: ${res.status}`);
     return await res.text();
   } finally {
     clearTimeout(timer);
@@ -223,6 +273,65 @@ export function extractArticleBody(strippedText) {
  *  extractArticleBody). Throws on timeout/non-2xx/network error. */
 export async function fetchArticleText(link, opts) {
   return extractArticleBody(stripHtml(await fetchArticleHtml(link, opts)));
+}
+
+/** Like stripHtml, but first turns <br>/</p>/</div> into newlines and preserves them (collapsing
+ *  only intra-line whitespace) instead of flattening everything into one run-on line — used by
+ *  extractSpanContent so a multi-paragraph article body keeps its paragraph breaks. */
+function stripHtmlPreservingBreaks(html) {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/(p|div)>/gi, '\n')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .split('\n')
+    .map((line) => line.replace(/\s+/g, ' ').trim())
+    .filter(Boolean)
+    .join('\n');
+}
+
+// Sigma Portal (aja.ir's CMS) wraps the real article body in a plain `<span class="Content">` —
+// confirmed identical across every sample fetched during the aja.ir structure investigation. It's
+// deeply nested (spans inside spans inside a wrapping div), so a real HTML parser is used to find
+// it rather than a regex to the next closing tag, which breaks on that nesting. There's also a
+// decoy `<td class="Content">` one level up, wrapping the whole news template (title + summary +
+// body) — querying specifically for `span.Content` skips it. Everything outside the span (the
+// rating widget starting at "امتیاز دهی", the comment form, the site's global footer nav) is page
+// chrome, not part of the article, and is excluded automatically since it's never descended into —
+// unlike Sepah, no separate trailing-noise landmark search is needed.
+/** Extracts and returns the clean text of aja.ir's `<span class="Content">` article-body element
+ *  from a fetched article page's raw HTML, or null if the element isn't found — routes the item
+ *  to pending-review instead of guessing at an unrecognized page structure. */
+export function extractSpanContent(html) {
+  if (typeof html !== 'string' || html === '') return null;
+  let root;
+  try {
+    root = parseHtml(html, { lowerCaseTagName: true });
+  } catch {
+    return null;
+  }
+  const span = root.querySelector('span.Content');
+  if (!span) return null;
+  const text = stripHtmlPreservingBreaks(span.innerHTML);
+  return text || null;
+}
+
+/** Fetches an Artesh (aja.ir) article page via the proxy and extracts its clean body text (see
+ *  extractSpanContent). Throws if the page fetch fails/times out, or if the expected content span
+ *  isn't found, so the item routes to pending-review instead of sending the model an empty
+ *  string. */
+export async function fetchArteshArticleText(link, opts) {
+  const html = await proxyFetch(link, opts);
+  const body = extractSpanContent(html);
+  if (body == null) {
+    throw new Error('article body extraction returned no content (span.Content not found)');
+  }
+  return body;
 }
 
 const META_PUBLISHED_TIME_PROPS = [
@@ -450,10 +559,10 @@ export function resolveLocation(loc, locRawText, locations, countries) {
   return { resolvedLoc: null, countryMatch: null, candidates };
 }
 
-export function isRelevant(item) {
+export function isRelevant(item, { broadKeywords = RELEVANCE_KEYWORDS, actionKeywords = ACTION_KEYWORDS } = {}) {
   const haystack = `${item.title || ''} ${item.description || ''}`;
-  const hasBroadMatch = RELEVANCE_KEYWORDS.some((kw) => haystack.includes(kw));
-  const hasActionMatch = ACTION_KEYWORDS.some((kw) => haystack.includes(kw));
+  const hasBroadMatch = broadKeywords.some((kw) => haystack.includes(kw));
+  const hasActionMatch = actionKeywords.some((kw) => haystack.includes(kw));
   return hasBroadMatch && hasActionMatch;
 }
 
@@ -461,7 +570,7 @@ function buildSystemPrompt(locations) {
   const locList = Object.entries(locations)
     .map(([id, loc]) => `  - ${id}: ${loc.name} (${loc.country})`)
     .join('\n');
-  return `شما یک استخراج‌کنندهٔ داده هستید. متن کامل یک خبر فارسی از سپاه‌نیوز دریافت می‌کنید که ممکن است دربارهٔ یک حملهٔ مشخص در عملیات «نصر ۲» یا «صاعقه» باشد.
+  return `شما یک استخراج‌کنندهٔ داده هستید. متن کامل یک خبر فارسی از سپاه‌نیوز یا پایگاه اطلاع‌رسانی ارتش (aja.ir) دریافت می‌کنید که ممکن است دربارهٔ یک حملهٔ مشخص در عملیات «نصر ۲» یا «صاعقه» باشد.
 
 فقط از میان این مکان‌های معتبر (شناسه: نام) انتخاب کنید — هیچ شناسهٔ دیگری یا مختصات جدید نسازید:
 ${locList}
@@ -794,6 +903,29 @@ function buildEventRecord(id, extraction) {
   };
 }
 
+// The two RSS sources this pipeline watches. Everything that differs between them — how their
+// feed/article pages are fetched, how a "code" is derived (if at all), and what keyword combo
+// counts as relevant — lives here; the extraction/validation pipeline below (processItems) is
+// otherwise identical for both, driven entirely by these per-source functions/lists.
+const SOURCES = [
+  {
+    id: 'sepah',
+    rssUrl: 'https://sepahnews.ir/fa/rss/allnews',
+    fetchFn: fetchArticleHtml,
+    fetchArticleTextFn: fetchArticleText,
+    codeFromLink: extractCodeFromLink,
+    relevanceKeywords: { broad: RELEVANCE_KEYWORDS, action: ACTION_KEYWORDS },
+  },
+  {
+    id: 'artesh',
+    rssUrl: 'https://www.aja.ir/portal/rsspage/?fa-ir/news/45459/45608/اخبار',
+    fetchFn: proxyFetch,
+    fetchArticleTextFn: fetchArteshArticleText,
+    codeFromLink: extractArteshCode,
+    relevanceKeywords: { broad: ARTESH_RELEVANCE_KEYWORDS, action: ARTESH_ACTION_KEYWORDS },
+  },
+];
+
 /**
  * Processes pending-review entries (retried directly by their own stored `link`) and fresh RSS
  * items, appending to `events` or `pendingReview` in place.
@@ -827,6 +959,15 @@ function buildEventRecord(id, extraction) {
  * (from an earlier run) are matched by guid and updated in place rather than appended again,
  * and no second GitHub Issue is opened for them; the existing `issue_number` is carried over so
  * a later success can close it.
+ *
+ * `sourceId` (e.g. "sepah"/"artesh") is optional and, when provided: (1) is namespaced onto every
+ * freshly-computed guid ("<sourceId>:<guid>") before it's checked against `seenSet`/pendingReview
+ * or added to `newGuids`, so two sources can never collide on a bare guid that happens to match
+ * (see main(), which keeps one shared seen-guids.json/pending-review.json across both sources);
+ * and (2) overrides the model-supplied `source` field with `sourceId` directly, the same way
+ * dateG/dateP/code are derived independently rather than trusted from the model. Left `null`
+ * (the default), guids are used bare and `source` is left exactly as the model returned it —
+ * this is what every pre-existing (single-source) caller/test still gets.
  */
 export async function processItems(items, {
   locations,
@@ -836,6 +977,7 @@ export async function processItems(items, {
   seenSet,
   systemPrompt,
   nextId,
+  sourceId = null,
   extractEventFn = extractEvent,
   openPendingReviewIssueFn = openPendingReviewIssue,
   closePendingReviewIssueFn = closePendingReviewIssue,
@@ -846,6 +988,7 @@ export async function processItems(items, {
   gregorianToJalaliFn = gregorianToJalali,
   extractCodeFromLinkFn = extractCodeFromLink,
   resolveLocationFn = resolveLocation,
+  isRelevantFn = isRelevant,
 }) {
   const newGuids = [];
   let newEventsCount = 0;
@@ -932,6 +1075,7 @@ export async function processItems(items, {
       extraction.dateG = dateG;
       extraction.dateP = dateP;
       extraction.code = code;
+      if (sourceId) extraction.source = sourceId;
 
       locInfo = resolveLocationFn(extraction.loc, extraction.loc_raw_text, locations, countries);
       extraction.loc = locInfo.resolvedLoc;
@@ -990,10 +1134,11 @@ export async function processItems(items, {
 
   // Phase 2: process the fresh RSS feed as before.
   for (const item of items) {
-    const guid = itemGuid(item);
+    const rawGuid = itemGuid(item);
+    const guid = rawGuid && sourceId ? `${sourceId}:${rawGuid}` : rawGuid;
     if (!guid || seenSet.has(guid) || resolvedThisRun.has(guid)) continue;
 
-    if (!isRelevant(item)) {
+    if (!isRelevantFn(item)) {
       // A previously-pending item can be reclassified as irrelevant once a filter change (e.g. the
       // action-keyword requirement) tightens; don't leave it orphaned in pending-review forever.
       const existingIdx = pendingReview.findIndex((p) => p.guid === guid);
@@ -1017,45 +1162,116 @@ export async function processItems(items, {
   return { newGuids, newEventsCount, pendingCount, resolvedCount };
 }
 
+/** True source ids (e.g. "sepah") for the split guid's leading segment, false for anything else
+ *  (including a bare legacy guid with no colon at all, or a URL-shaped guid like
+ *  "https://sepahnews.ir/..." whose first segment is "https"). */
+function hasKnownSourcePrefix(guid) {
+  if (typeof guid !== 'string') return false;
+  const colonIdx = guid.indexOf(':');
+  const prefix = colonIdx === -1 ? '' : guid.slice(0, colonIdx);
+  return SOURCES.some((s) => s.id === prefix);
+}
+
+/** Namespaces a guid onto its source ("<sourceId>:<guid>"), unless it's already namespaced.
+ *  seen-guids.json/pending-review.json predate multi-source support and hold bare guids that were
+ *  all produced by the Sepah pipeline (the only source that existed then) — those get the "sepah:"
+ *  prefix applied here on read, so they line up with the namespaced format new entries use without
+ *  needing a one-off migration script, and so an old pending Sepah item keeps being retried
+ *  (matched, source-filtered) exactly as before. */
+function namespaceLegacyGuid(guid) {
+  if (typeof guid !== 'string' || guid === '') return guid;
+  return hasKnownSourcePrefix(guid) ? guid : `sepah:${guid}`;
+}
+
+function sourceLabel(id) {
+  return id.charAt(0).toUpperCase() + id.slice(1);
+}
+
 export async function main({ dataDir = DATA } = {}) {
   const locations = await readJson(dataDir, 'locations.json', {});
   const countries = await readJson(dataDir, 'countries.json', {});
   const events = await readJson(dataDir, 'events.json', []);
-  const seenGuids = await readJson(dataDir, 'seen-guids.json', []);
+  const rawSeenGuids = await readJson(dataDir, 'seen-guids.json', []);
   const pendingReview = await readJson(dataDir, 'pending-review.json', []);
-  const seenSet = new Set(seenGuids);
 
-  const res = await fetch(RSS_URL, { headers: { 'User-Agent': USER_AGENT } });
-  if (!res.ok) throw new Error(`RSS fetch failed: ${res.status}`);
-  const xml = await res.text();
-  const parser = new XMLParser({ ignoreAttributes: false });
-  const feed = parser.parse(xml);
-  const rawItems = feed?.rss?.channel?.item;
-  const items = Array.isArray(rawItems) ? rawItems : rawItems ? [rawItems] : [];
+  const seenGuids = rawSeenGuids.map(namespaceLegacyGuid);
+  const seenSet = new Set(seenGuids);
+  for (const pending of pendingReview) {
+    if (pending && typeof pending === 'object') pending.guid = namespaceLegacyGuid(pending.guid);
+  }
 
   const systemPrompt = buildSystemPrompt(locations);
-  const nextId = events.reduce((max, e) => Math.max(max, e.id), 0) + 1;
+  const allNewGuids = [];
+  let totalNewEvents = 0;
+  let totalPending = 0;
+  let totalResolved = 0;
+  const summaryLines = [];
 
-  const { newGuids, newEventsCount, pendingCount, resolvedCount } = await processItems(items, {
-    locations, countries, events, pendingReview, seenSet, systemPrompt, nextId,
-  });
+  for (const source of SOURCES) {
+    const sourcePrefix = `${source.id}:`;
+    // Scope pending-review retries (processItems' Phase 1) to this source's own entries only —
+    // otherwise e.g. Sepah's direct-fetch transport would be used to retry an Artesh pending item
+    // (an aja.ir link), which can only ever fail, and would wastefully double-process every
+    // pending item once per source on every run.
+    const sourcePending = pendingReview.filter((p) => (p.guid || '').startsWith(sourcePrefix));
+    const otherPending = pendingReview.filter((p) => !(p.guid || '').startsWith(sourcePrefix));
 
-  if (newGuids.length) {
-    await writeJson(dataDir, 'seen-guids.json', [...seenGuids, ...newGuids]);
+    try {
+      const xml = await source.fetchFn(source.rssUrl);
+      const parser = new XMLParser({ ignoreAttributes: false });
+      const feed = parser.parse(xml);
+      const rawItems = feed?.rss?.channel?.item;
+      const items = Array.isArray(rawItems) ? rawItems : rawItems ? [rawItems] : [];
+
+      const nextId = events.reduce((max, e) => Math.max(max, e.id), 0) + 1;
+
+      const { newGuids, newEventsCount, pendingCount, resolvedCount } = await processItems(items, {
+        locations, countries, events, pendingReview: sourcePending, seenSet, systemPrompt, nextId,
+        sourceId: source.id,
+        fetchArticleTextFn: source.fetchArticleTextFn,
+        fetchArticleHtmlFn: source.fetchFn,
+        extractCodeFromLinkFn: source.codeFromLink,
+        isRelevantFn: (item) => isRelevant(item, source.relevanceKeywords),
+      });
+
+      pendingReview.length = 0;
+      pendingReview.push(...otherPending, ...sourcePending);
+
+      allNewGuids.push(...newGuids);
+      totalNewEvents += newEventsCount;
+      totalPending += pendingCount;
+      totalResolved += resolvedCount;
+
+      summaryLines.push(
+        `${sourceLabel(source.id)}: ${items.length} items — ${newEventsCount} new, ${pendingCount} pending, ${newGuids.length - newEventsCount} irrelevant.`
+      );
+    } catch (err) {
+      // A whole-source failure (e.g. the aja.ir proxy VPS is down) must not prevent the other
+      // source from syncing — restore its pending entries untouched and move on, same "one bad
+      // part can't crash the run" guarantee processItems already gives per-item.
+      pendingReview.length = 0;
+      pendingReview.push(...otherPending, ...sourcePending);
+      console.error(`sync-rss: source "${source.id}" failed entirely, skipping this run: ${err.message}`);
+      summaryLines.push(`${sourceLabel(source.id)}: failed to sync (${err.message}).`);
+    }
   }
-  if (newEventsCount > 0) {
+
+  if (allNewGuids.length) {
+    await writeJson(dataDir, 'seen-guids.json', [...seenGuids, ...allNewGuids]);
+  }
+  if (totalNewEvents > 0) {
     await writeJson(dataDir, 'events.json', events);
     await writeJson(dataDir, 'meta.json', computeMeta(events));
   }
-  if (pendingCount > 0 || resolvedCount > 0) {
+  if (totalPending > 0 || totalResolved > 0) {
     await writeJson(dataDir, 'pending-review.json', pendingReview);
   }
 
-  console.log(`Processed ${items.length} RSS items: ${newEventsCount} new events (${resolvedCount} resolved from pending), ${pendingCount} pending review, ${newGuids.length - newEventsCount} irrelevant.`);
+  for (const line of summaryLines) console.log(line);
 
   const outFile = process.env.GITHUB_OUTPUT;
   if (outFile) {
-    await fs.appendFile(outFile, `new_events_count=${newEventsCount}\npending_count=${pendingCount}\nresolved_count=${resolvedCount}\n`);
+    await fs.appendFile(outFile, `new_events_count=${totalNewEvents}\npending_count=${totalPending}\nresolved_count=${totalResolved}\n`);
   }
 }
 

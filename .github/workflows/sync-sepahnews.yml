@@ -1,4 +1,4 @@
-name: Sync Sepah News RSS
+name: Sync RSS sources (Sepah + Artesh)
 
 on:
   schedule:
@@ -34,6 +34,8 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          AJA_PROXY_URL: ${{ secrets.AJA_PROXY_URL }}
+          AJA_PROXY_SECRET: ${{ secrets.AJA_PROXY_SECRET }}
         run: node scripts/sync-rss.mjs
 
       - name: Configure git identity
@@ -45,7 +47,7 @@ jobs:
         run: |
           if ! git diff --quiet -- data/events.json data/meta.json; then
             git add data/events.json data/meta.json data/seen-guids.json
-            git commit -m "bot: sync sepahnews RSS (${{ steps.sync.outputs.new_events_count }} new events)"
+            git commit -m "bot: sync RSS sources (${{ steps.sync.outputs.new_events_count }} new events)"
           fi
 
       - name: Commit pending-review updates
