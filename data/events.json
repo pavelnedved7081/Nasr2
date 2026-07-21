@@ -2572,5 +2572,135 @@
       "ar": ""
     },
     "code": "36183"
+  },
+  {
+    "id": 100,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "1405-03-30T22:51:00",
+    "wave": "24",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "United States",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "missile",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "destroyed",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36259"
+  },
+  {
+    "id": 101,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "سه‌شنبه ۳۰ تیر ۱۴۰۵ - ۰۹:۰۰",
+    "wave": "|mizan",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "princeHassan",
+    "target": {
+      "fa": "نظام Radar دفاع موشکی امریکایی",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک کروز",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "تخریب یک سامانه رادار دفاع موشکی و انهدام یک فروند هواپیمای اف 15",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36239"
+  },
+  {
+    "id": 102,
+    "dateG": "2026-07-20",
+    "dateP": "۲۹ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "موج ۲۳",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "شیلترهای جنگنده‌ها و رمپ توقف",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشکی و پهپادی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "درهم کوبیده شدند",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36228"
+  },
+  {
+    "id": 103,
+    "dateG": "2026-07-20",
+    "dateP": "۲۹ تیر ۱۴۰۵",
+    "time": "",
+    "wave": "موج ۲۲ عملیات نصر ۲",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "سامانه رادار اخطار اولیه دشمن آمریکایی، یک سوله تجهیزات و قطعات هوایی و یک آشیانه پهپادهای MQ9 آمریکا",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپادی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "منهدم شدند",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36225"
+  },
+  {
+    "id": 104,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "جمعМО ۲۶ تیر ۱۴۰۵ - ۱۹:۵۱",
+    "wave": "unknown",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "ramshir",
+    "target": {
+      "fa": "AeroVironment RQ-11 Raven",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "RQ-11 Raven drone",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "destroyed",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36168"
   }
 ]
