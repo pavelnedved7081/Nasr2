@@ -174,9 +174,55 @@ export async function fetchArticleHtml(link, { timeoutMs = ARTICLE_FETCH_TIMEOUT
   }
 }
 
-/** Fetch an article page and return its stripped text content. Throws on timeout/non-2xx/network error. */
+// Sepah News article pages interleave a large "related headlines" sidebar/widget before
+// (and after) the real statement body, with no HTML separator once tags are stripped — a
+// page has no per-article content container to select instead (confirmed by inspecting the
+// raw HTML of news/36167: the only candidate div, "body main", wraps the whole page, not
+// just the article). This was the root cause of item 36167 extracting the wrong location
+// (a headline about a different, unrelated statement bled into the model's input). These
+// two text landmarks reliably bracket the real body instead:
+//   - start: right after "دانلود همه تصاویر" (the download-all-images button that
+//     immediately precedes every genuine statement's opening line), or the first
+//     "روابط عمومی سپاه پاسداران انقلاب اسلامی" if that's missing (some statements have no
+//     image gallery).
+//   - end: the first "اشتراک گذاری" (share widget) after the start landmark — UI chrome
+//     marking the end of the article body and the start of the tags/most-viewed widget.
+const IMAGES_LANDMARK = 'دانلود همه تصاویر';
+const STATEMENT_OPENING = 'روابط عمومی سپاه پاسداران انقلاب اسلامی';
+const SHARE_WIDGET_LANDMARK = 'اشتراک گذاری';
+
+/** Strips the related-headlines noise from a fetched article page's stripped text, keeping
+ *  only the real statement body. Returns `strippedText` unchanged (but logs distinctly) if
+ *  neither landmark is found, rather than guessing at an unfamiliar page structure. */
+export function extractArticleBody(strippedText) {
+  if (typeof strippedText !== 'string' || strippedText === '') return strippedText;
+
+  let startIdx = strippedText.lastIndexOf(IMAGES_LANDMARK);
+  if (startIdx !== -1) {
+    startIdx += IMAGES_LANDMARK.length;
+  } else {
+    startIdx = strippedText.indexOf(STATEMENT_OPENING);
+  }
+  if (startIdx === -1) {
+    console.error(
+      'extractArticleBody: neither the images-landmark nor the statement-opening landmark ' +
+        'was found; sending the full stripped text unchanged (page structure may have changed)'
+    );
+    return strippedText;
+  }
+
+  let body = strippedText.slice(startIdx).trim();
+  const endIdx = body.indexOf(SHARE_WIDGET_LANDMARK);
+  if (endIdx !== -1) {
+    body = body.slice(0, endIdx).trim();
+  }
+  return body;
+}
+
+/** Fetch an article page and return its stripped, noise-free text content (see
+ *  extractArticleBody). Throws on timeout/non-2xx/network error. */
 export async function fetchArticleText(link, opts) {
-  return stripHtml(await fetchArticleHtml(link, opts));
+  return extractArticleBody(stripHtml(await fetchArticleHtml(link, opts)));
 }
 
 const META_PUBLISHED_TIME_PROPS = [
