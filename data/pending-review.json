@@ -3,57 +3,37 @@
     "title": "سامانه راداری برد بلند و چندین فروند هواپیمای راهبردی سوخت‌رسان آمریکا منهدم گردید",
     "link": "https://sepahnews.ir/fa/news/36167/سامانه-راداری-برد-بلند-و-چندین-فروند-هواپیمای-راهبردی-سوخت‌رسان-آمریکا-منهدم-گردید",
     "guid": "https://sepahnews.ir/fa/news/36167/سامانه-راداری-برد-بلند-و-چندین-فروند-هواپیمای-راهبردی-سوخت‌رسان-آمریکا-منهدم-گردید",
-    "raw_extraction": null,
-    "errors": [
-      "extraction failed: Expected double-quoted property name in JSON at position 58"
-    ],
-    "added_at": "2026-07-21T15:29:27.515Z",
-    "last_checked_at": "2026-07-21T20:11:50.337Z"
-  },
-  {
-    "title": "پایگاه دشمن در کویت در پاسخ به جنایت ارتش آمریکا، در به شهادت رساندن مردم غیر نظامی به آتش کشیده شد",
-    "link": "https://sepahnews.ir/fa/news/36163/پایگاه-دشمن-در-کویت-در-پاسخ-به-جنایت-ارتش-آمریکا-در-به-شهادت-رساندن-مردم-غیر-نظامی-به-آتش-کشیده-شد",
-    "guid": "https://sepahnews.ir/fa/news/36163/پایگاه-دشمن-در-کویت-در-پاسخ-به-جنایت-ارتش-آمریکا-در-به-شهادت-رساندن-مردم-غیر-نظامی-به-آتش-کشیده-شد",
     "raw_extraction": {
-      "wave": "نصر ۲",
-      "force": "aerospace",
+      "wave": " سے艦 زنده یا تضاد.herokuapp.com",
+      "force": "unknown",
       "source": "sepah",
       "loc": "aliAlSalem",
-      "loc_raw_text": "پایگاه علی السالم و جزیره بوبیان",
-      "target": "پایگاه دشمن در کویت",
-      "weapon": "موشک‌های بالستیک، متוכנית هوایی",
-      "outcome": "تخریب Radius، انهدام فروند‌های هواپیما، Gomez‌های مقابله",
-      "time": "سه شنبه ۲۶ تير ۱۴۰۵ - ۰۹:۰۱",
+      "loc_raw_text": "پایگاه هوایی علی السالم و جزیره بوبیان",
+      "target": "سامانه راداری برد بلند و چند فروند هواپیمای راهبردی سوخت‌رسان",
+      "weapon": "موشک بالستیک و پ чуть‌های MQ9",
+      "outcome": "منHDAM و آسیب جدی به زیرساختographical dijelArena",
+      "time": "1405-06-13 13:32",
       "dateG": "2026-07-17",
       "dateP": "۲۶ تیر ۱۴۰۵",
-      "code": "36163"
+      "code": "36167"
     },
     "errors": [
       "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
-    "added_at": "2026-07-21T15:29:39.717Z",
-    "last_checked_at": "2026-07-21T20:12:04.959Z"
+    "added_at": "2026-07-21T15:29:27.515Z",
+    "last_checked_at": "2026-07-21T20:28:26.920Z",
+    "pubDate": "17 Jul 2026 13:32:20 +0330"
   },
   {
     "title": "رادار کشف و کنترل هوایی و ایستگاه پمپاژ مخازن سوخت جنگنده‌های دشمن در بحرین به طور کامل منهدم گردید",
     "link": "https://sepahnews.ir/fa/news/36159/رادار-کشف-و-کنترل-هوایی-و-ایستگاه-پمپاژ-مخازن-سوخت-جنگنده‌های-دشمن-در-بحرین-به-طور-کامل-منهدم-گردید",
     "guid": "https://sepahnews.ir/fa/news/36159/رادار-کشف-و-کنترل-هوایی-و-ایستگاه-پمپاژ-مخازن-سوخت-جنگنده‌های-دشمن-در-بحرین-به-طور-کامل-منهدم-گردید",
-    "raw_extraction": {
-      "wave": "null",
-      "force": "unknown",
-      "source": "sepah",
-      "loc": "sheikhIsa",
-      "loc_raw_text": "پایگاه شیخ عیسی بحرین",
-      "target": "رادار کشف و کنترل هوایی و ایستگاه پمپاژ مخازن سوخت",
-      "weapon": "null",
-      "outcome": "destroyed",
-      "code": "null",
-      "dateP": "null",
-      "time": "null"
-    },
+    "raw_extraction": null,
     "errors": [
-      "unparseable date: null"
+      "extraction failed: missing/unparseable pubDate: \"\""
     ],
-    "added_at": "2026-07-21T15:30:16.612Z"
+    "added_at": "2026-07-21T15:30:16.612Z",
+    "pubDate": null,
+    "last_checked_at": "2026-07-21T20:27:46.491Z"
   }
 ]
