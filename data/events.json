@@ -2364,5 +2364,213 @@
       "ar": ""
     },
     "code": ""
+  },
+  {
+    "id": 92,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "سه‌شنبه ۳۰ تير ۱۴۰۵ - ۰۹:۲۸",
+    "wave": "24",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "rukban",
+    "target": {
+      "fa": "US forces",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "ballistic missile",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "enemy casualties",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36241"
+  },
+  {
+    "id": 93,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "تاسیسات مهم و محل استقرار دشمن آمریکایی در یک پایگاه هوایی در اردن هدف موشک های بالستیک قرار گرفت",
+    "wave": "نصر۲",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "شیلترهای جنگنده‌ها و یک رمپ بزرگ توقف در پایگاه آمریکا",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشکی و پهپادی",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "در هم کوبیده شد",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36238"
+  },
+  {
+    "id": 94,
+    "dateG": "2026-07-21",
+    "dateP": "۳۰ تیر ۱۴۰۵",
+    "time": "سه‌شنبه ۳۰ تير ۱۴۰۵ - ۰۴:۳۲",
+    "wave": "24",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "muharraq",
+    "target": {
+      "fa": "رادار و سامانه پدافندی آمریکایی",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "موشک کروز",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "تخریب کامل",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36236"
+  },
+  {
+    "id": 95,
+    "dateG": "2026-07-20",
+    "dateP": "۲۹ تیر ۱۴۰۵",
+    "time": "2024-02-29T05:04",
+    "wave": "21",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "aqaba",
+    "target": {
+      "fa": "balistic missile base",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "ballistic missiles",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": " Destruction of F-15 aircraft, radar systems, and Isa network infrastructure in Aqaba. Heavy attacks on American-controlled targets and infrastructure.",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36223"
+  },
+  {
+    "id": 96,
+    "dateG": "2026-07-18",
+    "dateP": "۲۷ تیر ۱۴۰۵",
+    "time": "شنبه ۲۷ تير ۱۴۰۵ - ۱۱:۲۴",
+    "wave": "20",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "alAzraq",
+    "target": {
+      "fa": "US base at Al-Azraq, Jordan",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "missile, drone",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "At least two US fighter jets and three US aircraft completely destroyed, several others heavily damaged",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36188"
+  },
+  {
+    "id": 97,
+    "dateG": "2026-07-18",
+    "dateP": "۲۷ تیر ۱۴۰۵",
+    "time": "شنبه ۲۷ تیر ۱۴۰۵ - ۱۱:۲۲",
+    "wave": "19",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "alAhmadi",
+    "target": {
+      "fa": "United Nations",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "cruise missile",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "destroyed",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36187"
+  },
+  {
+    "id": 98,
+    "dateG": "2026-07-18",
+    "dateP": "۲۷ تیر ۱۴۰۵",
+    "time": "شنبه ۲۷ تير ۱۴۰۵ - ۰۷:۵۰",
+    "wave": "18",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "aliAlSalem",
+    "target": {
+      "fa": "رادار پایگاه علی السالم آمریکا",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "پهپاد (UAV)",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "منهدم شد",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36186"
+  },
+  {
+    "id": 99,
+    "dateG": "2026-07-17",
+    "dateP": "۲۶ تیر ۱۴۰۵",
+    "time": "شنبه ۲۷ تير ۱۴۰۵ - ۰۰:۰۵",
+    "wave": "25",
+    "force": "aerospace",
+    "source": "sepah",
+    "loc": "awsBahrain",
+    "target": {
+      "fa": "دپوی شمپادهای آمریکایی (شناورهای بدون سرنشین)",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "by ballistic missiles and UAVs",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "destroyed",
+      "en": "",
+      "ar": ""
+    },
+    "code": "36183"
   }
 ]
