@@ -1,0 +1,68 @@
+name: Sync Sepah News RSS
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: sync-sepahnews
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run RSS sync
+        id: sync
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/sync-rss.mjs
+
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit synced events
+        run: |
+          if ! git diff --quiet -- data/events.json data/meta.json; then
+            git add data/events.json data/meta.json data/seen-guids.json
+            git commit -m "bot: sync sepahnews RSS (${{ steps.sync.outputs.new_events_count }} new events)"
+          fi
+
+      - name: Commit pending-review updates
+        run: |
+          if ! git diff --quiet -- data/pending-review.json; then
+            git add data/pending-review.json data/seen-guids.json
+            git commit -m "bot: flag ${{ steps.sync.outputs.pending_count }} item(s) for manual review"
+          fi
+
+      - name: Commit remaining seen-guids changes
+        run: |
+          if ! git diff --quiet -- data/seen-guids.json; then
+            git add data/seen-guids.json
+            git commit -m "bot: mark irrelevant RSS items as seen"
+          fi
+
+      - name: Push
+        run: |
+          git pull --rebase origin main
+          git push origin HEAD:main
