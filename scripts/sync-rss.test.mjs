@@ -13,10 +13,25 @@ import {
   validateExtraction,
   processItems,
   main,
+  parseModelJson,
+  resolveLocation,
+  normalizeLocText,
+  levenshtein,
+  looksGarbled,
+  isRelevant,
 } from './sync-rss.mjs';
 
 const LOCATIONS = {
   princeHassan: { name: 'پایگاه هوایی پرنس حسن', country: 'jordan', lat: 30.2833, lng: 36.0833 },
+  alAzraq: { name: 'پایگاه هوایی الازرق', country: 'jordan', lat: 31.9328, lng: 36.8206 },
+  aliAlSalem: { name: 'پایگاه هوایی علی‌السالم', country: 'kuwait', lat: 29.3469, lng: 47.5213 },
+  ramshir: { name: 'منطقه رامشیر (پدافند هوایی)', country: 'iran', lat: 30.9, lng: 49.4 },
+};
+
+const COUNTRIES = {
+  jordan: { label_fa: 'اردن', label_en: 'Jordan', label_ar: 'الأردن' },
+  kuwait: { label_fa: 'کویت', label_en: 'Kuwait', label_ar: 'الكويت' },
+  iran: { label_fa: 'ایران (پدافند داخلی)', label_en: 'Iran (domestic air defense)', label_ar: 'إيران' },
 };
 
 function validExtraction(overrides = {}) {
@@ -39,7 +54,7 @@ function rssItem(guid, overrides = {}) {
     guid,
     link: `https://sepahnews.ir/fa/news/36159/${guid}`,
     title: 'اطلاعیه نصر ۲',
-    description: 'موج اول عملیات صاعقه',
+    description: 'موج اول عملیات صاعقه، پایگاه دشمن منهدم شد',
     pubDate: 'Wed, 08 Jul 2026 08:00:00 +0330',
     ...overrides,
   };
@@ -141,6 +156,190 @@ test('validateExtraction does not require the model to supply code', () => {
   const ex = validExtraction({ dateG: '2026-07-08', dateP: '۱۷ تیر ۱۴۰۵', code: '' });
   const { ok } = validateExtraction(ex, LOCATIONS);
   assert.equal(ok, true);
+});
+
+// --- Fix 3: wave is optional, defaults to "—" ---
+
+test('validateExtraction defaults a missing wave to "—" and does not fail validation on it', () => {
+  const ex = validExtraction({ dateG: '2026-07-08', dateP: '۱۷ تیر ۱۴۰۵' });
+  delete ex.wave;
+  const { ok, errors } = validateExtraction(ex, LOCATIONS);
+  assert.equal(ok, true);
+  assert.equal(ex.wave, '—');
+  assert.ok(!errors.some((e) => e.includes('wave')));
+});
+
+test('validateExtraction defaults an empty-string wave to "—"', () => {
+  const ex = validExtraction({ wave: '  ', dateG: '2026-07-08', dateP: '۱۷ تیر ۱۴۰۵' });
+  const { ok } = validateExtraction(ex, LOCATIONS);
+  assert.equal(ok, true);
+  assert.equal(ex.wave, '—');
+});
+
+test('validateExtraction still fails when a genuinely required field (e.g. target) is missing', () => {
+  const ex = validExtraction({ target: '', dateG: '2026-07-08', dateP: '۱۷ تیر ۱۴۰۵' });
+  const { ok, errors } = validateExtraction(ex, LOCATIONS);
+  assert.equal(ok, false);
+  assert.ok(errors.some((e) => e.includes('target')));
+});
+
+// --- Fix 4: output sanity check (garbled/mixed-script text) ---
+
+test('looksGarbled flags Hebrew-range characters', () => {
+  assert.equal(looksGarbled('به אש کشیدن یک آشیانه'), true);
+});
+
+test('looksGarbled flags a token mixing Persian and Latin letters with no separator', () => {
+  assert.equal(looksGarbled('یک آochyانه پهپاد'), true);
+  assert.equal(looksGarbled('صrettet 26 تير'), true);
+});
+
+test('looksGarbled flags other unusual scripts (e.g. Malayalam) mixed into Persian output', () => {
+  assert.equal(looksGarbled('صampiyonനം ingresoisted در پایگاه'), true);
+});
+
+test('looksGarbled does not flag clean Persian text', () => {
+  assert.equal(looksGarbled('تخریب سامانه راداری و انهدام فرودگاه'), false);
+});
+
+test('looksGarbled does not flag a field written entirely in English (untranslated, not corrupted)', () => {
+  assert.equal(looksGarbled('destruction of US facilities'), false);
+});
+
+test('looksGarbled does not flag legitimate Latin abbreviations followed by Persian punctuation', () => {
+  assert.equal(looksGarbled('یک آشیانه پهپادهای MQ-9، از رده خارج شد'), false);
+});
+
+test('validateExtraction rejects an extraction whose target/weapon/outcome text looks garbled', () => {
+  const ex = validExtraction({
+    weapon: 'شودک الاملی (fraud)',
+    outcome: 'به אש کشیدن یک آشیانه',
+    dateG: '2026-07-08',
+    dateP: '۱۷ تیر ۱۴۰۵',
+  });
+  const { ok, errors } = validateExtraction(ex, LOCATIONS);
+  assert.equal(ok, false);
+  assert.ok(errors.some((e) => e.includes('corrupted') || e.includes('garbled')));
+});
+
+// --- Fix 1: robust JSON parsing from model output ---
+
+test('parseModelJson parses a plain JSON object (no wrapping)', () => {
+  assert.deepEqual(parseModelJson('{"a": 1}'), { a: 1 });
+});
+
+test('parseModelJson strips a ```json ... ``` code fence', () => {
+  const wrapped = '```json\n{"wave": "1", "force": "aerospace"}\n```';
+  assert.deepEqual(parseModelJson(wrapped), { wave: '1', force: 'aerospace' });
+});
+
+test('parseModelJson strips a plain ``` ... ``` code fence (no "json" tag)', () => {
+  const wrapped = '```\n{"a": 2}\n```';
+  assert.deepEqual(parseModelJson(wrapped), { a: 2 });
+});
+
+test('parseModelJson extracts the JSON object out of prose preamble', () => {
+  const wrapped = 'We need to extract the event.\n\n{"a": 3, "b": "text"}';
+  assert.deepEqual(parseModelJson(wrapped), { a: 3, b: 'text' });
+});
+
+test('parseModelJson extracts the JSON object out of prose both before and after it', () => {
+  const wrapped = 'Here is the result:\n{"a": 4}\nHope that helps!';
+  assert.deepEqual(parseModelJson(wrapped), { a: 4 });
+});
+
+test('parseModelJson handles a code fence AND prose together', () => {
+  const wrapped = 'Sure, here you go:\n```json\n{"a": 5}\n```\nLet me know if you need more.';
+  assert.deepEqual(parseModelJson(wrapped), { a: 5 });
+});
+
+test('parseModelJson still throws on genuinely non-JSON content', () => {
+  assert.throws(() => parseModelJson('I cannot determine the event from this text.'));
+});
+
+// --- Fix 2: fuzzy location matching ---
+
+test('resolveLocation matches an exact location id', () => {
+  const { resolvedLoc } = resolveLocation('aliAlSalem', null, LOCATIONS, COUNTRIES);
+  assert.equal(resolvedLoc, 'aliAlSalem');
+});
+
+test('resolveLocation fuzzy-matches a small typo in a location id (edit distance <= 2)', () => {
+  const { resolvedLoc, countryMatch } = resolveLocation('alAzrag', 'اردن', LOCATIONS, COUNTRIES);
+  assert.equal(resolvedLoc, 'alAzraq');
+  assert.equal(countryMatch, null);
+});
+
+test('resolveLocation matches via loc_raw_text containing a known location\'s name, tolerating ZWNJ-vs-space and missing generic words', () => {
+  const { resolvedLoc } = resolveLocation(null, 'پایگاه علی السالم و جزيره بوبیان', LOCATIONS, COUNTRIES);
+  assert.equal(resolvedLoc, 'aliAlSalem');
+});
+
+test('resolveLocation matches a newly-added Ramshir location via loc_raw_text substring', () => {
+  const { resolvedLoc } = resolveLocation(null, 'منطقه رامشیر', LOCATIONS, COUNTRIES);
+  assert.equal(resolvedLoc, 'ramshir');
+});
+
+test('resolveLocation treats a country name/typo mistakenly put in loc as loc: null with countryMatch set, not a crash or a false location match', () => {
+  const { resolvedLoc, countryMatch } = resolveLocation('jordan', 'در اردن', LOCATIONS, COUNTRIES);
+  assert.equal(resolvedLoc, null);
+  assert.equal(countryMatch, 'jordan');
+});
+
+test('resolveLocation recognizes a close typo of a country id as a country mixup too', () => {
+  const { resolvedLoc, countryMatch } = resolveLocation('jordain', 'فرودگاه ناشناخته در اردن', LOCATIONS, COUNTRIES);
+  assert.equal(resolvedLoc, null);
+  assert.equal(countryMatch, 'jordan');
+});
+
+test('resolveLocation returns no match plus fuzzy candidates (with distances) when nothing is confident enough', () => {
+  const { resolvedLoc, countryMatch, candidates } = resolveLocation('totallyUnknownPlace', 'جایی نامشخص', LOCATIONS, COUNTRIES);
+  assert.equal(resolvedLoc, null);
+  assert.equal(countryMatch, null);
+  assert.ok(candidates.length > 0);
+  assert.ok(candidates.every((c) => typeof c.id === 'string' && typeof c.distance === 'number'));
+  assert.ok(candidates[0].distance <= candidates[candidates.length - 1].distance);
+});
+
+test('normalizeLocText unifies ZWNJ with a plain space and lowercases Latin characters', () => {
+  assert.equal(normalizeLocText('علی‌السالم'), normalizeLocText('علی السالم'));
+  assert.equal(normalizeLocText('Aqaba'), normalizeLocText('aqaba'));
+});
+
+test('levenshtein computes edit distance correctly', () => {
+  assert.equal(levenshtein('alazraq', 'alazrag'), 1);
+  assert.equal(levenshtein('same', 'same'), 0);
+});
+
+// --- Fix 5: tightened relevance filter ---
+
+test('isRelevant rejects a broad-keyword match with no military action verb (fake pages statement)', () => {
+  const item = {
+    title: 'بیانیه رسمی درباره صفحات جعلی منتسب به سپاه پاسداران انقلاب اسلامی',
+    description: 'در پی مشاهده اطلاعیه‌های جعلی منتسب به سپاه در فضای مجازی...',
+  };
+  assert.equal(isRelevant(item), false);
+});
+
+test('isRelevant rejects a broad-keyword match with no military action verb (political speech)', () => {
+  const item = {
+    title: 'ملت ایران با حفظ وحدت و ذوب‌شدگی در ولایت، پیروز جنگ موجودیتی‌ هستند',
+    description: 'در قاموس ایرانیان، تسلیم معنایی ندارد و موج حمایت مردمی ادامه دارد',
+  };
+  assert.equal(isRelevant(item), false);
+});
+
+test('isRelevant still accepts a genuine attack statement (broad keyword + action verb)', () => {
+  const item = {
+    title: 'تخریب سامانه راداری دفاع موشکی و انهدام یک فروند هواپیمای اف 15 در داخل شیلتر در اردن',
+    description: 'در ادامه عملیات نصر ۲، پایگاه هوایی الازرق مورد اصابت قرار گرفت',
+  };
+  assert.equal(isRelevant(item), true);
+});
+
+test('isRelevant rejects an item with only the action keyword and no broad relevance keyword', () => {
+  const item = { title: 'تخریب یک ساختمان مسکونی در اثر زلزله', description: '' };
+  assert.equal(isRelevant(item), false);
 });
 
 // --- processItems: the core regression tests for this fix ---
@@ -342,6 +541,124 @@ test('processItems isolates a throw from openPendingReviewIssueFn (e.g. GitHub A
   assert.equal(pendingReview[0].issue_number, null);
 });
 
+test('processItems accepts an extraction whose loc is a fuzzy typo of a known location id (Fix 2 wired end-to-end)', async () => {
+  const items = [rssItem('guid-typo-loc')];
+  const events = [];
+  const pendingReview = [];
+
+  await processItems(items, {
+    locations: LOCATIONS,
+    countries: COUNTRIES,
+    events,
+    pendingReview,
+    seenSet: new Set(),
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => validExtraction({ loc: 'alAzrag', loc_raw_text: 'اردن' }),
+    fetchArticleTextFn: async () => 'متن کامل خبر',
+    openPendingReviewIssueFn: async () => {},
+  });
+
+  assert.equal(events.length, 1);
+  assert.equal(events[0].loc, 'alAzraq');
+  assert.equal(pendingReview.length, 0);
+});
+
+test('processItems routes a country-name-in-loc extraction to pending-review with the country match noted', async () => {
+  const items = [rssItem('guid-country-mixup')];
+  const events = [];
+  const pendingReview = [];
+
+  await processItems(items, {
+    locations: LOCATIONS,
+    countries: COUNTRIES,
+    events,
+    pendingReview,
+    seenSet: new Set(),
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => validExtraction({ loc: 'jordan', loc_raw_text: 'در اردن' }),
+    fetchArticleTextFn: async () => 'متن کامل خبر',
+    openPendingReviewIssueFn: async () => {},
+  });
+
+  assert.equal(events.length, 0);
+  assert.equal(pendingReview.length, 1);
+  assert.equal(pendingReview[0].raw_extraction.loc, null);
+  assert.equal(pendingReview[0].loc_country_match, 'jordan');
+  assert.ok(pendingReview[0].errors.some((e) => e.includes('loc is null')));
+});
+
+test('processItems attaches fuzzy-match candidates (with edit distances) to a pending-review entry when no location match is confident enough', async () => {
+  const items = [rssItem('guid-no-loc-match')];
+  const events = [];
+  const pendingReview = [];
+
+  await processItems(items, {
+    locations: LOCATIONS,
+    countries: COUNTRIES,
+    events,
+    pendingReview,
+    seenSet: new Set(),
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => validExtraction({ loc: 'totallyUnknownPlace', loc_raw_text: 'جایی نامشخص' }),
+    fetchArticleTextFn: async () => 'متن کامل خبر',
+    openPendingReviewIssueFn: async () => {},
+  });
+
+  assert.equal(events.length, 0);
+  assert.equal(pendingReview.length, 1);
+  assert.ok(Array.isArray(pendingReview[0].loc_candidates));
+  assert.ok(pendingReview[0].loc_candidates.length > 0);
+  assert.ok(pendingReview[0].loc_candidates.every((c) => typeof c.id === 'string' && typeof c.distance === 'number'));
+});
+
+test('processItems removes an item from pending-review (and closes its issue) if a retry reclassifies it as not relevant', async () => {
+  const events = [];
+  const pendingReview = [];
+  const seenSet = new Set();
+  const closedIssues = [];
+
+  // Run 1: item is (incorrectly) judged relevant and fails extraction, so it lands in pending-review.
+  const relevantItem = rssItem('guid-reclassified', {
+    title: 'بیانیه رسمی درباره صفحات جعلی منتسب به سپاه',
+    description: 'موج جدیدی از اطلاعیه‌های جعلی',
+  });
+  pendingReview.push({
+    title: relevantItem.title,
+    link: relevantItem.link,
+    guid: 'guid-reclassified',
+    raw_extraction: null,
+    errors: ['extraction failed: some earlier error'],
+    added_at: new Date().toISOString(),
+    issue_number: 99,
+  });
+
+  // Run 2: the tightened relevance filter now (correctly) judges this item irrelevant on retry.
+  const { newGuids, resolvedCount } = await processItems([relevantItem], {
+    locations: LOCATIONS,
+    countries: COUNTRIES,
+    events,
+    pendingReview,
+    seenSet,
+    systemPrompt: 'test',
+    nextId: 1,
+    extractEventFn: async () => { throw new Error('should not be called for an irrelevant item'); },
+    fetchArticleTextFn: async () => { throw new Error('should not be called for an irrelevant item'); },
+    openPendingReviewIssueFn: async () => { throw new Error('should not open an issue for an irrelevant item'); },
+    closePendingReviewIssueFn: async (issueNumber, comment) => {
+      closedIssues.push({ issueNumber, comment });
+    },
+  });
+
+  assert.equal(pendingReview.length, 0);
+  assert.equal(resolvedCount, 1);
+  assert.ok(newGuids.includes('guid-reclassified'));
+  assert.equal(closedIssues.length, 1);
+  assert.equal(closedIssues[0].issueNumber, 99);
+});
+
 // --- processItems: pending-review retry/dedup regression tests ---
 
 test('processItems does not add a pending item\'s guid to newGuids, so it is never marked seen', async () => {
@@ -473,8 +790,8 @@ test('main() end-to-end: pubDate/link-derived date+code land in events.json, art
 
   const rssXml = `<?xml version="1.0"?>
 <rss><channel>
-  <item><guid>guid-fetch-fails</guid><link>https://sepahnews.ir/fa/news/1/one</link><title>اطلاعیه نصر ۲ یک</title><description>موج اول عملیات صاعقه</description><pubDate>Wed, 08 Jul 2026 08:00:00 +0330</pubDate></item>
-  <item><guid>guid-good</guid><link>https://sepahnews.ir/fa/news/36159/two</link><title>اطلاعیه نصر ۲ دو</title><description>موج دوم عملیات صاعقه</description><pubDate>Wed, 08 Jul 2026 08:00:00 +0330</pubDate></item>
+  <item><guid>guid-fetch-fails</guid><link>https://sepahnews.ir/fa/news/1/one</link><title>اطلاعیه نصر ۲ یک</title><description>موج اول عملیات صاعقه، پایگاه دشمن منهدم شد</description><pubDate>Wed, 08 Jul 2026 08:00:00 +0330</pubDate></item>
+  <item><guid>guid-good</guid><link>https://sepahnews.ir/fa/news/36159/two</link><title>اطلاعیه نصر ۲ دو</title><description>موج دوم عملیات صاعقه، پایگاه دشمن منهدم شد</description><pubDate>Wed, 08 Jul 2026 08:00:00 +0330</pubDate></item>
 </channel></rss>`;
 
   const originalFetch = globalThis.fetch;
