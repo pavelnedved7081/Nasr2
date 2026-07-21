@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>داشبورد پایش نصر ۲ / صاعقه</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#080b0f; --bg-1:#0e131a; --bg-2:#141b24; --line:#232e3d;
+    --text-0:#eef2f6; --text-1:#aab6c4; --text-2:#6c7889;
+    --amber:#d99a3f; --rust:#b8683f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg-0); color:var(--text-0);
+    font-family:'Vazirmatn',Tahoma,sans-serif;
+    min-height:100vh; display:flex; flex-direction:column; align-items:center;
+    padding:60px 20px;
+  }
+  .mark{
+    width:56px;height:56px;border-radius:14px;
+    background:radial-gradient(circle at 30% 30%, var(--amber), var(--rust) 70%);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:20px;color:#14100a;margin-bottom:18px;
+  }
+  h1{font-size:22px;font-weight:700;margin-bottom:6px;text-align:center;}
+  p.sub{color:var(--text-2);font-size:13.5px;margin-bottom:40px;text-align:center;max-width:480px;line-height:1.9;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;width:100%;max-width:880px;}
+  a.card{
+    display:block;padding:22px 20px;border:1px solid var(--line);border-radius:14px;
+    background:var(--bg-1);text-decoration:none;color:var(--text-0);
+    transition:border-color .15s, background .15s;
+  }
+  a.card:hover{border-color:var(--amber);background:var(--bg-2);}
+  a.card .tag{font-size:10.5px;color:var(--amber);letter-spacing:.3px;margin-bottom:8px;}
+  a.card .title{font-size:16px;font-weight:700;margin-bottom:6px;}
+  a.card .desc{font-size:12.5px;color:var(--text-2);line-height:1.8;}
+  footer{margin-top:50px;font-size:11px;color:var(--text-2);text-align:center;line-height:1.8;}
+</style>
+</head>
+<body>
+  <div class="mark">ن۲</div>
+  <h1>داشبورد پایش عملیات «نصر ۲» و «صاعقه»</h1>
+  <p class="sub">بازتاب اطلاعیه‌های رسمی سپاه پاسداران و ارتش جمهوری اسلامی ایران بر روی نقشه — نسخهٔ مناسب برای هر دستگاه و زبان را انتخاب کنید.</p>
+
+  <div class="grid">
+    <a class="card" href="index-fa-desktop.html">
+      <div class="tag">فارسی · دسکتاپ</div>
+      <div class="title">داشبورد کامل (دسکتاپ)</div>
+      <div class="desc">نقشه، تایم‌لاین، فیلترهای کشور/نیرو/منبع — مناسب صفحه‌نمایش بزرگ</div>
+    </a>
+    <a class="card" href="index-fa-mobile.html">
+      <div class="tag">فارسی · موبایل</div>
+      <div class="title">داشبورد موبایل</div>
+      <div class="desc">نقشهٔ تمام‌صفحه با صفحهٔ کشویی پایین، مخصوص گوشی</div>
+    </a>
+    <a class="card" href="index-en-mobile.html">
+      <div class="tag">English · Mobile</div>
+      <div class="title">English Mobile Dashboard</div>
+      <div class="desc">Same map and timeline, translated for an English-speaking audience</div>
+    </a>
+    <a class="card" href="index-ar-mobile.html">
+      <div class="tag">العربية · الجوال</div>
+      <div class="title">لوحة الرصد بالعربية</div>
+      <div class="desc">نفس البيانات، بواجهة عربية وتواريخ ميلادية</div>
+    </a>
+  </div>
+
+  <footer>
+    تمام داده‌ها بازتاب ادعاهای رسمی منتشرشده توسط روابط عمومی سپاه پاسداران و ارتش جمهوری اسلامی ایران است و راستی‌آزمایی مستقل ندارد.
+  </footer>
+</body>
+</html>

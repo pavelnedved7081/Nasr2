@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>داشبورد پایش عملیات نصر ۲</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root{
+    --bg-0:#080b0f;
+    --bg-1:#0e131a;
+    --bg-2:#141b24;
+    --bg-3:#1a2330;
+    --line:#232e3d;
+    --line-soft:#1a2330;
+    --text-0:#eef2f6;
+    --text-1:#aab6c4;
+    --text-2:#6c7889;
+    --amber:#d99a3f;
+    --amber-dim:#8a6a3a;
+    --red:#c9503f;
+    --teal:#3a9188;
+    --violet:#8b6fb0;
+    --blue:#4d80c9;
+    --rust:#b8683f;
+    --gray-zone:#5c6b7d;
+    --mono: 'Vazirmatn', Tahoma, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    background:var(--bg-0);
+    color:var(--text-0);
+    font-family:'Vazirmatn',Tahoma,sans-serif;
+    overflow:hidden;
+    font-feature-settings:"ss01";
+  }
+  ::selection{background:var(--amber);color:#12161c;}
+
+  /* ---------- Layout ---------- */
+  .app{
+    display:grid;
+    grid-template-rows:auto 1fr auto;
+    height:100vh;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,var(--bg-1),var(--bg-0));
+    padding:14px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{
+    width:38px;height:38px;border-radius:8px;
+    background:radial-gradient(circle at 30% 30%, var(--amber), var(--rust) 70%);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:15px;color:#14100a;
+    box-shadow:0 0 0 1px var(--line), 0 6px 18px -6px rgba(217,154,63,.5);
+    flex-shrink:0;
+  }
+  .brand-text h1{font-size:16px;font-weight:700;letter-spacing:.2px;}
+  .brand-text p{font-size:11.5px;color:var(--text-2);margin-top:2px;letter-spacing:.3px;}
+
+  .stat-strip{display:flex;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .stat{
+    padding:8px 18px;
+    text-align:center;
+    border-left:1px solid var(--line);
+    min-width:88px;
+  }
+  .stat:last-child{border-left:none;}
+  .stat b{display:block;font-size:19px;font-weight:700;color:var(--amber);font-variant-numeric:tabular-nums;}
+  .stat span{font-size:10.5px;color:var(--text-2);letter-spacing:.2px;}
+  .badge-live{
+    display:flex;align-items:center;gap:6px;
+    font-size:11px;color:var(--text-2);
+    border:1px solid var(--line);border-radius:20px;padding:6px 12px;
+  }
+  .dot-pulse{width:7px;height:7px;border-radius:50%;background:var(--red);
+    box-shadow:0 0 0 rgba(201,80,63,.6);animation:pulse 2s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(201,80,63,.55);}
+    70%{box-shadow:0 0 0 8px rgba(201,80,63,0);}
+    100%{box-shadow:0 0 0 0 rgba(201,80,63,0);}
+  }
+
+  /* ---------- Main grid ---------- */
+  .main{
+    display:grid;
+    grid-template-columns: 360px 1fr;
+    grid-template-rows: minmax(0,1fr);
+    min-height:0;
+    height:100%;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    border-left:1px solid var(--line);
+    background:var(--bg-1);
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+  .sidebar-section{
+    padding:14px 16px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .sidebar-title{
+    font-size:11px;
+    color:var(--text-2);
+    letter-spacing:.4px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{
+    font-size:11.5px;
+    padding:5px 10px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    background:var(--bg-2);
+    color:var(--text-1);
+    cursor:pointer;
+    display:flex;align-items:center;gap:6px;
+    transition:all .15s;
+    user-select:none;
+  }
+  .chip .sw{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .chip.active{
+    background:var(--bg-3);
+    color:var(--text-0);
+    border-color:currentColor;
+  }
+  .chip:hover{border-color:var(--text-2);}
+  .chip-count{color:var(--text-2);font-size:10px;}
+
+  .force-toggle{display:flex;gap:6px;}
+  .force-btn{
+    flex:1;
+    text-align:center;
+    padding:6px 4px;
+    font-size:11px;
+    border:1px solid var(--line);
+    border-radius:7px;
+    background:var(--bg-2);
+    color:var(--text-1);
+    cursor:pointer;
+  }
+  .force-btn.active{background:var(--bg-3);color:var(--amber);border-color:var(--amber-dim);}
+
+  .event-list{
+    flex:1;
+    overflow-y:auto;
+    padding:6px 10px 16px;
+  }
+  .event-list::-webkit-scrollbar{width:6px;}
+  .event-list::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+
+  .event-card{
+    padding:10px 12px;
+    border:1px solid var(--line-soft);
+    border-radius:9px;
+    margin:6px 4px;
+    cursor:pointer;
+    background:var(--bg-1);
+    transition:background .15s,border-color .15s,transform .1s;
+    position:relative;
+  }
+  .event-card:hover{background:var(--bg-2);border-color:var(--line);}
+  .event-card.selected{background:var(--bg-3);border-color:var(--amber-dim);}
+  .event-card .ec-top{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:10.5px;color:var(--text-2);margin-bottom:6px;
+  }
+  .event-card .ec-wave{
+    font-size:10px;
+    padding:1px 7px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    color:var(--text-1);
+  }
+  .event-card .ec-loc{font-size:13px;font-weight:600;color:var(--text-0);margin-bottom:3px;}
+  .event-card .ec-target{font-size:11.5px;color:var(--text-1);line-height:1.6;}
+  .event-card .ec-country-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-left:6px;flex-shrink:0;}
+
+  .empty-note{
+    padding:26px 14px;text-align:center;color:var(--text-2);font-size:12px;line-height:2;
+  }
+
+  /* ---------- Map area ---------- */
+  .map-wrap{position:relative;min-height:0;}
+  #map{position:absolute;inset:0;}
+  .leaflet-container{background:var(--bg-0);font-family:'Vazirmatn',Tahoma,sans-serif;}
+
+  .map-overlay-top{
+    position:absolute;top:14px;right:14px;z-index:500;
+    display:flex;flex-direction:column;gap:8px;align-items:flex-end;
+  }
+  .legend{
+    background:rgba(14,19,26,.9);
+    backdrop-filter:blur(6px);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    font-size:11px;
+    color:var(--text-1);
+    min-width:170px;
+  }
+  .legend-title{font-size:10px;color:var(--text-2);margin-bottom:7px;letter-spacing:.3px;}
+  .legend-row{display:flex;align-items:center;gap:8px;margin:4px 0;}
+  .legend-row .sw{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+  .mode-toggle{
+    display:flex;background:rgba(14,19,26,.9);backdrop-filter:blur(6px);
+    border:1px solid var(--line);border-radius:9px;overflow:hidden;
+  }
+  .mode-btn{padding:7px 14px;font-size:11.5px;color:var(--text-2);cursor:pointer;}
+  .mode-btn.active{background:var(--bg-3);color:var(--amber);}
+
+  .selected-panel{
+    position:absolute;bottom:100px;right:14px;z-index:500;
+    width:300px;max-width:calc(100vw - 400px);
+    background:rgba(14,19,26,.96);
+    backdrop-filter:blur(8px);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px;
+    display:none;
+    box-shadow:0 20px 40px -12px rgba(0,0,0,.6);
+  }
+  .selected-panel.show{display:block;}
+  .sp-close{position:absolute;left:10px;top:10px;color:var(--text-2);cursor:pointer;font-size:16px;line-height:1;}
+  .sp-country{font-size:10.5px;color:var(--amber);letter-spacing:.3px;margin-bottom:4px;}
+  .sp-title{font-size:15px;font-weight:700;margin-bottom:10px;line-height:1.5;}
+  .sp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+  .sp-field span{display:block;font-size:10px;color:var(--text-2);margin-bottom:2px;}
+  .sp-field b{font-size:12.5px;font-weight:600;color:var(--text-0);}
+  .sp-desc{font-size:12px;line-height:1.9;color:var(--text-1);border-top:1px solid var(--line-soft);padding-top:10px;}
+  .sp-code{font-size:10.5px;color:var(--text-2);margin-top:10px;}
+
+  /* ---------- Timeline ---------- */
+  .timeline-bar{
+    border-top:1px solid var(--line);
+    background:var(--bg-1);
+    padding:12px 20px 16px;
+  }
+  .tl-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .tl-current{display:flex;align-items:baseline;gap:10px;}
+  .tl-current b{font-size:15px;color:var(--text-0);}
+  .tl-current span{font-size:11.5px;color:var(--text-2);}
+  .tl-controls{display:flex;gap:8px;align-items:center;}
+  .tl-btn{
+    width:30px;height:30px;border-radius:8px;border:1px solid var(--line);
+    background:var(--bg-2);color:var(--text-1);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:12px;
+  }
+  .tl-btn:hover{border-color:var(--text-2);}
+  .tl-btn.playing{color:var(--amber);border-color:var(--amber-dim);}
+
+  .tl-track-wrap{position:relative;padding:0 4px;}
+  .tl-track{
+    position:relative;
+    height:44px;
+    display:flex;
+    align-items:center;
+  }
+  .tl-line{
+    position:absolute;right:0;left:0;top:50%;height:2px;
+    background:var(--line);transform:translateY(-50%);
+  }
+  .tl-line-fill{
+    position:absolute;right:0;top:50%;height:2px;
+    background:linear-gradient(90deg,var(--amber),var(--rust));
+    transform:translateY(-50%);
+    transition:width .25s;
+  }
+  .tl-ticks{position:relative;width:100%;height:100%;}
+  .tl-tick{
+    position:absolute;top:50%;transform:translate(50%,-50%);
+    width:13px;height:13px;border-radius:50%;
+    background:var(--bg-2);border:2px solid var(--line);
+    cursor:pointer;z-index:2;
+    transition:all .15s;
+  }
+  .tl-tick:hover{border-color:var(--text-1);}
+  .tl-tick.active{
+    background:var(--amber);border-color:var(--amber);
+    box-shadow:0 0 0 4px rgba(217,154,63,.2);
+  }
+  .tl-tick.past{background:var(--rust);border-color:var(--rust);}
+  .tl-tick-label{
+    position:absolute;top:-22px;right:50%;transform:translateX(50%);
+    font-size:10px;color:var(--text-2);white-space:nowrap;
+  }
+  .tl-tick-count{
+    position:absolute;bottom:-20px;right:50%;transform:translateX(50%);
+    font-size:9.5px;color:var(--text-2);white-space:nowrap;
+  }
+
+  a.attrib{position:absolute;bottom:6px;left:10px;z-index:400;font-size:9.5px;color:var(--text-2);text-decoration:none;opacity:.6;}
+
+  @media (max-width:900px){
+    .main{grid-template-columns:1fr;grid-template-rows:1fr 1fr;}
+    .sidebar{border-left:none;border-bottom:1px solid var(--line);}
+    .selected-panel{max-width:calc(100vw - 40px);right:14px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <div class="brand">
+      <div class="brand-mark">ن۲</div>
+      <div class="brand-text">
+        <h1>داشبورد پایش عملیات «نصر ۲»</h1>
+        <p>برگرفته از اطلاعیه‌های روابط عمومی سپاه پاسداران — سپاه‌نیوز</p>
+      </div>
+    </div>
+    <div class="stat-strip" id="statStrip"></div>
+    <div class="badge-live"><span class="dot-pulse"></span> بازه: ۱۲ تا ۲۶ تیر ۱۴۰۵</div>
+  </header>
+
+  <div class="main">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title"><span>فیلتر بر اساس منبع بیانیه</span></div>
+        <div class="chips" id="sourceChips"></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title"><span>فیلتر بر اساس کشور هدف</span></div>
+        <div class="chips" id="countryChips"></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title"><span>فیلتر بر اساس نیروی عامل</span></div>
+        <div class="force-toggle" id="forceToggle"></div>
+      </div>
+      <div class="sidebar-section" style="flex:1;display:flex;flex-direction:column;min-height:0;padding-bottom:0;">
+        <div class="sidebar-title" style="padding:14px 0 0;">
+          <span>رویدادهای این تاریخ</span>
+          <span id="listCount" style="color:var(--text-2);"></span>
+        </div>
+        <div class="event-list" id="eventList"></div>
+      </div>
+    </aside>
+
+    <div class="map-wrap">
+      <div id="map"></div>
+
+      <div class="map-overlay-top">
+        <div class="mode-toggle">
+          <div class="mode-btn active" data-mode="cumulative">تجمعی تا این تاریخ</div>
+          <div class="mode-btn" data-mode="single">فقط همین روز</div>
+        </div>
+        <div class="legend">
+          <div class="legend-title">کشورهای هدف</div>
+          <div id="legendList"></div>
+          <div class="legend-title" style="margin-top:10px;">شکل نشانگر</div>
+          <div class="legend-row"><span class="sw" style="background:#8a8a8a;border-radius:50%;"></span>سپاه پاسداران (دایره)</div>
+          <div class="legend-row"><span class="sw" style="background:#8a8a8a;border-radius:2px;transform:rotate(45deg);"></span>ارتش (لوزی)</div>
+        </div>
+      </div>
+
+      <div class="selected-panel" id="selPanel">
+        <div class="sp-close" id="spClose">✕</div>
+        <div class="sp-country" id="spCountry"></div>
+        <div class="sp-source" id="spSource" style="font-size:10px;color:var(--text-2);margin-bottom:8px;"></div>
+        <div class="sp-title" id="spTitle"></div>
+        <div class="sp-grid">
+          <div class="sp-field"><span>تاریخ</span><b id="spDate"></b></div>
+          <div class="sp-field"><span>موج / مرحله</span><b id="spWave"></b></div>
+          <div class="sp-field"><span>نیروی عامل</span><b id="spForce"></b></div>
+          <div class="sp-field"><span>سلاح ادعایی</span><b id="spWeapon"></b></div>
+        </div>
+        <div class="sp-desc" id="spDesc"></div>
+        <div class="sp-code" id="spCode"></div>
+      </div>
+
+      <a class="attrib" href="https://carto.com/attributions" target="_blank">© CARTO / OpenStreetMap</a>
+    </div>
+  </div>
+
+  <div class="timeline-bar">
+    <div class="tl-head">
+      <div class="tl-current">
+        <b id="tlCurrentDate">—</b>
+        <span id="tlCurrentMeta">—</span>
+      </div>
+      <div class="tl-controls">
+        <div class="tl-btn" id="tlPrev" title="روز قبل">◀</div>
+        <div class="tl-btn" id="tlPlay" title="پخش خودکار">▶</div>
+        <div class="tl-btn" id="tlNext" title="روز بعد">▶</div>
+      </div>
+    </div>
+    <div class="tl-track-wrap">
+      <div class="tl-track">
+        <div class="tl-line"></div>
+        <div class="tl-line-fill" id="tlFill"></div>
+        <div class="tl-ticks" id="tlTicks"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* =========================================================
+   داده‌ها — برگرفته و خلاصه‌شده از اطلاعیه‌های سپاه‌نیوز
+   (تاریخ شمسی تیر ۱۴۰۵ ≈ ژوئیه ۲۰۲۶ میلادی)
+   نکته: تمام موارد ادعای رسمی سپاه پاسداران است و راستی‌آزمایی
+   مستقل ندارد — این داشبورد صرفاً بازتاب محتوای اطلاعیه‌هاست.
+   ========================================================= */
+
+const LOC = {
+  princeHassan: {name:'پایگاه هوایی پرنس حسن', country:'jordan', lat:30.2833, lng:36.0833},
+  alAzraq:      {name:'پایگاه هوایی الازرق',   country:'jordan', lat:31.9328, lng:36.8206},
+  aqaba:        {name:'فرودگاه عقبه',           country:'jordan', lat:29.6116, lng:35.0182},
+  rukban:       {name:'منطقه الرکبان',           country:'jordan', lat:33.1500, lng:38.2000},
+  arifjan:      {name:'کمپ عریفجان',            country:'kuwait', lat:28.8956, lng:48.1633},
+  aliAlSalem:   {name:'پایگاه هوایی علی‌السالم', country:'kuwait', lat:29.3469, lng:47.5213},
+  ahmadAlJaber: {name:'پایگاه هوایی احمد الجابر', country:'kuwait', lat:28.9358, lng:47.7981},
+  minaAbdullah: {name:'میناء عبدالله (مرکز KGL)', country:'kuwait', lat:29.0500, lng:48.1333},
+  shuaiba:      {name:'اسکله شعیبه',            country:'kuwait', lat:29.0450, lng:48.1550},
+  alAhmadi:     {name:'بندر الاحمدی',            country:'kuwait', lat:29.0769, lng:48.1364},
+  kuwaitCity:   {name:'مرکز مخابراتی (کویت)',     country:'kuwait', lat:29.3759, lng:47.9774},
+  udairi:       {name:'اردوگاه العدیری',         country:'kuwait', lat:29.6667, lng:47.4833},
+  minaSalman:   {name:'بندر سلمان',              country:'bahrain', lat:26.2000, lng:50.6100},
+  jufair:       {name:'پایگاه جفیر (ناوگان پنجم)', country:'bahrain', lat:26.2285, lng:50.6083},
+  sheikhIsa:    {name:'پایگاه هوایی شیخ عیسی',    country:'bahrain', lat:25.9167, lng:50.5833},
+  batelco:      {name:'مرکز داده باتلکو (منامه)', country:'bahrain', lat:26.2235, lng:50.5876},
+  sakhir:       {name:'فرودگاه الصخیر',           country:'bahrain', lat:25.9186, lng:50.4794},
+  muharraq:     {name:'المحرق',                  country:'bahrain', lat:26.2572, lng:50.6119},
+  rifa:         {name:'الرفاع',                  country:'bahrain', lat:26.1300, lng:50.5550},
+  awsBahrain:   {name:'مرکز داده آمازون (AWS)، بحرین', country:'bahrain', lat:26.1932, lng:50.6462},
+  alUdeid:      {name:'پایگاه هوایی العدید',      country:'qatar', lat:25.1174, lng:51.3160},
+  duqm:         {name:'بندر دُقم',                country:'oman', lat:19.6667, lng:57.7000},
+  ghanam:       {name:'منطقهٔ غنم (مسندم)',        country:'oman', lat:26.1500, lng:56.3000},
+  salamah:      {name:'صخره‌های سلامه',           country:'oman', lat:23.5880, lng:58.5450},
+  tanf:         {name:'پایگاه التنف',             country:'syria', lat:33.4864, lng:38.2131},
+  hormuz:       {name:'تنگه هرمز',               country:'hormuz', lat:26.5000, lng:56.2500},
+  northIndianOcean: {name:'شمال اقیانوس هند',     country:'hormuz', lat:15.0000, lng:65.0000},
+  bandarAbbas:  {name:'بندرعباس (پدافند هوایی)',  country:'iran', lat:27.1865, lng:56.2808},
+};
+
+const COUNTRY = {
+  jordan:  {label:'اردن',  color:'#c9503f'},
+  kuwait:  {label:'کویت',  color:'#d99a3f'},
+  bahrain: {label:'بحرین', color:'#3a9188'},
+  qatar:   {label:'قطر',   color:'#8b6fb0'},
+  oman:    {label:'عمان',  color:'#4d80c9'},
+  syria:   {label:'سوریه', color:'#b8683f'},
+  hormuz:  {label:'تنگه هرمز / دریای عمان', color:'#5c6b7d'},
+  iran:    {label:'ایران (پدافند داخلی)', color:'#4f9d6e'},
+};
+
+const SOURCE = {
+  sepah:  {label:'سپاه پاسداران (عملیات نصر ۲)', short:'سپاه'},
+  artesh: {label:'ارتش جمهوری اسلامی (عملیات صاعقه)', short:'ارتش'},
+};
+
+const FORCE = {
+  ground:    'زمینی',
+  naval:     'دریایی',
+  aerospace: 'هوافضا',
+  joint:     'مشترک',
+  unknown:   'نامشخص',
+};
+
+function ev(id, dateG, dateP, time, wave, force, loc, target, weapon, outcome, code, source){
+  return {id, dateG, dateP, time, wave, force, source: source || 'sepah',
+          country: LOC[loc].country, locName: LOC[loc].name,
+          lat: LOC[loc].lat, lng: LOC[loc].lng,
+          target, weapon, outcome, code};
+}
+
+const EVENTS = [
+  ev(1,'2026-07-08','۱۷ تیر ۱۴۰۵','۰۷:۰۰','پاسخ اولیه (پیش از نام‌گذاری موج)','joint','minaSalman',
+     'تأسیسات نظامی در منطقه پنجم دریایی و بندر سلمان','موشک و پهپاد (عملیات مشترک ۸۵ نقطه‌ای)','ادعای انهدام بخشی از تأسیسات','۳۶۰۲۴'),
+  ev(2,'2026-07-08','۱۷ تیر ۱۴۰۵','۰۷:۰۰','پاسخ اولیه','joint','aliAlSalem',
+     'پایگاه هوایی علی‌السالم؛ سرنگونی یک فروند پهپاد MQ-9','موشک و پهپاد','ادعای سرنگونی پهپاد و آسیب به تأسیسات','۳۶۰۲۴'),
+  ev(3,'2026-07-09','۱۸ تیر ۱۴۰۵','۰۵:۳۶','مرحله ۱ (پاسخ تنبیهی)','joint','arifjan',
+     'زیرساخت پایگاه استعماری عریفجان','موشک و پهپاد','ادعای انهدام زیرساخت','۳۶۰۲۸'),
+  ev(4,'2026-07-09','۱۸ تیر ۱۴۰۵','۰۵:۳۶','مرحله ۱','joint','aliAlSalem',
+     'زیرساخت پایگاه علی‌السالم','موشک و پهپاد','ادعای انهدام زیرساخت','۳۶۰۲۸'),
+  ev(5,'2026-07-09','۱۸ تیر ۱۴۰۵','۰۵:۳۶','مرحله ۱','joint','jufair',
+     'زیرساخت پایگاه جفیر','موشک و پهپاد','ادعای انهدام زیرساخت','۳۶۰۲۸'),
+  ev(6,'2026-07-09','۱۸ تیر ۱۴۰۵','۰۵:۳۶','مرحله ۱','joint','sheikhIsa',
+     'زیرساخت پایگاه شیخ عیسی','موشک و پهپاد','ادعای انهدام زیرساخت','۳۶۰۲۸'),
+  ev(7,'2026-07-09','۱۸ تیر ۱۴۰۵','۱۶:۲۸','مرحله ۲','aerospace','alAzraq',
+     'مرکز فرماندهی‌وکنترل و پایگاه هوایی الازرق','۱۰ فروند موشک بالستیک','ادعای انهدام مرکز فرماندهی','۳۶۰۳۶'),
+  ev(8,'2026-07-12','۲۱ تیر ۱۴۰۵','۰۶:۲۲','مرحله ۱ (روز دوم درگیری)','aerospace','princeHassan',
+     'مرکز فرماندهی‌وکنترل و آشیانه پهپادهای MQ-9، پایگاه پرنس حسن','موشک بالستیک','ادعای انهدام مرکز فرماندهی و آشیانه پهپاد','۳۶۰۷۷'),
+  ev(9,'2026-07-12','۲۱ تیر ۱۴۰۵','۰۷:۰۵','مرحله ۲','aerospace','alUdeid',
+     'مرکز تعمیر جنگنده‌ها و مرکز فرماندهی، پایگاه العدید','موشک بالستیک','ادعای انهدام مراکز تعمیر و فرماندهی','۳۶۰۷۸'),
+  ev(10,'2026-07-12','۲۱ تیر ۱۴۰۵','۰۷:۰۵','—','naval','hormuz',
+     'توقف دومین شناور متخلف در تنگه هرمز','اصابت مستقیم','ادعای متوقف‌سازی شناور','۳۶۰۷۸'),
+  ev(11,'2026-07-12','۲۱ تیر ۱۴۰۵','۰۷:۲۶','مرحله ۳','aerospace','duqm',
+     'پشتیبانی لجستیکی ناوها و سکوهای سوخت‌گیری، بندر دُقم','حمله سنگین (نوع نامشخص)','ادعای درهم‌کوبیدن تأسیسات','۳۶۰۷۹'),
+  ev(12,'2026-07-13','۲۲ تیر ۱۴۰۵','۱۴:۴۵','اطلاعیه ۱','aerospace','princeHassan',
+     'زاغه‌های موشکی و مخازن سوخت، پایگاه پرنس حسن','موشک و پهپاد','به آتش کشیده شد','۳۶۰۹۲'),
+  ev(13,'2026-07-13','۲۲ تیر ۱۴۰۵','۱۴:۴۶','اطلاعیه ۲ / مرحله ۲','aerospace','sheikhIsa',
+     'مرکز تعمیر بالگرد، آشیانه هواپیمای P-8 و مرکز کنترل پهپادی، شیخ عیسی','نامشخص','ادعای انهدام','۳۶۰۹۳'),
+  ev(14,'2026-07-13','۲۲ تیر ۱۴۰۵','۱۴:۴۶','اطلاعیه ۳ / مرحله ۳','aerospace','aliAlSalem',
+     'مخازن سوخت و پدافند پاتریوت، علی‌السالم','نامشخص','ادعای انهدام کامل','۳۶۰۹۴'),
+  ev(15,'2026-07-13','۲۲ تیر ۱۴۰۵','۱۴:۴۶','اطلاعیه ۳','aerospace','ahmadAlJaber',
+     'سامانه راداری راهبردی FPS، پایگاه احمد الجابر','نامشخص','ادعای انهدام کامل','۳۶۰۹۴'),
+  ev(16,'2026-07-13','۲۲ تیر ۱۴۰۵','۱۴:۴۶','اطلاعیه ۴ / مرحله ۴','ground','aliAlSalem',
+     'سکوهای موشکی هایمارس و زاغه مهمات (کویت)','موشک و پهپاد','به آتش کشیده و منهدم شد','۳۶۰۹۵'),
+  ev(17,'2026-07-13','۲۲ تیر ۱۴۰۵','۱۴:۴۷','اطلاعیه ۵ / مرحله ۵','naval','jufair',
+     'تأسیسات و زیرساخت ارتش آمریکا در جفیر','موشک و پهپاد','ادعای آتش‌سوزی گسترده','۳۶۰۹۶'),
+  ev(18,'2026-07-13','۲۲ تیر ۱۴۰۵','۱۴:۴۷','اطلاعیه ۵','naval','ghanam',
+     'رادار دوربرد هوایی FPS و رادار کشف شناوری، عمان','موشک و پهپاد','ادعای انهدام','۳۶۰۹۶'),
+  ev(19,'2026-07-14','۲۳ تیر ۱۴۰۵','۰۴:۳۹','اطلاعیه ۶ (بدون شماره موج)','naval','hormuz',
+     'اصابت به دو فروند ابرنفتکش متخلف در تنگه هرمز','اصابت مستقیم / مین‌گذاری','از کار افتادن دو شناور','۳۶۱۰۷'),
+  ev(20,'2026-07-14','۲۳ تیر ۱۴۰۵','۰۵:۱۹','اطلاعیه ۷ / موج ۲','naval','jufair',
+     'انبار پشتیبانی تسلیحاتی، مرکز ارتباط ماهواره‌ای و اقامتگاه نیروها، جفیر','موشک و پهپاد','ادعای درهم‌کوبیدن اهداف','۳۶۱۰۸'),
+  ev(21,'2026-07-14','۲۳ تیر ۱۴۰۵','۰۶:۵۶','اطلاعیه ۸ / موج ۲ (مرحله ۲)','joint','minaSalman',
+     'مخازن سوخت ناوگان پنجم، رادار پاتریوت، رادار کنترل هوایی و C-RAM، بحرین','موشک و پهپاد','ادعای انهدام کامل','۳۶۱۰۹'),
+  ev(22,'2026-07-14','۲۳ تیر ۱۴۰۵','۰۸:۰۴','اطلاعیه ۹ / موج ۲ (مرحله ۳)','aerospace','alAzraq',
+     'تأسیسات پایگاه هوایی تحت اشغال در اردن','موشک بالستیک','ادعای مجازات نیروهای مستقر','۳۶۱۱۰'),
+  ev(23,'2026-07-14','۲۳ تیر ۱۴۰۵','۲۲:۱۵','اطلاعیه ۱۰ / موج ۳','aerospace','sheikhIsa',
+     'سوله نگهداری تسلیحات و قطعات شناور/هواگرد، شیخ عیسی','موشک و پهپاد','ادعای انهدام','۳۶۱۲۸'),
+  ev(24,'2026-07-14','۲۳ تیر ۱۴۰۵','۲۲:۱۵','اطلاعیه ۱۰ / موج ۳','aerospace','aliAlSalem',
+     'رمپ استقرار پهپادهای MQ-9، علی‌السالم','پهپاد','ادعای انهدام و آسیب به چند پهپاد','۳۶۱۲۸'),
+  ev(25,'2026-07-15','۲۴ تیر ۱۴۰۵','۰۵:۱۸','اطلاعیه ۱۱ / موج ۴','ground','minaAbdullah',
+     'مرکز آماد و پشتیبانی KGL، میناء عبدالله','نامشخص','به آتش کشیده و منهدم شد','۳۶۱۳۱'),
+  ev(26,'2026-07-15','۲۴ تیر ۱۴۰۵','۰۵:۳۵','اطلاعیه ۱۲ / موج ۵','naval','jufair',
+     'مرکز مدیریت NSI، مرکز فرماندهی، انبار قطعات و مخازن سوخت ناوگان پنجم','نامشخص','درهم‌کوبیده و منهدم شد','۳۶۱۳۲'),
+  ev(27,'2026-07-15','۲۴ تیر ۱۴۰۵','۱۸:۱۸','موج ۶','aerospace','alAzraq',
+     'آشیانه جنگنده‌های F-15 / F-16 / F-35 و پهپادهای راهبردی MQ-9','نامشخص','ادعای انهدام کامل آشیانه‌ها','۳۶۱۴۵'),
+  ev(28,'2026-07-15','۲۴ تیر ۱۴۰۵','۱۸:۲۴','موج ۷','ground','aliAlSalem',
+     'مرکز ارتباط ماهواره‌ای، رادار موشکی-هوایی، مجتمع پاتریوت، انبار پشتیبانی و پرتابگرهای هایمارس','موشک و پهپاد','ادعای انهدام و سرکوب اهداف','۳۶۱۴۷'),
+  ev(29,'2026-07-16','۲۵ تیر ۱۴۰۵','۰۶:۵۲','موج ۸','naval','aliAlSalem',
+     'رادار پیش‌هشدار C-RAM و محل تجمع نیروها، علی‌السالم','موشک و پهپاد (عملیات ترکیبی)','ادعای درهم‌کوبیدن اهداف','۳۶۱۵۲'),
+  ev(30,'2026-07-17','۲۶ تیر ۱۴۰۵','۰۹:۰۱','موج ۹','naval','aliAlSalem',
+     'مرکز ارتباط ماهواره‌ای و رادار پیش‌هشدار، علی‌السالم','موشک و پهپاد','ادعای انهدام','۳۶۱۶۰'),
+  ev(31,'2026-07-17','۲۶ تیر ۱۴۰۵','۰۹:۰۱','موج ۹','naval','shuaiba',
+     'اسکله نظامیان آمریکایی، شعیبه','موشک و پهپاد','ادعای انهدام','۳۶۱۶۰'),
+  ev(32,'2026-07-17','۲۶ تیر ۱۴۰۵','۰۹:۰۱','موج ۱۰','naval','sheikhIsa',
+     'رادار پایش هوایی و ایستگاه پمپاژ سوخت، شیخ عیسی','نامشخص','ادعای انهدام کامل','۳۶۱۶۱'),
+  ev(33,'2026-07-17','۲۶ تیر ۱۴۰۵','۰۹:۰۱','موج ۱۱','aerospace','tanf',
+     'مرکز فرماندهی عملیات ویژه، رادار و بالگردهای عملیات ویژه، التنف','نامشخص','ادعای انهدام سامانه راداری و چند بالگرد','۳۶۱۶۲'),
+  ev(34,'2026-07-17','۲۶ تیر ۱۴۰۵','۰۹:۰۱','موج ۱۲ (تخمینی)','ground','aliAlSalem',
+     'پایگاه دشمن در کویت (شرح مختصر)','نامشخص','به آتش کشیده شد','۳۶۱۶۳'),
+  ev(35,'2026-07-17','۲۶ تیر ۱۴۰۵','۰۹:۰۷','اطلاعیه ۲۱ / موج ۱۳','naval','salamah',
+     'رادار کنترل دریایی، صخره‌های سلامه','نامشخص','ادعای انهدام','۳۶۱۶۴'),
+  ev(36,'2026-07-17','۲۶ تیر ۱۴۰۵','۰۹:۰۷','اطلاعیه ۲۱ / موج ۱۳','naval','ghanam',
+     'رادار کنترل هوایی آمریکا، منطقه غنم','نامشخص','ادعای انهدام','۳۶۱۶۴'),
+  ev(37,'2026-07-17','۲۶ تیر ۱۴۰۵','۱۱:۵۱','اطلاعیه ۲۳ / موج ۱۵','ground','aliAlSalem',
+     'سکو و موشک‌های هایمارس، محل استقرار نیرو و «ضدانقلاب مزدور»','پهپاد و موشک','ادعای انهدام و تلفات','۳۶۱۶۶'),
+  ev(38,'2026-07-17','۲۶ تیر ۱۴۰۵','۱۱:۵۱','موج ۱۶','aerospace','alUdeid',
+     'سامانه راداری برد بلند و هواپیمای سوخت‌رسان راهبردی، العدید','نامشخص','ادعای انهدام کامل و آسیب جدی','۳۶۱۶۶'),
+  ev(39,'2026-07-17','۲۶ تیر ۱۴۰۵','۱۱:۵۱','موج ۱۷','naval','sheikhIsa',
+     'دپوی شناورهای بدون‌سرنشین (شمپاد)، شیخ عیسی','موشک بالستیک و پهپاد','ادعای آتش‌سوزی گسترده','۳۶۱۶۶'),
+  ev(40,'2026-07-17','۲۶ تیر ۱۴۰۵','۱۱:۵۱','موج ۱۷','naval','batelco',
+     'مرکز اصلی هوش مصنوعی (باتلکو)، بحرین','موشک بالستیک و پهپاد','ادعای تخریب کامل','۳۶۱۶۶'),
+  ev(41,'2026-07-17','۲۶ تیر ۱۴۰۵','۱۱:۵۱','موج ۱۸','ground','arifjan',
+     'مرکز پشتیبانی نیروی زمینی، عریفجان','حمله ترکیبی زمینی','ادعای تلفات نیرو','۳۶۱۶۶'),
+  ev(42,'2026-07-17','۲۶ تیر ۱۴۰۵','۱۱:۵۱','موج ۱۸','ground','aliAlSalem',
+     'رادار پایگاه علی‌السالم','پهپاد','ادعای انهدام رادار','۳۶۱۶۶'),
+  ev(43,'2026-07-17','۲۶ تیر ۱۴۰۵','۱۱:۵۱','موج ۱۹','naval','alAhmadi',
+     'اسکله پشتیبانی سوخت ناوگان آمریکا، بندر الاحمدی','پهپاد و موشک','ادعای هدف قرارگیری','۳۶۱۶۶'),
+  ev(44,'2026-07-17','۲۶ تیر ۱۴۰۵','۱۱:۵۱','موج ۱۹','naval','sheikhIsa',
+     'محل تجمع پرنده‌های جنگی، شیخ عیسی','پهپاد و موشک','ادعای هدف قرارگیری','۳۶۱۶۶'),
+  ev(45,'2026-07-17','۲۶ تیر ۱۴۰۵','۱۱:۵۱','موج ۱۹','naval','kuwaitCity',
+     'مرکز سیگنالی و مخابراتی آمریکا، کویت','نامشخص','ادعای انهدام','۳۶۱۶۶'),
+  ev(46,'2026-07-17','۲۶ تیر ۱۴۰۵','۱۱:۵۱','موج ۲۰','aerospace','alAzraq',
+     'شیلترهای جنگنده و رمپ توقف بزرگ، الازرق','موشک و پهپاد (همزمان)','ادعای انهدام کامل ۲ جنگنده و ۳ هواگرد','۳۶۱۶۶'),
+
+  /* --- ادامه اطلاعیه‌های سپاه (نصر ۲)، موج‌های ۲۱ تا ۲۴ --- */
+  ev(47,'2026-07-20','۲۹ تیر ۱۴۰۵','۰۴:۴۴','—','naval','hormuz',
+     'دو نفتکش متخلف، جنوب تنگه هرمز','انفجار (بدون اشاره به مکانیسم)','از حرکت باز ماندند','۳۶۲۲۲'),
+  ev(48,'2026-07-20','۲۹ تیر ۱۴۰۵','۰۵:۰۴','موج ۲۱','aerospace','aqaba',
+     'هواپیماهای ترابری C17 و هواپیماهای فرماندهی‌کنترل P8، فرودگاه عقبه','موشک بالستیک','ادعای خسارت سنگین','۳۶۲۲۳'),
+  ev(49,'2026-07-20','۲۹ تیر ۱۴۰۵','۰۶:۵۱','موج ۲۲','aerospace','aliAlSalem',
+     'رادار اخطار اولیه، سوله تجهیزات و قطعات هوایی و آشیانه پهپادهای MQ-9، علی‌السالم','پهپاد','ادعای انهدام رادار و آتش‌سوزی چند پهپاد','۳۶۲۲۵'),
+  ev(50,'2026-07-20','۲۹ تیر ۱۴۰۵','۱۶:۳۹','موج ۲۳ / مرحله ۱','naval','sakhir',
+     'سوله‌های نگهداری و تعمیرات پهپادی واحدهای آمریکایی، فرودگاه الصخیر','حمله دریایی ترکیبی','ادعای انهدام سوله‌ها','۳۶۲۲۸'),
+  ev(51,'2026-07-20','۲۹ تیر ۱۴۰۵','۱۶:۳۹','موج ۲۳ / مرحله ۲','naval','minaSalman',
+     'سوله‌های آماده‌سازی شناورهای TF-59، بندر سلمان','حمله دریایی ترکیبی','ادعای تخریب و خسارت به شناورها','۳۶۲۲۸'),
+  ev(52,'2026-07-20','۲۹ تیر ۱۴۰۵','۱۶:۳۹','موج ۲۳ / مرحله ۳','ground','arifjan',
+     'سوله‌های استقرار و پشتیبانی تکاوران دریایی ویژه، عریفجان','آتش‌افروزی','ادعای انهدام کامل','۳۶۲۲۸'),
+  ev(53,'2026-07-21','۳۰ تیر ۱۴۰۵','۰۴:۲۶','—','naval','hormuz',
+     'دو نفتکش متخلف دیگر، جنوب تنگه هرمز','انفجار','توقف شناورها با آتش‌سوزی گسترده','۳۶۲۳۵'),
+  ev(54,'2026-07-21','۳۰ تیر ۱۴۰۵','۰۴:۳۲','موج ۲۴ / مرحله ۱','aerospace','muharraq',
+     'سامانه پدافندی و رادار آمریکایی، المحرق','موشک و پهپاد','ادعای تخریب کامل','۳۶۲۳۶'),
+  ev(55,'2026-07-21','۳۰ تیر ۱۴۰۵','۰۴:۳۲','موج ۲۴','aerospace','rifa',
+     'سامانه پدافند هوایی پاتریوت، الرفاع','حمله همزمان موشکی و پهپادی','ادعای نابودی کامل','۳۶۲۳۶'),
+  ev(56,'2026-07-21','۳۰ تیر ۱۴۰۵','۰۵:۰۰','موج ۲۴ / مرحله ۲','aerospace','kuwaitCity',
+     'سایت راداری برد بلند، مرکز مخابراتی، سامانه دریافت ماهواره‌ای و رادار دفاع موشکی، کویت','موشک و پهپاد','ادعای انهدام','۳۶۲۳۷'),
+  ev(57,'2026-07-21','۳۰ تیر ۱۴۰۵','۰۵:۰۷','موج ۲۴','aerospace','ahmadAlJaber',
+     'رادار هشدار اولیه، رادار دفاع موشکی، رادار FPS-117، پدافند پاتریوت و سامانه ارتباط ماهواره‌ای، احمد الجابر','موشک و پهپاد','ادعای انهدام کامل','۳۶۲۳۸'),
+  ev(58,'2026-07-21','۳۰ تیر ۱۴۰۵','۰۵:۰۷','موج ۲۴','aerospace','aliAlSalem',
+     'آشیانه پهپادهای MQ-9، علی‌السالم','پهپاد','ادعای انهدام یا آسیب چند پهپاد','۳۶۲۳۸'),
+  ev(59,'2026-07-21','۳۰ تیر ۱۴۰۵','۰۹:۰۰','موج ۲۴ (ادامه)','aerospace','alAzraq',
+     'سامانه راداری دفاع موشکی و یک فروند اف-۱۵ داخل شیلتر، اردن','موشک','ادعای انهدام رادار و جنگنده','۳۶۲۳۹'),
+  ev(60,'2026-07-21','۳۰ تیر ۱۴۰۵','۰۹:۲۵','—','aerospace','awsBahrain',
+     'زیرساخت مرکزی داده‌های آمازون (AWS)، بحرین','موشک کروز','ادعای ویرانی کامل','۳۶۲۴۰'),
+  ev(61,'2026-07-21','۳۰ تیر ۱۴۰۵','۰۹:۲۸','موج ۲۴ (ادامه)','ground','rukban',
+     'مجتمع استقرار نیروهای زمینی آمریکا، منطقه الرکبان اردن','حمله زمینی','ادعای کشته‌شدن تعدادی نیرو','۳۶۲۴۱'),
+
+  /* --- بیانیه‌های ارتش جمهوری اسلامی، عملیات صاعقه --- */
+  ev(62,'2026-07-09','۱۸ تیر ۱۴۰۵','','ادامه حملات','ground','aliAlSalem',
+     'سامانه پاتریوت ارتش آمریکا، کویت','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(63,'2026-07-09','۱۸ تیر ۱۴۰۵','','ادامه حملات','aerospace','alUdeid',
+     'آنتن ماهواره‌ای (سایت اخطار اولیه)، قطر','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(64,'2026-07-09','۱۸ تیر ۱۴۰۵','','ادامه حملات','naval','jufair',
+     'مخازن سوخت ارتش آمریکا، بحرین','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(65,'2026-07-12','۲۱ تیر ۱۴۰۵','','ادامه حملات','ground','aliAlSalem',
+     'سامانه پاتریوت، انبار مهمات و سایت رادار، کویت','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(66,'2026-07-12','۲۱ تیر ۱۴۰۵','','ادامه حملات','naval','jufair',
+     'سامانه ارتباطی و سایت راداری، بحرین','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(67,'2026-07-13','۲۲ تیر ۱۴۰۵','','—','ground','kuwaitCity',
+     'محل استقرار و پشتیبانی نیروهای آمریکایی، کویت','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(68,'2026-07-13','۲۲ تیر ۱۴۰۵','','دفاع هوایی داخلی','aerospace','bandarAbbas',
+     'پهپاد متخاصم «لوکاس»','موشک زمین‌به‌هوا','سرنگون شد','','artesh'),
+  ev(69,'2026-07-14','۲۳ تیر ۱۴۰۵','','—','ground','kuwaitCity',
+     'سامانه‌های ارتباطی، مخازن سوخت، پاتریوت، برج مراقبت و انبار مهمات، کویت','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(70,'2026-07-14','۲۳ تیر ۱۴۰۵','','—','naval','northIndianOcean',
+     'شناور متخاصم دشمن آمریکایی','موشک کروز ساحل‌به‌دریا','هدف قرار گرفت','','artesh'),
+  ev(71,'2026-07-15','۲۴ تیر ۱۴۰۵','','مرحله ۷ عملیات صاعقه','aerospace','alAzraq',
+     'محل استقرار جنگنده‌های اف-۱۸، ساختمان اسکان و سوله تجهیزات، الازرق','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(72,'2026-07-15','۲۴ تیر ۱۴۰۵','','مرحله ۸ عملیات صاعقه','aerospace','alAzraq',
+     'محل استقرار جنگنده‌های اف-۱۸ و سوله‌های تجهیزاتی (بار دوم)، الازرق','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(73,'2026-07-16','۲۵ تیر ۱۴۰۵','','مرحله ۹ عملیات صاعقه','aerospace','alAzraq',
+     'سایت راداری ثابت، سامانه ارتباط و مخازن سوخت، الازرق','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(74,'2026-07-16','۲۵ تیر ۱۴۰۵','','مرحله ۱۰ عملیات صاعقه','aerospace','aliAlSalem',
+     'سامانه‌های راداری، پدافند پاتریوت و مخازن سوخت، علی‌السالم','پهپاد انهدامی آرش','هدف قرار گرفت','','artesh'),
+  ev(75,'2026-07-16','۲۵ تیر ۱۴۰۵','','مرحله ۱۰ عملیات صاعقه','aerospace','sheikhIsa',
+     'رادارهای سوپرهاوک، تاسیسات و سامانه‌های پاتریوت، شیخ عیسی','پهپاد انهدامی','ادعای آسیب جدی','','artesh'),
+  ev(76,'2026-07-17','۲۶ تیر ۱۴۰۵','','مرحله ۱۱ عملیات صاعقه','aerospace','sakhir',
+     'محل استقرار هواپیماهای شناسایی P8 و بالگردها، الصخیر','پهپاد انهدامی آرش','هدف قرار گرفت','','artesh'),
+  ev(77,'2026-07-17','۲۶ تیر ۱۴۰۵','','مرحله ۱۲ عملیات صاعقه','ground','kuwaitCity',
+     'مراکز پشتیبانی لجستیکی نیروهای آمریکایی، کویت','پهپاد انهدامی آرش','هدف قرار گرفت','','artesh'),
+  ev(78,'2026-07-18','۲۷ تیر ۱۴۰۵','','مرحله ۱۳ عملیات صاعقه','naval','northIndianOcean',
+     'شناور متخاصم دشمن، شمال اقیانوس هند','موشک کروز ساحل‌به‌دریا','هدف قرار گرفت','','artesh'),
+  ev(79,'2026-07-18','۲۷ تیر ۱۴۰۵','','مرحله ۱۴ عملیات صاعقه','ground','udairi',
+     'انبار مهمات، اردوگاه العدیری','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(80,'2026-07-18','۲۷ تیر ۱۴۰۵','','مرحله ۱۴ عملیات صاعقه','ground','aliAlSalem',
+     'ساختمان‌های ستاد، انبارهای مهمات و چند پل ارتباطی، علی‌السالم','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(81,'2026-07-18','۲۷ تیر ۱۴۰۵','','مرحله ۱۴ عملیات صاعقه','ground','alAzraq',
+     'مخازن سوخت، الازرق','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(82,'2026-07-18','۲۷ تیر ۱۴۰۵','','مرحله ۱۵ عملیات صاعقه','aerospace','sheikhIsa',
+     'آشیانه و پارکینگ هواپیماها، مخازن سوخت و چند پل ارتباطی، شیخ عیسی','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(83,'2026-07-19','۲۸ تیر ۱۴۰۵','','مرحله ۱۶ عملیات صاعقه','ground','udairi',
+     'انبار مهمات، اردوگاه العدیری','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(84,'2026-07-19','۲۸ تیر ۱۴۰۵','','مرحله ۱۶ عملیات صاعقه','ground','aliAlSalem',
+     'رادار پاتریوت و رادار هوایی، علی‌السالم','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(85,'2026-07-19','۲۸ تیر ۱۴۰۵','','مرحله ۱۷ عملیات صاعقه','ground','udairi',
+     'انبار مهمات (بار دوم)، اردوگاه العدیری','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(86,'2026-07-19','۲۸ تیر ۱۴۰۵','','مرحله ۱۷ عملیات صاعقه','ground','aliAlSalem',
+     'سوله‌های تجهیزات و نفرات (بار دوم)، علی‌السالم','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(87,'2026-07-21','۳۰ تیر ۱۴۰۵','','مرحله ۱۸ عملیات صاعقه','ground','arifjan',
+     'سامانه‌های موشکی هایمارس، عریفجان','موشک زمین‌به‌زمین','هدف قرار گرفت','','artesh'),
+  ev(88,'2026-07-21','۳۰ تیر ۱۴۰۵','','مرحله ۱۹ عملیات صاعقه','aerospace','arifjan',
+     'ساختمان‌های اداری و آنتن‌های جهت‌یاب، عریفجان','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(89,'2026-07-21','۳۰ تیر ۱۴۰۵','','مرحله ۱۹ عملیات صاعقه','aerospace','udairi',
+     'پارکینگ گروهی بالگردها، اردوگاه العدیری','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(90,'2026-07-21','۳۰ تیر ۱۴۰۵','','مرحله ۱۹ عملیات صاعقه','aerospace','ahmadAlJaber',
+     'ساختمان استقرار نیروها، احمد الجابر','پهپاد انهدامی','هدف قرار گرفت','','artesh'),
+  ev(91,'2026-07-21','۳۰ تیر ۱۴۰۵','','مرحله ۲۰ عملیات صاعقه','aerospace','sheikhIsa',
+     'محل اسکان و استقرار نیروها، شیخ عیسی','پهپاد انهدامی آرش (چند مرحله)','هدف قرار گرفت','','artesh'),
+];
+
+const DATES = [...new Set(EVENTS.map(e=>e.dateG))].sort();
+const DATE_LABEL = {};
+EVENTS.forEach(e=>DATE_LABEL[e.dateG]=e.dateP);
+
+/* ---------------- state ---------------- */
+let state = {
+  dateIdx: DATES.length-1,
+  mode: 'cumulative',
+  countries: new Set(Object.keys(COUNTRY)),
+  forces: new Set(Object.keys(FORCE)),
+  sources: new Set(Object.keys(SOURCE)),
+  selectedId: null,
+  playing: false,
+  playTimer: null,
+};
+
+/* ---------------- map init ---------------- */
+const map = L.map('map', {zoomControl:false, attributionControl:false})
+  .setView([27.5, 49.5], 6);
+L.control.zoom({position:'bottomleft'}).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  subdomains:'abcd', maxZoom:12, minZoom:4
+}).addTo(map);
+
+let markerLayer = L.layerGroup().addTo(map);
+let markersById = {};
+
+function countryColor(c){ return (COUNTRY[c]||{}).color || '#888'; }
+
+function makeIcon(country, active, source){
+  const c = countryColor(country);
+  const size = active? 22:16;
+  const glow = active? 0.18 : 0.08;
+  const shadow = `0 0 0 ${active?4:2}px rgba(255,255,255,${glow}), 0 0 14px ${c}${active?'aa':'55'}`;
+  const shape = source==='artesh'
+    ? `width:${size}px;height:${size}px;background:${c};box-shadow:${shadow};border:1.5px solid rgba(255,255,255,.75);transform:rotate(45deg);border-radius:3px;`
+    : `width:${size}px;height:${size}px;border-radius:50%;background:${c};box-shadow:${shadow};border:1.5px solid rgba(255,255,255,.75);`;
+  return L.divIcon({
+    className:'',
+    html:`<div style="${shape}"></div>`,
+    iconSize:[size,size], iconAnchor:[size/2,size/2]
+  });
+}
+
+/* ---------------- filtering ---------------- */
+function visibleEvents(){
+  const curDate = DATES[state.dateIdx];
+  return EVENTS.filter(e=>{
+    if(!state.countries.has(e.country)) return false;
+    if(!state.forces.has(e.force)) return false;
+    if(!state.sources.has(e.source)) return false;
+    if(state.mode==='single') return e.dateG===curDate;
+    return e.dateG<=curDate;
+  });
+}
+function todaysEvents(){
+  const curDate = DATES[state.dateIdx];
+  return EVENTS.filter(e=> e.dateG===curDate && state.countries.has(e.country) && state.forces.has(e.force) && state.sources.has(e.source));
+}
+
+/* ---------------- render: stat strip ---------------- */
+function renderStats(){
+  const total = EVENTS.length;
+  const countries = new Set(EVENTS.map(e=>e.country)).size;
+  const waves = new Set(EVENTS.map(e=>e.wave)).size;
+  document.getElementById('statStrip').innerHTML = `
+    <div class="stat"><b>${total}</b><span>کل رویدادها</span></div>
+    <div class="stat"><b>${countries}</b><span>کشور هدف</span></div>
+    <div class="stat"><b>${DATES.length}</b><span>روز فعال</span></div>
+    <div class="stat"><b>${waves}</b><span>موج/مرحله</span></div>
+  `;
+}
+
+function renderSourceChips(){
+  const wrap = document.getElementById('sourceChips');
+  wrap.innerHTML='';
+  Object.keys(SOURCE).forEach(key=>{
+    const count = EVENTS.filter(e=>e.source===key).length;
+    const chip = document.createElement('div');
+    chip.className = 'chip' + (state.sources.has(key)?' active':'');
+    chip.innerHTML = `<span class="sw" style="background:${key==='artesh'?'#4d80c9':'#d99a3f'}; border-radius:${key==='artesh'?'2px':'50%'}; transform:${key==='artesh'?'rotate(45deg)':'none'};"></span>${SOURCE[key].label}<span class="chip-count">${count}</span>`;
+    chip.onclick = ()=>{
+      if(state.sources.has(key)) state.sources.delete(key); else state.sources.add(key);
+      renderSourceChips(); renderAll();
+    };
+    wrap.appendChild(chip);
+  });
+}
+
+/* ---------------- render: chips ---------------- */
+function renderChips(){
+  const wrap = document.getElementById('countryChips');
+  wrap.innerHTML='';
+  Object.keys(COUNTRY).forEach(key=>{
+    const count = EVENTS.filter(e=>e.country===key).length;
+    const chip = document.createElement('div');
+    chip.className = 'chip' + (state.countries.has(key)?' active':'');
+    chip.style.color = COUNTRY[key].color;
+    chip.innerHTML = `<span class="sw" style="background:${COUNTRY[key].color}"></span>${COUNTRY[key].label}<span class="chip-count">${count}</span>`;
+    chip.onclick = ()=>{
+      if(state.countries.has(key)) state.countries.delete(key); else state.countries.add(key);
+      renderChips(); renderAll();
+    };
+    wrap.appendChild(chip);
+  });
+
+  const legend = document.getElementById('legendList');
+  legend.innerHTML = Object.keys(COUNTRY).map(k=>`
+    <div class="legend-row"><span class="sw" style="background:${COUNTRY[k].color}"></span>${COUNTRY[k].label}</div>
+  `).join('');
+}
+
+function renderForceToggle(){
+  const wrap = document.getElementById('forceToggle');
+  wrap.innerHTML='';
+  Object.keys(FORCE).filter(k=>k!=='unknown').forEach(key=>{
+    const btn = document.createElement('div');
+    btn.className = 'force-btn' + (state.forces.has(key)?' active':'');
+    btn.textContent = FORCE[key];
+    btn.onclick = ()=>{
+      if(state.forces.has(key)) state.forces.delete(key); else state.forces.add(key);
+      state.forces.add('unknown');
+      renderForceToggle(); renderAll();
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+/* ---------------- render: markers ---------------- */
+function renderMarkers(){
+  markerLayer.clearLayers();
+  markersById = {};
+  const evs = visibleEvents();
+  const todaySet = new Set(todaysEvents().map(e=>e.id));
+
+  evs.forEach(e=>{
+    const active = todaySet.has(e.id) || e.id===state.selectedId;
+    const marker = L.marker([e.lat, e.lng], {icon: makeIcon(e.country, active, e.source)});
+    marker.on('click', ()=>selectEvent(e.id));
+    marker.bindTooltip(`${e.locName}`, {direction:'top', offset:[0,-10], className:'tt'});
+    marker.addTo(markerLayer);
+    markersById[e.id] = marker;
+  });
+}
+
+/* ---------------- render: event list ---------------- */
+function renderEventList(){
+  const list = document.getElementById('eventList');
+  const evs = todaysEvents();
+  document.getElementById('listCount').textContent = evs.length ? `${evs.length} مورد` : '';
+
+  if(evs.length===0){
+    list.innerHTML = `<div class="empty-note">در این تاریخ، با فیلترهای فعلی رویدادی ثبت نشده است.</div>`;
+    return;
+  }
+  list.innerHTML = evs.map(e=>`
+    <div class="event-card ${e.id===state.selectedId?'selected':''}" data-id="${e.id}">
+      <div class="ec-top">
+        <span>${e.time || ''}</span>
+        <span class="ec-wave">${SOURCE[e.source].short} · ${e.wave || '—'}</span>
+      </div>
+      <div class="ec-loc"><span class="ec-country-dot" style="background:${countryColor(e.country)}"></span>${e.locName}</div>
+      <div class="ec-target">${e.target}</div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('.event-card').forEach(card=>{
+    card.onclick = ()=> selectEvent(parseInt(card.dataset.id));
+  });
+}
+
+/* ---------------- selection panel ---------------- */
+function selectEvent(id){
+  state.selectedId = id;
+  const e = EVENTS.find(x=>x.id===id);
+  if(!e) return;
+
+  document.getElementById('spCountry').textContent = COUNTRY[e.country].label;
+  document.getElementById('spCountry').style.color = COUNTRY[e.country].color;
+  document.getElementById('spSource').textContent = SOURCE[e.source].label;
+  document.getElementById('spTitle').textContent = e.locName;
+  document.getElementById('spDate').textContent = `${e.dateP}${e.time? ' — '+e.time:''}`;
+  document.getElementById('spWave').textContent = e.wave || '—';
+  document.getElementById('spForce').textContent = FORCE[e.force] || 'نامشخص';
+  document.getElementById('spWeapon').textContent = e.weapon || '—';
+  document.getElementById('spDesc').textContent = `هدف ادعایی: ${e.target}. نتیجه اعلام‌شده: ${e.outcome}`;
+  document.getElementById('spCode').textContent = e.code
+    ? `کد خبر سپاه‌نیوز: ${e.code}`
+    : `منبع: روابط عمومی ارتش جمهوری اسلامی ایران (${e.dateP})`;
+  document.getElementById('selPanel').classList.add('show');
+
+  if(!DATES.includes(e.dateG)) return;
+  const idx = DATES.indexOf(e.dateG);
+  if(idx !== state.dateIdx){ state.dateIdx = idx; renderAll(); }
+  else { renderMarkers(); renderEventList(); renderTimeline(); }
+
+  const m = markersById[id];
+  if(m){ map.flyTo(m.getLatLng(), Math.max(map.getZoom(), 7), {duration:0.6}); m.openTooltip(); }
+}
+
+document.getElementById('spClose').onclick = ()=>{
+  state.selectedId = null;
+  document.getElementById('selPanel').classList.remove('show');
+  renderMarkers(); renderEventList();
+};
+
+/* ---------------- timeline ---------------- */
+function renderTimeline(){
+  const curDate = DATES[state.dateIdx];
+  document.getElementById('tlCurrentDate').textContent = DATE_LABEL[curDate];
+  const dayEvents = todaysEvents();
+  const cumEvents = visibleEvents();
+  document.getElementById('tlCurrentMeta').textContent =
+    `${dayEvents.length} رویداد در این روز · ${cumEvents.length} رویداد تجمعی`;
+
+  const pct = DATES.length<=1 ? 100 : (state.dateIdx/(DATES.length-1))*100;
+  document.getElementById('tlFill').style.width = pct+'%';
+
+  const ticksWrap = document.getElementById('tlTicks');
+  ticksWrap.innerHTML = '';
+  DATES.forEach((d, i)=>{
+    const posPct = DATES.length<=1 ? 0 : (i/(DATES.length-1))*100;
+    const count = EVENTS.filter(e=>e.dateG===d).length;
+    const tick = document.createElement('div');
+    tick.className = 'tl-tick' + (i===state.dateIdx?' active': i<state.dateIdx?' past':'');
+    tick.style.right = posPct+'%';
+    tick.title = `${DATE_LABEL[d]} — ${count} رویداد`;
+    tick.innerHTML = `<div class="tl-tick-label">${DATE_LABEL[d].replace(' ۱۴۰۵','')}</div><div class="tl-tick-count">${count}</div>`;
+    tick.onclick = ()=>{ state.dateIdx = i; renderAll(); };
+    ticksWrap.appendChild(tick);
+  });
+}
+
+/* ---------------- mode toggle ---------------- */
+document.querySelectorAll('.mode-btn').forEach(btn=>{
+  btn.onclick = ()=>{
+    document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    state.mode = btn.dataset.mode;
+    renderAll();
+  };
+});
+
+/* ---------------- prev/next/play ---------------- */
+document.getElementById('tlPrev').onclick = ()=>{
+  state.dateIdx = Math.max(0, state.dateIdx-1); renderAll();
+};
+document.getElementById('tlNext').onclick = ()=>{
+  state.dateIdx = Math.min(DATES.length-1, state.dateIdx+1); renderAll();
+};
+document.getElementById('tlPlay').onclick = function(){
+  if(state.playing){
+    state.playing = false;
+    clearInterval(state.playTimer);
+    this.classList.remove('playing');
+    this.textContent = '▶';
+    return;
+  }
+  state.playing = true;
+  this.classList.add('playing');
+  this.textContent = '❚❚';
+  state.playTimer = setInterval(()=>{
+    state.dateIdx++;
+    if(state.dateIdx >= DATES.length){
+      state.dateIdx = DATES.length-1;
+      document.getElementById('tlPlay').click();
+    }
+    renderAll();
+  }, 1400);
+};
+
+/* ---------------- master render ---------------- */
+function renderAll(){
+  renderMarkers();
+  renderEventList();
+  renderTimeline();
+}
+
+renderStats();
+renderSourceChips();
+renderChips();
+renderForceToggle();
+renderAll();
+
+/* Leaflet sometimes initializes before the grid layout has settled,
+   which leaves it thinking the container is 0×0. Force a recalculation. */
+function fixMapSize(){ map.invalidateSize(); }
+window.addEventListener('resize', fixMapSize);
+setTimeout(fixMapSize, 50);
+setTimeout(fixMapSize, 300);
+setTimeout(fixMapSize, 1000);
+if(document.fonts && document.fonts.ready){ document.fonts.ready.then(fixMapSize); }
+</script>
+</body>
+</html>

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>لوحة رصد عملية نصر ٢ — نسخة الجوال</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root{
+    --bg-0:#080b0f;
+    --bg-1:#0e131a;
+    --bg-2:#141b24;
+    --bg-3:#1b2530;
+    --line:#232e3d;
+    --line-soft:#1a2330;
+    --text-0:#eef2f6;
+    --text-1:#aab6c4;
+    --text-2:#6c7889;
+    --amber:#d99a3f;
+    --amber-dim:#8a6a3a;
+    --red:#c9503f;
+    --rust:#b8683f;
+    --sheet-peek: 128px;
+    --sheet-expanded: 78vh;
+    --safe-b: env(safe-area-inset-bottom, 0px);
+    --safe-t: env(safe-area-inset-top, 0px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;overscroll-behavior:none;}
+  body{
+    background:var(--bg-0);
+    color:var(--text-0);
+    font-family:'Tajawal',Tahoma,sans-serif;
+    overflow:hidden;
+    position:fixed;
+    inset:0;
+  }
+
+  /* ---------------- Map layer ---------------- */
+  #map{position:fixed;inset:0;z-index:1;background:var(--bg-0);}
+  .leaflet-container{background:var(--bg-0);font-family:'Tajawal',Tahoma,sans-serif;}
+  .leaflet-control-zoom{display:none;}
+
+  /* ---------------- Top bar ---------------- */
+  .topbar{
+    position:fixed;top:0;right:0;left:0;z-index:600;
+    padding:calc(10px + var(--safe-t)) 14px 10px;
+    background:linear-gradient(180deg, rgba(8,11,15,.94), rgba(8,11,15,.55) 70%, transparent);
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+  }
+  .tb-brand{display:flex;align-items:center;gap:9px;min-width:0;}
+  .tb-mark{
+    width:32px;height:32px;border-radius:8px;flex-shrink:0;
+    background:radial-gradient(circle at 30% 30%, var(--amber), var(--rust) 70%);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:12.5px;color:#14100a;
+  }
+  .tb-title{min-width:0;}
+  .tb-title h1{font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .tb-title p{font-size:10px;color:var(--text-2);margin-top:1px;white-space:nowrap;}
+  .tb-live{
+    display:flex;align-items:center;gap:5px;flex-shrink:0;
+    font-size:10px;color:var(--text-1);
+    background:rgba(20,27,36,.9);border:1px solid var(--line);border-radius:20px;
+    padding:6px 10px;
+  }
+  .dot-pulse{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 2s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(201,80,63,.55);}
+    70%{box-shadow:0 0 0 7px rgba(201,80,63,0);}
+    100%{box-shadow:0 0 0 0 rgba(201,80,63,0);}
+  }
+
+  /* ---------------- Filter toggle chip on map ---------------- */
+  .filter-fab{
+    position:fixed;z-index:600;
+    top:calc(64px + var(--safe-t));
+    left:14px;
+    width:40px;height:40px;border-radius:12px;
+    background:rgba(20,27,36,.92);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-1);font-size:16px;
+  }
+  .filter-fab.active{color:var(--amber);border-color:var(--amber-dim);}
+
+  .mode-fab{
+    position:fixed;z-index:600;
+    top:calc(64px + var(--safe-t));
+    left:64px;
+    display:flex;background:rgba(20,27,36,.92);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    font-size:10.5px;
+  }
+  .mode-fab div{padding:10px 10px;color:var(--text-2);}
+  .mode-fab div.active{background:var(--bg-3);color:var(--amber);}
+
+  /* ---------------- Selected event floating card ---------------- */
+  .sel-card{
+    position:fixed;z-index:650;
+    right:14px;left:14px;
+    bottom:calc(var(--sheet-peek) + 14px + var(--safe-b));
+    background:rgba(14,19,26,.97);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 14px 12px;
+    box-shadow:0 16px 40px -10px rgba(0,0,0,.65);
+    display:none;
+    transition:bottom .25s;
+  }
+  .sel-card.show{display:block;}
+  .sc-close{position:absolute;left:10px;top:10px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:15px;}
+  .sc-country{font-size:10.5px;color:var(--amber);margin-bottom:3px;letter-spacing:.3px;}
+  .sc-title{font-size:15px;font-weight:700;line-height:1.5;margin-bottom:9px;padding-left:26px;}
+  .sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:9px;}
+  .sc-field span{display:block;font-size:9.5px;color:var(--text-2);margin-bottom:1px;}
+  .sc-field b{font-size:12px;font-weight:700;}
+  .sc-desc{font-size:11.5px;line-height:1.8;color:var(--text-1);border-top:1px solid var(--line-soft);padding-top:8px;}
+  .sc-code{font-size:10px;color:var(--text-2);margin-top:8px;}
+
+  /* ---------------- Bottom sheet ---------------- */
+  .sheet{
+    position:fixed;right:0;left:0;bottom:0;z-index:640;
+    height:var(--sheet-peek);
+    background:var(--bg-1);
+    border-top:1px solid var(--line);
+    border-radius:18px 18px 0 0;
+    box-shadow:0 -10px 30px -10px rgba(0,0,0,.5);
+    transition:height .28s cubic-bezier(.2,.8,.3,1);
+    display:flex;flex-direction:column;
+    overflow:hidden;
+    touch-action:none;
+  }
+  .sheet.expanded{height:var(--sheet-expanded);}
+
+  .sheet-handle{
+    padding:10px 0 6px;display:flex;flex-direction:column;align-items:center;gap:8px;
+    flex-shrink:0;
+  }
+  .handle-bar{width:36px;height:4px;border-radius:3px;background:var(--line);}
+  .sheet-summary{
+    width:100%;padding:0 16px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .ss-date{display:flex;align-items:baseline;gap:8px;min-width:0;}
+  .ss-date b{font-size:14px;white-space:nowrap;}
+  .ss-date span{font-size:10.5px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .ss-controls{display:flex;gap:6px;flex-shrink:0;}
+  .ss-btn{
+    width:34px;height:34px;border-radius:9px;border:1px solid var(--line);
+    background:var(--bg-2);color:var(--text-1);
+    display:flex;align-items:center;justify-content:center;font-size:13px;
+  }
+  .ss-btn.playing{color:var(--amber);border-color:var(--amber-dim);}
+
+  .date-scroll{
+    display:flex;gap:8px;overflow-x:auto;padding:10px 16px 12px;flex-shrink:0;
+    -webkit-overflow-scrolling:touch;
+  }
+  .date-scroll::-webkit-scrollbar{display:none;}
+  .date-pill{
+    flex-shrink:0;
+    padding:8px 14px;border-radius:20px;
+    border:1px solid var(--line);
+    background:var(--bg-2);
+    font-size:12px;color:var(--text-1);
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    min-width:64px;
+  }
+  .date-pill b{font-size:9px;font-weight:400;color:var(--text-2);}
+  .date-pill.active{background:linear-gradient(135deg,var(--amber),var(--rust));color:#14100a;border-color:transparent;}
+  .date-pill.active b{color:#2a1c0c;}
+  .date-pill.past{border-color:var(--amber-dim);}
+
+  .sheet-body{
+    flex:1;overflow-y:auto;min-height:0;
+    padding:0 16px calc(20px + var(--safe-b));
+    -webkit-overflow-scrolling:touch;
+  }
+  .sheet-section{padding:12px 0;border-bottom:1px solid var(--line-soft);}
+  .sheet-section-title{font-size:11px;color:var(--text-2);margin-bottom:10px;letter-spacing:.3px;}
+
+  .chip-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;}
+  .chip-row::-webkit-scrollbar{display:none;}
+  .chip{
+    flex-shrink:0;
+    font-size:12.5px;padding:8px 13px;border-radius:20px;
+    border:1px solid var(--line);background:var(--bg-2);color:var(--text-1);
+    display:flex;align-items:center;gap:7px;
+  }
+  .chip .sw{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .chip.active{background:var(--bg-3);color:var(--text-0);border-color:currentColor;}
+  .chip-count{color:var(--text-2);font-size:10.5px;}
+
+  .force-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+  .force-btn{
+    text-align:center;padding:9px 4px;font-size:11.5px;border-radius:9px;
+    border:1px solid var(--line);background:var(--bg-2);color:var(--text-1);
+  }
+  .force-btn.active{background:var(--bg-3);color:var(--amber);border-color:var(--amber-dim);}
+
+  .event-card{
+    padding:12px 13px;border:1px solid var(--line-soft);border-radius:11px;
+    margin-bottom:9px;background:var(--bg-2);
+  }
+  .event-card.selected{border-color:var(--amber-dim);background:var(--bg-3);}
+  .ec-top{display:flex;justify-content:space-between;font-size:10.5px;color:var(--text-2);margin-bottom:6px;}
+  .ec-wave{padding:1px 8px;border-radius:20px;border:1px solid var(--line);}
+  .ec-loc{font-size:14px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:7px;}
+  .ec-country-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .ec-target{font-size:12px;color:var(--text-1);line-height:1.7;}
+
+  .empty-note{padding:24px 4px;text-align:center;color:var(--text-2);font-size:12.5px;line-height:2;}
+
+  .stat-row{display:flex;gap:8px;}
+  .stat-mini{
+    flex:1;text-align:center;padding:10px 4px;border:1px solid var(--line);border-radius:10px;background:var(--bg-2);
+  }
+  .stat-mini b{display:block;font-size:16px;color:var(--amber);}
+  .stat-mini span{font-size:9.5px;color:var(--text-2);}
+
+  .disclaimer{font-size:10.5px;color:var(--text-2);line-height:1.8;padding:10px 0 4px;}
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<div class="topbar">
+  <div class="tb-brand">
+    <div class="tb-mark">ن٢</div>
+    <div class="tb-title">
+      <h1>رصد عملية «نصر ٢»</h1>
+      <p>وكالة سباه نيوز — نسخة الجوال</p>
+    </div>
+  </div>
+  <div class="tb-live"><span class="dot-pulse"></span>٨–١٧ يوليو</div>
+</div>
+
+<div class="filter-fab" id="filterFab">☰</div>
+<div class="mode-fab" id="modeFab">
+  <div class="active" data-mode="cumulative">تراكمي</div>
+  <div data-mode="single">اليوم فقط</div>
+</div>
+
+<div class="sel-card" id="selCard">
+  <div class="sc-close" id="scClose">✕</div>
+  <div class="sc-country" id="scCountry"></div>
+  <div class="sc-title" id="scTitle"></div>
+  <div class="sc-grid">
+    <div class="sc-field"><span>التاريخ</span><b id="scDate"></b></div>
+    <div class="sc-field"><span>الموجة/المرحلة</span><b id="scWave"></b></div>
+    <div class="sc-field"><span>القوة المنفذة</span><b id="scForce"></b></div>
+    <div class="sc-field"><span>السلاح المزعوم</span><b id="scWeapon"></b></div>
+  </div>
+  <div class="sc-desc" id="scDesc"></div>
+  <div class="sc-code" id="scCode"></div>
+</div>
+
+<div class="sheet" id="sheet">
+  <div class="sheet-handle" id="sheetHandle">
+    <div class="handle-bar"></div>
+    <div class="sheet-summary">
+      <div class="ss-date">
+        <b id="ssDate">—</b>
+        <span id="ssMeta">—</span>
+      </div>
+      <div class="ss-controls">
+        <div class="ss-btn" id="ssPrev">◀</div>
+        <div class="ss-btn" id="ssPlay">▶</div>
+        <div class="ss-btn" id="ssNext">▶</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="date-scroll" id="dateScroll"></div>
+
+  <div class="sheet-body" id="sheetBody">
+    <div class="sheet-section">
+      <div class="stat-row" id="statRow"></div>
+    </div>
+    <div class="sheet-section" id="filterCountrySection">
+      <div class="sheet-section-title">تصفية حسب الدولة المستهدفة</div>
+      <div class="chip-row" id="countryChips"></div>
+    </div>
+    <div class="sheet-section" id="filterForceSection">
+      <div class="sheet-section-title">تصفية حسب نوع القوة المنفذة</div>
+      <div class="force-grid" id="forceToggle"></div>
+    </div>
+    <div class="sheet-section">
+      <div class="sheet-section-title">أحداث هذا التاريخ (<span id="listCount">٠</span>)</div>
+      <div id="eventList"></div>
+    </div>
+    <div class="sheet-section" style="border-bottom:none;">
+      <div class="disclaimer">جميع البيانات الواردة هنا مستقاة من بيانات رسمية صادرة عن الحرس الثوري الإيراني عبر «سباه نيوز»، وهي ادعاءات لم يتم التحقق منها بشكل مستقل — تعرض هذه اللوحة محتوى البيانات كما ورد دون أي تأكيد إضافي.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   البيانات — نفس مجموعة بيانات لوحة نصر ٢، مترجمة إلى العربية.
+   ملاحظة: جميع البنود تعكس ادعاءات رسمية صادرة عن الحرس الثوري
+   الإيراني (سباه) ولا تحمل أي تحقق مستقل.
+   ========================================================= */
+
+const LOC = {
+  princeHassan: {name:'قاعدة الأمير حسن الجوية', country:'jordan', lat:30.2833, lng:36.0833},
+  alAzraq:      {name:'قاعدة الأزرق الجوية',     country:'jordan', lat:31.9328, lng:36.8206},
+  arifjan:      {name:'معسكر عريفجان',           country:'kuwait', lat:28.8956, lng:48.1633},
+  aliAlSalem:   {name:'قاعدة علي السالم الجوية',  country:'kuwait', lat:29.3469, lng:47.5213},
+  ahmadAlJaber: {name:'قاعدة أحمد الجابر الجوية', country:'kuwait', lat:28.9358, lng:47.7981},
+  minaAbdullah: {name:'ميناء عبدالله (مركز KGL اللوجستي)', country:'kuwait', lat:29.0500, lng:48.1333},
+  shuaiba:      {name:'رصيف الشعيبة',            country:'kuwait', lat:29.0450, lng:48.1550},
+  alAhmadi:     {name:'ميناء الأحمدي',            country:'kuwait', lat:29.0769, lng:48.1364},
+  kuwaitCity:   {name:'مركز الاتصالات (الكويت)',   country:'kuwait', lat:29.3759, lng:47.9774},
+  minaSalman:   {name:'ميناء سلمان',              country:'bahrain', lat:26.2000, lng:50.6100},
+  jufair:       {name:'قاعدة الجفير (مقر الأسطول الخامس)', country:'bahrain', lat:26.2285, lng:50.6083},
+  sheikhIsa:    {name:'قاعدة الشيخ عيسى الجوية',   country:'bahrain', lat:25.9167, lng:50.5833},
+  batelco:      {name:'مركز بيانات بتلكو (المنامة)', country:'bahrain', lat:26.2235, lng:50.5876},
+  alUdeid:      {name:'قاعدة العديد الجوية',      country:'qatar', lat:25.1174, lng:51.3160},
+  duqm:         {name:'ميناء الدقم',              country:'oman', lat:19.6667, lng:57.7000},
+  ghanam:       {name:'منطقة غنم (مسندم)',        country:'oman', lat:26.1500, lng:56.3000},
+  salamah:      {name:'صخور سلامة',              country:'oman', lat:23.5880, lng:58.5450},
+  tanf:         {name:'قاعدة التنف',              country:'syria', lat:33.4864, lng:38.2131},
+  hormuz:       {name:'مضيق هرمز',               country:'hormuz', lat:26.5000, lng:56.2500},
+};
+
+const COUNTRY = {
+  jordan:  {label:'الأردن',  color:'#c9503f'},
+  kuwait:  {label:'الكويت',  color:'#d99a3f'},
+  bahrain: {label:'البحرين', color:'#3a9188'},
+  qatar:   {label:'قطر',    color:'#8b6fb0'},
+  oman:    {label:'عُمان',   color:'#4d80c9'},
+  syria:   {label:'سوريا',  color:'#b8683f'},
+  hormuz:  {label:'مضيق هرمز', color:'#5c6b7d'},
+};
+
+const FORCE = {
+  ground:    'بري',
+  naval:     'بحري',
+  aerospace: 'جوفضائي',
+  joint:     'مشترك',
+  unknown:   'غير محدد',
+};
+
+function ev(id, dateG, dateP, time, wave, force, loc, target, weapon, outcome, code){
+  return {id, dateG, dateP, time, wave, force,
+          country: LOC[loc].country, locName: LOC[loc].name,
+          lat: LOC[loc].lat, lng: LOC[loc].lng,
+          target, weapon, outcome, code};
+}
+
+const EVENTS = [
+  ev(1,'2026-07-08','١٧ تير ١٤٠٥','٠٧:٠٠','الرد الأولي','joint','minaSalman',
+     'منشآت عسكرية في المنطقة البحرية الخامسة وميناء سلمان','صواريخ وطائرات مسيّرة (عملية مشتركة استهدفت ٨٥ نقطة)','ادعاء تدمير جزء من المنشآت','٣٦٠٢٤'),
+  ev(2,'2026-07-08','١٧ تير ١٤٠٥','٠٧:٠٠','الرد الأولي','joint','aliAlSalem',
+     'قاعدة علي السالم الجوية؛ إسقاط طائرة مسيّرة من طراز MQ-9','صواريخ وطائرات مسيّرة','ادعاء إسقاط الطائرة المسيّرة وإلحاق أضرار بالمنشآت','٣٦٠٢٤'),
+  ev(3,'2026-07-09','١٨ تير ١٤٠٥','٠٥:٣٦','المرحلة الأولى','joint','arifjan',
+     'البنية التحتية لمعسكر عريفجان','صواريخ وطائرات مسيّرة','ادعاء تدمير البنية التحتية','٣٦٠٢٨'),
+  ev(4,'2026-07-09','١٨ تير ١٤٠٥','٠٥:٣٦','المرحلة الأولى','joint','aliAlSalem',
+     'البنية التحتية لقاعدة علي السالم','صواريخ وطائرات مسيّرة','ادعاء تدمير البنية التحتية','٣٦٠٢٨'),
+  ev(5,'2026-07-09','١٨ تير ١٤٠٥','٠٥:٣٦','المرحلة الأولى','joint','jufair',
+     'البنية التحتية لقاعدة الجفير','صواريخ وطائرات مسيّرة','ادعاء تدمير البنية التحتية','٣٦٠٢٨'),
+  ev(6,'2026-07-09','١٨ تير ١٤٠٥','٠٥:٣٦','المرحلة الأولى','joint','sheikhIsa',
+     'البنية التحتية لقاعدة الشيخ عيسى','صواريخ وطائرات مسيّرة','ادعاء تدمير البنية التحتية','٣٦٠٢٨'),
+  ev(7,'2026-07-09','١٨ تير ١٤٠٥','١٦:٢٨','المرحلة الثانية','aerospace','alAzraq',
+     'مركز القيادة والسيطرة وقاعدة الأزرق الجوية','١٠ صواريخ باليستية','ادعاء تدمير مركز القيادة','٣٦٠٣٦'),
+  ev(8,'2026-07-12','٢١ تير ١٤٠٥','٠٦:٢٢','المرحلة الأولى (اليوم الثاني)','aerospace','princeHassan',
+     'مركز القيادة والسيطرة وحظائر طائرات MQ-9، قاعدة الأمير حسن','صواريخ باليستية','ادعاء تدمير مركز القيادة وحظائر الطائرات المسيّرة','٣٦٠٧٧'),
+  ev(9,'2026-07-12','٢١ تير ١٤٠٥','٠٧:٠٥','المرحلة الثانية','aerospace','alUdeid',
+     'مركز صيانة المقاتلات ومركز القيادة، قاعدة العديد','صواريخ باليستية','ادعاء تدمير مراكز الصيانة والقيادة','٣٦٠٧٨'),
+  ev(10,'2026-07-12','٢١ تير ١٤٠٥','٠٧:٠٥','—','naval','hormuz',
+     'تعطيل ناقلة نفط ثانية «متجاوزة» في مضيق هرمز','إصابة مباشرة','ادعاء تعطيل الناقلة','٣٦٠٧٨'),
+  ev(11,'2026-07-12','٢١ تير ١٤٠٥','٠٧:٢٦','المرحلة الثالثة','aerospace','duqm',
+     'الدعم اللوجستي للسفن ومنصات التزود بالوقود، ميناء الدقم','ضربة قوية (نوع غير محدد)','ادعاء تدمير المنشآت','٣٦٠٧٩'),
+  ev(12,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٥','البيان رقم ١','aerospace','princeHassan',
+     'مستودعات الصواريخ وخزانات الوقود، قاعدة الأمير حسن','صواريخ وطائرات مسيّرة','أُضرمت فيها النيران','٣٦٠٩٢'),
+  ev(13,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٦','البيان رقم ٢ / المرحلة الثانية','aerospace','sheikhIsa',
+     'مركز صيانة المروحيات وحظيرة طائرات P-8 ومركز التحكم بالطائرات المسيّرة، الشيخ عيسى','غير محدد','ادعاء التدمير','٣٦٠٩٣'),
+  ev(14,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٦','البيان رقم ٣ / المرحلة الثالثة','aerospace','aliAlSalem',
+     'خزانات الوقود ومنظومة باتريوت للدفاع الجوي، علي السالم','غير محدد','ادعاء التدمير الكامل','٣٦٠٩٤'),
+  ev(15,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٦','البيان رقم ٣','aerospace','ahmadAlJaber',
+     'منظومة رادار FPS بعيدة المدى، قاعدة أحمد الجابر','غير محدد','ادعاء التدمير الكامل','٣٦٠٩٤'),
+  ev(16,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٦','البيان رقم ٤ / المرحلة الرابعة','ground','aliAlSalem',
+     'منصات صواريخ هيمارس ومستودع الذخيرة (الكويت)','صواريخ وطائرات مسيّرة','أُضرمت فيها النيران ودُمّرت','٣٦٠٩٥'),
+  ev(17,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٧','البيان رقم ٥ / المرحلة الخامسة','naval','jufair',
+     'منشآت وبنية تحتية للقوات الأمريكية في الجفير','صواريخ وطائرات مسيّرة','ادعاء اندلاع حرائق واسعة','٣٦٠٩٦'),
+  ev(18,'2026-07-13','٢٢ تير ١٤٠٥','١٤:٤٧','البيان رقم ٥','naval','ghanam',
+     'رادار جوي بعيد المدى ورادار كشف السفن، عُمان','صواريخ وطائرات مسيّرة','ادعاء التدمير','٣٦٠٩٦'),
+  ev(19,'2026-07-14','٢٣ تير ١٤٠٥','٠٤:٣٩','البيان رقم ٦','naval','hormuz',
+     'إصابة ناقلتي نفط عملاقتين «متجاوزتين» في مضيق هرمز','إصابة مباشرة / تلغيم','تعطّل الناقلتين','٣٦١٠٧'),
+  ev(20,'2026-07-14','٢٣ تير ١٤٠٥','٠٥:١٩','البيان رقم ٧ / الموجة ٢','naval','jufair',
+     'مستودع دعم تسليحي ومركز اتصالات فضائية وسكن للقوات، الجفير','صواريخ وطائرات مسيّرة','ادعاء إصابة الأهداف','٣٦١٠٨'),
+  ev(21,'2026-07-14','٢٣ تير ١٤٠٥','٠٦:٥٦','البيان رقم ٨ / الموجة ٢','joint','minaSalman',
+     'خزانات وقود الأسطول الخامس، رادار باتريوت، رادار مراقبة جوية ومنظومة C-RAM، البحرين','صواريخ وطائرات مسيّرة','ادعاء التدمير الكامل','٣٦١٠٩'),
+  ev(22,'2026-07-14','٢٣ تير ١٤٠٥','٠٨:٠٤','البيان رقم ٩ / الموجة ٢','aerospace','alAzraq',
+     'منشآت القاعدة الجوية الواقعة تحت الاحتلال في الأردن','صواريخ باليستية','ادعاء معاقبة القوات المتمركزة','٣٦١١٠'),
+  ev(23,'2026-07-14','٢٣ تير ١٤٠٥','٢٢:١٥','البيان رقم ١٠ / الموجة ٣','aerospace','sheikhIsa',
+     'حظيرة تخزين الأسلحة وقطع غيار الطائرات/السفن، الشيخ عيسى','صواريخ وطائرات مسيّرة','ادعاء التدمير','٣٦١٢٨'),
+  ev(24,'2026-07-14','٢٣ تير ١٤٠٥','٢٢:١٥','البيان رقم ١٠ / الموجة ٣','aerospace','aliAlSalem',
+     'منصة تجهيز طائرات MQ-9 المسيّرة، علي السالم','ضربة بطائرة مسيّرة','ادعاء التدمير وإلحاق أضرار بعدة طائرات مسيّرة','٣٦١٢٨'),
+  ev(25,'2026-07-15','٢٤ تير ١٤٠٥','٠٥:١٨','البيان رقم ١١ / الموجة ٤','ground','minaAbdullah',
+     'مركز الدعم اللوجستي KGL، ميناء عبدالله','غير محدد','أُضرم فيه الحريق ودُمّر','٣٦١٣١'),
+  ev(26,'2026-07-15','٢٤ تير ١٤٠٥','٠٥:٣٥','البيان رقم ١٢ / الموجة ٥','naval','jufair',
+     'مركز إدارة NSI ومركز القيادة ومستودع القطع وخزانات وقود الأسطول الخامس','غير محدد','ادعاء الإصابة والتدمير','٣٦١٣٢'),
+  ev(27,'2026-07-15','٢٤ تير ١٤٠٥','١٨:١٨','الموجة ٦','aerospace','alAzraq',
+     'حظائر مقاتلات F-15 وF-16 وF-35 وطائرات MQ-9 الاستراتيجية','غير محدد','ادعاء تدمير الحظائر بالكامل','٣٦١٤٥'),
+  ev(28,'2026-07-15','٢٤ تير ١٤٠٥','١٨:٢٤','الموجة ٧','ground','aliAlSalem',
+     'مركز الاتصالات الفضائية ورادار الدفاع الصاروخي-الجوي ومجمع باتريوت ومستودع الدعم ومنصات هيمارس','صواريخ وطائرات مسيّرة','ادعاء تدمير الأهداف وقمعها','٣٦١٤٧'),
+  ev(29,'2026-07-16','٢٥ تير ١٤٠٥','٠٦:٥٢','الموجة ٨','naval','aliAlSalem',
+     'رادار الإنذار المبكر C-RAM ونقطة تجمع للقوات، علي السالم','صواريخ وطائرات مسيّرة (عملية مركبة)','ادعاء إصابة الأهداف','٣٦١٥٢'),
+  ev(30,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠١','الموجة ٩','naval','aliAlSalem',
+     'مركز الاتصالات الفضائية ورادار الإنذار المبكر، علي السالم','صواريخ وطائرات مسيّرة','ادعاء التدمير','٣٦١٦٠'),
+  ev(31,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠١','الموجة ٩','naval','shuaiba',
+     'رصيف تمركز الجنود الأمريكيين، الشعيبة','صواريخ وطائرات مسيّرة','ادعاء التدمير','٣٦١٦٠'),
+  ev(32,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠١','الموجة ١٠','naval','sheikhIsa',
+     'رادار المراقبة الجوية ومحطة ضخ الوقود، الشيخ عيسى','غير محدد','ادعاء التدمير الكامل','٣٦١٦١'),
+  ev(33,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠١','الموجة ١١','aerospace','tanf',
+     'مركز قيادة العمليات الخاصة والرادار والمروحيات، التنف','غير محدد','ادعاء تدمير منظومة الرادار وعدة مروحيات','٣٦١٦٢'),
+  ev(34,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠١','الموجة ١٢ (تقديري)','ground','aliAlSalem',
+     'قاعدة العدو في الكويت (بيان مقتضب)','غير محدد','أُضرمت فيها النيران','٣٦١٦٣'),
+  ev(35,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠٧','البيان رقم ٢١ / الموجة ١٣','naval','salamah',
+     'رادار المراقبة البحرية، صخور سلامة','غير محدد','ادعاء التدمير','٣٦١٦٤'),
+  ev(36,'2026-07-17','٢٦ تير ١٤٠٥','٠٩:٠٧','البيان رقم ٢١ / الموجة ١٣','naval','ghanam',
+     'رادار المراقبة الجوية الأمريكي، منطقة غنم','غير محدد','ادعاء التدمير','٣٦١٦٤'),
+  ev(37,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','البيان رقم ٢٣ / الموجة ١٥','ground','aliAlSalem',
+     'منصة وصواريخ هيمارس، ونقطة تمركز قوات ومواقع لقوى «معادية للثورة»','طائرات مسيّرة وصواريخ','ادعاء التدمير وسقوط قتلى','٣٦١٦٦'),
+  ev(38,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٦','aerospace','alUdeid',
+     'منظومة رادار بعيدة المدى وطائرة تزود بالوقود استراتيجية، العديد','غير محدد','ادعاء التدمير الكامل وإلحاق أضرار جسيمة','٣٦١٦٦'),
+  ev(39,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٧','naval','sheikhIsa',
+     'مستودع الزوارق المسيّرة السطحية، الشيخ عيسى','صواريخ باليستية وطائرات مسيّرة','ادعاء اندلاع حرائق واسعة','٣٦١٦٦'),
+  ev(40,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٧','naval','batelco',
+     'مركز الذكاء الاصطناعي الرئيسي (بتلكو)، البحرين','صواريخ باليستية وطائرات مسيّرة','ادعاء التدمير الكامل','٣٦١٦٦'),
+  ev(41,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٨','ground','arifjan',
+     'مركز دعم القوات البرية، معسكر عريفجان','هجوم بري مركب','ادعاء سقوط قتلى بين القوات','٣٦١٦٦'),
+  ev(42,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٨','ground','aliAlSalem',
+     'رادار قاعدة علي السالم','ضربة بطائرة مسيّرة','ادعاء تدمير الرادار','٣٦١٦٦'),
+  ev(43,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٩','naval','alAhmadi',
+     'رصيف تزويد الأسطول الأمريكي بالوقود، ميناء الأحمدي','طائرات مسيّرة وصواريخ','ادعاء استهداف الرصيف','٣٦١٦٦'),
+  ev(44,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٩','naval','sheikhIsa',
+     'نقطة تجمع المقاتلات الحربية، الشيخ عيسى','طائرات مسيّرة وصواريخ','ادعاء استهداف النقطة','٣٦١٦٦'),
+  ev(45,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ١٩','naval','kuwaitCity',
+     'مركز الإشارة والاتصالات الأمريكي، الكويت','غير محدد','ادعاء التدمير','٣٦١٦٦'),
+  ev(46,'2026-07-17','٢٦ تير ١٤٠٥','١١:٥١','الموجة ٢٠','aerospace','alAzraq',
+     'ملاجئ المقاتلات ومنصة وقوف كبرى، الأزرق','صواريخ وطائرات مسيّرة (متزامنة)','ادعاء تدمير مقاتلتين وثلاث طائرات','٣٦١٦٦'),
+];
+
+const DATES = [...new Set(EVENTS.map(e=>e.dateG))].sort();
+
+const AR_INDIC = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+function toArabicIndic(n){ return String(n).replace(/[0-9]/g, d=>AR_INDIC[d]); }
+const AR_MONTHS = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+function gregShort(dateG){
+  const d = new Date(dateG+'T00:00:00');
+  return `${toArabicIndic(d.getDate())} ${AR_MONTHS[d.getMonth()]}`;
+}
+function gregFull(dateG){
+  const d = new Date(dateG+'T00:00:00');
+  return `${toArabicIndic(d.getDate())} ${AR_MONTHS[d.getMonth()]} ${toArabicIndic(d.getFullYear())}`;
+}
+const DATE_LABEL = {};
+const DATE_LABEL_FULL = {};
+DATES.forEach(d=>{ DATE_LABEL[d]=gregShort(d); DATE_LABEL_FULL[d]=gregFull(d); });
+
+/* ---------------- state ---------------- */
+let state = {
+  dateIdx: DATES.length-1,
+  mode: 'cumulative',
+  countries: new Set(Object.keys(COUNTRY)),
+  forces: new Set(Object.keys(FORCE)),
+  selectedId: null,
+  playing: false,
+  playTimer: null,
+  expanded: false,
+};
+
+/* ---------------- map init ---------------- */
+const map = L.map('map', {zoomControl:false, attributionControl:false})
+  .setView([27.5, 49.5], 5.4);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  subdomains:'abcd', maxZoom:12, minZoom:3
+}).addTo(map);
+
+let markerLayer = L.layerGroup().addTo(map);
+let markersById = {};
+
+function countryColor(c){ return (COUNTRY[c]||{}).color || '#888'; }
+
+function makeIcon(country, active){
+  const c = countryColor(country);
+  const size = active? 26:19;
+  const glow = active? 0.2 : 0.08;
+  return L.divIcon({
+    className:'',
+    html:`<div style="
+        width:${size}px;height:${size}px;border-radius:50%;
+        background:${c};
+        box-shadow:0 0 0 ${active?5:2}px rgba(255,255,255,${glow}), 0 0 16px ${c}${active?'aa':'55'};
+        border:2px solid rgba(255,255,255,.8);
+      "></div>`,
+    iconSize:[size,size], iconAnchor:[size/2,size/2]
+  });
+}
+
+/* ---------------- filtering ---------------- */
+function visibleEvents(){
+  const curDate = DATES[state.dateIdx];
+  return EVENTS.filter(e=>{
+    if(!state.countries.has(e.country)) return false;
+    if(!state.forces.has(e.force)) return false;
+    if(state.mode==='single') return e.dateG===curDate;
+    return e.dateG<=curDate;
+  });
+}
+function todaysEvents(){
+  const curDate = DATES[state.dateIdx];
+  return EVENTS.filter(e=> e.dateG===curDate && state.countries.has(e.country) && state.forces.has(e.force));
+}
+
+/* ---------------- render: stat row ---------------- */
+function renderStats(){
+  const total = EVENTS.length;
+  const countries = new Set(EVENTS.map(e=>e.country)).size;
+  const waves = new Set(EVENTS.map(e=>e.wave)).size;
+  document.getElementById('statRow').innerHTML = `
+    <div class="stat-mini"><b>${total}</b><span>إجمالي الأحداث</span></div>
+    <div class="stat-mini"><b>${countries}</b><span>الدول المستهدفة</span></div>
+    <div class="stat-mini"><b>${DATES.length}</b><span>الأيام النشطة</span></div>
+    <div class="stat-mini"><b>${waves}</b><span>الموجات/المراحل</span></div>
+  `;
+}
+
+/* ---------------- render: date scroller ---------------- */
+function renderDateScroll(){
+  const wrap = document.getElementById('dateScroll');
+  wrap.innerHTML = '';
+  DATES.forEach((d,i)=>{
+    const count = EVENTS.filter(e=>e.dateG===d).length;
+    const pill = document.createElement('div');
+    pill.className = 'date-pill' + (i===state.dateIdx?' active': i<state.dateIdx?' past':'');
+    pill.innerHTML = `${DATE_LABEL[d]}<b>${count} حدث</b>`;
+    pill.onclick = ()=>{ state.dateIdx = i; renderAll(); };
+    wrap.appendChild(pill);
+  });
+  const activeEl = wrap.querySelector('.date-pill.active');
+  if(activeEl) activeEl.scrollIntoView({inline:'center', block:'nearest', behavior:'smooth'});
+}
+
+/* ---------------- render: chips ---------------- */
+function renderChips(){
+  const wrap = document.getElementById('countryChips');
+  wrap.innerHTML='';
+  Object.keys(COUNTRY).forEach(key=>{
+    const count = EVENTS.filter(e=>e.country===key).length;
+    const chip = document.createElement('div');
+    chip.className = 'chip' + (state.countries.has(key)?' active':'');
+    chip.style.color = COUNTRY[key].color;
+    chip.innerHTML = `<span class="sw" style="background:${COUNTRY[key].color}"></span>${COUNTRY[key].label}<span class="chip-count">${count}</span>`;
+    chip.onclick = ()=>{
+      if(state.countries.has(key)) state.countries.delete(key); else state.countries.add(key);
+      renderChips(); renderAll();
+    };
+    wrap.appendChild(chip);
+  });
+}
+
+function renderForceToggle(){
+  const wrap = document.getElementById('forceToggle');
+  wrap.innerHTML='';
+  Object.keys(FORCE).filter(k=>k!=='unknown').forEach(key=>{
+    const btn = document.createElement('div');
+    btn.className = 'force-btn' + (state.forces.has(key)?' active':'');
+    btn.textContent = FORCE[key];
+    btn.onclick = ()=>{
+      if(state.forces.has(key)) state.forces.delete(key); else state.forces.add(key);
+      state.forces.add('unknown');
+      renderForceToggle(); renderAll();
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+/* ---------------- render: markers ---------------- */
+function renderMarkers(){
+  markerLayer.clearLayers();
+  markersById = {};
+  const evs = visibleEvents();
+  const todaySet = new Set(todaysEvents().map(e=>e.id));
+
+  evs.forEach(e=>{
+    const active = todaySet.has(e.id) || e.id===state.selectedId;
+    const marker = L.marker([e.lat, e.lng], {icon: makeIcon(e.country, active)});
+    marker.on('click', ()=>selectEvent(e.id));
+    marker.addTo(markerLayer);
+    markersById[e.id] = marker;
+  });
+}
+
+/* ---------------- render: event list ---------------- */
+function renderEventList(){
+  const list = document.getElementById('eventList');
+  const evs = todaysEvents();
+  document.getElementById('listCount').textContent = evs.length;
+
+  if(evs.length===0){
+    list.innerHTML = `<div class="empty-note">لا توجد أحداث مسجّلة في هذا التاريخ وفق عوامل التصفية الحالية.</div>`;
+    return;
+  }
+  list.innerHTML = evs.map(e=>`
+    <div class="event-card ${e.id===state.selectedId?'selected':''}" data-id="${e.id}">
+      <div class="ec-top">
+        <span>${e.time || ''}</span>
+        <span class="ec-wave">${e.wave || '—'}</span>
+      </div>
+      <div class="ec-loc"><span class="ec-country-dot" style="background:${countryColor(e.country)}"></span>${e.locName}</div>
+      <div class="ec-target">${e.target}</div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('.event-card').forEach(card=>{
+    card.onclick = ()=> selectEvent(parseInt(card.dataset.id));
+  });
+}
+
+/* ---------------- selection card ---------------- */
+function selectEvent(id){
+  state.selectedId = id;
+  const e = EVENTS.find(x=>x.id===id);
+  if(!e) return;
+
+  document.getElementById('scCountry').textContent = COUNTRY[e.country].label;
+  document.getElementById('scCountry').style.color = COUNTRY[e.country].color;
+  document.getElementById('scTitle').textContent = e.locName;
+  document.getElementById('scDate').textContent = `${DATE_LABEL_FULL[e.dateG]}${e.time? ' — '+e.time:''}`;
+  document.getElementById('scWave').textContent = e.wave || '—';
+  document.getElementById('scForce').textContent = FORCE[e.force] || 'غير محدد';
+  document.getElementById('scWeapon').textContent = e.weapon || '—';
+  document.getElementById('scDesc').textContent = `الهدف المزعوم: ${e.target}. النتيجة المعلنة: ${e.outcome}.`;
+  document.getElementById('scCode').textContent = `رمز خبر سباه نيوز: ${e.code} · التقويم الفارسي: ${e.dateP}`;
+  document.getElementById('selCard').classList.add('show');
+
+  collapseSheet();
+
+  if(DATES.includes(e.dateG)){
+    const idx = DATES.indexOf(e.dateG);
+    if(idx !== state.dateIdx){ state.dateIdx = idx; renderAll(); }
+    else { renderMarkers(); renderEventList(); }
+  }
+
+  const m = markersById[id];
+  if(m){ map.flyTo(m.getLatLng(), Math.max(map.getZoom(), 6.5), {duration:0.6}); }
+}
+
+document.getElementById('scClose').onclick = ()=>{
+  state.selectedId = null;
+  document.getElementById('selCard').classList.remove('show');
+  renderMarkers(); renderEventList();
+};
+
+/* ---------------- bottom sheet expand/collapse ---------------- */
+const sheet = document.getElementById('sheet');
+function expandSheet(){ state.expanded = true; sheet.classList.add('expanded'); setTimeout(()=>map.invalidateSize(),300); }
+function collapseSheet(){ state.expanded = false; sheet.classList.remove('expanded'); setTimeout(()=>map.invalidateSize(),300); }
+function toggleSheet(){ state.expanded ? collapseSheet() : expandSheet(); }
+
+document.getElementById('sheetHandle').addEventListener('click', toggleSheet);
+document.getElementById('filterFab').addEventListener('click', ()=>{
+  expandSheet();
+  document.getElementById('filterFab').classList.add('active');
+});
+
+/* simple swipe on handle */
+let touchStartY = null;
+document.getElementById('sheetHandle').addEventListener('touchstart', e=>{
+  touchStartY = e.touches[0].clientY;
+}, {passive:true});
+document.getElementById('sheetHandle').addEventListener('touchend', e=>{
+  if(touchStartY===null) return;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if(dy < -20) expandSheet();
+  else if(dy > 20) collapseSheet();
+  touchStartY = null;
+});
+
+/* ---------------- mode toggle ---------------- */
+document.querySelectorAll('#modeFab div').forEach(btn=>{
+  btn.onclick = ()=>{
+    document.querySelectorAll('#modeFab div').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    state.mode = btn.dataset.mode;
+    renderAll();
+  };
+});
+
+/* ---------------- prev/next/play ---------------- */
+document.getElementById('ssPrev').onclick = (e)=>{
+  e.stopPropagation();
+  state.dateIdx = Math.max(0, state.dateIdx-1); renderAll();
+};
+document.getElementById('ssNext').onclick = (e)=>{
+  e.stopPropagation();
+  state.dateIdx = Math.min(DATES.length-1, state.dateIdx+1); renderAll();
+};
+document.getElementById('ssPlay').onclick = function(e){
+  e.stopPropagation();
+  if(state.playing){
+    state.playing = false;
+    clearInterval(state.playTimer);
+    this.classList.remove('playing');
+    this.textContent = '▶';
+    return;
+  }
+  state.playing = true;
+  this.classList.add('playing');
+  this.textContent = '❚❚';
+  state.playTimer = setInterval(()=>{
+    state.dateIdx++;
+    if(state.dateIdx >= DATES.length){
+      state.dateIdx = DATES.length-1;
+      document.getElementById('ssPlay').click();
+    }
+    renderAll();
+  }, 1400);
+};
+
+/* ---------------- master render ---------------- */
+function renderAll(){
+  renderMarkers();
+  renderEventList();
+  renderDateScroll();
+  const curDate = DATES[state.dateIdx];
+  document.getElementById('ssDate').textContent = DATE_LABEL_FULL[curDate];
+  const dayCount = todaysEvents().length;
+  const cumCount = visibleEvents().length;
+  document.getElementById('ssMeta').textContent = `${dayCount} حدث اليوم · ${cumCount} تراكمي`;
+}
+
+renderStats();
+renderChips();
+renderForceToggle();
+renderAll();
+
+/* Leaflet sizing fix — container may be 0×0 at first paint */
+function fixMapSize(){ map.invalidateSize(); }
+window.addEventListener('resize', fixMapSize);
+setTimeout(fixMapSize, 50);
+setTimeout(fixMapSize, 300);
+setTimeout(fixMapSize, 1000);
+if(document.fonts && document.fonts.ready){ document.fonts.ready.then(fixMapSize); }
+</script>
+</body>
+</html>
