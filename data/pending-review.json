@@ -9,7 +9,7 @@
     ],
     "added_at": "2026-07-21T15:30:16.612Z",
     "pubDate": null,
-    "last_checked_at": "2026-07-21T23:36:51.680Z"
+    "last_checked_at": "2026-07-22T09:17:36.643Z"
   },
   {
     "title": "",
@@ -17,25 +17,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36188/حمله-کوبنده-و-همزمان-موشکی-و-پهپادی-به-شیلترهای-جنگنده‌ها-و-یک-رمپ-بزرگ-توقف-در-پایگاه-آمریکا-در-الازرق-اردن",
     "pubDate": "Sat, 18 Jul 2026 12:00:00 GMT",
     "raw_extraction": {
-      "wave": "20",
+      "wave": "۲۰",
       "force": "aerospace",
       "source": "sepah",
       "loc": "alAzraq",
-      "loc_raw_text": null,
-      "target": "US base at Al-Azraq, Jordan",
-      "weapon": "missile, drone",
-      "outcome": "At least two US fighter jets and three US aircraft completely destroyed, several others heavily damaged",
-      "time": "شنبه ۲۷ تير ۱۴۰۵ - ۱۱:۲۴",
+      "loc_raw_text": "پایگاه آمریکا در الازرق اردن",
+      "target": "شیلترهای جنگنده‌ها و یک رمپ بزرگ توقف در پایگاه آمریکا",
+      "weapon": "موشکی و پهپادی",
+      "outcome": "منهدم شدن حداقل دو جنگنده و سه هواگرد آمریکایی و وارد کردن خسارت عمده به تعدادی دیگر",
+      "time": "سحرگاه امروز",
       "dateG": "2026-07-18",
       "dateP": "۲۷ تیر ۱۴۰۵",
       "code": "36188"
     },
     "errors": [
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: سحرگاه امروز"
     ],
     "added_at": "2026-07-22T00:00:39.174Z",
     "issue_number": null,
-    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21)."
+    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
+    "last_checked_at": "2026-07-22T09:17:43.511Z"
   },
   {
     "title": "",
@@ -47,21 +48,22 @@
       "force": "naval",
       "source": "sepah",
       "loc": "alAhmadi",
-      "loc_raw_text": null,
-      "target": "United Nations",
-      "weapon": "cruise missile",
-      "outcome": "destroyed",
-      "time": "شنبه ۲۷ تیر ۱۴۰۵ - ۱۱:۲۲",
+      "loc_raw_text": "بندر الاحمدی کویت، شیخ عیسی بحرین، باتلکو، مرکز مخابراتی کویت",
+      "target": "اسکله پشتیبانی سوخت ناوگان آمریکا، محل جمع‌آوری پرنده‌های jangī دشمن، مرکز داده‌های اطلاعاتی دشمن، یک مرکز سیگنالی و مخابراتی آمریکا",
+      "weapon": "پهپادی و موشکی",
+      "outcome": "تخریب شد",
+      "time": "۲۷ تير ۱۴۰۵ ۱۱:۲۲",
       "dateG": "2026-07-18",
       "dateP": "۲۷ تیر ۱۴۰۵",
       "code": "36187"
     },
     "errors": [
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: ۲۷ تير ۱۴۰۵ ۱۱:۲۲"
     ],
     "added_at": "2026-07-22T00:00:39.174Z",
     "issue_number": null,
-    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21)."
+    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
+    "last_checked_at": "2026-07-22T09:18:10.862Z"
   },
   {
     "title": "",
@@ -69,26 +71,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36259/مجموعه-رادارهای-تاکتیکی-در-پایگاه-علی-السالم-و-جزیره-بوبیان-از-رده-عملیاتی-خارج-شدند",
     "pubDate": "Tue, 21 Jul 2026 12:00:00 GMT",
     "raw_extraction": {
-      "wave": "24",
-      "force": "aerospace",
+      "wave": "And 24",
+      "force": "unknown",
       "source": "sepah",
       "loc": "aliAlSalem",
-      "loc_raw_text": null,
-      "target": "United States",
-      "weapon": "missile",
-      "outcome": "destroyed",
-      "time": "1405-03-30T22:51:00",
+      "loc_raw_text": "پایگاه علی السالم وuerre بوبیان کویت",
+      "target": "واحد رادار هشدار اولیه، مجموعة رادار تاکتیکی، سیستم راداری دیگر",
+      "weapon": "unknown",
+      "outcome": "رادارها را منهدم کرده و از رده عملیات خارج کردند.",
+      "time": "سه‌شنبه ۳۰ تير ۱۴۰۵ - ۲۲:۵۱",
       "dateG": "2026-07-21",
       "dateP": "۳۰ تیر ۱۴۰۵",
       "code": "36259"
     },
     "errors": [
-      "invalid time field value: 1405-03-30T22:51:00",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "wave contains disallowed characters: And 24"
     ],
     "added_at": "2026-07-22T00:00:39.174Z",
     "issue_number": null,
-    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21)."
+    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
+    "last_checked_at": "2026-07-22T09:18:58.934Z"
   },
   {
     "title": "",
@@ -96,131 +98,106 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36168/یک-فروند-پهپاد-آئروویرنمنت-آرکیو-۱۱-در-منطقه-رامشیر-منهدم-شد",
     "pubDate": "Fri, 17 Jul 2026 12:00:00 GMT",
     "raw_extraction": {
-      "wave": "unknown",
-      "force": "aerospace",
+      "wave": "—",
+      "force": "unknown",
       "source": "sepah",
       "loc": "ramshir",
-      "loc_raw_text": null,
-      "target": "AeroVironment RQ-11 Raven",
-      "weapon": "RQ-11 Raven drone",
+      "loc_raw_text": "منطقه رامشیر",
+      "target": "AeroVironment RQ‑11 Raven",
+      "weapon": "Light fire of Iran’s advanced air defense system",
       "outcome": "destroyed",
-      "time": "جمعМО ۲۶ تیر ۱۴۰۵ - ۱۹:۵۱",
+      "time": "جمعه ۲۶ تیر ۱۴۰۵ - ۱۹:۵۱",
       "dateG": "2026-07-17",
       "dateP": "۲۶ تیر ۱۴۰۵",
       "code": "36168"
     },
     "errors": [
-      "invalid time field value: جمعМО ۲۶ تیر ۱۴۰۵ - ۱۹:۵۱",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-22T00:00:39.174Z",
     "issue_number": null,
-    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21)."
+    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
+    "last_checked_at": "2026-07-22T09:20:09.059Z"
   },
   {
     "title": "",
     "link": "",
     "guid": "artesh:manual-cleanup-id107",
     "pubDate": "Tue, 21 Jul 2026 12:00:00 GMT",
-    "raw_extraction": {
-      "wave": "—",
-      "force": "aerospace",
-      "source": "artesh",
-      "loc": "sheikhIsa",
-      "loc_raw_text": null,
-      "target": "United States military",
-      "weapon": "drone",
-      "outcome": "ongoing attack",
-      "time": "morning",
-      "dateG": "2026-07-21",
-      "dateP": "۳۰ تیر ۱۴۰۵",
-      "code": ""
-    },
+    "raw_extraction": null,
     "errors": [
-      "invalid time field value: morning",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "extraction failed: proxy fetch failed: 400"
     ],
     "added_at": "2026-07-22T00:00:39.175Z",
     "issue_number": null,
-    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry."
+    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry.",
+    "last_checked_at": "2026-07-22T09:20:10.050Z"
   },
   {
     "title": "",
     "link": "",
     "guid": "artesh:manual-cleanup-id108",
     "pubDate": "Tue, 21 Jul 2026 12:00:00 GMT",
-    "raw_extraction": {
-      "wave": "9",
-      "force": "aerospace",
-      "source": "artesh",
-      "loc": "arifjan",
-      "loc_raw_text": null,
-      "target": "US military bases",
-      "weapon": "drone",
-      "outcome": "unknown",
-      "time": "today morning",
-      "dateG": "2026-07-21",
-      "dateP": "۳۰ تیر ۱۴۰۵",
-      "code": ""
-    },
+    "raw_extraction": null,
     "errors": [
-      "invalid time field value: today morning",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "extraction failed: proxy fetch failed: 400"
     ],
     "added_at": "2026-07-22T00:00:39.175Z",
     "issue_number": null,
-    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry."
+    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry.",
+    "last_checked_at": "2026-07-22T09:20:10.212Z"
   },
   {
     "title": "",
     "link": "",
     "guid": "artesh:manual-cleanup-id109",
     "pubDate": "Sun, 19 Jul 2026 12:00:00 GMT",
-    "raw_extraction": {
-      "wave": "—",
-      "force": "aerospace",
-      "source": "artesh",
-      "loc": "udairi",
-      "loc_raw_text": null,
-      "target": "US military bases",
-      "weapon": "drone",
-      "outcome": "damage inflicted",
-      "time": "",
-      "dateG": "2026-07-19",
-      "dateP": "۲۸ تیر ۱۴۰۵",
-      "code": ""
-    },
+    "raw_extraction": null,
     "errors": [
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "extraction failed: proxy fetch failed: 400"
     ],
     "added_at": "2026-07-22T00:00:39.175Z",
     "issue_number": null,
-    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry."
+    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry.",
+    "last_checked_at": "2026-07-22T09:20:10.374Z"
   },
   {
     "title": "",
     "link": "",
     "guid": "artesh:manual-cleanup-id110",
     "pubDate": "Sat, 18 Jul 2026 12:00:00 GMT",
-    "raw_extraction": {
-      "wave": "پانزدهم عملیات صاعقه",
-      "force": "aerospace",
-      "source": "artesh",
-      "loc": "sheikhIsa",
-      "loc_raw_text": null,
-      "target": "آشیانه و پارکینگ هواپیماها، مخازن سوخت ارتش تروریستی آمریکا در پایگاه شیخ عیسی و چند پل ارتباطی",
-      "weapon": "پهپادهای انهدامی",
-      "outcome": "هدف قرار گرفتن",
-      "time": "ساعاتی قبل",
-      "dateG": "2026-07-18",
-      "dateP": "۲۷ تیر ۱۴۰۵",
-      "code": ""
-    },
+    "raw_extraction": null,
     "errors": [
-      "invalid time field value: ساعاتی قبل"
+      "extraction failed: proxy fetch failed: 400"
     ],
     "added_at": "2026-07-22T00:00:39.175Z",
     "issue_number": null,
-    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry."
+    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry.",
+    "last_checked_at": "2026-07-22T09:20:10.536Z"
+  },
+  {
+    "title": "پایگاه و مراکز مهم  آمریکا در کویت هدف حملات پهپادی ارتش قرار گرفت",
+    "link": "https://www.aja.ir//Home/ShowPage.aspx?Object=news&CategoryID=9ce0ffff-6667-4cc8-8cc7-7d8be06f03e4&LayoutID=6341690b-b7bb-4b01-be11-a64bd748a77a&ID=1faefe2b-430f-464e-a559-068e9a900c10",
+    "guid": "artesh:1faefe2b-430f-464e-a559-068e9a900c10",
+    "pubDate": "Wed, 22 Jul 2026 06:26:40 +0330",
+    "raw_extraction": {
+      "wave": "21",
+      "force": "aerospace",
+      "source": "artesh",
+      "loc": "kuwaitCity",
+      "loc_raw_text": "پادگان الدوهه کويت",
+      "target": "ground",
+      "weapon": "aerospace",
+      "outcome": "attack",
+      "time": "",
+      "dateG": "2026-07-22",
+      "dateP": "۳۱ تیر ۱۴۰۵",
+      "code": ""
+    },
+    "errors": [
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+    ],
+    "added_at": "2026-07-22T09:21:07.356Z",
+    "issue_number": 39
   }
 ]
