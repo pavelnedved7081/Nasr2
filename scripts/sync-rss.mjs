@@ -735,6 +735,90 @@ export function looksGarbled(text) {
   return false;
 }
 
+// --- time field validation ---
+//
+// A genuine statement's `time` is either empty (many Artesh events carry no time at all — an
+// existing, accepted convention) or a bare "HH:MM", optionally prefixed with the Persian weekday
+// and Jalali date the article itself was time-stamped with (e.g. "دوشنبه ۲۹ تیر ۱۴۰۵، ۱۴:۴۵", or
+// the "-"-separated style real feed items actually use: "سه‌شنبه ۳۰ تیر ۱۴۰۵ - ۰۹:۲۸"). Anything
+// else — a full descriptive sentence, a bare ISO 8601 timestamp, a placeholder word like
+// "morning"/"today", or a date whose year falls outside this project's known timeline — is a sign
+// the model dumped free text into the field instead of extracting a clock time.
+const TIME_HHMM_ONLY_RE = /^([۰-۹0-9]{1,2}):([۰-۹0-9]{2})$/;
+const PERSIAN_WEEKDAY_RE = '(?:شنبه|یکشنبه|دوشنبه|سه[‌ ]?شنبه|چهارشنبه|پنج[‌ ]?شنبه|جمعه)';
+const TIME_WITH_DATE_PREFIX_RE = new RegExp(
+  `^${PERSIAN_WEEKDAY_RE}\\s+([۰-۹0-9]{1,2})\\s+(${JALALI_MONTHS.join('|')})\\s+([۰-۹0-9]{2,4})[\\s،,\\-–]+([۰-۹0-9]{1,2}):([۰-۹0-9]{2})$`
+);
+const KNOWN_JALALI_YEAR_MIN = 1404;
+const KNOWN_JALALI_YEAR_MAX = 1406;
+const KNOWN_GREGORIAN_YEAR_MIN = 2026;
+const KNOWN_GREGORIAN_YEAR_MAX = 2027;
+
+/** Folds the Arabic-yeh/kaf/hamza variants a real feed sometimes uses (e.g. "تير" instead of
+ *  "تیر") to their standard Persian equivalents, without touching digits or anything else — used
+ *  only to make the weekday/month match in isValidTimeField tolerant of that letter variance. */
+function foldPersianLetterVariants(str) {
+  return str.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/[يى]/g, 'ی').replace(/ك/g, 'ک');
+}
+
+function isKnownYear(yearStr) {
+  const year = parseInt(persianToLatinDigits(yearStr), 10);
+  if (Number.isNaN(year)) return false;
+  return (
+    (year >= KNOWN_JALALI_YEAR_MIN && year <= KNOWN_JALALI_YEAR_MAX) ||
+    (year >= KNOWN_GREGORIAN_YEAR_MIN && year <= KNOWN_GREGORIAN_YEAR_MAX)
+  );
+}
+
+/**
+ * Validates the `time` field: empty/missing is fine (an accepted convention for Artesh events
+ * with no reported time), as is a bare "HH:MM" or a "<weekday> <day> <month> <year><sep>HH:MM"
+ * string in the style real feed items use. Rejects anything else — a full sentence, an ISO 8601
+ * timestamp, a bare placeholder word ("morning"/"today"), or a date whose year isn't in this
+ * project's known range — since those are signs of the model dumping free text into the field.
+ */
+export function isValidTimeField(time) {
+  if (time == null) return true;
+  if (typeof time !== 'string') return false;
+  const trimmed = time.trim();
+  if (trimmed === '') return true;
+  if (TIME_HHMM_ONLY_RE.test(trimmed)) return true;
+
+  const m = foldPersianLetterVariants(trimmed).match(TIME_WITH_DATE_PREFIX_RE);
+  if (m) return isKnownYear(m[3]);
+  return false;
+}
+
+// --- wave field normalization/validation ---
+//
+// Real statements commonly omit a wave number entirely (see the "—" default below); a model
+// occasionally returns the literal word "unknown"/"null"/"none" instead of just leaving it empty,
+// which is normalized the same way. Anything containing characters outside Persian text, digits,
+// spaces, and "/()-" (e.g. a stray "|" or Latin letters, as in "|mizan") is rejected outright
+// rather than silently accepted, since it's a sign of corrupted model output, not a real wave label.
+const WAVE_NULL_LITERALS = new Set(['unknown', 'null', 'none']);
+const WAVE_ALLOWED_CHARS_RE = /^[؀-ۿ‌0-9\s/()—-]*$/;
+
+// --- language-purity check on target/weapon/outcome ---
+//
+// Both Sepah and Artesh are Persian-language outlets; a field that comes back majority-Latin is a
+// sign the model translated (or hallucinated in English) instead of extracting the source text.
+// Short embedded Latin tokens — weapon/aircraft model names like "MQ-9", "F-15", "HIMARS", "C-RAM"
+// — are common and legitimate in genuine output, so this counts letters across the whole combined
+// target+weapon+outcome text rather than flagging on any Latin character at all: a couple of model
+// names surrounded by Persian sentences stays Persian-majority, while whole English sentences
+// ("US forces", "United Nations") tip the balance the other way.
+const LATIN_LETTER_COUNT_RE = /[A-Za-z]/g;
+const PERSIAN_ARABIC_LETTER_COUNT_RE = /[؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]/g;
+
+/** True if `text`'s Latin letters outnumber its Persian/Arabic letters — see comment above. */
+export function isLatinMajority(text) {
+  if (typeof text !== 'string' || text === '') return false;
+  const latinCount = (text.match(LATIN_LETTER_COUNT_RE) || []).length;
+  const persianCount = (text.match(PERSIAN_ARABIC_LETTER_COUNT_RE) || []).length;
+  return latinCount > persianCount;
+}
+
 /**
  * Validate a merged extraction: the model's fields (wave, force, source, loc, target, weapon,
  * outcome) plus dateG/dateP/code, which are derived independently from the RSS <pubDate> and
@@ -748,9 +832,14 @@ export function validateExtraction(ex, locations) {
   if (!ex || typeof ex !== 'object') return { ok: false, errors: ['not an object'] };
 
   // wave is commonly absent from real statements (existing events.json uses "—" for this); default
-  // rather than fail validation on it alone.
+  // rather than fail validation on it alone. A model-returned "unknown"/"null"/"none" literal gets
+  // the same treatment.
   if (typeof ex.wave !== 'string' || ex.wave.trim() === '') {
     ex.wave = '—';
+  } else if (WAVE_NULL_LITERALS.has(ex.wave.trim().toLowerCase())) {
+    ex.wave = '—';
+  } else if (!WAVE_ALLOWED_CHARS_RE.test(ex.wave)) {
+    errors.push(`wave contains disallowed characters: ${ex.wave}`);
   }
 
   for (const field of ['force', 'source', 'target', 'weapon', 'outcome']) {
@@ -763,10 +852,62 @@ export function validateExtraction(ex, locations) {
   if (ex.loc != null && !(ex.loc in locations)) errors.push(`unknown loc id: ${ex.loc}`);
   if (ex.loc == null) errors.push('loc is null');
   if (!isValidJalaliDateString(ex.dateP)) errors.push(`unparseable date: ${ex.dateP}`);
+  if (!isValidTimeField(ex.time)) errors.push(`invalid time field value: ${ex.time}`);
   if (looksGarbled(`${ex.target || ''} ${ex.weapon || ''} ${ex.outcome || ''}`)) {
     errors.push('target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)');
   }
+  if (isLatinMajority(`${ex.target || ''} ${ex.weapon || ''} ${ex.outcome || ''}`)) {
+    errors.push('target/weapon/outcome text is majority Latin-script (likely untranslated/English output)');
+  }
   return { ok: errors.length === 0, errors };
+}
+
+// --- code-based deduplication against existing events (Sepah only — see extractArteshCode) ---
+//
+// The 91 hand-curated events entered before the RSS pipeline existed were never tracked in
+// seen-guids.json, so the RSS crawl can rediscover the same real-world statement and try to add it
+// as a brand-new entry. Sepah's `code` (the numeric news-article id parsed out of the link, see
+// extractCodeFromLink) is a reliable identifier for "same underlying statement" — Artesh has no
+// such id (extractArteshCode always returns ''), so this only ever matches on a non-empty code,
+// which naturally limits it to Sepah.
+const CODE_DIGITS_RE = /[۰-۹0-9]/;
+
+/** Existing `events` entries whose `code` matches `code` once both sides are digit-normalized
+ *  (existing hand-curated events store Persian-digit codes; freshly-parsed ones are Latin-digit —
+ *  see extractCodeFromLink). Returns [] if `code` is empty (e.g. every Artesh extraction). */
+export function findEventsBySameCode(events, code) {
+  if (!code || !CODE_DIGITS_RE.test(code)) return [];
+  const normCode = persianToLatinDigits(code).trim();
+  if (!normCode) return [];
+  return events.filter((e) => e.code && persianToLatinDigits(e.code).trim() === normCode);
+}
+
+/**
+ * Checks a resolved extraction's `code` against `events` for a hand-curated (or earlier-synced)
+ * event sharing the same underlying news article. Returns null if there's no code match at all.
+ * Otherwise returns `{ matches, isDuplicate }`: `isDuplicate` is true when the new extraction's
+ * resolved `loc` agrees with at least one matching event's `loc` (a genuinely redundant
+ * rediscovery), false when every match has a different `loc` (a real conflict — the new
+ * extraction might be adding missing detail, might have the wrong location, or both; a human
+ * should decide, so this routes to pending-review rather than either silently dropping it or
+ * silently adding a contradicting second entry).
+ */
+export function checkCodeDuplicate(events, extraction) {
+  const matches = findEventsBySameCode(events, extraction?.code);
+  if (matches.length === 0) return null;
+  const isDuplicate = matches.some((m) => m.loc === extraction.loc);
+  return { matches, isDuplicate };
+}
+
+/** Builds the pending-review note describing why a code-duplicate extraction needs a human
+ *  decision — which existing event id(s) it collides with and how the location differs. */
+export function formatDedupConflictNote(extraction, matches) {
+  const ids = matches.map((m) => m.id).join(', ');
+  const existingLocs = [...new Set(matches.map((m) => m.loc))].join(' / ');
+  return (
+    `duplicate code ${extraction.code}, conflicts with existing event id ${ids}: ` +
+    `loc differs (existing: ${existingLocs}, new: ${extraction.loc ?? extraction.loc_raw_text ?? 'null'})`
+  );
 }
 
 /** Opens a needs-review GitHub Issue for a pending item. Returns the issue number, or null if
@@ -989,11 +1130,13 @@ export async function processItems(items, {
   extractCodeFromLinkFn = extractCodeFromLink,
   resolveLocationFn = resolveLocation,
   isRelevantFn = isRelevant,
+  checkCodeDuplicateFn = checkCodeDuplicate,
 }) {
   const newGuids = [];
   let newEventsCount = 0;
   let pendingCount = 0;
   let resolvedCount = 0;
+  let duplicateCount = 0;
   let id = nextId;
 
   async function routeToPending(item, guid, extraction, errors, locInfo) {
@@ -1080,18 +1223,55 @@ export async function processItems(items, {
       locInfo = resolveLocationFn(extraction.loc, extraction.loc_raw_text, locations, countries);
       extraction.loc = locInfo.resolvedLoc;
 
+      const dedup = checkCodeDuplicateFn(events, extraction);
+
       ({ ok: extraction.__ok, errors } = validateExtraction(extraction, locations));
+      return { extraction, errors, locInfo, dedup };
     } catch (err) {
       errors = [`extraction failed: ${err.message}`];
     }
-    return { extraction, errors, locInfo };
+    return { extraction, errors, locInfo, dedup: null };
   }
 
   /** Attempts extraction for one item/guid and routes the result to events or pending-review.
-   *  Returns true if the item resolved into `events`. */
+   *  Returns true if the item resolved (added to `events`, or confirmed a redundant rediscovery
+   *  of one already there). */
   async function tryResolveOrRoute(item, guid) {
     try {
-      const { extraction, errors, locInfo } = await attemptExtraction(item);
+      const { extraction, errors, locInfo, dedup } = await attemptExtraction(item);
+
+      // Code-based dedup against existing events.json (see checkCodeDuplicate) takes priority
+      // over ordinary quality validation: a code match means this is the same underlying news
+      // article as an already-recorded event, so it's either a redundant rediscovery (same loc —
+      // resolve silently, no second entry) or a genuine conflict a human needs to reconcile
+      // (different loc — pending-review, regardless of whether the extraction would otherwise
+      // have passed validation).
+      if (dedup) {
+        const existingIdx = pendingReview.findIndex((p) => p.guid === guid);
+
+        if (dedup.isDuplicate) {
+          let resolvedIssueNumber = null;
+          if (existingIdx !== -1) {
+            resolvedIssueNumber = pendingReview[existingIdx].issue_number;
+            pendingReview.splice(existingIdx, 1);
+            resolvedCount++;
+          }
+          duplicateCount++;
+          newGuids.push(guid);
+          if (resolvedIssueNumber) {
+            const matchIds = dedup.matches.map((m) => m.id).join(', ');
+            await closePendingReviewIssueFn(
+              resolvedIssueNumber,
+              `Resolved automatically: duplicate of existing event id ${matchIds} (same code, same location).`
+            );
+          }
+          return true;
+        }
+
+        const conflictNote = formatDedupConflictNote(extraction, dedup.matches);
+        await routeToPending(item, guid, extraction, [...errors, conflictNote], locInfo);
+        return false;
+      }
 
       if (!extraction || !extraction.__ok) {
         await routeToPending(item, guid, extraction, errors, locInfo);
@@ -1159,7 +1339,7 @@ export async function processItems(items, {
     await tryResolveOrRoute(item, guid);
   }
 
-  return { newGuids, newEventsCount, pendingCount, resolvedCount };
+  return { newGuids, newEventsCount, pendingCount, resolvedCount, duplicateCount };
 }
 
 /** True source ids (e.g. "sepah") for the split guid's leading segment, false for anything else
@@ -1205,6 +1385,7 @@ export async function main({ dataDir = DATA } = {}) {
   let totalNewEvents = 0;
   let totalPending = 0;
   let totalResolved = 0;
+  let totalDuplicates = 0;
   const summaryLines = [];
 
   for (const source of SOURCES) {
@@ -1225,7 +1406,7 @@ export async function main({ dataDir = DATA } = {}) {
 
       const nextId = events.reduce((max, e) => Math.max(max, e.id), 0) + 1;
 
-      const { newGuids, newEventsCount, pendingCount, resolvedCount } = await processItems(items, {
+      const { newGuids, newEventsCount, pendingCount, resolvedCount, duplicateCount } = await processItems(items, {
         locations, countries, events, pendingReview: sourcePending, seenSet, systemPrompt, nextId,
         sourceId: source.id,
         fetchArticleTextFn: source.fetchArticleTextFn,
@@ -1241,9 +1422,11 @@ export async function main({ dataDir = DATA } = {}) {
       totalNewEvents += newEventsCount;
       totalPending += pendingCount;
       totalResolved += resolvedCount;
+      totalDuplicates += duplicateCount;
 
       summaryLines.push(
-        `${sourceLabel(source.id)}: ${items.length} items — ${newEventsCount} new, ${pendingCount} pending, ${newGuids.length - newEventsCount} irrelevant.`
+        `${sourceLabel(source.id)}: ${items.length} items — ${newEventsCount} new, ${pendingCount} pending, ` +
+          `${duplicateCount} duplicate (existing code), ${newGuids.length - newEventsCount - duplicateCount} irrelevant.`
       );
     } catch (err) {
       // A whole-source failure (e.g. the aja.ir proxy VPS is down) must not prevent the other
@@ -1271,7 +1454,7 @@ export async function main({ dataDir = DATA } = {}) {
 
   const outFile = process.env.GITHUB_OUTPUT;
   if (outFile) {
-    await fs.appendFile(outFile, `new_events_count=${totalNewEvents}\npending_count=${totalPending}\nresolved_count=${totalResolved}\n`);
+    await fs.appendFile(outFile, `new_events_count=${totalNewEvents}\npending_count=${totalPending}\nresolved_count=${totalResolved}\nduplicate_count=${totalDuplicates}\n`);
   }
 }
 

@@ -24,6 +24,11 @@ import {
   extractSpanContent,
   extractArteshCode,
   proxyFetch,
+  isValidTimeField,
+  isLatinMajority,
+  findEventsBySameCode,
+  checkCodeDuplicate,
+  formatDedupConflictNote,
 } from './sync-rss.mjs';
 
 const LOCATIONS = {
@@ -961,8 +966,10 @@ test('a pending item whose link is no longer in the fresh RSS fetch still gets r
   const fetchedLinks = [];
 
   // The fresh RSS fetch does NOT include this item's guid/link at all (it aged out of the feed's
-  // ~100-item window) — only an unrelated item is present.
-  const freshItems = [rssItem('guid-unrelated')];
+  // ~100-item window) — only an unrelated item is present. It's given a distinct news-code (a
+  // different /news/<id>/ segment) so it isn't itself mistaken for a code-duplicate of the
+  // aged-out item once that one lands in `events` during phase 1.
+  const freshItems = [rssItem('guid-unrelated', { link: 'https://sepahnews.ir/fa/news/40001/guid-unrelated' })];
 
   const { newGuids, resolvedCount, newEventsCount } = await processItems(freshItems, {
     locations: LOCATIONS,
@@ -1340,4 +1347,241 @@ test('main() end-to-end: pubDate/link-derived date+code land in events.json, art
   assert.equal(events[0].dateP, '۱۷ تیر ۱۴۰۵');
   assert.equal(events[0].code, '36159');
   assert.equal(events[0].source, 'sepah');
+});
+
+// --- isValidTimeField ---
+
+test('isValidTimeField accepts an empty/missing time (existing convention for Artesh events)', () => {
+  assert.equal(isValidTimeField(''), true);
+  assert.equal(isValidTimeField('   '), true);
+  assert.equal(isValidTimeField(null), true);
+  assert.equal(isValidTimeField(undefined), true);
+});
+
+test('isValidTimeField accepts a bare HH:MM value in either Persian or Latin digits', () => {
+  assert.equal(isValidTimeField('۰۹:۰۱'), true);
+  assert.equal(isValidTimeField('08:00'), true);
+});
+
+test('isValidTimeField accepts a weekday + Jalali date + time string in the style real feed items use', () => {
+  assert.equal(isValidTimeField('دوشنبه ۲۹ تیر ۱۴۰۵، ۱۴:۴۵'), true);
+  assert.equal(isValidTimeField('سه‌شنبه ۳۰ تیر ۱۴۰۵ - ۰۹:۲۸'), true);
+});
+
+test('isValidTimeField rejects a full descriptive sentence', () => {
+  assert.equal(
+    isValidTimeField('تاسیسات مهم و محل استقرار دشمن آمریکایی در یک پایگاه هوایی در اردن هدف موشک های بالستیک قرار گرفت'),
+    false
+  );
+});
+
+test('isValidTimeField rejects a bare ISO 8601 timestamp, even with an in-range year', () => {
+  assert.equal(isValidTimeField('2024-02-29T05:04'), false);
+  assert.equal(isValidTimeField('1405-03-30T22:51:00'), false);
+});
+
+test('isValidTimeField rejects placeholder words instead of a clock time', () => {
+  assert.equal(isValidTimeField('morning'), false);
+  assert.equal(isValidTimeField('today morning'), false);
+  assert.equal(isValidTimeField('ساعاتی قبل'), false);
+});
+
+test('isValidTimeField rejects a weekday-prefixed date whose year is outside the known range', () => {
+  assert.equal(isValidTimeField('شنبه ۲۷ تیر ۱۳۹۰ - ۰۰:۰۵'), false);
+});
+
+// --- wave normalization/validation (Part 2) ---
+
+test('validateExtraction normalizes literal "unknown"/"null"/"none" wave values to "—", case-insensitively', () => {
+  const LOCS = { princeHassan: { name: 'x', country: 'jordan' } };
+  for (const raw of ['unknown', 'Unknown', 'NULL', 'none']) {
+    const ex = validExtraction({ wave: raw, dateG: '2026-07-08', dateP: '۱۷ تیر ۱۴۰۵' });
+    const { ok, errors } = validateExtraction(ex, LOCS);
+    assert.equal(ex.wave, '—');
+    assert.equal(ok, true);
+    assert.ok(!errors.some((e) => e.includes('wave')));
+  }
+});
+
+test('validateExtraction accepts the "—" placeholder wave value itself (not disallowed characters)', () => {
+  const LOCS = { princeHassan: { name: 'x', country: 'jordan' } };
+  const ex = validExtraction({ wave: '—', dateG: '2026-07-08', dateP: '۱۷ تیر ۱۴۰۵' });
+  const { ok, errors } = validateExtraction(ex, LOCS);
+  assert.equal(ok, true);
+  assert.ok(!errors.some((e) => e.includes('wave')));
+});
+
+test('validateExtraction rejects a wave value containing characters outside Persian text/digits/spaces//()−', () => {
+  const LOCS = { princeHassan: { name: 'x', country: 'jordan' } };
+  const ex = validExtraction({ wave: '|mizan', dateG: '2026-07-08', dateP: '۱۷ تیر ۱۴۰۵' });
+  const { ok, errors } = validateExtraction(ex, LOCS);
+  assert.equal(ok, false);
+  assert.ok(errors.some((e) => e.includes('wave') && e.includes('disallowed')));
+});
+
+test('validateExtraction still accepts ordinary wave formats ("موج ۲۴ / مرحله ۱", bare digits)', () => {
+  const LOCS = { princeHassan: { name: 'x', country: 'jordan' } };
+  for (const wave of ['موج ۲۴ / مرحله ۱', '24', 'مرحله ۱۲ عملیات صاعقه']) {
+    const ex = validExtraction({ wave, dateG: '2026-07-08', dateP: '۱۷ تیر ۱۴۰۵' });
+    const { ok } = validateExtraction(ex, LOCS);
+    assert.equal(ok, true);
+  }
+});
+
+// --- isLatinMajority / language-purity check (Part 2) ---
+
+test('isLatinMajority flags fully English target/outcome text', () => {
+  assert.equal(isLatinMajority('US forces'), true);
+  assert.equal(isLatinMajority('United Nations'), true);
+});
+
+test('isLatinMajority does not flag Persian text with an embedded weapon-model token', () => {
+  assert.equal(isLatinMajority('پهپاد MQ-9 هدف قرار گرفت'), false);
+  assert.equal(isLatinMajority('یک آشیانه پهپادهای MQ-9، از رده خارج شد'), false);
+  assert.equal(isLatinMajority('سامانه پدافند هوایی پاتریوت با موشک و F-15 مورد اصابت قرار گرفت'), false);
+});
+
+test('isLatinMajority does not flag plain Persian text with no Latin at all', () => {
+  assert.equal(isLatinMajority('رادار پایگاه علی السالم آمریکا'), false);
+});
+
+test('validateExtraction rejects an extraction whose target/weapon/outcome is majority Latin-script', () => {
+  const LOCS = { princeHassan: { name: 'x', country: 'jordan' } };
+  const ex = validExtraction({
+    target: 'US base at Al-Azraq, Jordan',
+    weapon: 'missile, drone',
+    outcome: 'At least two US fighter jets completely destroyed',
+    dateG: '2026-07-08',
+    dateP: '۱۷ تیر ۱۴۰۵',
+  });
+  const { ok, errors } = validateExtraction(ex, LOCS);
+  assert.equal(ok, false);
+  assert.ok(errors.some((e) => e.includes('Latin')));
+});
+
+// --- code-based deduplication against existing events (Part 1) ---
+
+test('findEventsBySameCode matches across the Persian-digit vs Latin-digit code formats used by hand-curated vs freshly-parsed events', () => {
+  const events = [{ id: 34, loc: 'aliAlSalem', code: '۳۶۱۶۳' }];
+  assert.deepEqual(findEventsBySameCode(events, '36163'), events);
+});
+
+test('findEventsBySameCode returns no matches for an empty code (the Artesh case — no strict dedup)', () => {
+  const events = [{ id: 62, loc: 'aliAlSalem', code: '' }, { id: 63, loc: 'aliAlSalem', code: '' }];
+  assert.deepEqual(findEventsBySameCode(events, ''), []);
+});
+
+test('checkCodeDuplicate returns null when no existing event shares the code', () => {
+  const events = [{ id: 34, loc: 'aliAlSalem', code: '۳۶۱۶۳' }];
+  assert.equal(checkCodeDuplicate(events, { code: '99999', loc: 'aliAlSalem' }), null);
+});
+
+test('checkCodeDuplicate reports isDuplicate:true when the new extraction\'s loc agrees with the matching event(s)', () => {
+  const events = [{ id: 34, loc: 'aliAlSalem', code: '۳۶۱۶۳' }];
+  const result = checkCodeDuplicate(events, { code: '36163', loc: 'aliAlSalem' });
+  assert.equal(result.isDuplicate, true);
+  assert.equal(result.matches.length, 1);
+});
+
+test('checkCodeDuplicate reports isDuplicate:false (a conflict) when every match has a different loc', () => {
+  const events = [{ id: 59, loc: 'alAzraq', code: '۳۶۲۳۹' }];
+  const result = checkCodeDuplicate(events, { code: '36239', loc: 'princeHassan' });
+  assert.equal(result.isDuplicate, false);
+  assert.equal(result.matches.length, 1);
+});
+
+test('formatDedupConflictNote names the conflicting existing event id(s) and both locations', () => {
+  const events = [{ id: 59, loc: 'alAzraq', code: '۳۶۲۳۹' }];
+  const note = formatDedupConflictNote({ code: '36239', loc: 'princeHassan' }, events);
+  assert.match(note, /36239/);
+  assert.match(note, /\b59\b/);
+  assert.match(note, /alAzraq/);
+  assert.match(note, /princeHassan/);
+});
+
+test('processItems: an extraction whose code matches an existing event with a DIFFERENT loc is routed to pending-review with a conflict note, not added as a new event', async () => {
+  const events = [
+    { id: 59, dateG: '2026-07-21', dateP: '۳۰ تیر ۱۴۰۵', time: '۰۹:۰۰', wave: 'موج ۲۴', force: 'aerospace',
+      source: 'sepah', loc: 'alAzraq', target: { fa: 'رادار', en: '', ar: '' }, weapon: { fa: 'موشک', en: '', ar: '' },
+      outcome: { fa: 'منهدم شد', en: '', ar: '' }, code: '۳۶۲۳۹' },
+  ];
+  const pendingReview = [];
+  const items = [rssItem('guid-conflict', { link: 'https://sepahnews.ir/fa/news/36239/some-other-slug' })];
+
+  const { newEventsCount, pendingCount } = await processItems(items, {
+    locations: LOCATIONS,
+    countries: COUNTRIES,
+    events,
+    pendingReview,
+    seenSet: new Set(),
+    systemPrompt: 'test',
+    nextId: 100,
+    extractEventFn: async () => validExtraction({ loc: 'princeHassan' }),
+    fetchArticleTextFn: async () => 'متن کامل خبر',
+    openPendingReviewIssueFn: async () => 201,
+  });
+
+  assert.equal(newEventsCount, 0);
+  assert.equal(events.length, 1); // unchanged — no new event appended
+  assert.equal(pendingCount, 1);
+  assert.equal(pendingReview.length, 1);
+  assert.ok(pendingReview[0].errors.some((e) => e.includes('duplicate code') && e.includes('59')));
+});
+
+test('processItems: an extraction whose code AND loc match an existing event is resolved as a redundant duplicate — no new event, guid marked seen', async () => {
+  const events = [
+    { id: 34, dateG: '2026-07-17', dateP: '۲۶ تیر ۱۴۰۵', time: '۰۹:۰۱', wave: 'موج ۱۲', force: 'ground',
+      source: 'sepah', loc: 'aliAlSalem', target: { fa: 'پایگاه دشمن', en: '', ar: '' }, weapon: { fa: 'نامشخص', en: '', ar: '' },
+      outcome: { fa: 'به آتش کشیده شد', en: '', ar: '' }, code: '۳۶۱۶۳' },
+  ];
+  const pendingReview = [];
+  const items = [rssItem('guid-duplicate', { link: 'https://sepahnews.ir/fa/news/36163/rediscovered-slug' })];
+
+  const { newGuids, newEventsCount, pendingCount, duplicateCount } = await processItems(items, {
+    locations: LOCATIONS,
+    countries: COUNTRIES,
+    events,
+    pendingReview,
+    seenSet: new Set(),
+    systemPrompt: 'test',
+    nextId: 100,
+    extractEventFn: async () => validExtraction({ loc: 'aliAlSalem' }),
+    fetchArticleTextFn: async () => 'متن کامل خبر',
+    openPendingReviewIssueFn: async () => { throw new Error('should not open an issue for a redundant duplicate'); },
+  });
+
+  assert.equal(newEventsCount, 0);
+  assert.equal(events.length, 1); // still just the original hand-curated event
+  assert.equal(pendingCount, 0);
+  assert.equal(duplicateCount, 1);
+  assert.deepEqual(newGuids, ['guid-duplicate']); // guid still marked seen, despite no new event
+});
+
+test('processItems never runs code-based dedup for Artesh (empty code), even when two events share loc/force/everything else', async () => {
+  const events = [
+    { id: 62, dateG: '2026-07-14', dateP: '۲۳ تیر ۱۴۰۵', time: '', wave: '—', force: 'aerospace',
+      source: 'artesh', loc: 'aliAlSalem', target: { fa: 'هدف', en: '', ar: '' }, weapon: { fa: 'پهپاد', en: '', ar: '' },
+      outcome: { fa: 'هدف قرار گرفت', en: '', ar: '' }, code: '' },
+  ];
+  const pendingReview = [];
+  const items = [rssItem('guid-artesh-new', { link: 'https://www.aja.ir/some/new/article' })];
+
+  const { newEventsCount, duplicateCount } = await processItems(items, {
+    locations: LOCATIONS,
+    countries: COUNTRIES,
+    events,
+    pendingReview,
+    seenSet: new Set(),
+    systemPrompt: 'test',
+    nextId: 100,
+    sourceId: 'artesh',
+    extractEventFn: async () => validExtraction({ loc: 'aliAlSalem', source: 'artesh' }),
+    fetchArticleTextFn: async () => 'متن کامل خبر',
+    extractCodeFromLinkFn: () => '',
+    openPendingReviewIssueFn: async () => 202,
+  });
+
+  assert.equal(newEventsCount, 1); // added as a genuinely new event, not treated as a code-duplicate
+  assert.equal(duplicateCount, 0);
+  assert.equal(events.length, 2);
 });
