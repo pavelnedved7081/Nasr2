@@ -187,6 +187,14 @@ coordinates. To resolve one:
    location.
 4. Remove the entry from `data/pending-review.json` and close the issue.
 
+## Known limitations
+
+- Artesh has no reliable per-article code field, so duplicate detection for
+  hand-curated historical Artesh events relied on a one-time manual guid
+  pre-seed (see commit d4fc833) rather than automatic dedup. Any future
+  source added without a stable per-article identifier will need the same
+  manual step, or a proper content-based dedup mechanism should be built.
+
 ## Local testing
 
 ```sh
