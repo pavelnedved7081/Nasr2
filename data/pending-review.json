@@ -12,56 +12,6 @@
     "last_checked_at": "2026-07-21T23:36:51.680Z"
   },
   {
-    "title": "ادامه حملات پهپادهای ارتش به پایگاه های آمریکا در کویت",
-    "link": "https://www.aja.ir//Home/ShowPage.aspx?Object=news&CategoryID=9ce0ffff-6667-4cc8-8cc7-7d8be06f03e4&LayoutID=6341690b-b7bb-4b01-be11-a64bd748a77a&ID=318ea5fd-088d-4c00-9ce7-11d0e4e0acbf",
-    "guid": "artesh:318ea5fd-088d-4c00-9ce7-11d0e4e0acbf",
-    "pubDate": "Sun, 19 Jul 2026 09:01:21 +0330",
-    "raw_extraction": {
-      "wave": "7",
-      "force": "ground",
-      "source": "artesh",
-      "loc": "udairi",
-      "loc_raw_text": "اردوگاه العدیری",
-      "target": "ار 어떠نیسمه و تجهیزات و نفرات ارتش تروریستی آمریکا در়ودریا کویت",
-      "weapon": "پهپادی",
-      "outcome": "هدفJPN باید formantunid یا هدف قرار gitt",
-      "time": "بامداد امروز",
-      "dateG": "2026-07-19",
-      "dateP": "۲۸ تیر ۱۴۰۵",
-      "code": ""
-    },
-    "errors": [
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
-    ],
-    "added_at": "2026-07-21T23:37:58.669Z",
-    "issue_number": 34
-  },
-  {
-    "title": "پایگاه‌های آمریکا در اردن و کویت، آماج حملات پهپادی ارتش",
-    "link": "https://www.aja.ir//Home/ShowPage.aspx?Object=news&CategoryID=9ce0ffff-6667-4cc8-8cc7-7d8be06f03e4&LayoutID=6341690b-b7bb-4b01-be11-a64bd748a77a&ID=32e35d88-1223-4574-9cac-3f1a1d5ead9a",
-    "guid": "artesh:32e35d88-1223-4574-9cac-3f1a1d5ead9a",
-    "pubDate": "Sat, 18 Jul 2026 03:14:24 +0330",
-    "raw_extraction": {
-      "wave": "—",
-      "force": "joint",
-      "source": "artesh",
-      "loc": "udairi",
-      "loc_raw_text": "اردوگاه العدیری",
-      "target": "US military facilities (command & control centers, ammunition depots, maintenanceриди, aviation bases) in Jordan and Kuwait",
-      "weapon": "قیرپهپادهای انهدامی (MUAV) Iran IRGC",
-      "outcome": "دمج و تخریب انبارهای مهمات و زیرساخت‌های امنیتی آمریکا",
-      "time": null,
-      "dateG": "2026-07-17",
-      "dateP": "۲۶ تیر ۱۴۰۵",
-      "code": ""
-    },
-    "errors": [
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
-    ],
-    "added_at": "2026-07-21T23:39:08.564Z",
-    "issue_number": 35
-  },
-  {
     "title": "",
     "link": "https://sepahnews.ir/fa/news/36188/حمله-کوبنده-و-همزمان-موشکی-و-پهپادی-به-شیلترهای-جنگنده‌ها-و-یک-رمپ-بزرگ-توقف-در-پایگاه-آمریکا-در-الازرق-اردن",
     "guid": "sepah:https://sepahnews.ir/fa/news/36188/حمله-کوبنده-و-همزمان-موشکی-و-پهپادی-به-شیلترهای-جنگنده‌ها-و-یک-رمپ-بزرگ-توقف-در-پایگاه-آمریکا-در-الازرق-اردن",
