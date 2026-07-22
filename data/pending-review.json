@@ -9,7 +9,7 @@
     ],
     "added_at": "2026-07-21T15:30:16.612Z",
     "pubDate": null,
-    "last_checked_at": "2026-07-22T09:17:36.643Z"
+    "last_checked_at": "2026-07-22T11:40:56.636Z"
   },
   {
     "title": "",
@@ -17,53 +17,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36188/حمله-کوبنده-و-همزمان-موشکی-و-پهپادی-به-شیلترهای-جنگنده‌ها-و-یک-رمپ-بزرگ-توقف-در-پایگاه-آمریکا-در-الازرق-اردن",
     "pubDate": "Sat, 18 Jul 2026 12:00:00 GMT",
     "raw_extraction": {
-      "wave": "۲۰",
+      "wave": "20",
       "force": "aerospace",
       "source": "sepah",
       "loc": "alAzraq",
       "loc_raw_text": "پایگاه آمریکا در الازرق اردن",
-      "target": "شیلترهای جنگنده‌ها و یک رمپ بزرگ توقف در پایگاه آمریکا",
-      "weapon": "موشکی و پهپادی",
-      "outcome": "منهدم شدن حداقل دو جنگنده و سه هواگرد آمریکایی و وارد کردن خسارت عمده به تعدادی دیگر",
-      "time": "سحرگاه امروز",
+      "target": "اميرکی",
+      "weapon": "موشکی,&Pehpadi",
+      "outcome": " нив، سه هواگرد آمریکایی",
+      "time": "27 Tir 1405",
       "dateG": "2026-07-18",
       "dateP": "۲۷ تیر ۱۴۰۵",
       "code": "36188"
     },
     "errors": [
-      "invalid time field value: سحرگاه امروز"
+      "invalid time field value: 27 Tir 1405",
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-22T00:00:39.174Z",
     "issue_number": null,
     "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
-    "last_checked_at": "2026-07-22T09:17:43.511Z"
-  },
-  {
-    "title": "",
-    "link": "https://sepahnews.ir/fa/news/36187/اسکله-پشتیبانی-سوخت-ناوگان-آمریکا-محل-تجمع-پرنده‌های-جنگی-دشمن-مرکز-داده‌های-اطلاعاتی-دشمن-یک-مرکز-سیگنالی-و-مخابراتی-آمریکا-درهم-کوبیده-شدند",
-    "guid": "sepah:https://sepahnews.ir/fa/news/36187/اسکله-پشتیبانی-سوخت-ناوگان-آمریکا-محل-تجمع-پرنده‌های-جنگی-دشمن-مرکز-داده‌های-اطلاعاتی-دشمن-یک-مرکز-سیگنالی-و-مخابراتی-آمریکا-درهم-کوبیده-شدند",
-    "pubDate": "Sat, 18 Jul 2026 12:00:00 GMT",
-    "raw_extraction": {
-      "wave": "19",
-      "force": "naval",
-      "source": "sepah",
-      "loc": "alAhmadi",
-      "loc_raw_text": "بندر الاحمدی کویت، شیخ عیسی بحرین، باتلکو، مرکز مخابراتی کویت",
-      "target": "اسکله پشتیبانی سوخت ناوگان آمریکا، محل جمع‌آوری پرنده‌های jangī دشمن، مرکز داده‌های اطلاعاتی دشمن، یک مرکز سیگنالی و مخابراتی آمریکا",
-      "weapon": "پهپادی و موشکی",
-      "outcome": "تخریب شد",
-      "time": "۲۷ تير ۱۴۰۵ ۱۱:۲۲",
-      "dateG": "2026-07-18",
-      "dateP": "۲۷ تیر ۱۴۰۵",
-      "code": "36187"
-    },
-    "errors": [
-      "invalid time field value: ۲۷ تير ۱۴۰۵ ۱۱:۲۲"
-    ],
-    "added_at": "2026-07-22T00:00:39.174Z",
-    "issue_number": null,
-    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
-    "last_checked_at": "2026-07-22T09:18:10.862Z"
+    "last_checked_at": "2026-07-22T11:41:06.994Z"
   },
   {
     "title": "",
@@ -71,26 +45,48 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36259/مجموعه-رادارهای-تاکتیکی-در-پایگاه-علی-السالم-و-جزیره-بوبیان-از-رده-عملیاتی-خارج-شدند",
     "pubDate": "Tue, 21 Jul 2026 12:00:00 GMT",
     "raw_extraction": {
-      "wave": "And 24",
-      "force": "unknown",
+      "wave": "24",
+      "force": "ground",
       "source": "sepah",
       "loc": "aliAlSalem",
-      "loc_raw_text": "پایگاه علی السالم وuerre بوبیان کویت",
-      "target": "واحد رادار هشدار اولیه، مجموعة رادار تاکتیکی، سیستم راداری دیگر",
+      "loc_raw_text": "پایگاه علی السالم",
+      "target": "radar",
       "weapon": "unknown",
-      "outcome": "رادارها را منهدم کرده و از رده عملیات خارج کردند.",
+      "outcome": "destroyed",
       "time": "سه‌شنبه ۳۰ تير ۱۴۰۵ - ۲۲:۵۱",
       "dateG": "2026-07-21",
       "dateP": "۳۰ تیر ۱۴۰۵",
       "code": "36259"
     },
     "errors": [
-      "wave contains disallowed characters: And 24"
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-22T00:00:39.174Z",
     "issue_number": null,
     "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
-    "last_checked_at": "2026-07-22T09:18:58.934Z"
+    "last_checked_at": "2026-07-22T11:41:38.712Z",
+    "loc_candidates": [
+      {
+        "id": "aliAlSalem",
+        "distance": 1
+      },
+      {
+        "id": "alAzraq",
+        "distance": 6
+      },
+      {
+        "id": "alAhmadi",
+        "distance": 6
+      },
+      {
+        "id": "minaSalman",
+        "distance": 6
+      },
+      {
+        "id": "salamah",
+        "distance": 6
+      }
+    ]
   },
   {
     "title": "",
@@ -99,25 +95,52 @@
     "pubDate": "Fri, 17 Jul 2026 12:00:00 GMT",
     "raw_extraction": {
       "wave": "—",
-      "force": "unknown",
+      "force": "aerospace",
       "source": "sepah",
       "loc": "ramshir",
       "loc_raw_text": "منطقه رامشیر",
-      "target": "AeroVironment RQ‑11 Raven",
-      "weapon": "Light fire of Iran’s advanced air defense system",
+      "target": "unknown",
+      "weapon": "aerospace",
       "outcome": "destroyed",
-      "time": "جمعه ۲۶ تیر ۱۴۰۵ - ۱۹:۵۱",
+      "time": "26 Tir 1405 - 19:51",
       "dateG": "2026-07-17",
       "dateP": "۲۶ تیر ۱۴۰۵",
       "code": "36168"
     },
     "errors": [
+      "invalid time field value: 26 Tir 1405 - 19:51",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-22T00:00:39.174Z",
     "issue_number": null,
     "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
-    "last_checked_at": "2026-07-22T09:20:09.059Z"
+    "last_checked_at": "2026-07-22T11:42:11.647Z"
+  },
+  {
+    "title": "خسارت سنگین به سوله پهپادهای MQ9، انهدام ۸فروند پهپاد آکبند و ۲فروند آماده بکار، ۲ فروند بالگرد سنگین آمریکایی و کشته و زخمی شدن تعدادی از نیروهای متجاوز در پایگاه‌های ملک فیصل و پرنس حسن اردن در موج ۲۵",
+    "link": "https://sepahnews.ir/fa/news/36275/خسارت-سنگین-به-سوله-پهپادهای-mq9-انهدام-۸فروند-پهپاد-آکبند-و-۲فروند-آماده-بکار-۲-فروند-بالگرد-سنگین-آمریکایی-و-کشته-و-زخمی-شدن-تعدادی-از-نیروهای-متجاوز-در-پایگاه‌های-ملک-فیصل-و-پرنس-حسن-اردن-در-موج-۲۵",
+    "guid": "sepah:https://sepahnews.ir/fa/news/36275/خسارت-سنگین-به-سوله-پهپادهای-mq9-انهدام-۸فروند-پهپاد-آکبند-و-۲فروند-آماده-بکار-۲-فروند-بالگرد-سنگین-آمریکایی-و-کشته-و-زخمی-شدن-تعدادی-از-نیروهای-متجاوز-در-پایگاه‌های-ملک-فیصل-و-پرنس-حسن-اردن-در-موج-۲۵",
+    "pubDate": "22 Jul 2026 14:12:18 +0330",
+    "raw_extraction": {
+      "wave": "—",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": "princeHassan",
+      "loc_raw_text": "پایگاه‌های ملک فیصل و پرنس حسن اردن",
+      "target": "United States",
+      "weapon": "missile, drone",
+      "outcome": "Heavy damage to U.S. facilities and equipment, including destruction of several MQ‑9 and HK‑51 drones and heavy helicopters, with casualties among U.S. forces.",
+      "time": "2026-07-22T14:12:00",
+      "dateG": "2026-07-22",
+      "dateP": "۳۱ تیر ۱۴۰۵",
+      "code": "36275"
+    },
+    "errors": [
+      "invalid time field value: 2026-07-22T14:12:00",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+    ],
+    "added_at": "2026-07-22T11:42:33.776Z",
+    "issue_number": 40
   },
   {
     "title": "",
@@ -131,7 +154,7 @@
     "added_at": "2026-07-22T00:00:39.175Z",
     "issue_number": null,
     "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry.",
-    "last_checked_at": "2026-07-22T09:20:10.050Z"
+    "last_checked_at": "2026-07-22T11:42:34.972Z"
   },
   {
     "title": "",
@@ -145,7 +168,7 @@
     "added_at": "2026-07-22T00:00:39.175Z",
     "issue_number": null,
     "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry.",
-    "last_checked_at": "2026-07-22T09:20:10.212Z"
+    "last_checked_at": "2026-07-22T11:42:35.183Z"
   },
   {
     "title": "",
@@ -159,7 +182,7 @@
     "added_at": "2026-07-22T00:00:39.175Z",
     "issue_number": null,
     "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry.",
-    "last_checked_at": "2026-07-22T09:20:10.374Z"
+    "last_checked_at": "2026-07-22T11:42:35.399Z"
   },
   {
     "title": "",
@@ -173,7 +196,7 @@
     "added_at": "2026-07-22T00:00:39.175Z",
     "issue_number": null,
     "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21). Original RSS item guid/link could not be recovered (Artesh guids are opaque UUIDs not derivable from any field stored on the events.json record) — link left empty; a human will need to either re-find the source article manually or discard this entry.",
-    "last_checked_at": "2026-07-22T09:20:10.536Z"
+    "last_checked_at": "2026-07-22T11:42:35.610Z"
   },
   {
     "title": "پایگاه و مراکز مهم  آمریکا در کویت هدف حملات پهپادی ارتش قرار گرفت",
@@ -185,19 +208,20 @@
       "force": "aerospace",
       "source": "artesh",
       "loc": "kuwaitCity",
-      "loc_raw_text": "پادگان الدوهه کويت",
-      "target": "ground",
-      "weapon": "aerospace",
-      "outcome": "attack",
-      "time": "",
+      "loc_raw_text": "پادگان الدوحه در غرب کویت",
+      "target": "انبارهای مهمات و تجهیزات لجستیکی مرکز فرماندهی نیروهای زمینی ارتش آمریکا",
+      "weapon": "پهپادهای انهدامی",
+      "outcome": "هدف قرار گرفته (حملهٔ پهپادی اجرا شد)",
+      "time": "ساعاتی پیش از گزارش",
       "dateG": "2026-07-22",
       "dateP": "۳۱ تیر ۱۴۰۵",
       "code": ""
     },
     "errors": [
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: ساعاتی پیش از گزارش"
     ],
     "added_at": "2026-07-22T09:21:07.356Z",
-    "issue_number": 39
+    "issue_number": 39,
+    "last_checked_at": "2026-07-22T11:43:09.804Z"
   }
 ]
