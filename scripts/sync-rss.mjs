@@ -770,12 +770,43 @@ function isKnownYear(yearStr) {
   );
 }
 
+// --- report-relative time phrase detection ---
+//
+// Some Artesh statements give the time relative to when the statement/report itself was issued
+// ("ساعاتی پیش از گزارش" - a few hours before this report, "لحظاتی پیش" - moments ago, "امروز صبح" /
+// "بامداد امروز" - this morning) rather than a clock time or omitting time entirely. These carry no
+// reliable absolute time, so they're accepted by the validator but normalized to the empty string
+// (the existing convention for Artesh events with no known time) — see normalizeTimeField below —
+// rather than being rejected or stored as free text. This is a generous keyword/pattern whitelist
+// rather than an exhaustive phrase list, since real feed items phrase this in varying ways; note it
+// deliberately matches only "پیش" (not "قبل") for the bare "<unit> ago" shape, since a bare "<unit>
+// قبل" with no other context (e.g. "ساعاتی قبل") is still too vague/placeholder-like to trust and is
+// rejected, same as before this change.
+const RELATIVE_TIME_PATTERNS = [
+  /(?:لحظ[ه‌]*ات?[یی]?|دقایق[یی]?|دقیقه[یی]?|ساعات[یی]?|ساعتی)[\s‌]*پیش/, // "لحظاتی/دقایقی/ساعاتی پیش" - moments/minutes/hours ago
+  /پیش[\s‌]*از[\s‌]*(?:این[\s‌]*)?گزارش/, // "پیش از (این) گزارش" - before (this) report
+  /امروز[\s‌]*(?:صبح|بامداد|ظهر|عصر|شب|شامگاه)|(?:صبح|بامداد|ظهر|عصر|شب|شامگاه)[\s‌]*امروز/, // "امروز صبح" / "بامداد امروز" and similar day-part + "امروز" combos
+  /دیشب|امشب/, // "دیشب" (last night) / "امشب" (tonight)
+  /هم[‌\s]*اکنون|همین[‌\s]*حالا/, // "هم‌اکنون" / "همین حالا" - right now
+  /به[‌\s]*تازگی|اخیرا/, // "به تازگی" / "اخیراً" - recently
+];
+
+/** True if `str` is a report-relative time phrase (see RELATIVE_TIME_PATTERNS above) rather than an
+ *  absolute clock time — e.g. "ساعاتی پیش از گزارش", "لحظاتی پیش", "امروز صبح". */
+export function isRelativeTimePhrase(str) {
+  if (typeof str !== 'string') return false;
+  const trimmed = foldPersianLetterVariants(str.trim());
+  if (trimmed === '') return false;
+  return RELATIVE_TIME_PATTERNS.some((re) => re.test(trimmed));
+}
+
 /**
  * Validates the `time` field: empty/missing is fine (an accepted convention for Artesh events
- * with no reported time), as is a bare "HH:MM" or a "<weekday> <day> <month> <year><sep>HH:MM"
- * string in the style real feed items use. Rejects anything else — a full sentence, an ISO 8601
- * timestamp, a bare placeholder word ("morning"/"today"), or a date whose year isn't in this
- * project's known range — since those are signs of the model dumping free text into the field.
+ * with no reported time), as is a bare "HH:MM", a "<weekday> <day> <month> <year><sep>HH:MM"
+ * string in the style real feed items use, or a report-relative phrase (see isRelativeTimePhrase
+ * above). Rejects anything else — a full sentence, an ISO 8601 timestamp, a bare placeholder word
+ * ("morning"/"today"), or a date whose year isn't in this project's known range — since those are
+ * signs of the model dumping free text into the field.
  */
 export function isValidTimeField(time) {
   if (time == null) return true;
@@ -783,10 +814,19 @@ export function isValidTimeField(time) {
   const trimmed = time.trim();
   if (trimmed === '') return true;
   if (TIME_HHMM_ONLY_RE.test(trimmed)) return true;
+  if (isRelativeTimePhrase(trimmed)) return true;
 
   const m = foldPersianLetterVariants(trimmed).match(TIME_WITH_DATE_PREFIX_RE);
   if (m) return isKnownYear(m[3]);
   return false;
+}
+
+/** Normalizes a report-relative time phrase (see isRelativeTimePhrase) to the empty string — the
+ *  existing convention for Artesh events with no known absolute time — leaving any other value
+ *  (empty, absolute HH:MM, weekday+date+HH:MM) untouched. */
+export function normalizeTimeField(time) {
+  if (typeof time === 'string' && isRelativeTimePhrase(time)) return '';
+  return time;
 }
 
 // --- wave field normalization/validation ---
@@ -798,6 +838,17 @@ export function isValidTimeField(time) {
 // rather than silently accepted, since it's a sign of corrupted model output, not a real wave label.
 const WAVE_NULL_LITERALS = new Set(['unknown', 'null', 'none']);
 const WAVE_ALLOWED_CHARS_RE = /^[؀-ۿ‌0-9\s/()—-]*$/;
+
+// --- weapon/outcome/target "unknown"/"null" literal normalization ---
+//
+// Same failure mode as `wave` above: a model occasionally returns the literal English word
+// "unknown"/"null"/"none" for target/weapon/outcome instead of the dataset's actual placeholder
+// for "not specified" — existing events.json already uses "نامشخص" 13 times for `weapon`, so that's
+// the established convention to normalize to (rather than wave's "—", which is specific to that
+// field). Applied to target/outcome too for consistency, since both are required fields and a
+// literal "unknown" is just as wrong there.
+const TEXT_NULL_LITERALS = WAVE_NULL_LITERALS;
+const UNSPECIFIED_TEXT_PLACEHOLDER = 'نامشخص';
 
 // --- language-purity check on target/weapon/outcome ---
 //
@@ -842,6 +893,12 @@ export function validateExtraction(ex, locations) {
     errors.push(`wave contains disallowed characters: ${ex.wave}`);
   }
 
+  for (const field of ['target', 'weapon', 'outcome']) {
+    if (typeof ex[field] === 'string' && TEXT_NULL_LITERALS.has(ex[field].trim().toLowerCase())) {
+      ex[field] = UNSPECIFIED_TEXT_PLACEHOLDER;
+    }
+  }
+
   for (const field of ['force', 'source', 'target', 'weapon', 'outcome']) {
     if (typeof ex[field] !== 'string' || ex[field].trim() === '') {
       errors.push(`missing/empty required field: ${field}`);
@@ -853,6 +910,7 @@ export function validateExtraction(ex, locations) {
   if (ex.loc == null) errors.push('loc is null');
   if (!isValidJalaliDateString(ex.dateP)) errors.push(`unparseable date: ${ex.dateP}`);
   if (!isValidTimeField(ex.time)) errors.push(`invalid time field value: ${ex.time}`);
+  else ex.time = normalizeTimeField(ex.time);
   if (looksGarbled(`${ex.target || ''} ${ex.weapon || ''} ${ex.outcome || ''}`)) {
     errors.push('target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)');
   }
