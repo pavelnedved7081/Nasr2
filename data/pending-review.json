@@ -5,28 +5,28 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36188/حمله-کوبنده-و-همزمان-موشکی-و-پهپادی-به-شیلترهای-جنگنده‌ها-و-یک-رمپ-بزرگ-توقف-در-پایگاه-آمریکا-در-الازرق-اردن",
     "pubDate": "Sat, 18 Jul 2026 12:00:00 GMT",
     "raw_extraction": {
-      "wave": "Are 20",
+      "wave": "م бомبphony 20",
       "force": "aerospace",
       "source": "sepah",
       "loc": "alAzraq",
-      "loc_raw_text": "پایگاه آمریکایی در الازرق اردن",
-      "target": "آمریکایی",
-      "weapon": "رمپ بزرگ، حمله موشکی و پاره کوچک Wärme به شیلترهای جنگنده‌ها",
-      "outcome": " حداقل دو جنگنده و سه هواگرد آمریکایی را به طور کامل منPreferably و تعدادی را خسارت عمده وارد آوردند",
-      "time": "27 تیر ۱۴۰۵",
+      "loc_raw_text": "الازرق اردن",
+      "target": "پایگاه آمریکا در الازرق اردن",
+      "weapon": "رهن و воздушkke Fighter",
+      "outcome": "نقود دو جنگنده آمریکایی و سه هواگرد آمریکایی به طور کامل منمنده و تعدادی خسارت عمده",
+      "time": "27 تیر 1405",
       "dateG": "2026-07-18",
       "dateP": "۲۷ تیر ۱۴۰۵",
       "code": "36188"
     },
     "errors": [
-      "wave contains disallowed characters: Are 20",
-      "invalid time field value: 27 تیر ۱۴۰۵",
+      "wave contains disallowed characters: م бомبphony 20",
+      "invalid time field value: 27 تیر 1405",
       "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-22T00:00:39.174Z",
     "issue_number": null,
     "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
-    "last_checked_at": "2026-07-23T17:04:36.663Z"
+    "last_checked_at": "2026-07-23T21:38:39.826Z"
   },
   {
     "title": "پیام مهم سپاه به مردم اردن/ حق قانونی و شرعی و منطقی ماست که پایگاه آمریکایی مبدا تجاوز به کشورمان را هدف قرار دهیم",
@@ -34,26 +34,24 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر2",
-      "force": "joint",
+      "wave": "عملیات نصر ۲",
+      "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکایی در خاک اردن",
-      "target": "پایگاه‌های آمریکایی در خاک اردن",
-      "weapon": "_View_모드: EMP (برق آسا), radar jamming and destruction of Patriot and C‑RAM systems",
-      "outcome": "نابودی کامل تجهیزات پاداش و تخریب انبارهای سوخت و تجهیزات بالگردی",
-      "time": "2026-07-22T09:00:00",
+      "loc_raw_text": "پایگاه های آمریکا در خاک اردن",
+      "target": "پایگاه‌های آمریکایی (رادار تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات)",
+      "weapon": "حملات برق آسا",
+      "outcome": "انهدام رادار تاد، سامانه پاتریوت، رادار C-ram و مخازن سوخت و تخریب انبار تجهیزات و سوله تعمیرات",
+      "time": "پنجشنبه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null",
-      "invalid time field value: 2026-07-22T09:00:00",
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
+      "loc is null"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-07-23T17:05:36.410Z"
+    "last_checked_at": "2026-07-23T21:39:25.404Z"
   }
 ]
