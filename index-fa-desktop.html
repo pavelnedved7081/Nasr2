@@ -787,7 +787,9 @@ document.getElementById('tlPlay').onclick = function(){
 /* ---------------- collapsible filter sections ---------------- */
 const COLLAPSE_STORAGE_PREFIX = 'nasr2_filterCollapsed_';
 function getCollapsedState(key){
-  return localStorage.getItem(COLLAPSE_STORAGE_PREFIX+key) === '1';
+  const stored = localStorage.getItem(COLLAPSE_STORAGE_PREFIX+key);
+  if(stored === null) return true; // default: collapsed on first visit (no saved preference yet)
+  return stored === '1';
 }
 function setCollapsedState(key, collapsed){
   localStorage.setItem(COLLAPSE_STORAGE_PREFIX+key, collapsed ? '1' : '0');
