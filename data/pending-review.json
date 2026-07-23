@@ -5,28 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36188/حمله-کوبنده-و-همزمان-موشکی-و-پهپادی-به-شیلترهای-جنگنده‌ها-و-یک-رمپ-بزرگ-توقف-در-پایگاه-آمریکا-در-الازرق-اردن",
     "pubDate": "Sat, 18 Jul 2026 12:00:00 GMT",
     "raw_extraction": {
-      "wave": "use available wave number",
+      "wave": "—",
       "force": "aerospace",
       "source": "sepah",
       "loc": "alAzraq",
-      "loc_raw_text": "الازرق اردن",
-      "target": "arb2",
-      "weapon": "missile,rocket",
-      "outcome": "destroyed 2 fighter jets and 3 US surveillance drones",
-      "time": "2024-01-13",
+      "loc_raw_text": "پایگاه آمریکا در الازرق",
+      "target": "US base",
+      "weapon": "missile, drone, airstrike",
+      "outcome": "At least 2 aircraft and 3 ground crew destroyed; significant damage inflicted on others.",
+      "time": "2026-06-20 11:24",
       "dateG": "2026-07-18",
       "dateP": "۲۷ تیر ۱۴۰۵",
       "code": "36188"
     },
     "errors": [
-      "wave contains disallowed characters: use available wave number",
-      "invalid time field value: 2024-01-13",
+      "invalid time field value: 2026-06-20 11:24",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-22T00:00:39.174Z",
     "issue_number": null,
     "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
-    "last_checked_at": "2026-07-23T07:46:02.995Z"
+    "last_checked_at": "2026-07-23T09:15:58.034Z"
   },
   {
     "title": "پیام مهم سپاه به مردم اردن/ حق قانونی و شرعی و منطقی ماست که پایگاه آمریکایی مبدا تجاوز به کشورمان را هدف قرار دهیم",
@@ -34,25 +33,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "—",
-      "force": "aerospace",
+      "wave": "نصیر ۲",
+      "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه آمریکایی",
-      "target": "American base inbau land",
-      "weapon": "ground attack",
-      "outcome": "دمار رادار سیستم پدرک TAD، سامانه پاتری Completed Multiply، رادار C თავ رکھ თამაში; تخریب مخازن سوخت و تجهیزات بالگردی",
-      "time": "2026-08-23T09 producen",
+      "loc_raw_text": "پایگاه آمریکایی در اردن",
+      "target": "پایگاه آمریکایی",
+      "weapon": "مرز",
+      "outcome": "تخریب",
+      "time": "۱۴۰۵/مرداد/۱",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: 2026-08-23T09 producen",
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
+      "invalid time field value: ۱۴۰۵/مرداد/۱"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
-    "issue_number": 42
+    "issue_number": 42,
+    "last_checked_at": "2026-07-23T09:17:03.413Z"
   }
 ]
