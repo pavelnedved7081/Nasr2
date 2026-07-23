@@ -207,6 +207,7 @@
   .ec-loc{font-size:14px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:7px;}
   .ec-country-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
   .ec-target{font-size:12px;color:var(--text-1);line-height:1.7;}
+  .ec-target.pending, .ec-wave.pending, .sc-field b.pending{color:var(--text-2);font-style:italic;}
 
   .empty-note{padding:24px 4px;text-align:center;color:var(--text-2);font-size:12.5px;line-height:2;}
 
@@ -345,14 +346,18 @@ function gregFull(dateG){
   return `${toArabicIndic(d.getDate())} ${AR_MONTHS[d.getMonth()]} ${toArabicIndic(d.getFullYear())}`;
 }
 
+const PENDING_TRANSLATION = '[الترجمة قيد الإنجاز]';
+function trOr(field){ return (field && field.trim()!=='') ? field : PENDING_TRANSLATION; }
+
 async function loadData(){
-  const [locRaw, countryRaw, sourceRaw, forceRaw, eventsRaw, meta] = await Promise.all([
+  const [locRaw, countryRaw, sourceRaw, forceRaw, eventsRaw, meta, waveTrans] = await Promise.all([
     fetch('data/locations.json').then(r=>r.json()),
     fetch('data/countries.json').then(r=>r.json()),
     fetch('data/sources.json').then(r=>r.json()),
     fetch('data/forces.json').then(r=>r.json()),
     fetch('data/events.json').then(r=>r.json()),
     fetch('data/meta.json').then(r=>r.json()),
+    fetch('data/wave-translations.json').then(r=>r.json()),
   ]);
 
   LOC = locRaw;
@@ -366,13 +371,21 @@ async function loadData(){
   FORCE = {};
   for(const [k,v] of Object.entries(forceRaw)) FORCE[k] = v.label_ar;
 
-  // المعرّفات ٤٧-٩١ أُضيفت بعد آخر مزامنة لترجمات هذه اللوحة إلى العربية؛
-  // نصوص target/weapon/outcome الخاصة بها لم تُترجم بعد وستظهر فارغة.
+  function locNameFor(loc){ return (loc.name_ar && loc.name_ar.trim()) || loc.name; }
+  function waveFor(wave){
+    if(!wave) return wave;
+    const t = waveTrans[wave];
+    return (t && t.ar) || PENDING_TRANSLATION;
+  }
+
+  // بعض الأحداث المضافة بعد آخر مزامنة لترجمات هذه اللوحة إلى العربية لا تحتوي على نص عربي
+  // لحقول target/weapon/outcome؛ تُعرض هذه الحقول بعبارة "الترجمة قيد الإنجاز" أعلاه بدلاً من
+  // نص فارغ أو تسريب النص الفارسي الأصلي.
   EVENTS = eventsRaw.map(e=>({
-    id:e.id, dateG:e.dateG, dateP:e.dateP, time:e.time, wave:e.wave, force:e.force,
-    source:e.source, country:LOC[e.loc].country, locName:LOC[e.loc].name,
+    id:e.id, dateG:e.dateG, dateP:e.dateP, time:e.time, wave:waveFor(e.wave), force:e.force,
+    source:e.source, country:LOC[e.loc].country, locName:locNameFor(LOC[e.loc]),
     lat:LOC[e.loc].lat, lng:LOC[e.loc].lng,
-    target:e.target.ar, weapon:e.weapon.ar, outcome:e.outcome.ar, code:e.code,
+    target:trOr(e.target.ar), weapon:trOr(e.weapon.ar), outcome:trOr(e.outcome.ar), code:e.code,
   }));
 
   META = meta;
@@ -535,10 +548,10 @@ function renderEventList(){
     <div class="event-card ${e.id===state.selectedId?'selected':''}" data-id="${e.id}">
       <div class="ec-top">
         <span>${e.time || ''}</span>
-        <span class="ec-wave">${e.wave || '—'}</span>
+        <span class="ec-wave${e.wave===PENDING_TRANSLATION?' pending':''}">${e.wave || '—'}</span>
       </div>
       <div class="ec-loc"><span class="ec-country-dot" style="background:${countryColor(e.country)}"></span>${e.locName}</div>
-      <div class="ec-target">${e.target}</div>
+      <div class="ec-target${e.target===PENDING_TRANSLATION?' pending':''}">${e.target}</div>
     </div>
   `).join('');
 
@@ -557,9 +570,13 @@ function selectEvent(id){
   document.getElementById('scCountry').style.color = COUNTRY[e.country].color;
   document.getElementById('scTitle').textContent = e.locName;
   document.getElementById('scDate').textContent = `${DATE_LABEL_FULL[e.dateG]}${e.time? ' — '+e.time:''}`;
-  document.getElementById('scWave').textContent = e.wave || '—';
+  const scWave = document.getElementById('scWave');
+  scWave.textContent = e.wave || '—';
+  scWave.classList.toggle('pending', e.wave===PENDING_TRANSLATION);
   document.getElementById('scForce').textContent = FORCE[e.force] || 'غير محدد';
-  document.getElementById('scWeapon').textContent = e.weapon || '—';
+  const scWeapon = document.getElementById('scWeapon');
+  scWeapon.textContent = e.weapon || '—';
+  scWeapon.classList.toggle('pending', e.weapon===PENDING_TRANSLATION);
   document.getElementById('scDesc').textContent = `الهدف المزعوم: ${e.target}. النتيجة المعلنة: ${e.outcome}.`;
   document.getElementById('scCode').textContent = `رمز خبر سباه نيوز: ${e.code} · التقويم الفارسي: ${e.dateP}`;
   document.getElementById('selCard').classList.add('show');
