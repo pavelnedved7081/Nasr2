@@ -21,8 +21,8 @@
     }
 
     function fileFor(lang){
-      if (lang === 'en') return 'index-en-mobile.html';
-      if (lang === 'ar') return 'index-ar-mobile.html';
+      if (lang === 'en') return isMobileDevice() ? 'index-en-mobile.html' : 'index-en-desktop.html';
+      if (lang === 'ar') return isMobileDevice() ? 'index-ar-mobile.html' : 'index-ar-desktop.html';
       return isMobileDevice() ? 'index-fa-mobile.html' : 'index-fa-desktop.html';
     }
 
@@ -126,10 +126,20 @@
       <div class="title">داشبورد موبایل</div>
       <div class="desc">نقشهٔ تمام‌صفحه با صفحهٔ کشویی پایین، مخصوص گوشی</div>
     </a>
+    <a class="card" href="index-en-desktop.html">
+      <div class="tag">English · Desktop</div>
+      <div class="title">English Desktop Dashboard</div>
+      <div class="desc">Full map, timeline, and country/force/source filters — translated for an English-speaking audience</div>
+    </a>
     <a class="card" href="index-en-mobile.html">
       <div class="tag">English · Mobile</div>
       <div class="title">English Mobile Dashboard</div>
       <div class="desc">Same map and timeline, translated for an English-speaking audience</div>
+    </a>
+    <a class="card" href="index-ar-desktop.html">
+      <div class="tag">العربية · سطح المكتب</div>
+      <div class="title">لوحة الرصد بالعربية (سطح المكتب)</div>
+      <div class="desc">الخريطة والجدول الزمني الكاملان مع عوامل تصفية الدولة/القوة/المصدر</div>
     </a>
     <a class="card" href="index-ar-mobile.html">
       <div class="tag">العربية · الجوال</div>
