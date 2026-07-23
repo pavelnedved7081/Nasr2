@@ -194,6 +194,9 @@ coordinates. To resolve one:
   pre-seed (see commit d4fc833) rather than automatic dedup. Any future
   source added without a stable per-article identifier will need the same
   manual step, or a proper content-based dedup mechanism should be built.
+- Sepah item code 36159 was manually discarded as a near-duplicate of event
+  id 32 — its pubDate could never be recovered from the RSS feed, its stored
+  pubDate field, or the article page.
 
 ## Local testing
 

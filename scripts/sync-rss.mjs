@@ -778,12 +778,11 @@ function isKnownYear(yearStr) {
 // reliable absolute time, so they're accepted by the validator but normalized to the empty string
 // (the existing convention for Artesh events with no known time) — see normalizeTimeField below —
 // rather than being rejected or stored as free text. This is a generous keyword/pattern whitelist
-// rather than an exhaustive phrase list, since real feed items phrase this in varying ways; note it
-// deliberately matches only "پیش" (not "قبل") for the bare "<unit> ago" shape, since a bare "<unit>
-// قبل" with no other context (e.g. "ساعاتی قبل") is still too vague/placeholder-like to trust and is
-// rejected, same as before this change.
+// rather than an exhaustive phrase list, since real feed items phrase this in varying ways; the bare
+// "<unit> ago" shape matches both "پیش" and "قبل" (e.g. "ساعاتی پیش", "ساعاتی قبل", "دقایقی قبل",
+// "لحظاتی قبل"), since both are equally common, unambiguous "<unit> ago" phrasings in real feed items.
 const RELATIVE_TIME_PATTERNS = [
-  /(?:لحظ[ه‌]*ات?[یی]?|دقایق[یی]?|دقیقه[یی]?|ساعات[یی]?|ساعتی)[\s‌]*پیش/, // "لحظاتی/دقایقی/ساعاتی پیش" - moments/minutes/hours ago
+  /(?:لحظ[ه‌]*ات?[یی]?|دقایق[یی]?|دقیقه[یی]?|ساعات[یی]?|ساعتی)[\s‌]*(?:پیش|قبل)/, // "لحظاتی/دقایقی/ساعاتی پیش/قبل" - moments/minutes/hours ago
   /پیش[\s‌]*از[\s‌]*(?:این[\s‌]*)?گزارش/, // "پیش از (این) گزارش" - before (this) report
   /امروز[\s‌]*(?:صبح|بامداد|ظهر|عصر|شب|شامگاه)|(?:صبح|بامداد|ظهر|عصر|شب|شامگاه)[\s‌]*امروز/, // "امروز صبح" / "بامداد امروز" and similar day-part + "امروز" combos
   /دیشب|امشب/, // "دیشب" (last night) / "امشب" (tonight)
