@@ -1385,7 +1385,6 @@ test('isValidTimeField rejects a bare ISO 8601 timestamp, even with an in-range 
 test('isValidTimeField rejects placeholder words instead of a clock time', () => {
   assert.equal(isValidTimeField('morning'), false);
   assert.equal(isValidTimeField('today morning'), false);
-  assert.equal(isValidTimeField('ساعاتی قبل'), false);
 });
 
 test('isValidTimeField rejects a weekday-prefixed date whose year is outside the known range', () => {
@@ -1406,14 +1405,20 @@ test('isValidTimeField accepts common Persian report-relative time phrases', () 
   }
 });
 
-test('isValidTimeField still rejects a bare vague "<unit> قبل" placeholder with no report-relative context', () => {
-  assert.equal(isValidTimeField('ساعاتی قبل'), false);
+test('isValidTimeField accepts "قبل" variants of the "<unit> ago" shape, same as "پیش"', () => {
+  for (const phrase of ['ساعاتی قبل', 'دقایقی قبل', 'لحظاتی قبل']) {
+    assert.equal(isValidTimeField(phrase), true, phrase);
+  }
 });
 
 test('normalizeTimeField normalizes report-relative phrases to the empty string', () => {
   assert.equal(normalizeTimeField('ساعاتی پیش از گزارش'), '');
   assert.equal(normalizeTimeField('لحظاتی پیش'), '');
   assert.equal(normalizeTimeField('امروز صبح'), '');
+});
+
+test('normalizeTimeField normalizes "ساعاتی قبل" to the empty string, same as "پیش" variants', () => {
+  assert.equal(normalizeTimeField('ساعاتی قبل'), '');
 });
 
 test('normalizeTimeField leaves absolute/empty time values untouched', () => {
