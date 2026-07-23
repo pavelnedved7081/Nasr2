@@ -573,7 +573,9 @@ function selectEvent(id){
   scWeapon.textContent = e.weapon || '—';
   scWeapon.classList.toggle('pending', e.weapon===PENDING_TRANSLATION);
   document.getElementById('scDesc').textContent = `Claimed target: ${e.target}. Reported outcome: ${e.outcome}.`;
-  document.getElementById('scCode').textContent = `Sepah News article code: ${e.code} · Persian calendar: ${e.dateP}`;
+  document.getElementById('scCode').textContent = e.code
+    ? `Sepah News article code: ${e.code} · Persian calendar: ${e.dateP}`
+    : `Source: Islamic Republic Army Public Relations (${DATE_LABEL_FULL[e.dateG]})`;
   document.getElementById('selCard').classList.add('show');
 
   collapseSheet();

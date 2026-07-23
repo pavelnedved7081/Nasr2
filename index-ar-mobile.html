@@ -578,7 +578,9 @@ function selectEvent(id){
   scWeapon.textContent = e.weapon || '—';
   scWeapon.classList.toggle('pending', e.weapon===PENDING_TRANSLATION);
   document.getElementById('scDesc').textContent = `الهدف المزعوم: ${e.target}. النتيجة المعلنة: ${e.outcome}.`;
-  document.getElementById('scCode').textContent = `رمز خبر سباه نيوز: ${e.code} · التقويم الفارسي: ${e.dateP}`;
+  document.getElementById('scCode').textContent = e.code
+    ? `رمز خبر سباه نيوز: ${e.code} · التقويم الفارسي: ${e.dateP}`
+    : `المصدر: العلاقات العامة للجيش الإيراني (عملية الصاعقة) (${DATE_LABEL_FULL[e.dateG]})`;
   document.getElementById('selCard').classList.add('show');
 
   collapseSheet();
