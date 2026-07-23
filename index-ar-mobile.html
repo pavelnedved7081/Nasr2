@@ -71,11 +71,17 @@
     100%{box-shadow:0 0 0 0 rgba(201,80,63,0);}
   }
 
-  /* ---------------- Filter toggle chip on map ---------------- */
-  .filter-fab{
+  /* ---------------- Control bar: filter / mode / language ---------------- */
+  .control-bar{
     position:fixed;z-index:600;
     top:calc(64px + var(--safe-t));
-    left:14px;
+    right:14px;left:14px;
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+  }
+  .cb-group{display:flex;align-items:center;gap:8px;flex-shrink:0;min-width:0;}
+
+  .filter-fab{
+    flex-shrink:0;
     width:40px;height:40px;border-radius:12px;
     background:rgba(20,27,36,.92);border:1px solid var(--line);
     display:flex;align-items:center;justify-content:center;
@@ -84,15 +90,30 @@
   .filter-fab.active{color:var(--amber);border-color:var(--amber-dim);}
 
   .mode-fab{
-    position:fixed;z-index:600;
-    top:calc(64px + var(--safe-t));
-    left:64px;
+    flex-shrink:0;
     display:flex;background:rgba(20,27,36,.92);
     border:1px solid var(--line);border-radius:12px;overflow:hidden;
     font-size:10.5px;
   }
-  .mode-fab div{padding:10px 10px;color:var(--text-2);}
+  .mode-fab div{padding:10px 10px;color:var(--text-2);white-space:nowrap;}
   .mode-fab div.active{background:var(--bg-3);color:var(--amber);}
+
+  .lang-switch{
+    display:flex;background:rgba(20,27,36,.92);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    font-size:10.5px;min-width:0;flex-shrink:1;
+  }
+  .lang-switch a{
+    padding:10px 12px;color:var(--text-2);text-decoration:none;
+    white-space:nowrap;display:flex;align-items:center;justify-content:center;
+  }
+  .lang-switch a:not(:first-child){border-inline-start:1px solid var(--line);}
+  .lang-switch a:active{color:var(--text-0);}
+
+  @media (max-width:359px){
+    .control-bar{gap:6px;}
+    .lang-switch a{padding:8px 8px;font-size:9.5px;}
+  }
 
   /* ---------------- Selected event floating card ---------------- */
   .sel-card{
@@ -218,6 +239,13 @@
   .stat-mini b{display:block;font-size:16px;color:var(--amber);}
   .stat-mini span{font-size:9.5px;color:var(--text-2);}
 
+  .all-versions-link{
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:11.5px;color:var(--text-2);text-decoration:none;
+    padding:2px;
+  }
+  .all-versions-link:active{color:var(--text-1);}
+
   .disclaimer{font-size:10.5px;color:var(--text-2);line-height:1.8;padding:10px 0 4px;}
 
   /* ---------------- Loading overlay ---------------- */
@@ -259,16 +287,18 @@
     <div id="lastUpdated" style="font-size:8.5px;color:var(--text-2);"></div>
   </div>
 </div>
-<div style="position:fixed;z-index:600;top:calc(64px + var(--safe-t));left:50%;transform:translateX(-50%);display:flex;gap:6px;">
-  <a href="index.html?view=all" style="font-size:9.5px;color:var(--text-2);background:rgba(20,27,36,.9);border:1px solid var(--line);border-radius:20px;padding:6px 10px;text-decoration:none;">كل النسخ</a>
-  <a href="index.html?lang=fa" style="font-size:9.5px;color:var(--text-2);background:rgba(20,27,36,.9);border:1px solid var(--line);border-radius:20px;padding:6px 10px;text-decoration:none;">فارسی</a>
-  <a href="index.html?lang=en" style="font-size:9.5px;color:var(--text-2);background:rgba(20,27,36,.9);border:1px solid var(--line);border-radius:20px;padding:6px 10px;text-decoration:none;">English</a>
-</div>
-
-<div class="filter-fab" id="filterFab">☰</div>
-<div class="mode-fab" id="modeFab">
-  <div class="active" data-mode="cumulative">تراكمي</div>
-  <div data-mode="single">اليوم فقط</div>
+<div class="control-bar">
+  <div class="cb-group">
+    <div class="filter-fab" id="filterFab">☰</div>
+    <div class="mode-fab" id="modeFab">
+      <div class="active" data-mode="cumulative">تراكمي</div>
+      <div data-mode="single">اليوم فقط</div>
+    </div>
+  </div>
+  <div class="lang-switch">
+    <a href="index-fa-mobile.html">FA</a>
+    <a href="index-en-mobile.html">EN</a>
+  </div>
 </div>
 
 <div class="sel-card" id="selCard">
@@ -314,6 +344,11 @@
     <div class="sheet-section" id="filterForceSection">
       <div class="sheet-section-title">تصفية حسب نوع القوة المنفذة</div>
       <div class="force-grid" id="forceToggle"></div>
+    </div>
+    <div class="sheet-section">
+      <a class="all-versions-link" href="index.html?view=all">
+        <span>عرض جميع النسخ (شاملة سطح المكتب)</span><span aria-hidden="true">↗</span>
+      </a>
     </div>
     <div class="sheet-section">
       <div class="sheet-section-title">أحداث هذا التاريخ (<span id="listCount">٠</span>)</div>
