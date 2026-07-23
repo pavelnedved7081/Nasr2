@@ -1,174 +1,232 @@
 {
   "princeHassan": {
     "name": "پایگاه هوایی پرنس حسن",
+    "name_en": "Prince Hassan Air Base",
+    "name_ar": "قاعدة الأمير حسن الجوية",
     "country": "jordan",
     "lat": 30.2833,
     "lng": 36.0833
   },
   "alAzraq": {
     "name": "پایگاه هوایی الازرق",
+    "name_en": "Azraq Air Base",
+    "name_ar": "قاعدة الأزرق الجوية",
     "country": "jordan",
     "lat": 31.9328,
     "lng": 36.8206
   },
   "aqaba": {
     "name": "فرودگاه عقبه",
+    "name_en": "Aqaba Airport",
+    "name_ar": "مطار العقبة",
     "country": "jordan",
     "lat": 29.6116,
     "lng": 35.0182
   },
   "rukban": {
     "name": "منطقه الرکبان",
+    "name_en": "Rukban area",
+    "name_ar": "منطقة الركبان",
     "country": "jordan",
     "lat": 33.15,
     "lng": 38.2
   },
   "arifjan": {
     "name": "کمپ عریفجان",
+    "name_en": "Camp Arifjan",
+    "name_ar": "معسكر عريفجان",
     "country": "kuwait",
     "lat": 28.8956,
     "lng": 48.1633
   },
   "aliAlSalem": {
     "name": "پایگاه هوایی علی‌السالم",
+    "name_en": "Ali Al Salem Air Base",
+    "name_ar": "قاعدة علي السالم الجوية",
     "country": "kuwait",
     "lat": 29.3469,
     "lng": 47.5213
   },
   "ahmadAlJaber": {
     "name": "پایگاه هوایی احمد الجابر",
+    "name_en": "Ahmad Al Jaber Air Base",
+    "name_ar": "قاعدة أحمد الجابر الجوية",
     "country": "kuwait",
     "lat": 28.9358,
     "lng": 47.7981
   },
   "minaAbdullah": {
     "name": "میناء عبدالله (مرکز KGL)",
+    "name_en": "Mina Abdullah (KGL logistics hub)",
+    "name_ar": "ميناء عبدالله (مركز KGL)",
     "country": "kuwait",
     "lat": 29.05,
     "lng": 48.1333
   },
   "shuaiba": {
     "name": "اسکله شعیبه",
+    "name_en": "Shuaiba Port",
+    "name_ar": "ميناء الشعيبة",
     "country": "kuwait",
     "lat": 29.045,
     "lng": 48.155
   },
   "alAhmadi": {
     "name": "بندر الاحمدی",
+    "name_en": "Ahmadi Port",
+    "name_ar": "ميناء الأحمدي",
     "country": "kuwait",
     "lat": 29.0769,
     "lng": 48.1364
   },
   "kuwaitCity": {
     "name": "مرکز مخابراتی (کویت)",
+    "name_en": "Telecommunications hub (Kuwait City)",
+    "name_ar": "مركز الاتصالات (مدينة الكويت)",
     "country": "kuwait",
     "lat": 29.3759,
     "lng": 47.9774
   },
   "udairi": {
     "name": "اردوگاه العدیری",
+    "name_en": "Camp Udairi",
+    "name_ar": "معسكر العديري",
     "country": "kuwait",
     "lat": 29.6667,
     "lng": 47.4833
   },
   "minaSalman": {
     "name": "بندر سلمان",
+    "name_en": "Mina Salman Port",
+    "name_ar": "ميناء سلمان",
     "country": "bahrain",
     "lat": 26.2,
     "lng": 50.61
   },
   "jufair": {
     "name": "پایگاه جفیر (ناوگان پنجم)",
+    "name_en": "Juffair Base (5th Fleet)",
+    "name_ar": "قاعدة الجفير (الأسطول الخامس)",
     "country": "bahrain",
     "lat": 26.2285,
     "lng": 50.6083
   },
   "sheikhIsa": {
     "name": "پایگاه هوایی شیخ عیسی",
+    "name_en": "Sheikh Isa Air Base",
+    "name_ar": "قاعدة الشيخ عيسى الجوية",
     "country": "bahrain",
     "lat": 25.9167,
     "lng": 50.5833
   },
   "batelco": {
     "name": "مرکز داده باتلکو (منامه)",
+    "name_en": "Batelco Data Center (Manama)",
+    "name_ar": "مركز بيانات بتلكو (المنامة)",
     "country": "bahrain",
     "lat": 26.2235,
     "lng": 50.5876
   },
   "sakhir": {
     "name": "فرودگاه الصخیر",
+    "name_en": "Sakhir Airport",
+    "name_ar": "مطار الصخير",
     "country": "bahrain",
     "lat": 25.9186,
     "lng": 50.4794
   },
   "muharraq": {
     "name": "المحرق",
+    "name_en": "Muharraq",
+    "name_ar": "المحرق",
     "country": "bahrain",
     "lat": 26.2572,
     "lng": 50.6119
   },
   "rifa": {
     "name": "الرفاع",
+    "name_en": "Riffa",
+    "name_ar": "الرفاع",
     "country": "bahrain",
     "lat": 26.13,
     "lng": 50.555
   },
   "awsBahrain": {
     "name": "مرکز داده آمازون (AWS)، بحرین",
+    "name_en": "Amazon (AWS) Data Center, Bahrain",
+    "name_ar": "مركز بيانات أمازون (AWS)، البحرين",
     "country": "bahrain",
     "lat": 26.1932,
     "lng": 50.6462
   },
   "alUdeid": {
     "name": "پایگاه هوایی العدید",
+    "name_en": "Al Udeid Air Base",
+    "name_ar": "قاعدة العديد الجوية",
     "country": "qatar",
     "lat": 25.1174,
     "lng": 51.316
   },
   "duqm": {
     "name": "بندر دُقم",
+    "name_en": "Duqm Port",
+    "name_ar": "ميناء الدقم",
     "country": "oman",
     "lat": 19.6667,
     "lng": 57.7
   },
   "ghanam": {
     "name": "منطقهٔ غنم (مسندم)",
+    "name_en": "Ghanam area (Musandam)",
+    "name_ar": "منطقة غنم (مسندم)",
     "country": "oman",
     "lat": 26.15,
     "lng": 56.3
   },
   "salamah": {
     "name": "صخره‌های سلامه",
+    "name_en": "Salamah Rocks",
+    "name_ar": "صخور سلامة",
     "country": "oman",
     "lat": 23.588,
     "lng": 58.545
   },
   "tanf": {
     "name": "پایگاه التنف",
+    "name_en": "Al-Tanf Garrison",
+    "name_ar": "قاعدة التنف",
     "country": "syria",
     "lat": 33.4864,
     "lng": 38.2131
   },
   "hormuz": {
     "name": "تنگه هرمز",
+    "name_en": "Strait of Hormuz",
+    "name_ar": "مضيق هرمز",
     "country": "hormuz",
     "lat": 26.5,
     "lng": 56.25
   },
   "northIndianOcean": {
     "name": "شمال اقیانوس هند",
+    "name_en": "Northern Indian Ocean",
+    "name_ar": "شمال المحيط الهندي",
     "country": "hormuz",
     "lat": 15,
     "lng": 65
   },
   "bandarAbbas": {
     "name": "بندرعباس (پدافند هوایی)",
+    "name_en": "Bandar Abbas (air defense)",
+    "name_ar": "بندر عباس (الدفاع الجوي)",
     "country": "iran",
     "lat": 27.1865,
     "lng": 56.2808
   },
   "ramshir": {
     "name": "منطقه رامشیر (پدافند هوایی)",
+    "name_en": "Ramshir area (air defense)",
+    "name_ar": "منطقة رامشير (الدفاع الجوي)",
     "country": "iran",
     "lat": 30.90,
     "lng": 49.40

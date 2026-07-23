@@ -211,6 +211,7 @@
   .event-card .ec-loc{font-size:13px;font-weight:600;color:var(--text-0);margin-bottom:3px;}
   .event-card .ec-target{font-size:11.5px;color:var(--text-1);line-height:1.6;}
   .event-card .ec-target.pending{color:var(--text-2);font-style:italic;}
+  .event-card .ec-wave.pending{color:var(--text-2);font-style:italic;}
   .event-card .ec-country-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-left:6px;flex-shrink:0;}
 
   .empty-note{
@@ -498,13 +499,14 @@ function gregFull(dateG){
 let LOC, COUNTRY, SOURCE, FORCE, EVENTS, DATES, DATE_LABEL, DATE_LABEL_FULL, META;
 
 async function loadData(){
-  const [locRaw, countryRaw, sourceRaw, forceRaw, eventsRaw, meta] = await Promise.all([
+  const [locRaw, countryRaw, sourceRaw, forceRaw, eventsRaw, meta, waveTrans] = await Promise.all([
     fetch('data/locations.json').then(r=>r.json()),
     fetch('data/countries.json').then(r=>r.json()),
     fetch('data/sources.json').then(r=>r.json()),
     fetch('data/forces.json').then(r=>r.json()),
     fetch('data/events.json').then(r=>r.json()),
     fetch('data/meta.json').then(r=>r.json()),
+    fetch('data/wave-translations.json').then(r=>r.json()),
   ]);
 
   LOC = locRaw;
@@ -518,12 +520,21 @@ async function loadData(){
   FORCE = {};
   for(const [k,v] of Object.entries(forceRaw)) FORCE[k] = v.label_ar;
 
-  /* يحتوي locations.json على حقل "name" فارسي وحيد فقط (بدون name_en/name_ar) —
-     أسماء المواقع أدناه تُعرض كما هي بالفارسية، بما يطابق سلوك
-     index-en-mobile.html/index-ar-mobile.html الحالي. راجع ملاحظات الـPR. */
+  // أسماء المواقع تعود إلى الاسم الفارسي (لا إلى عبارة "الترجمة قيد الإنجاز" المستخدمة لحقول
+  // target/weapon/outcome) لأن اسم العلم يبقى قابلاً للتمييز والبحث بلغته الأصلية، بخلاف جملة غير مترجمة.
+  function locNameFor(loc){ return (loc.name_ar && loc.name_ar.trim()) || loc.name; }
+  // تُقرأ تسميات الموجة من data/wave-translations.json (راجع ملاحظات الـPR لسبب اختيار جدول
+  // بحث بدل حقلي wave_en/wave_ar لكل حدث: ٦٩ قيمة فريدة فقط بين ١٠١ حدث). أي قيمة موجة بلا
+  // مدخل في الجدول تعود إلى عبارة "الترجمة قيد الإنجاز".
+  function waveFor(wave){
+    if(!wave) return wave;
+    const t = waveTrans[wave];
+    return (t && t.ar) || PENDING_TRANSLATION;
+  }
+
   EVENTS = eventsRaw.map(e=>({
-    id:e.id, dateG:e.dateG, dateP:e.dateP, time:e.time, wave:e.wave, force:e.force,
-    source:e.source, country:LOC[e.loc].country, locName:LOC[e.loc].name,
+    id:e.id, dateG:e.dateG, dateP:e.dateP, time:e.time, wave:waveFor(e.wave), force:e.force,
+    source:e.source, country:LOC[e.loc].country, locName:locNameFor(LOC[e.loc]),
     lat:LOC[e.loc].lat, lng:LOC[e.loc].lng,
     target:trOr(e.target.ar), weapon:trOr(e.weapon.ar), outcome:trOr(e.outcome.ar), code:e.code,
   }));
@@ -696,7 +707,7 @@ function renderEventList(){
     <div class="event-card ${e.id===state.selectedId?'selected':''}" data-id="${e.id}">
       <div class="ec-top">
         <span>${e.time || ''}</span>
-        <span class="ec-wave">${SOURCE[e.source].short} · ${e.wave || '—'}</span>
+        <span class="ec-wave${e.wave===PENDING_TRANSLATION?' pending':''}">${SOURCE[e.source].short} · ${e.wave || '—'}</span>
       </div>
       <div class="ec-loc"><span class="ec-country-dot" style="background:${countryColor(e.country)}"></span>${e.locName}</div>
       <div class="ec-target${e.target===PENDING_TRANSLATION?' pending':''}">${e.target}</div>
@@ -719,7 +730,9 @@ function selectEvent(id){
   document.getElementById('spSource').textContent = SOURCE[e.source].label;
   document.getElementById('spTitle').textContent = e.locName;
   document.getElementById('spDate').textContent = `${DATE_LABEL_FULL[e.dateG]}${e.time? ' — '+e.time:''}`;
-  document.getElementById('spWave').textContent = e.wave || '—';
+  const spWave = document.getElementById('spWave');
+  spWave.textContent = e.wave || '—';
+  spWave.classList.toggle('pending', e.wave===PENDING_TRANSLATION);
   document.getElementById('spForce').textContent = FORCE[e.force] || 'غير محدد';
   const spWeapon = document.getElementById('spWeapon');
   spWeapon.textContent = e.weapon || '—';
