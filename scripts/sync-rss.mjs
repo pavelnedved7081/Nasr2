@@ -820,11 +820,55 @@ export function isValidTimeField(time) {
   return false;
 }
 
-/** Normalizes a report-relative time phrase (see isRelativeTimePhrase) to the empty string — the
- *  existing convention for Artesh events with no known absolute time — leaving any other value
- *  (empty, absolute HH:MM, weekday+date+HH:MM) untouched. */
+/** Extracts the {day, month, year, hour, minute} embedded in a weekday+Jalali-date+HH:MM time
+ *  string (see TIME_WITH_DATE_PREFIX_RE), or null if `time` doesn't match that shape. */
+function extractDatePrefixParts(time) {
+  if (typeof time !== 'string') return null;
+  const m = foldPersianLetterVariants(time.trim()).match(TIME_WITH_DATE_PREFIX_RE);
+  if (!m) return null;
+  return { day: m[1], month: m[2], year: m[3], hour: m[4], minute: m[5] };
+}
+
+/**
+ * True if a weekday+Jalali-date+HH:MM `time` string's embedded date matches `dateP` (the event's
+ * own Jalali date, e.g. "۲۶ تیر ۱۴۰۵", independently derived from the RSS <pubDate> — see
+ * attemptExtraction) once both are digit-normalized, or if `time` doesn't carry an embedded date
+ * at all (nothing to check, so trivially true). Real feed items have produced a `time` whose
+ * embedded date lands on a different calendar day than the event's own dateG/dateP — e.g. a
+ * just-after-midnight article byline timestamp vs. an RSS item still dated the previous day. That's
+ * a genuine cross-source disagreement a human should resolve (which date is right?), not something
+ * to silently paper over by storing one and discarding the other — see validateExtraction, which
+ * routes a false result here to pending-review instead of normalizing/accepting the value.
+ */
+export function timeDateMatchesEventDate(time, dateP) {
+  const parts = extractDatePrefixParts(time);
+  if (!parts) return true;
+  if (typeof dateP !== 'string') return true;
+  const dp = dateP.match(/^\s*([۰-۹0-9]{1,2})\s+(\S+)\s+([۰-۹0-9]{2,4})\s*$/);
+  if (!dp) return true;
+  const norm = (s) => persianToLatinDigits(s).replace(/^0+(?=\d)/, '');
+  return (
+    norm(parts.day) === norm(dp[1]) &&
+    foldPersianLetterVariants(parts.month) === foldPersianLetterVariants(dp[2]) &&
+    norm(parts.year) === norm(dp[3])
+  );
+}
+
+/**
+ * Normalizes a `time` field for storage: a report-relative phrase (see isRelativeTimePhrase)
+ * becomes the empty string (existing convention for Artesh events with no known absolute time);
+ * a weekday+Jalali-date+HH:MM string (see TIME_WITH_DATE_PREFIX_RE) is stripped down to just its
+ * "HH:MM" portion, since the weekday/date it carries is redundant with the event's own
+ * dateG/dateP and every other event in the dataset stores a bare clock time. Any other value
+ * (empty, already-bare HH:MM) is left untouched. Call timeDateMatchesEventDate() first if the
+ * embedded date needs to be cross-checked before stripping it — this function only reformats, it
+ * doesn't validate.
+ */
 export function normalizeTimeField(time) {
-  if (typeof time === 'string' && isRelativeTimePhrase(time)) return '';
+  if (typeof time !== 'string') return time;
+  if (isRelativeTimePhrase(time)) return '';
+  const parts = extractDatePrefixParts(time);
+  if (parts) return `${parts.hour}:${parts.minute}`;
   return time;
 }
 
@@ -909,7 +953,11 @@ export function validateExtraction(ex, locations) {
   if (ex.loc == null) errors.push('loc is null');
   if (!isValidJalaliDateString(ex.dateP)) errors.push(`unparseable date: ${ex.dateP}`);
   if (!isValidTimeField(ex.time)) errors.push(`invalid time field value: ${ex.time}`);
-  else ex.time = normalizeTimeField(ex.time);
+  else if (!timeDateMatchesEventDate(ex.time, ex.dateP)) {
+    errors.push(`time field's embedded date doesn't match this event's date (dateP=${ex.dateP}): ${ex.time}`);
+  } else {
+    ex.time = normalizeTimeField(ex.time);
+  }
   if (looksGarbled(`${ex.target || ''} ${ex.weapon || ''} ${ex.outcome || ''}`)) {
     errors.push('target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)');
   }

@@ -27,6 +27,7 @@ import {
   isValidTimeField,
   isRelativeTimePhrase,
   normalizeTimeField,
+  timeDateMatchesEventDate,
   isLatinMajority,
   findEventsBySameCode,
   checkCodeDuplicate,
@@ -1421,10 +1422,66 @@ test('normalizeTimeField normalizes "ساعاتی قبل" to the empty string, s
   assert.equal(normalizeTimeField('ساعاتی قبل'), '');
 });
 
-test('normalizeTimeField leaves absolute/empty time values untouched', () => {
+test('normalizeTimeField leaves an already-bare HH:MM (or empty) value untouched', () => {
   assert.equal(normalizeTimeField(''), '');
   assert.equal(normalizeTimeField('۰۹:۰۱'), '۰۹:۰۱');
-  assert.equal(normalizeTimeField('سه‌شنبه ۳۰ تیر ۱۴۰۵ - ۰۹:۲۸'), 'سه‌شنبه ۳۰ تیر ۱۴۰۵ - ۰۹:۲۸');
+});
+
+test('normalizeTimeField strips a weekday+Jalali-date prefix down to bare HH:MM', () => {
+  // The weekday/date is redundant with the event's own dateG/dateP, and every other event in the
+  // dataset stores a bare clock time — see the id 98/106/107/109/110/111/113 cleanup this covers.
+  assert.equal(normalizeTimeField('سه‌شنبه ۳۰ تیر ۱۴۰۵ - ۰۹:۲۸'), '۰۹:۲۸');
+  assert.equal(normalizeTimeField('دوشنبه ۲۹ تیر ۱۴۰۵، ۱۴:۴۵'), '۱۴:۴۵');
+  assert.equal(normalizeTimeField('شنبه ۲۷ تير ۱۴۰۵ - ۰۷:۵۰'), '۰۷:۵۰'); // Arabic-yeh "تير" variant
+  assert.equal(normalizeTimeField('پنجشنبه ۰۱ مرداد ۱۴۰۵ - ۱۷:۰۳'), '۱۷:۰۳'); // zero-padded day
+});
+
+// --- timeDateMatchesEventDate ---
+
+test('timeDateMatchesEventDate is trivially true for a time with no embedded date', () => {
+  assert.equal(timeDateMatchesEventDate('۰۹:۰۱', '۲۶ تیر ۱۴۰۵'), true);
+  assert.equal(timeDateMatchesEventDate('', '۲۶ تیر ۱۴۰۵'), true);
+  assert.equal(timeDateMatchesEventDate('ساعاتی پیش از گزارش', '۲۶ تیر ۱۴۰۵'), true);
+});
+
+test('timeDateMatchesEventDate is true when the embedded date matches dateP', () => {
+  assert.equal(timeDateMatchesEventDate('سه‌شنبه ۳۰ تیر ۱۴۰۵ - ۰۹:۲۸', '۳۰ تیر ۱۴۰۵'), true);
+  // zero-padded day in `time` vs. unpadded dateP
+  assert.equal(timeDateMatchesEventDate('پنجشنبه ۰۱ مرداد ۱۴۰۵ - ۱۷:۰۳', '۱ مرداد ۱۴۰۵'), true);
+});
+
+test('timeDateMatchesEventDate is false when the embedded date disagrees with dateP (the id 99 case)', () => {
+  // Real data: event id 99 has dateG=2026-07-17/dateP="۲۶ تیر ۱۴۰۵" (from the RSS <pubDate>), but
+  // its extracted `time` carries "شنبه ۲۷ تير ۱۴۰۵" — a day later. Left as free text pending a
+  // human decision (see data/events.json id 99), not silently normalized.
+  assert.equal(timeDateMatchesEventDate('شنبه ۲۷ تير ۱۴۰۵ - ۰۰:۰۵', '۲۶ تیر ۱۴۰۵'), false);
+});
+
+test('validateExtraction normalizes a consistent weekday+date time down to bare HH:MM', () => {
+  const LOCS = { princeHassan: { name: 'x', country: 'jordan' } };
+  const ex = validExtraction({
+    time: 'سه‌شنبه ۳۰ تیر ۱۴۰۵ - ۰۹:۲۸',
+    dateG: '2026-07-21',
+    dateP: '۳۰ تیر ۱۴۰۵',
+  });
+  const { ok, errors } = validateExtraction(ex, LOCS);
+  assert.equal(ok, true);
+  assert.equal(ex.time, '۰۹:۲۸');
+  assert.ok(!errors.some((e) => e.includes('time')));
+});
+
+test('validateExtraction rejects a weekday+date time whose embedded date disagrees with dateP', () => {
+  const LOCS = { princeHassan: { name: 'x', country: 'jordan' } };
+  const ex = validExtraction({
+    time: 'شنبه ۲۷ تير ۱۴۰۵ - ۰۰:۰۵',
+    dateG: '2026-07-17',
+    dateP: '۲۶ تیر ۱۴۰۵',
+  });
+  const { ok, errors } = validateExtraction(ex, LOCS);
+  assert.equal(ok, false);
+  assert.ok(errors.some((e) => e.includes("time field's embedded date")));
+  // Left untouched (not normalized) since it's routed to pending-review, not accepted.
+  assert.equal(ex.time, 'شنبه ۲۷ تير ۱۴۰۵ - ۰۰:۰۵');
 });
 
 test('validateExtraction normalizes a report-relative time phrase to empty string and passes validation', () => {
