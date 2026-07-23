@@ -9,7 +9,7 @@
     ],
     "added_at": "2026-07-21T15:30:16.612Z",
     "pubDate": null,
-    "last_checked_at": "2026-07-22T21:42:24.149Z"
+    "last_checked_at": "2026-07-23T07:45:28.177Z"
   },
   {
     "title": "",
@@ -17,53 +17,79 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36188/حمله-کوبنده-و-همزمان-موشکی-و-پهپادی-به-شیلترهای-جنگنده‌ها-و-یک-رمپ-بزرگ-توقف-در-پایگاه-آمریکا-در-الازرق-اردن",
     "pubDate": "Sat, 18 Jul 2026 12:00:00 GMT",
     "raw_extraction": {
-      "wave": "۲۰",
+      "wave": "use available wave number",
       "force": "aerospace",
       "source": "sepah",
       "loc": "alAzraq",
-      "loc_raw_text": "پایگاه آمریکا در الازرق اردن",
-      "target": "شیلترهای جنگنده‌ها و یک رمپ بزرگ توقف در پایگاه آمریکا",
-      "weapon": "موشکی و پهپادی",
-      "outcome": "منهدم کردن حداقل دو جنگنده و سه هواگرد آمریکایی و وارد کردن خسارت عمده به تعدادی دیگر",
-      "time": "سحرگاه امروز",
+      "loc_raw_text": "الازرق اردن",
+      "target": "arb2",
+      "weapon": "missile,rocket",
+      "outcome": "destroyed 2 fighter jets and 3 US surveillance drones",
+      "time": "2024-01-13",
       "dateG": "2026-07-18",
       "dateP": "۲۷ تیر ۱۴۰۵",
       "code": "36188"
     },
     "errors": [
-      "invalid time field value: سحرگاه امروز"
-    ],
-    "added_at": "2026-07-22T00:00:39.174Z",
-    "issue_number": null,
-    "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
-    "last_checked_at": "2026-07-22T21:42:36.155Z"
-  },
-  {
-    "title": "",
-    "link": "https://sepahnews.ir/fa/news/36168/یک-فروند-پهپاد-آئروویرنمنت-آرکیو-۱۱-در-منطقه-رامشیر-منهدم-شد",
-    "guid": "sepah:https://sepahnews.ir/fa/news/36168/یک-فروند-پهپاد-آئروویرنمنت-آرکیو-۱۱-در-منطقه-رامشیر-منهدم-شد",
-    "pubDate": "Fri, 17 Jul 2026 12:00:00 GMT",
-    "raw_extraction": {
-      "wave": "—",
-      "force": "unknown",
-      "source": "sepah",
-      "loc": "ramshir",
-      "loc_raw_text": "منطقه رامشیر",
-      "target": null,
-      "weapon": "AeroVironment RQ-11 Raven",
-      "outcome": "destroyed",
-      "time": "19:51",
-      "dateG": "2026-07-17",
-      "dateP": "۲۶ تیر ۱۴۰۵",
-      "code": "36168"
-    },
-    "errors": [
-      "missing/empty required field: target",
+      "wave contains disallowed characters: use available wave number",
+      "invalid time field value: 2024-01-13",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-22T00:00:39.174Z",
     "issue_number": null,
     "note": "Moved from events.json during one-time Part 2/3 quality-rule cleanup (2026-07-21).",
-    "last_checked_at": "2026-07-22T21:43:10.770Z"
+    "last_checked_at": "2026-07-23T07:46:02.995Z"
+  },
+  {
+    "title": "پیام مهم سپاه به مردم اردن/ حق قانونی و شرعی و منطقی ماست که پایگاه آمریکایی مبدا تجاوز به کشورمان را هدف قرار دهیم",
+    "link": "https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
+    "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
+    "pubDate": "23 Jul 2026 09:00:01 +0330",
+    "raw_extraction": {
+      "wave": "—",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "پایگاه آمریکایی",
+      "target": "American base inbau land",
+      "weapon": "ground attack",
+      "outcome": "دمار رادار سیستم پدرک TAD، سامانه پاتری Completed Multiply، رادار C თავ رکھ თამაში; تخریب مخازن سوخت و تجهیزات بالگردی",
+      "time": "2026-08-23T09 producen",
+      "dateG": "2026-07-23",
+      "dateP": "۱ مرداد ۱۴۰۵",
+      "code": "36292"
+    },
+    "errors": [
+      "loc is null",
+      "invalid time field value: 2026-08-23T09 producen",
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
+    ],
+    "added_at": "2026-07-23T07:46:35.050Z",
+    "issue_number": 42
+  },
+  {
+    "title": "سه پایگاه آمریکا در کویت هدف مجدد حملات پهپادی ارتش قرار گرفت",
+    "link": "https://www.aja.ir//Home/ShowPage.aspx?Object=news&CategoryID=9ce0ffff-6667-4cc8-8cc7-7d8be06f03e4&LayoutID=6341690b-b7bb-4b01-be11-a64bd748a77a&ID=56fb0e20-d51e-42ef-b27b-303f4dcf3de6",
+    "guid": "artesh:56fb0e20-d51e-42ef-b27b-303f4dcf3de6",
+    "pubDate": "Thu, 23 Jul 2026 08:04:53 +0330",
+    "raw_extraction": {
+      "wave": "بیست و سوم عملیات صاعقه",
+      "force": "aerospace",
+      "source": "artesh",
+      "loc": "aliAlSalem",
+      "loc_raw_text": "پایگاه‌های الدوحه، علی السالم و عریفجان کویت",
+      "target": "مراکز و یگان‌های ارتش تروریستی آمریکا (انبارهای مهمات، اقلام لجستیکی، مخازن سوخت)",
+      "weapon": "پهپادهای انهدامی",
+      "outcome": "حملات پر حجم",
+      "time": "ساعاتی قبل",
+      "dateG": "2026-07-23",
+      "dateP": "۱ مرداد ۱۴۰۵",
+      "code": ""
+    },
+    "errors": [
+      "invalid time field value: ساعاتی قبل"
+    ],
+    "added_at": "2026-07-23T07:46:48.799Z",
+    "issue_number": 43
   }
 ]
