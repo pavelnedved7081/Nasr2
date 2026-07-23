@@ -122,6 +122,25 @@
     align-items:center;
     justify-content:space-between;
   }
+  .sidebar-title-toggle{
+    cursor:pointer;
+    user-select:none;
+  }
+  .sidebar-title-toggle:hover{color:var(--text-1);}
+  .sidebar-title-toggle .chevron{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:9px;
+    color:var(--text-2);
+    transition:transform .25s ease;
+    transform:rotate(0deg);
+  }
+  .sidebar-section.collapsed .sidebar-title-toggle .chevron{transform:rotate(-90deg);}
+  .sidebar-collapse{
+    overflow:hidden;
+    transition:max-height .25s ease;
+  }
   .chips{display:flex;flex-wrap:wrap;gap:6px;}
   .chip{
     font-size:11.5px;
@@ -351,17 +370,32 @@
 
   <div class="main">
     <aside class="sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-title"><span>فیلتر بر اساس منبع بیانیه</span></div>
-        <div class="chips" id="sourceChips"></div>
+      <div class="sidebar-section collapsible" data-filter-key="source">
+        <div class="sidebar-title sidebar-title-toggle" role="button" tabindex="0" aria-expanded="true">
+          <span>فیلتر بر اساس منبع بیانیه</span>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="sidebar-collapse">
+          <div class="chips" id="sourceChips"></div>
+        </div>
       </div>
-      <div class="sidebar-section">
-        <div class="sidebar-title"><span>فیلتر بر اساس کشور هدف</span></div>
-        <div class="chips" id="countryChips"></div>
+      <div class="sidebar-section collapsible" data-filter-key="country">
+        <div class="sidebar-title sidebar-title-toggle" role="button" tabindex="0" aria-expanded="true">
+          <span>فیلتر بر اساس کشور هدف</span>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="sidebar-collapse">
+          <div class="chips" id="countryChips"></div>
+        </div>
       </div>
-      <div class="sidebar-section">
-        <div class="sidebar-title"><span>فیلتر بر اساس نیروی عامل</span></div>
-        <div class="force-toggle" id="forceToggle"></div>
+      <div class="sidebar-section collapsible" data-filter-key="force">
+        <div class="sidebar-title sidebar-title-toggle" role="button" tabindex="0" aria-expanded="true">
+          <span>فیلتر بر اساس نیروی عامل</span>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="sidebar-collapse">
+          <div class="force-toggle" id="forceToggle"></div>
+        </div>
       </div>
       <div class="sidebar-section" style="flex:1;display:flex;flex-direction:column;min-height:0;padding-bottom:0;">
         <div class="sidebar-title" style="padding:14px 0 0;">
@@ -749,6 +783,65 @@ document.getElementById('tlPlay').onclick = function(){
     renderAll();
   }, 1400);
 };
+
+/* ---------------- collapsible filter sections ---------------- */
+const COLLAPSE_STORAGE_PREFIX = 'nasr2_filterCollapsed_';
+function getCollapsedState(key){
+  return localStorage.getItem(COLLAPSE_STORAGE_PREFIX+key) === '1';
+}
+function setCollapsedState(key, collapsed){
+  localStorage.setItem(COLLAPSE_STORAGE_PREFIX+key, collapsed ? '1' : '0');
+}
+function toggleFilterSection(section){
+  const collapse = section.querySelector('.sidebar-collapse');
+  const header = section.querySelector('.sidebar-title-toggle');
+  const key = section.dataset.filterKey;
+  const collapsing = !section.classList.contains('collapsed');
+
+  if(collapsing){
+    collapse.style.maxHeight = collapse.scrollHeight + 'px';
+    void collapse.offsetHeight;
+    collapse.style.maxHeight = '0px';
+    section.classList.add('collapsed');
+  } else {
+    section.classList.remove('collapsed');
+    collapse.style.maxHeight = collapse.scrollHeight + 'px';
+    collapse.addEventListener('transitionend', function onEnd(e){
+      if(e.propertyName === 'max-height'){
+        collapse.style.maxHeight = '';
+        collapse.removeEventListener('transitionend', onEnd);
+      }
+    });
+  }
+  header.setAttribute('aria-expanded', String(!collapsing));
+  setCollapsedState(key, collapsing);
+}
+
+function initCollapsibleFilters(){
+  document.querySelectorAll('.sidebar-section.collapsible').forEach(section=>{
+    const key = section.dataset.filterKey;
+    const collapse = section.querySelector('.sidebar-collapse');
+    const header = section.querySelector('.sidebar-title-toggle');
+
+    if(getCollapsedState(key)){
+      collapse.style.transition = 'none';
+      collapse.style.maxHeight = '0px';
+      section.classList.add('collapsed');
+      header.setAttribute('aria-expanded', 'false');
+      void collapse.offsetHeight;
+      collapse.style.transition = '';
+    }
+
+    header.addEventListener('click', ()=> toggleFilterSection(section));
+    header.addEventListener('keydown', e=>{
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        toggleFilterSection(section);
+      }
+    });
+  });
+}
+initCollapsibleFilters();
 
 /* ---------------- master render ---------------- */
 function renderAll(){
