@@ -5,53 +5,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "Operation Naser 2",
+      "wave": "اطلاعیه شماره ۴۵ عملیات نصر۲",
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریک chamایی در خاک اردن",
-      "target": "American military base",
-      "weapon": "Patriot missile system",
-      "outcome": "destroyed",
-      "time": "1405-06-01 09:00",
+      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
+      "target": "پایگاه‌های آمریکایی در اردن (رادار تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات)",
+      "weapon": "حملات برق‌آسا",
+      "outcome": "انهدام رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، آتش گرفتن مخازن سوخت، تخریب انبار تجهیزات بالگردی و سوله تعمیرات",
+      "time": "پنجشنبه ۰۱ مرداد ۱۴۰۵",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "wave contains disallowed characters: Operation Naser 2",
       "loc is null",
-      "invalid time field value: 1405-06-01 09:00",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: پنجشنبه ۰۱ مرداد ۱۴۰۵"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-07-25T15:58:36.384Z"
-  },
-  {
-    "title": "ساختمان باقی مانده از شرکت آمازون منهدم شد",
-    "link": "https://sepahnews.ir/fa/news/36315/ساختمان-باقی-مانده-از-شرکت-آمازون-منهدم-شد",
-    "guid": "sepah:https://sepahnews.ir/fa/news/36315/ساختمان-باقی-مانده-از-شرکت-آمازون-منهدم-شد",
-    "pubDate": "24 Jul 2026 11:53:48 +0330",
-    "raw_extraction": {
-      "wave": "۲۷",
-      "force": "ground",
-      "source": "sepah",
-      "loc": "awsBahrain",
-      "loc_raw_text": "مستus耐用istant‌ها اطلاعاتی شرکتآمازون",
-      "target": "سایت داده‌های آمازون",
-      "weapon": "نامشخص",
-      "outcome": "منض دمي",
-      "time": "۱۴۰۵/۰۵/۰۲ - ۱۱:۵۳",
-      "dateG": "2026-07-24",
-      "dateP": "۲ مرداد ۱۴۰۵",
-      "code": "36315"
-    },
-    "errors": [
-      "invalid time field value: ۱۴۰۵/۰۵/۰۲ - ۱۱:۵۳"
-    ],
-    "added_at": "2026-07-24T09:13:38.537Z",
-    "issue_number": 50,
-    "last_checked_at": "2026-07-25T15:57:55.690Z"
+    "last_checked_at": "2026-07-25T20:37:22.193Z"
   }
 ]
