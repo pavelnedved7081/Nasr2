@@ -5,27 +5,28 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر ۲",
-      "force": "joint",
+      "wave": "Operation Naser 2",
+      "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکایی در terdن",
-      "target": "پایگاه آمریکایی",
-      "weapon": "کمپکنinear (مدبنی)، حشو سوخت به آتش کشیدن",
-      "outcome": "منش pocos کردن ورودی‌های پدافند، ভারতن سوخت، و انبار بالگردها و سولuciones",
-      "time": "۱۴۰۵-۰۵-۰۱",
+      "loc_raw_text": "پایگاه‌های آمریک chamایی در خاک اردن",
+      "target": "American military base",
+      "weapon": "Patriot missile system",
+      "outcome": "destroyed",
+      "time": "1405-06-01 09:00",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
+      "wave contains disallowed characters: Operation Naser 2",
       "loc is null",
-      "invalid time field value: ۱۴۰۵-۰۵-۰۱",
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
+      "invalid time field value: 1405-06-01 09:00",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-07-25T07:37:42.901Z"
+    "last_checked_at": "2026-07-25T15:58:36.384Z"
   },
   {
     "title": "ساختمان باقی مانده از شرکت آمازون منهدم شد",
@@ -33,72 +34,24 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36315/ساختمان-باقی-مانده-از-شرکت-آمازون-منهدم-شد",
     "pubDate": "24 Jul 2026 11:53:48 +0330",
     "raw_extraction": {
-      "wave": "—",
+      "wave": "۲۷",
       "force": "ground",
       "source": "sepah",
       "loc": "awsBahrain",
-      "loc_raw_text": "مرکز داده‌های اطلاعاتی شرکت آمریکایی آمازون",
-      "target": "Amazon data center",
+      "loc_raw_text": "مستus耐用istant‌ها اطلاعاتی شرکتآمازون",
+      "target": "سایت داده‌های آمازون",
       "weapon": "نامشخص",
-      "outcome": "destroyed",
-      "time": "۱۱:۵۳",
+      "outcome": "منض دمي",
+      "time": "۱۴۰۵/۰۵/۰۲ - ۱۱:۵۳",
       "dateG": "2026-07-24",
       "dateP": "۲ مرداد ۱۴۰۵",
       "code": "36315"
     },
     "errors": [
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: ۱۴۰۵/۰۵/۰۲ - ۱۱:۵۳"
     ],
     "added_at": "2026-07-24T09:13:38.537Z",
     "issue_number": 50,
-    "last_checked_at": "2026-07-25T07:37:15.782Z"
-  },
-  {
-    "title": "اقامتگاه نظامیان آمریکایی و چند جنگنده در اردن، سامانه پدافند هوایی پاتریوت، یک بالن جاسوسی و اقامتگاه تروریست‌های امریکایی در اربیل منهدم شدند",
-    "link": "https://sepahnews.ir/fa/news/36318/اقامتگاه-نظامیان-آمریکایی-و-چند-جنگنده-در-اردن-سامانه-پدافند-هوایی-پاتریوت-یک-بالن-جاسوسی-و-اقامتگاه-تروریست‌های-امریکایی-در-اربیل-منهدم-شدند",
-    "guid": "sepah:https://sepahnews.ir/fa/news/36318/اقامتگاه-نظامیان-آمریکایی-و-چند-جنگنده-در-اردن-سامانه-پدافند-هوایی-پاتریوت-یک-بالن-جاسوسی-و-اقامتگاه-تروریست‌های-امریکایی-در-اربیل-منهدم-شدند",
-    "pubDate": "24 Jul 2026 15:59:58 +0330",
-    "raw_extraction": {
-      "wave": "27",
-      "force": "aerospace",
-      "source": "sepah",
-      "loc": "alAzraq",
-      "loc_raw_text": "پایگاه آمریکا در الازرق اردن",
-      "target": "U.S. base at alAzraq, Jordan",
-      "weapon": "aerial strike (fighter jet)",
-      "outcome": "Significant damage to aircraft; casualties among U.S. personnel",
-      "time": "15:59",
-      "dateG": "2026-07-24",
-      "dateP": "۲ مرداد ۱۴۰۵",
-      "code": "36318"
-    },
-    "errors": [
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
-    ],
-    "loc_candidates": [
-      {
-        "id": "alAzraq",
-        "distance": 6
-      },
-      {
-        "id": "arifjan",
-        "distance": 9
-      },
-      {
-        "id": "alAhmadi",
-        "distance": 9
-      },
-      {
-        "id": "tanf",
-        "distance": 9
-      },
-      {
-        "id": "aqaba",
-        "distance": 10
-      }
-    ],
-    "added_at": "2026-07-24T17:16:09.302Z",
-    "issue_number": 53,
-    "last_checked_at": "2026-07-25T07:36:39.393Z"
+    "last_checked_at": "2026-07-25T15:57:55.690Z"
   }
 ]
