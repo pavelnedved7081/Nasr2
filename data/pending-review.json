@@ -5,25 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر۲",
-      "force": "aerospace",
+      "wave": "نصر ۲",
+      "force": "joint",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در اردن",
+      "loc_raw_text": "پایگاه‌های آمریکایی در terdن",
       "target": "پایگاه آمریکایی",
-      "weapon": "موشک",
-      "outcome": "تخریب یک رادار سامانه پدافند موشکی Tad، یک سامانه پاتریوت، یک رادار C-ram، سوخت مخازن، انبار بزرگ تجهیزات بالگردی و سوله تعمیرات و نگهداری بالگردها",
-      "time": "۰۹:۰۰",
+      "weapon": "کمپکنinear (مدبنی)، حشو سوخت به آتش کشیدن",
+      "outcome": "منش pocos کردن ورودی‌های پدافند، ভারতن سوخت، و انبار بالگردها و سولuciones",
+      "time": "۱۴۰۵-۰۵-۰۱",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null"
+      "loc is null",
+      "invalid time field value: ۱۴۰۵-۰۵-۰۱",
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-07-24T22:11:03.225Z"
+    "last_checked_at": "2026-07-25T07:37:42.901Z"
   },
   {
     "title": "ساختمان باقی مانده از شرکت آمازون منهدم شد",
@@ -31,35 +33,47 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36315/ساختمان-باقی-مانده-از-شرکت-آمازون-منهدم-شد",
     "pubDate": "24 Jul 2026 11:53:48 +0330",
     "raw_extraction": {
-      "wave": "27",
+      "wave": "—",
       "force": "ground",
       "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "م urgency_DATA_AMAZON که نقش اصلی در تکمیل اطلاعات ارتش کودک‌کش آمریکا را بر عهده دارد، ساختمان باقی مانده این مرکز را هدف قرار داده و منهدم کردند.",
-      "target": "م urgency_DATA_AMAZON",
+      "loc": "awsBahrain",
+      "loc_raw_text": "مرکز داده‌های اطلاعاتی شرکت آمریکایی آمازون",
+      "target": "Amazon data center",
       "weapon": "نامشخص",
-      "outcome": "منهادم شد",
+      "outcome": "destroyed",
       "time": "۱۱:۵۳",
       "dateG": "2026-07-24",
       "dateP": "۲ مرداد ۱۴۰۵",
       "code": "36315"
     },
     "errors": [
-      "loc is null",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-24T09:13:38.537Z",
     "issue_number": 50,
-    "last_checked_at": "2026-07-24T22:10:45.308Z"
+    "last_checked_at": "2026-07-25T07:37:15.782Z"
   },
   {
     "title": "اقامتگاه نظامیان آمریکایی و چند جنگنده در اردن، سامانه پدافند هوایی پاتریوت، یک بالن جاسوسی و اقامتگاه تروریست‌های امریکایی در اربیل منهدم شدند",
     "link": "https://sepahnews.ir/fa/news/36318/اقامتگاه-نظامیان-آمریکایی-و-چند-جنگنده-در-اردن-سامانه-پدافند-هوایی-پاتریوت-یک-بالن-جاسوسی-و-اقامتگاه-تروریست‌های-امریکایی-در-اربیل-منهدم-شدند",
     "guid": "sepah:https://sepahnews.ir/fa/news/36318/اقامتگاه-نظامیان-آمریکایی-و-چند-جنگنده-در-اردن-سامانه-پدافند-هوایی-پاتریوت-یک-بالن-جاسوسی-و-اقامتگاه-تروریست‌های-امریکایی-در-اربیل-منهدم-شدند",
     "pubDate": "24 Jul 2026 15:59:58 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "wave": "27",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": "alAzraq",
+      "loc_raw_text": "پایگاه آمریکا در الازرق اردن",
+      "target": "U.S. base at alAzraq, Jordan",
+      "weapon": "aerial strike (fighter jet)",
+      "outcome": "Significant damage to aircraft; casualties among U.S. personnel",
+      "time": "15:59",
+      "dateG": "2026-07-24",
+      "dateP": "۲ مرداد ۱۴۰۵",
+      "code": "36318"
+    },
     "errors": [
-      "extraction failed: Expected ',' or '}' after property value in JSON at position 63683"
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "loc_candidates": [
       {
@@ -85,6 +99,6 @@
     ],
     "added_at": "2026-07-24T17:16:09.302Z",
     "issue_number": 53,
-    "last_checked_at": "2026-07-24T22:09:59.756Z"
+    "last_checked_at": "2026-07-25T07:36:39.393Z"
   }
 ]
