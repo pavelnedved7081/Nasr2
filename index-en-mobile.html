@@ -44,11 +44,15 @@
   .leaflet-container{background:var(--bg-0);font-family:'Inter',sans-serif;}
   .leaflet-control-zoom{display:none;}
 
-  /* ---------------- Top bar ---------------- */
-  .topbar{
+  /* ---------------- Header (topbar + control-bar) ---------------- */
+  .header-wrap{
     position:fixed;top:0;right:0;left:0;z-index:600;
-    padding:calc(10px + var(--safe-t)) 14px 10px;
-    background:linear-gradient(180deg, rgba(8,11,15,.94), rgba(8,11,15,.55) 70%, transparent);
+    display:flex;flex-direction:column;gap:8px;
+    padding:var(--safe-t) 0 10px;
+    background:linear-gradient(180deg, rgba(8,11,15,.94), rgba(8,11,15,.6) 80%, transparent);
+  }
+  .topbar{
+    padding:10px 14px 0;
     display:flex;align-items:center;justify-content:space-between;gap:10px;
   }
   .tb-brand{display:flex;align-items:center;gap:9px;min-width:0;}
@@ -71,11 +75,15 @@
     100%{box-shadow:0 0 0 0 rgba(201,80,63,0);}
   }
 
-  /* ---------------- Filter toggle chip on map ---------------- */
+  /* ---------------- Control bar: filter / mode / language ---------------- */
+  .control-bar{
+    padding:0 14px;
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+  }
+  .cb-group{display:flex;align-items:center;gap:8px;flex-shrink:0;min-width:0;}
+
   .filter-fab{
-    position:fixed;z-index:600;
-    top:calc(64px + var(--safe-t));
-    right:14px;
+    flex-shrink:0;
     width:40px;height:40px;border-radius:12px;
     background:rgba(20,27,36,.92);border:1px solid var(--line);
     display:flex;align-items:center;justify-content:center;
@@ -84,15 +92,30 @@
   .filter-fab.active{color:var(--amber);border-color:var(--amber-dim);}
 
   .mode-fab{
-    position:fixed;z-index:600;
-    top:calc(64px + var(--safe-t));
-    right:64px;
+    flex-shrink:0;
     display:flex;background:rgba(20,27,36,.92);
     border:1px solid var(--line);border-radius:12px;overflow:hidden;
     font-size:10.5px;
   }
-  .mode-fab div{padding:10px 10px;color:var(--text-2);}
+  .mode-fab div{padding:10px 10px;color:var(--text-2);white-space:nowrap;}
   .mode-fab div.active{background:var(--bg-3);color:var(--amber);}
+
+  .lang-switch{
+    display:flex;background:rgba(20,27,36,.92);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    font-size:10.5px;min-width:0;flex-shrink:1;
+  }
+  .lang-switch a{
+    padding:10px 12px;color:var(--text-2);text-decoration:none;
+    white-space:nowrap;display:flex;align-items:center;justify-content:center;
+  }
+  .lang-switch a:not(:first-child){border-inline-start:1px solid var(--line);}
+  .lang-switch a:active{color:var(--text-0);}
+
+  @media (max-width:359px){
+    .control-bar{gap:6px;}
+    .lang-switch a{padding:8px 8px;font-size:9.5px;}
+  }
 
   /* ---------------- Selected event floating card ---------------- */
   .sel-card{
@@ -218,6 +241,13 @@
   .stat-mini b{display:block;font-size:16px;color:var(--amber);}
   .stat-mini span{font-size:9px;color:var(--text-2);}
 
+  .all-versions-link{
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:11.5px;color:var(--text-2);text-decoration:none;
+    padding:2px;
+  }
+  .all-versions-link:active{color:var(--text-1);}
+
   .disclaimer{font-size:10.5px;color:var(--text-2);line-height:1.7;padding:10px 0 4px;}
 
   /* ---------------- Loading overlay ---------------- */
@@ -235,40 +265,44 @@
 <div class="load-overlay" id="loadOverlay">Loading…</div>
 <div id="map"></div>
 
-<div class="topbar">
-  <div class="tb-brand">
-    <div class="tb-mark">
-      <svg viewBox="0 0 32 32" width="100%" height="100%" aria-hidden="true" focusable="false">
-        <circle cx="16" cy="16" r="14.2" fill="none" stroke="#d99a3f" stroke-width="1.7"/>
-        <circle cx="16" cy="16" r="3" fill="url(#nasr2-tb-core)"/>
-        <defs>
-          <radialGradient id="nasr2-tb-core" cx="30%" cy="30%" r="75%">
-            <stop offset="0%" stop-color="#d99a3f"/>
-            <stop offset="100%" stop-color="#b8683f"/>
-          </radialGradient>
-        </defs>
-      </svg>
+<div class="header-wrap">
+  <div class="topbar">
+    <div class="tb-brand">
+      <div class="tb-mark">
+        <svg viewBox="0 0 32 32" width="100%" height="100%" aria-hidden="true" focusable="false">
+          <circle cx="16" cy="16" r="14.2" fill="none" stroke="#d99a3f" stroke-width="1.7"/>
+          <circle cx="16" cy="16" r="3" fill="url(#nasr2-tb-core)"/>
+          <defs>
+            <radialGradient id="nasr2-tb-core" cx="30%" cy="30%" r="75%">
+              <stop offset="0%" stop-color="#d99a3f"/>
+              <stop offset="100%" stop-color="#b8683f"/>
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="tb-title">
+        <h1>Nasr-2 Operation Monitor</h1>
+        <p>Sepah News — Mobile Edition</p>
+      </div>
     </div>
-    <div class="tb-title">
-      <h1>Nasr-2 Operation Monitor</h1>
-      <p>Sepah News — Mobile Edition</p>
+    <div class="tb-live" style="flex-direction:column;align-items:flex-end;gap:2px;padding:6px 10px;">
+      <div style="display:flex;align-items:center;gap:5px;"><span class="dot-pulse"></span><span id="dateRangeBadge">—</span></div>
+      <div id="lastUpdated" style="font-size:8.5px;color:var(--text-2);"></div>
     </div>
   </div>
-  <div class="tb-live" style="flex-direction:column;align-items:flex-end;gap:2px;padding:6px 10px;">
-    <div style="display:flex;align-items:center;gap:5px;"><span class="dot-pulse"></span><span id="dateRangeBadge">—</span></div>
-    <div id="lastUpdated" style="font-size:8.5px;color:var(--text-2);"></div>
+  <div class="control-bar">
+    <div class="cb-group">
+      <div class="filter-fab" id="filterFab">☰</div>
+      <div class="mode-fab" id="modeFab">
+        <div class="active" data-mode="cumulative">Cumulative</div>
+        <div data-mode="single">Today only</div>
+      </div>
+    </div>
+    <div class="lang-switch">
+      <a href="index-fa-mobile.html">FA</a>
+      <a href="index-ar-mobile.html">AR</a>
+    </div>
   </div>
-</div>
-<div style="position:fixed;z-index:600;top:calc(64px + var(--safe-t));left:50%;transform:translateX(-50%);display:flex;gap:6px;">
-  <a href="index.html?view=all" style="font-size:9.5px;color:var(--text-2);background:rgba(20,27,36,.9);border:1px solid var(--line);border-radius:20px;padding:6px 10px;text-decoration:none;">All versions</a>
-  <a href="index.html?lang=fa" style="font-size:9.5px;color:var(--text-2);background:rgba(20,27,36,.9);border:1px solid var(--line);border-radius:20px;padding:6px 10px;text-decoration:none;">فارسی</a>
-  <a href="index.html?lang=ar" style="font-size:9.5px;color:var(--text-2);background:rgba(20,27,36,.9);border:1px solid var(--line);border-radius:20px;padding:6px 10px;text-decoration:none;">العربية</a>
-</div>
-
-<div class="filter-fab" id="filterFab">☰</div>
-<div class="mode-fab" id="modeFab">
-  <div class="active" data-mode="cumulative">Cumulative</div>
-  <div data-mode="single">Today only</div>
 </div>
 
 <div class="sel-card" id="selCard">
@@ -314,6 +348,11 @@
     <div class="sheet-section" id="filterForceSection">
       <div class="sheet-section-title">Filter by force type</div>
       <div class="force-grid" id="forceToggle"></div>
+    </div>
+    <div class="sheet-section">
+      <a class="all-versions-link" href="index.html?view=all">
+        <span>View all versions (incl. desktop)</span><span aria-hidden="true">↗</span>
+      </a>
     </div>
     <div class="sheet-section">
       <div class="sheet-section-title">Events on this date (<span id="listCount">0</span>)</div>
