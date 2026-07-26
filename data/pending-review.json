@@ -9,22 +9,45 @@
       "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه آمریکایی در اردن",
-      "target": "الركاب قدمزveloppant US forces (امéricain)",
-      "weapon": "later (Seniorage)",
-      "outcome": "ت/Button алгоритمی،produzent خود سازمان‌های پدافند، و مخازن سوخت به آتش کشیده شدند",
-      "time": "۱۴۰۵/۰۵/۰۱ ۰۹:۰۰",
+      "loc_raw_text": "پایگاه آمریکایی درerdن",
+      "target": "بازه‌های آمریکایی",
+      "weapon": "م revene بالگردی و سیستم‌های رادار (-hiometh، Patriot، C-ram)",
+      "outcome": "تخریب پایگاه‌های آمریکایی، تخریب Treasury، ش tournant و زخمی و شhammer ۱۶۸ دانش հանդիպه، تخریب مخازن سوخت و تجهیزات بالگرد",
+      "time": "۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: ۱۴۰۵/۰۵/۰۱ ۰۹:۰۰",
       "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-07-26T15:47:53.809Z"
+    "last_checked_at": "2026-07-26T21:15:24.685Z"
+  },
+  {
+    "title": "آیین مراسم تکریم فرماندهان سابق و جدید در ناحیه مقاومت بسیج دزفول برگزار گردید",
+    "link": "https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
+    "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
+    "pubDate": "26 Jul 2026 23:10:35 +0330",
+    "raw_extraction": {
+      "wave": "—",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "پایگاه اردن",
+      "target": "پایگاه‌های آمریکا",
+      "weapon": "هواپیما و پهپاد",
+      "outcome": "منهدم و منفجر شد",
+      "dateG": "2026-07-26",
+      "dateP": "۴ مرداد ۱۴۰۵",
+      "code": "36354"
+    },
+    "errors": [
+      "loc is null"
+    ],
+    "added_at": "2026-07-26T21:14:49.492Z",
+    "issue_number": 54
   }
 ]
