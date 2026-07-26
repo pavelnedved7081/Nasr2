@@ -5,25 +5,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "اطلاعیه شماره ۴۵ عملیات نصر۲",
+      "wave": "نصر۲",
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
-      "target": "پایگاه‌های آمریکایی در اردن (رادار تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات)",
-      "weapon": "حملات برق‌آسا",
-      "outcome": "انهدام رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، آتش گرفتن مخازن سوخت، تخریب انبار تجهیزات بالگردی و سوله تعمیرات",
-      "time": "پنجشنبه ۰۱ مرداد ۱۴۰۵",
+      "loc_raw_text": "پایگاه‌های آمریکایی در خاک اردن",
+      "target": "پایگاه‌های آمریک zhvillnje  مشابه",
+      "weapon": "missile",
+      "outcome": "destroyed radars and missile defense systems",
+      "time": "2026-08-01T09:00:00Z",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: پنجشنبه ۰۱ مرداد ۱۴۰۵"
+      "invalid time field value: 2026-08-01T09:00:00Z",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-07-25T20:37:22.193Z"
+    "last_checked_at": "2026-07-26T08:00:47.569Z"
   }
 ]
