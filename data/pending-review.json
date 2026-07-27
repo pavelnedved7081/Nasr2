@@ -5,25 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر۲",
-      "force": "aerospace",
+      "wave": "نصر ۲",
+      "force": "naval",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
-      "target": "پایگاه‌های آمریکایی در الأردن",
-      "weapon": "موشک",
-      "outcome": "تخریب رادار تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات و نگهداری بالگردها (آتش‌سوزی و ویران شدن)",
-      "time": "۰۹:۰۰",
+      "loc_raw_text": "پایگاه‌های آمریکایی در اردن",
+      "target": "state",
+      "weapon": "lectricy attacks",
+      "outcome": "Destruction of radar, fuel storage, and ammunition depots at American bases",
+      "time": "2024-05-01T09:00:00",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null"
+      "loc is null",
+      "invalid time field value: 2024-05-01T09:00:00",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-07-27T12:40:49.818Z"
+    "last_checked_at": "2026-07-27T21:50:59.772Z"
   },
   {
     "title": "آیین مراسم تکریم فرماندهان سابق و جدید در ناحیه مقاومت بسیج دزفول برگزار گردید",
@@ -32,24 +34,47 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "unknown",
+      "force": "naval",
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "پایگاه اردن",
-      "target": "پایگاه‌های آمریکا",
-      "weapon": "هواپیما، پهپاد",
-      "outcome": "انفجار بیش از ۱۱ هواپیما و تاسیسات",
-      "time": "یکشنبه ۰۴ مرداد ۱۴۰۵",
+      "target": "US bases and aircraft in Jordan",
+      "weapon": "نامشخص",
+      "outcome": "Destruction of >288 points and >11 US aircraft at Jordan base",
+      "time": "۰۴ مرداد ۱۴۰۵ ۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: یکشنبه ۰۴ مرداد ۱۴۰۵"
+      "invalid time field value: ۰۴ مرداد ۱۴۰۵ ۲۳:۱۰",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-07-27T12:40:35.727Z"
+    "last_checked_at": "2026-07-27T21:50:09.717Z",
+    "loc_candidates": [
+      {
+        "id": "duqm",
+        "distance": 3
+      },
+      {
+        "id": "rifa",
+        "distance": 4
+      },
+      {
+        "id": "tanf",
+        "distance": 4
+      },
+      {
+        "id": "aqaba",
+        "distance": 5
+      },
+      {
+        "id": "rukban",
+        "distance": 5
+      }
+    ]
   }
 ]
