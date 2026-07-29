@@ -6,13 +6,13 @@
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
       "wave": "نصر۲",
-      "force": "ground",
+      "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکایی در خاک اردن",
-      "target": "پایگاه‌های آمریکایی در اردن",
-      "weapon": "missile",
-      "outcome": "تخریب",
+      "loc_raw_text": "پایگاه‌های آمریکایی در اردن",
+      "target": "پایگاه آمریکایی",
+      "weapon": "موشک",
+      "outcome": "تخریب radar TAD، سامانه پاتریوت، رادار C-ram، سوخت، انبار تجهیزات بالگردی و سوله تعمیرات",
       "time": "۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
@@ -23,7 +23,7 @@
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-07-29T10:08:23.955Z"
+    "last_checked_at": "2026-07-29T20:40:42.146Z"
   },
   {
     "title": "آیین مراسم تکریم فرماندهان سابق و جدید در ناحیه مقاومت بسیج دزفول برگزار گردید",
@@ -32,27 +32,25 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "unknown",
+      "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "سالن شیخ مرتضی انصاری دانشگاه آزاد اسلامی واحد دزفول",
-      "target": null,
-      "weapon": null,
-      "outcome": null,
+      "loc_raw_text": "پایگاه اردن",
+      "target": "US aircraft",
+      "weapon": "unspecified",
+      "outcome": "destroyed",
       "time": "۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "missing/empty required field: target",
-      "missing/empty required field: weapon",
-      "missing/empty required field: outcome",
-      "loc is null"
+      "loc is null",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-07-29T10:10:23.136Z",
+    "last_checked_at": "2026-07-29T20:42:30.430Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -83,9 +81,10 @@
     "pubDate": "29 Jul 2026 05:01:43 +0330",
     "raw_extraction": null,
     "errors": [
-      "extraction failed: Expected ',' or '}' after property value in JSON at position 14"
+      "extraction failed: This operation was aborted"
     ],
     "added_at": "2026-07-29T10:09:43.476Z",
-    "issue_number": 55
+    "issue_number": 55,
+    "last_checked_at": "2026-07-29T20:42:19.321Z"
   }
 ]
