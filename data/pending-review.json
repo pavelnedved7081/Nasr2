@@ -5,26 +5,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر۲",
+      "wave": "نصر ۲",
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
-      "target": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات",
-      "weapon": "حملات برق‌آسا",
-      "outcome": "انهدام و تخریب",
-      "time": "پنجشنبه ۰۱ مرداد ۱۴۰۵",
+      "loc_raw_text": "باز پایگاه‌های آمریکایی در اردن",
+      "target": "پایگاه‌های آمریکایی در اردن",
+      "weapon": "برق اسا، systèmes radar (radar C-ram، پاترتیوت)",
+      "outcome": " MonzaژYardSystems radar به دهم و tregedan، magazIMAGEs oil به آتش کشیده و تخریب شدند",
+      "time": "۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: پنجشنبه ۰۱ مرداد ۱۴۰۵"
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-07-30T17:10:17.808Z"
+    "last_checked_at": "2026-07-30T21:49:06.336Z"
   },
   {
     "title": "آیین مراسم تکریم فرماندهان سابق و جدید در ناحیه مقاومت بسیج دزفول برگزار گردید",
@@ -32,27 +32,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "—",
+      "wave": "ground",
       "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "دزفول",
-      "target": "نامشخص",
-      "weapon": "نامشخص",
-      "outcome": "continued resistance",
-      "time": "1405/06/04 23:10",
+      "loc_raw_text": "نوار(/, ICATION?t D'iz Foul",
+      "target": "الآمریکا، رژیم صهیونیستی",
+      "weapon": "aerospace",
+      "outcome": "تكریم فرماندهان昔今 در زمینه مقاومت وething از جنگ جدید",
+      "time": "۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
+      "wave contains disallowed characters: ground",
       "loc is null",
-      "invalid time field value: 1405/06/04 23:10",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-07-30T17:13:05.585Z",
+    "last_checked_at": "2026-07-30T21:51:32.435Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -77,54 +77,32 @@
     ]
   },
   {
-    "title": "پایگاه هوایی و مرکز فرماندهی مرکزی ارتش آمریکا در اردن هدف موشک‌های بالستیک قرار گرفت",
-    "link": "https://sepahnews.ir/fa/news/36384/پایگاه-هوایی-و-مرکز-فرماندهی-مرکزی-ارتش-آمریکا-در-اردن-هدف-موشک‌های-بالستیک-قرار-گرفت",
-    "guid": "sepah:https://sepahnews.ir/fa/news/36384/پایگاه-هوایی-و-مرکز-فرماندهی-مرکزی-ارتش-آمریکا-در-اردن-هدف-موشک‌های-بالستیک-قرار-گرفت",
-    "pubDate": "29 Jul 2026 05:01:43 +0330",
-    "raw_extraction": {
-      "wave": "نصر ۲",
-      "force": "aerospace",
-      "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "پایگاه هوایی و مرکز فرماندهی مرکزی ارتش آمریکا در اردن",
-      "target": "پایگاه هوایی و مرکز فرماندهی مرکزی ارتش آمریکا در اردن",
-      "weapon": "موشک بالستیک",
-      "outcome": "پیروزمندانه",
-      "dateG": "2026-07-29",
-      "dateP": "۷ مرداد ۱۴۰۵",
-      "code": "36384"
-    },
-    "errors": [
-      "loc is null"
-    ],
-    "added_at": "2026-07-29T10:09:43.476Z",
-    "issue_number": 55,
-    "last_checked_at": "2026-07-30T17:12:18.488Z"
-  },
-  {
     "title": "دو آشیانه پهپادی و یک مخزن سوخت هواپیما و بالگردهای نظامی در پایگاه علی السالم به آتش کشیده و منهدم شدند",
     "link": "https://sepahnews.ir/fa/news/36420/دو-آشیانه-پهپادی-و-یک-مخزن-سوخت-هواپیما-و-بالگردهای-نظامی-در-پایگاه-علی-السالم-به-آتش-کشیده-و-منهدم-شدند",
     "guid": "sepah:https://sepahnews.ir/fa/news/36420/دو-آشیانه-پهپادی-و-یک-مخزن-سوخت-هواپیما-و-بالگردهای-نظامی-در-پایگاه-علی-السالم-به-آتش-کشیده-و-منهدم-شدند",
     "pubDate": "30 Jul 2026 16:31:06 +0330",
     "raw_extraction": {
-      "wave": "نصر ۲",
-      "force": "joint",
+      "wave": "نصر2",
+      "force": "aerospace",
       "source": "sepah",
       "loc": "aliAlSalem",
-      "loc_raw_text": "علی السالم",
-      "target": "پایگاه هوایی آمریکایی در علی السالم",
-      "weapon": "بالگردهای نظامی",
-      "outcome": "منشودی و منسوبت کامل",
-      "time": "پنجشنبه ۰۸ مرداد ۱۴۰۵ ساعت ۱۶:۳۱",
+      "loc_raw_text": "voli سالم",
+      "target": "U.S. air base",
+      "weapon": "explosives",
+      "outcome": "دétruction of assets",
+      "time": "08 Mordad 1405 - 16:31",
       "dateG": "2026-07-30",
       "dateP": "۸ مرداد ۱۴۰۵",
       "code": "36420"
     },
     "errors": [
-      "invalid time field value: پنجشنبه ۰۸ مرداد ۱۴۰۵ ساعت ۱۶:۳۱"
+      "invalid time field value: 08 Mordad 1405 - 16:31",
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-30T17:11:39.703Z",
-    "issue_number": 56
+    "issue_number": 56,
+    "last_checked_at": "2026-07-30T21:50:45.215Z"
   },
   {
     "title": "همین امروز متجاوز را تنبیه می کنیم/ تخریب کامل سه فروند هواپیمای اف 35 و ورود خسارت سنگین به سه فروند دیگر در الازرق در پاسخ به جنایت دشمن آمریکایی در قشم",
@@ -132,23 +110,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36419/همین-امروز-متجاوز-را-تنبیه-می-کنیم-تخریب-کامل-سه-فروند-هواپیمای-اف-35-و-ورود-خسارت-سنگین-به-سه-فروند-دیگر-در-الازرق-در-پاسخ-به-جنایت-دشمن-آمریکایی-در-قشم",
     "pubDate": "30 Jul 2026 14:47:25 +0330",
     "raw_extraction": {
-      "wave": "—",
+      "wave": "nesr 2",
       "force": "aerospace",
       "source": "sepah",
       "loc": "alAzraq",
-      "loc_raw_text": "پایگاه هوایی الازرق",
-      "target": "رمپ استقرار و سوله تعمیراتی جنگنده های اف35",
-      "weapon": "فر 标签 موشک بالستیک",
-      "outcome": "تخریب کامل سه فروند هواپیمای اف35 و خسارت سنگین به سه فروند دیگر؛ کشته شدن چند افسر و کادر فنی تعمیراتی",
-      "time": null,
+      "loc_raw_text": "پایگاه هوایی الازرق (jordan)",
+      "target": "دستی امریکایی",
+      "weapon": "میلک موشک بالستیکی",
+      "outcome": "تخریب کامل سه هواپیمایAF35 و خسارت سنگین سه فروند دیگر، به Politique و کادر فنی دشمن",
+      "time": "۱۴:۴۷",
       "dateG": "2026-07-30",
       "dateP": "۸ مرداد ۱۴۰۵",
       "code": "36419"
     },
     "errors": [
+      "wave contains disallowed characters: nesr 2",
       "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-30T17:12:03.094Z",
-    "issue_number": 57
+    "issue_number": 57,
+    "last_checked_at": "2026-07-30T21:51:13.464Z"
   }
 ]
