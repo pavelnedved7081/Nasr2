@@ -9,21 +9,23 @@
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
-      "target": "پایگاه آمریکایی در اردن (پادافند موشکی تاد، سامانه پاتریوت، رادار C-ram، انبار سوخت، انبار تجهیزات بالگردی، سوله تعمیرات بالگرد)",
-      "weapon": "موشک",
-      "outcome": "تخریب رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram؛ سوخت انبار سوخت و انبار تجهیزات بالگردی و سوله تعمیرات بالگرد به آتش کشیده و تخریب شد",
-      "time": "۰۹:۰۰",
+      "loc_raw_text": "پایگاه آمریکایی در اردن",
+      "target": "پایگاه آمریکایی",
+      "weapon": " olaraq، jednegoennent، پتریوت، رادار، 軍事藤油",
+      "outcome": "破壞 یک رうち SAM، یک سیستم Патریوت، یک رادر C-ram، مخازن سوخت، یک انبار بزرگ تجهیزات بالگرد و یک سوله تعمیرات",
+      "time": "پنچشنبه ۰۱ مرداد ۱۴۰۵",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null"
+      "loc is null",
+      "invalid time field value: پنچشنبه ۰۱ مرداد ۱۴۰۵",
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-07-31T17:12:23.225Z"
+    "last_checked_at": "2026-07-31T21:46:33.015Z"
   },
   {
     "title": "آیین مراسم تکریم فرماندهان سابق و جدید در ناحیه مقاومت بسیج دزفول برگزار گردید",
@@ -32,13 +34,13 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "aerospace",
+      "force": "unknown",
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "پایگاه اردن",
-      "target": "US aircraft",
+      "target": "US base in Jordan",
       "weapon": "نامشخص",
-      "outcome": "destroyed (more than 11 US aircraft)",
+      "outcome": "Destruction of more than 11 US aircraft and demolition of over 288 points",
       "time": "null",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
@@ -51,7 +53,7 @@
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-07-31T17:13:17.955Z",
+    "last_checked_at": "2026-07-31T21:46:42.692Z",
     "loc_candidates": [
       {
         "id": "duqm",
