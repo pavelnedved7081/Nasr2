@@ -9,48 +9,58 @@
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
-      "target": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات",
-      "weapon": "حملات برق‌آسا",
-      "outcome": "انهدام رادار تاد، پاتریوت، C-ram و مخازن سوخت و تخریب انبار تجهیزات",
-      "time": "۰۹:۰۰",
+      "loc_raw_text": "پایگاه آمریکایی در خاک اردن",
+      "target": "پایگاه آمریکایی",
+      "weapon": "برادران مجاهد (Attack با برق أسا)",
+      "outcome": "تخریب ردیار، مخازن سوخت، و سوله بالگردها",
+      "time": "پنچشنبه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null"
+      "loc is null",
+      "invalid time field value: پنچشنبه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-03T12:39:37.514Z"
+    "last_checked_at": "2026-08-03T21:49:37.736Z",
+    "loc_candidates": [
+      {
+        "id": "rukban",
+        "distance": 4
+      },
+      {
+        "id": "hormuz",
+        "distance": 4
+      },
+      {
+        "id": "aqaba",
+        "distance": 5
+      },
+      {
+        "id": "arifjan",
+        "distance": 5
+      },
+      {
+        "id": "jufair",
+        "distance": 5
+      }
+    ],
+    "loc_country_match": "jordan"
   },
   {
     "title": "آیین مراسم تکریم فرماندهان سابق و جدید در ناحیه مقاومت بسیج دزفول برگزار گردید",
     "link": "https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
-    "raw_extraction": {
-      "wave": "—",
-      "force": "unknown",
-      "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "پایگاه اردن",
-      "target": "پایگاه‌های آمریکا",
-      "weapon": null,
-      "outcome": "منهدم شد",
-      "time": null,
-      "dateG": "2026-07-26",
-      "dateP": "۴ مرداد ۱۴۰۵",
-      "code": "36354"
-    },
+    "raw_extraction": null,
     "errors": [
-      "missing/empty required field: weapon",
-      "loc is null"
+      "extraction failed: This operation was aborted"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-03T12:40:30.243Z",
+    "last_checked_at": "2026-08-03T21:49:47.738Z",
     "loc_candidates": [
       {
         "id": "rukban",
