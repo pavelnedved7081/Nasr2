@@ -4,13 +4,26 @@
     "link": "https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "wave": "نصر ۲",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
+      "target": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات",
+      "weapon": "حملات برق‌آسا",
+      "outcome": "انهدام رادار تاد، پاتریوت، C-ram و مخازن سوخت و تخریب انبار تجهیزات",
+      "time": "۰۹:۰۰",
+      "dateG": "2026-07-23",
+      "dateP": "۱ مرداد ۱۴۰۵",
+      "code": "36292"
+    },
     "errors": [
-      "extraction failed: This operation was aborted"
+      "loc is null"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-02T20:39:10.903Z"
+    "last_checked_at": "2026-08-03T12:39:37.514Z"
   },
   {
     "title": "آیین مراسم تکریم فرماندهان سابق و جدید در ناحیه مقاومت بسیج دزفول برگزار گردید",
@@ -19,26 +32,25 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "ground",
+      "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "نکته مقاومت résistance Area دیزفول",
-      "target": ".Unit States و همپن fonde",
-      "weapon": "aerial",
-      "outcome": "تکریم نقشه ਸ਼ perspectiv Trotz و پیام مقاومت",
-      "time": "یکشنبه ۲۳ correspondingly ۱۴۰۵،۲۳:۱۰",
+      "loc_raw_text": "پایگاه اردن",
+      "target": "پایگاه‌های آمریکا",
+      "weapon": null,
+      "outcome": "منهدم شد",
+      "time": null,
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "loc is null",
-      "invalid time field value: یکشنبه ۲۳ correspondingly ۱۴۰۵،۲۳:۱۰",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "missing/empty required field: weapon",
+      "loc is null"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-02T20:39:26.660Z",
+    "last_checked_at": "2026-08-03T12:40:30.243Z",
     "loc_candidates": [
       {
         "id": "rukban",
