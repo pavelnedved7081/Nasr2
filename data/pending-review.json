@@ -5,26 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "اطلاعیه شماره ۴۵ عملیات نصر۲",
+      "wave": "separate",
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
-      "target": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات",
-      "weapon": "حملات برق‌آسا",
-      "outcome": "انهدام رادار تاد، پاتریوت، C-ram و تخریب مخازن سوخت و انبار تجهیزات",
-      "time": "پنجشنبه ۰۱ مرداد ۱۴۰۵",
+      "loc_raw_text": "پایگاه‌های آمریکایی در اردن",
+      "target": "پایگاه‌های آمریکایی",
+      "weapon": "missile, drone",
+      "outcome": "منحله یک الردیار پدافند موشکی، یک lemme Patterson، مخازن سوخت، انبار بالگرد و سوله تعمیرات",
+      "time": "2025-04-01",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
+      "wave contains disallowed characters: separate",
       "loc is null",
-      "invalid time field value: پنجشنبه ۰۱ مرداد ۱۴۰۵"
+      "invalid time field value: 2025-04-01"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-04T10:14:20.584Z",
+    "last_checked_at": "2026-08-04T18:13:39.056Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -56,26 +57,24 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "ground",
+      "force": "unknown",
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "پایگاه اردن",
-      "target": "ground",
-      "weapon": "aerospace",
-      "outcome": "destroyed",
-      "time": "1405-08-04 23:10",
+      "target": "پایگاه‌های آمریکا",
+      "weapon": "هواپیما و پهپاد",
+      "outcome": "منفجر شد",
+      "time": null,
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "loc is null",
-      "invalid time field value: 1405-08-04 23:10",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "loc is null"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-04T10:15:54.168Z",
+    "last_checked_at": "2026-08-04T18:13:49.334Z",
     "loc_candidates": [
       {
         "id": "rukban",
