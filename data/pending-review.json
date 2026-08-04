@@ -5,26 +5,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر ۲",
+      "wave": "اطلاعیه شماره ۴۵ عملیات نصر۲",
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه آمریکایی در خاک اردن",
-      "target": "پایگاه آمریکایی",
-      "weapon": "برادران مجاهد (Attack با برق أسا)",
-      "outcome": "تخریب ردیار، مخازن سوخت، و سوله بالگردها",
-      "time": "پنچشنبه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
+      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
+      "target": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات",
+      "weapon": "حملات برق‌آسا",
+      "outcome": "انهدام رادار تاد، پاتریوت، C-ram و تخریب مخازن سوخت و انبار تجهیزات",
+      "time": "پنجشنبه ۰۱ مرداد ۱۴۰۵",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: پنچشنبه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰"
+      "invalid time field value: پنجشنبه ۰۱ مرداد ۱۴۰۵"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-03T21:49:37.736Z",
+    "last_checked_at": "2026-08-04T10:14:20.584Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -54,13 +54,28 @@
     "link": "https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "wave": "—",
+      "force": "ground",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "پایگاه اردن",
+      "target": "ground",
+      "weapon": "aerospace",
+      "outcome": "destroyed",
+      "time": "1405-08-04 23:10",
+      "dateG": "2026-07-26",
+      "dateP": "۴ مرداد ۱۴۰۵",
+      "code": "36354"
+    },
     "errors": [
-      "extraction failed: This operation was aborted"
+      "loc is null",
+      "invalid time field value: 1405-08-04 23:10",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-03T21:49:47.738Z",
+    "last_checked_at": "2026-08-04T10:15:54.168Z",
     "loc_candidates": [
       {
         "id": "rukban",
