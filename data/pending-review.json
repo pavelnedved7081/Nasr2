@@ -5,27 +5,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "separate",
-      "force": "aerospace",
+      "wave": "نصر ۲",
+      "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکایی در اردن",
-      "target": "پایگاه‌های آمریکایی",
-      "weapon": "missile, drone",
-      "outcome": "منحله یک الردیار پدافند موشکی، یک lemme Patterson، مخازن سوخت، انبار بالگرد و سوله تعمیرات",
-      "time": "2025-04-01",
+      "loc_raw_text": "پایگاه آمریکایی در ارض اردن",
+      "target": "پایگاه آمریکایی در اردن",
+      "weapon": "Artilary",
+      "outcome": "تخلیف]-$itльное equipment، جانگ Austrts 168 دانش‌آموز، و جریمه struggling",
+      "time": "۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "wave contains disallowed characters: separate",
       "loc is null",
-      "invalid time field value: 2025-04-01"
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-04T18:13:39.056Z",
+    "last_checked_at": "2026-08-05T10:05:44.406Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -57,24 +56,25 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "unknown",
+      "force": "aerospace",
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "پایگاه اردن",
-      "target": "پایگاه‌های آمریکا",
-      "weapon": "هواپیما و پهپاد",
-      "outcome": "منفجر شد",
-      "time": null,
+      "target": "هواپیمای آمریکا",
+      "weapon": "",
+      "outcome": "تخریب بیش از ۱۱ هواپیما و ۲۸۸ نقطه در پایگاه‌های آمریکا",
+      "time": "۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
+      "missing/empty required field: weapon",
       "loc is null"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-04T18:13:49.334Z",
+    "last_checked_at": "2026-08-05T10:06:06.211Z",
     "loc_candidates": [
       {
         "id": "rukban",
