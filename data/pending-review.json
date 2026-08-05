@@ -5,28 +5,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "Naseer 2",
+      "wave": "نصر۲",
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکایی در خاک اردن",
-      "target": "ground",
-      "weapon": "missiles",
-      "outcome": "دستورپشی باาวิทยาลัย.microsoft.com/radar، مخزنی سوخت، انبار به ارتش آمریکا، و تجهیزات بالگرد به آتش کشیده و تخریب گردید",
-      "time": "پنچشنبه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
+      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
+      "target": "پایگاه‌های آمریکایی در اردن",
+      "weapon": "موشک/رکت",
+      "outcome": "تخریب Radar سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت و تجهیزات بالگردی؛ آتش زدن آن‌ها",
+      "time": "۰۱ مرداد ۱۴۰۵ ۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "wave contains disallowed characters: Naseer 2",
       "loc is null",
-      "invalid time field value: پنچشنبه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
+      "invalid time field value: ۰۱ مرداد ۱۴۰۵ ۰۹:۰۰"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-05T17:12:48.754Z",
+    "last_checked_at": "2026-08-05T22:18:36.842Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -57,28 +55,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "ceremony",
-      "force": "ground",
+      "wave": "—",
+      "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "دزفول",
-      "target": "نامشخص",
-      "weapon": "نامشخص",
-      "outcome": "honoration of resistance commanders",
-      "time": "1405/04/04 23:10",
+      "loc_raw_text": "پایگاه اردن",
+      "target": "پایگاه‌های آمریکا",
+      "weapon": "هواپیما و پهپاد",
+      "outcome": "منهدم و منفجر شد",
+      "time": null,
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "wave contains disallowed characters: ceremony",
-      "loc is null",
-      "invalid time field value: 1405/04/04 23:10",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "loc is null"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-05T17:13:11.406Z",
+    "last_checked_at": "2026-08-05T22:19:02.919Z",
     "loc_candidates": [
       {
         "id": "rukban",
