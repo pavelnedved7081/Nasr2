@@ -10,21 +10,20 @@
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
-      "target": "پایگاه‌های آمریکایی در اردن",
-      "weapon": "موشک/رکت",
-      "outcome": "تخریب Radar سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت و تجهیزات بالگردی؛ آتش زدن آن‌ها",
-      "time": "۰۱ مرداد ۱۴۰۵ ۰۹:۰۰",
+      "target": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات",
+      "weapon": "حملات برق‌آسا",
+      "outcome": "انهدام رادار تاد، پاتریوت، C-ram و مخازن سوخت، آتش گرفتن انبار تجهیزات و سوله",
+      "time": "۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null",
-      "invalid time field value: ۰۱ مرداد ۱۴۰۵ ۰۹:۰۰"
+      "loc is null"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-05T22:18:36.842Z",
+    "last_checked_at": "2026-08-06T10:13:33.065Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -60,20 +59,21 @@
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "پایگاه اردن",
-      "target": "پایگاه‌های آمریکا",
-      "weapon": "هواپیما و پهپاد",
-      "outcome": "منهدم و منفجر شد",
-      "time": null,
+      "target": "نامشخص",
+      "weapon": "نامشخص",
+      "outcome": "پایگاه‌های آمریکا منهدم و هواپیمای آن‌ها به غیر از تاسیسات و پهپاد‌ها منفجر شد",
+      "time": "9 اسفند",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "loc is null"
+      "loc is null",
+      "invalid time field value: 9 اسفند"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-05T22:19:02.919Z",
+    "last_checked_at": "2026-08-06T10:13:40.443Z",
     "loc_candidates": [
       {
         "id": "rukban",
