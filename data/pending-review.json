@@ -8,22 +8,21 @@
       "wave": "نصر ۲",
       "force": "aerospace",
       "source": "sepah",
-      "loc": "princeHassan",
-      "loc_raw_text": "پایگاه هوایی پرنس حسن",
-      "target": "پایتان آمریکایی",
-      "weapon": "حملات برق آسا",
-      "outcome": "منهدم شد، به آتش کشیده شد، تخریب شدند",
-      "time": "روز گذشته",
+      "loc": null,
+      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
+      "target": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی، سوله تعمیرات",
+      "weapon": "حملات برق‌آسا",
+      "outcome": "انهدام سامانه‌ها و آتش گرفتن مخازن و انبارها",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "invalid time field value: روز گذشته"
+      "loc is null"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-07T05:52:44.240Z",
+    "last_checked_at": "2026-08-07T09:35:21.945Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -55,25 +54,26 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "aerospace",
+      "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه اردن",
+      "loc_raw_text": "نقه مقاومت بسیج دزفول",
       "target": "نامشخص",
       "weapon": "نامشخص",
-      "outcome": "destroyed",
-      "time": "unknown",
+      "outcome": "зуczy",
+      "time": "2024-07-14T23:10:00",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: unknown"
+      "invalid time field value: 2024-07-14T23:10:00",
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-07T05:52:47.115Z",
+    "last_checked_at": "2026-08-07T09:35:37.907Z",
     "loc_candidates": [
       {
         "id": "rukban",
