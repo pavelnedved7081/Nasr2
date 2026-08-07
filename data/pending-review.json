@@ -5,25 +5,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر۲",
+      "wave": "نصر ۲",
       "force": "aerospace",
       "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
-      "target": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات",
-      "weapon": "حملات برق‌آسا",
-      "outcome": "انهدام رادار تاد، پاتریوت، C-ram و مخازن سوخت، آتش گرفتن انبار تجهیزات و سوله",
-      "time": "۰۹:۰۰",
+      "loc": "princeHassan",
+      "loc_raw_text": "پایگاه هوایی پرنس حسن",
+      "target": "پایتان آمریکایی",
+      "weapon": "حملات برق آسا",
+      "outcome": "منهدم شد، به آتش کشیده شد، تخریب شدند",
+      "time": "روز گذشته",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null"
+      "invalid time field value: روز گذشته"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-06T10:13:33.065Z",
+    "last_checked_at": "2026-08-07T05:52:44.240Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -55,25 +55,25 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "unknown",
+      "force": "aerospace",
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "پایگاه اردن",
       "target": "نامشخص",
       "weapon": "نامشخص",
-      "outcome": "پایگاه‌های آمریکا منهدم و هواپیمای آن‌ها به غیر از تاسیسات و پهپاد‌ها منفجر شد",
-      "time": "9 اسفند",
+      "outcome": "destroyed",
+      "time": "unknown",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: 9 اسفند"
+      "invalid time field value: unknown"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-06T10:13:40.443Z",
+    "last_checked_at": "2026-08-07T05:52:47.115Z",
     "loc_candidates": [
       {
         "id": "rukban",
