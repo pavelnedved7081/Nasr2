@@ -5,24 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر ۲",
-      "force": "aerospace",
+      "wave": "Nisa 2",
+      "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
-      "target": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی، سوله تعمیرات",
-      "weapon": "حملات برق‌آسا",
-      "outcome": "انهدام سامانه‌ها و آتش گرفتن مخازن و انبارها",
+      "loc_raw_text": "پایگاه آمریکایی در خاک اردن",
+      "target": "آمircibaudین در اردن",
+      "weapon": "BBS (باز África سیکتاریté)",
+      "outcome": "منشدم شدن یک رادار سامانه پدافند موشکی تاد، یک سامانه پاتریوت، یک رادار C-ram، مخازن سوخت، یک انبار بزرگ تجهیزات بالگردی و یک سوله تعمیرات و نگهداری بالگردها",
+      "time": "۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null"
+      "wave contains disallowed characters: Nisa 2",
+      "loc is null",
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-07T09:35:21.945Z",
+    "last_checked_at": "2026-08-07T15:10:50.867Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -54,26 +57,25 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "ground",
+      "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "نقه مقاومت بسیج دزفول",
-      "target": "نامشخص",
-      "weapon": "نامشخص",
-      "outcome": "зуczy",
-      "time": "2024-07-14T23:10:00",
+      "loc_raw_text": "پایگاه اردن",
+      "target": "پایگاه‌های آمریکا",
+      "weapon": "هواپیما و پهپاد",
+      "outcome": "منهدم و منفجر شد",
+      "time": "unknown",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: 2024-07-14T23:10:00",
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
+      "invalid time field value: unknown"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-07T09:35:37.907Z",
+    "last_checked_at": "2026-08-07T15:11:00.107Z",
     "loc_candidates": [
       {
         "id": "rukban",
