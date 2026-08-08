@@ -5,26 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر ۲",
+      "wave": "single",
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه های آمریکا در خاک اردن",
-      "target": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی، سوله تعمیرات",
-      "weapon": "حملات برق آسا",
-      "outcome": "انهدام رادار تاد، پاتریوت، C-ram و مخازن سوخت و تخریب انبار و سوله",
-      "time": "پنجشنبه ۰۱ مرداد ۱۴۰۵",
+      "loc_raw_text": "پایگاه آمریکایی در خاک اردن",
+      "target": "پایگاه آمریکایی",
+      "weapon": "::<, AAM, PATRIOT, C-ram radar",
+      "outcome": "دستخم یکadar و یک System PATRIOT، یک رادار C-ram، مخازن سوختن و انبار برایبالگردها",
+      "time": "۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
+      "wave contains disallowed characters: single",
       "loc is null",
-      "invalid time field value: پنجشنبه ۰۱ مرداد ۱۴۰۵"
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-08T08:06:30.928Z",
+    "last_checked_at": "2026-08-08T14:05:45.145Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -55,27 +56,29 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "nasr2",
-      "force": "aerospace",
+      "wave": "—",
+      "force": null,
       "source": "sepah",
-      "loc": "princeHassan",
+      "loc": null,
       "loc_raw_text": "پایگاه اردن",
-      "target": "ground",
-      "weapon": "missile",
-      "outcome": "destroyed",
-      "time": "2026-04-26T23:10:00+03:30",
+      "target": null,
+      "weapon": null,
+      "outcome": null,
+      "time": null,
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "wave contains disallowed characters: nasr2",
-      "invalid time field value: 2026-04-26T23:10:00+03:30",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "missing/empty required field: force",
+      "missing/empty required field: target",
+      "missing/empty required field: weapon",
+      "missing/empty required field: outcome",
+      "loc is null"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-08T08:06:38.175Z",
+    "last_checked_at": "2026-08-08T14:06:21.257Z",
     "loc_candidates": [
       {
         "id": "rukban",
