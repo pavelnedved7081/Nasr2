@@ -5,27 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "Nisan 2",
+      "wave": "—",
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "jordani bases",
-      "target": "United States military",
-      "weapon": "radar",
-      "outcome": "Destruction of radar systems, fuel depots, and ammunition storage facilities",
-      "time": "09:00",
+      "loc_raw_text": "پایگاه آمریکایی در genoem‌های اردن",
+      "target": "army",
+      "weapon": "missile",
+      "outcome": "منهدم شدن یکрадار سامانه پدافند موشکی، یکسامانه پاتریوت، یکرادار C-ram، مخازن سوخت، یک انبار بزرگ تجهیزات بالگردی و یکسوله تعمیرات و نگهداری بالگردها به آتش کشیده و تخریب",
+      "time": "پنجشنvedo ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "wave contains disallowed characters: Nisan 2",
       "loc is null",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: پنجشنvedo ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-09T14:05:48.834Z",
+    "last_checked_at": "2026-08-09T19:48:52.643Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -57,25 +57,28 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "joint",
+      "force": null,
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "دزفول",
-      "target": "enemies (US and Zionist regime)",
-      "weapon": "none (ceremony context)",
-      "outcome": "commemoration of commanders' sacrifices and resilience against enemy threats",
-      "time": "۲۳:۱۰",
+      "loc_raw_text": "پایگاه اردن",
+      "target": null,
+      "weapon": null,
+      "outcome": null,
+      "time": null,
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "loc is null",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "missing/empty required field: force",
+      "missing/empty required field: target",
+      "missing/empty required field: weapon",
+      "missing/empty required field: outcome",
+      "loc is null"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-09T14:06:24.233Z",
+    "last_checked_at": "2026-08-09T19:49:29.258Z",
     "loc_candidates": [
       {
         "id": "rukban",
