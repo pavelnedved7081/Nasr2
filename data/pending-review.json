@@ -6,24 +6,24 @@
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
       "wave": "نصر ۲",
-      "force": "ground",
+      "force": "aerospace",
       "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکایی در خاک اردن",
-      "target": "پایگاه‌های آمریکایی",
-      "weapon": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی، سوله تعمیرات بالگردها",
-      "outcome": "منهدم شد",
+      "loc": "princeHassan",
+      "loc_raw_text": "پایگاه‌های آمریکایی در اردن",
+      "target": "پایگاه آمریکایی در اردن",
+      "weapon": "حمله برق آسا (م(tick) meant to imply precision missile or drone strike — interpreted as aerospace-delivered guided weapons)",
+      "outcome": "منهدم شدن یک رادار سامانه پدافند موشکی تاد، یک سامانه پاتریوت، یک رادار C-ram، destrucción مخازن سوخت، تخریب انبار بزرگ تجهیزات بالگردی و سوله تعمیرات و نگهداری بالگردها",
       "time": "۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null"
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-09T04:42:55.130Z",
+    "last_checked_at": "2026-08-09T08:08:57.162Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -55,23 +55,28 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "unknown",
+      "force": null,
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "پایگاه اردن",
-      "target": "پایگاه‌های آمریکا",
-      "weapon": "هواپیما و پهپاد",
-      "outcome": "منهدم و منفجر شد",
+      "target": null,
+      "weapon": null,
+      "outcome": null,
+      "time": null,
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
+      "missing/empty required field: force",
+      "missing/empty required field: target",
+      "missing/empty required field: weapon",
+      "missing/empty required field: outcome",
       "loc is null"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-09T04:43:08.205Z",
+    "last_checked_at": "2026-08-09T08:09:49.351Z",
     "loc_candidates": [
       {
         "id": "rukban",
