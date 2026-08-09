@@ -5,25 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر ۲",
+      "wave": "Nisan 2",
       "force": "aerospace",
       "source": "sepah",
-      "loc": "princeHassan",
-      "loc_raw_text": "پایگاه‌های آمریکایی در اردن",
-      "target": "پایگاه آمریکایی در اردن",
-      "weapon": "حمله برق آسا (م(tick) meant to imply precision missile or drone strike — interpreted as aerospace-delivered guided weapons)",
-      "outcome": "منهدم شدن یک رادار سامانه پدافند موشکی تاد، یک سامانه پاتریوت، یک رادار C-ram، destrucción مخازن سوخت، تخریب انبار بزرگ تجهیزات بالگردی و سوله تعمیرات و نگهداری بالگردها",
-      "time": "۰۹:۰۰",
+      "loc": null,
+      "loc_raw_text": "jordani bases",
+      "target": "United States military",
+      "weapon": "radar",
+      "outcome": "Destruction of radar systems, fuel depots, and ammunition storage facilities",
+      "time": "09:00",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
+      "wave contains disallowed characters: Nisan 2",
+      "loc is null",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-09T08:08:57.162Z",
+    "last_checked_at": "2026-08-09T14:05:48.834Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -55,28 +57,25 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": null,
+      "force": "joint",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه اردن",
-      "target": null,
-      "weapon": null,
-      "outcome": null,
-      "time": null,
+      "loc_raw_text": "دزفول",
+      "target": "enemies (US and Zionist regime)",
+      "weapon": "none (ceremony context)",
+      "outcome": "commemoration of commanders' sacrifices and resilience against enemy threats",
+      "time": "۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "missing/empty required field: force",
-      "missing/empty required field: target",
-      "missing/empty required field: weapon",
-      "missing/empty required field: outcome",
-      "loc is null"
+      "loc is null",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-09T08:09:49.351Z",
+    "last_checked_at": "2026-08-09T14:06:24.233Z",
     "loc_candidates": [
       {
         "id": "rukban",
