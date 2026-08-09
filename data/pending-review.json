@@ -5,27 +5,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "nasr2",
-      "force": "aerospace",
+      "wave": "نصر ۲",
+      "force": "ground",
       "source": "sepah",
-      "loc": "princeHassan",
-      "loc_raw_text": "پایگاه هوایی پرنس حسن",
-      "target": "US base in Jordan",
-      "weapon": "missile/drone strikes (implied by 'lightning-fast strikes')",
-      "outcome": "destruction of a US TAD air defense radar, a Patriot missile system, a C-RAM radar, fuel storage, a large helicopter equipment warehouse, and a helicopter maintenance and repair shed",
-      "time": "01 Mordad 1405 (July 23, 2024)",
+      "loc": null,
+      "loc_raw_text": "پایگاه‌های آمریکایی در خاک اردن",
+      "target": "پایگاه‌های آمریکایی",
+      "weapon": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی، سوله تعمیرات بالگردها",
+      "outcome": "منهدم شد",
+      "time": "۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "wave contains disallowed characters: nasr2",
-      "invalid time field value: 01 Mordad 1405 (July 23, 2024)",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "loc is null"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-08T19:18:31.946Z",
+    "last_checked_at": "2026-08-09T04:42:55.130Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -73,7 +71,7 @@
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-08T19:18:50.056Z",
+    "last_checked_at": "2026-08-09T04:43:08.205Z",
     "loc_candidates": [
       {
         "id": "rukban",
