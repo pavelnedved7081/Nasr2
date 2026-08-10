@@ -5,27 +5,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "—",
+      "wave": "نصر۲",
       "force": "aerospace",
       "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "پایگاه آمریکایی در genoem‌های اردن",
-      "target": "army",
-      "weapon": "missile",
-      "outcome": "منهدم شدن یکрадار سامانه پدافند موشکی، یکسامانه پاتریوت، یکرادار C-ram، مخازن سوخت، یک انبار بزرگ تجهیزات بالگردی و یکسوله تعمیرات و نگهداری بالگردها به آتش کشیده و تخریب",
-      "time": "پنجشنvedo ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
+      "loc": "princeHassan",
+      "loc_raw_text": "پایگاه هوایی پرنس حسن",
+      "target": "پایگاه آمریکایی",
+      "weapon": "حملات برق آسا",
+      "outcome": "تخریب رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، اشتعال مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات بالگردها",
+      "time": "روز گذشته (منطقه‌ایrelative به زمان انتشار خبر: پنجشنبه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰)",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null",
-      "invalid time field value: پنجشنvedo ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
+      "invalid time field value: روز گذشته (منطقه‌ایrelative به زمان انتشار خبر: پنجشنبه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-09T19:48:52.643Z",
+    "last_checked_at": "2026-08-10T05:10:04.130Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -57,28 +55,26 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": null,
+      "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه اردن",
-      "target": null,
-      "weapon": null,
-      "outcome": null,
-      "time": null,
+      "loc_raw_text": "دزفول",
+      "target": "نامشخص",
+      "weapon": "missile",
+      "outcome": "destruction of US bases in the region",
+      "time": "۱۴۰۵-۰۴-۰۵ ۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "missing/empty required field: force",
-      "missing/empty required field: target",
-      "missing/empty required field: weapon",
-      "missing/empty required field: outcome",
-      "loc is null"
+      "loc is null",
+      "invalid time field value: ۱۴۰۵-۰۴-۰۵ ۲۳:۱۰",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-09T19:49:29.258Z",
+    "last_checked_at": "2026-08-10T05:10:39.665Z",
     "loc_candidates": [
       {
         "id": "rukban",
