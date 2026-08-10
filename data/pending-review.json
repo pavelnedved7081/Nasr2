@@ -5,25 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر۲",
-      "force": "aerospace",
+      "wave": "نصر ۲",
+      "force": "ground",
       "source": "sepah",
-      "loc": "princeHassan",
-      "loc_raw_text": "پایگاه هوایی پرنس حسن",
-      "target": "پایگاه آمریکایی",
-      "weapon": "حملات برق آسا",
-      "outcome": "تخریب رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، اشتعال مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات بالگردها",
-      "time": "روز گذشته (منطقه‌ایrelative به زمان انتشار خبر: پنجشنبه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰)",
+      "loc": null,
+      "loc_raw_text": "پایگاه‌های آمریکایی در خاک اردن",
+      "target": "American bases in Jordan",
+      "weapon": "نامشخص",
+      "outcome": "destroyed",
+      "time": "1405-08-01T09:00:00",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "invalid time field value: روز گذشته (منطقه‌ایrelative به زمان انتشار خبر: پنجشنبه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰)"
+      "loc is null",
+      "invalid time field value: 1405-08-01T09:00:00",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-10T05:10:04.130Z",
+    "last_checked_at": "2026-08-10T10:40:20.125Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -55,26 +57,25 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "ground",
+      "force": "unknown",
       "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "دزفول",
-      "target": "نامشخص",
-      "weapon": "missile",
-      "outcome": "destruction of US bases in the region",
-      "time": "۱۴۰۵-۰۴-۰۵ ۲۳:۱۰",
+      "loc": "princeHassan",
+      "loc_raw_text": "پایگاه اردن",
+      "target": "us_base",
+      "weapon": "unspecified",
+      "outcome": "destroyed",
+      "time": "1405-04-04T23:10:00+03:30",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "loc is null",
-      "invalid time field value: ۱۴۰۵-۰۴-۰۵ ۲۳:۱۰",
+      "invalid time field value: 1405-04-04T23:10:00+03:30",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-10T05:10:39.665Z",
+    "last_checked_at": "2026-08-10T10:40:24.692Z",
     "loc_candidates": [
       {
         "id": "rukban",
