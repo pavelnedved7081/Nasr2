@@ -6,13 +6,13 @@
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
       "wave": "نصر ۲",
-      "force": "ground",
+      "force": "aerospace",
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "پایگاه‌های آمریکایی در خاک اردن",
-      "target": "American bases in Jordan",
-      "weapon": "نامشخص",
-      "outcome": "destroyed",
+      "target": "پایگاه‌های آمریکایی در خاک اردن",
+      "weapon": "رادار سامانه پدافند موشکی تاد, سامانه پاتریوت, رادار C-ram, مخازن سوخت, انبار تجهیزات بالگردی, سوله تعمیرات بالگردها",
+      "outcome": "منهدم شد",
       "time": "1405-08-01T09:00:00",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
@@ -20,12 +20,11 @@
     },
     "errors": [
       "loc is null",
-      "invalid time field value: 1405-08-01T09:00:00",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: 1405-08-01T09:00:00"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-10T10:40:20.125Z",
+    "last_checked_at": "2026-08-10T15:36:04.915Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -57,25 +56,26 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "unknown",
+      "force": "ground",
       "source": "sepah",
-      "loc": "princeHassan",
-      "loc_raw_text": "پایگاه اردن",
-      "target": "us_base",
-      "weapon": "unspecified",
-      "outcome": "destroyed",
-      "time": "1405-04-04T23:10:00+03:30",
+      "loc": null,
+      "loc_raw_text": "دزفول",
+      "target": "نامشخص",
+      "weapon": "نامشخص",
+      "outcome": " Smackdown commemoration ceremony for past and present commanders of Disfowl's resistance area",
+      "time": "۱۴۰۵/۰۴/Midll",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "invalid time field value: 1405-04-04T23:10:00+03:30",
+      "loc is null",
+      "invalid time field value: ۱۴۰۵/۰۴/Midll",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-10T10:40:24.692Z",
+    "last_checked_at": "2026-08-10T15:36:32.418Z",
     "loc_candidates": [
       {
         "id": "rukban",
