@@ -4,13 +4,27 @@
     "link": "https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "wave": "نصر ۲",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "پایگاه های آمریکا در خاک اردن",
+      "target": "رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی، سوله تعمیرات",
+      "weapon": "حملات برق آسا",
+      "outcome": "انهدام رادار تاد، پاتریوت، C-ram، سوزاندن مخازن سوخت و تخریب انبار تجهیزات و سوله",
+      "time": "پنجشنبه ۰۱ مرداد ۱۴۰۵",
+      "dateG": "2026-07-23",
+      "dateP": "۱ مرداد ۱۴۰۵",
+      "code": "36292"
+    },
     "errors": [
-      "extraction failed: This operation was aborted"
+      "loc is null",
+      "invalid time field value: پنجشنبه ۰۱ مرداد ۱۴۰۵"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-10T20:09:08.812Z",
+    "last_checked_at": "2026-08-11T04:51:04.510Z",
     "loc_candidates": [
       {
         "id": "rukban",
@@ -41,28 +55,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "Nigar 2",
-      "force": "joint",
+      "wave": "—",
+      "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "دزفول (Country: Khuzestan)",
-      "target": "US military bases in Persian Gulf",
-      "weapon": "aerial bombardment",
-      "outcome": "resistance success through public mobilization",
-      "time": "04 Maryam 1405 (May 2, 2024) - 23:10",
+      "loc_raw_text": "پایگاه اردن",
+      "target": "بیش از ۱۱ هواپیمای آنها به غیر از تاسیسات فراوان و پهپاد‌ها",
+      "weapon": "موشک (اشاره به بمباران)",
+      "outcome": "منفجر شد",
+      "time": null,
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "wave contains disallowed characters: Nigar 2",
-      "loc is null",
-      "invalid time field value: 04 Maryam 1405 (May 2, 2024) - 23:10",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "loc is null"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-10T20:09:46.571Z",
+    "last_checked_at": "2026-08-11T04:51:17.686Z",
     "loc_candidates": [
       {
         "id": "rukban",
