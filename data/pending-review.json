@@ -5,45 +5,47 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "۴۵",
+      "wave": "نصر ۲",
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
-      "target": "پایگاه آمریکایی، رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی، سوله تعمیرات و نگهداری بالگردها",
-      "weapon": "حملات برق‌آسا",
-      "outcome": "انهدام رادار تاد، سامانه پاتریوت و رادار C-ram، آتش گرفتن مخازن سوخت، تخریب انبار تجهیزات و سوله تعمیرات",
-      "time": "۰۹:۰۰",
+      "loc_raw_text": "صحبت امریکایی در اردن",
+      "target": "پarzyst معیبت آمریکایی به القلع",
+      "weapon": "رآدار ام retrans Cap Reactive Mooshki، Sistem Patrion، بالگرد، سوله Regulations",
+      "outcome": "منشطب ریلارismo، میزان سوخت پایگاه، انبار تجهیزات بالگرد و سولهSecondo تخریب شده",
+      "time": "پنجمسه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null"
+      "loc is null",
+      "invalid time field value: پنجمسه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-11T08:40:26.046Z",
+    "last_checked_at": "2026-08-11T15:30:52.039Z",
     "loc_candidates": [
       {
-        "id": "rukban",
-        "distance": 4
-      },
-      {
-        "id": "hormuz",
+        "id": "bandarAbbas",
         "distance": 4
       },
       {
         "id": "aqaba",
-        "distance": 5
+        "distance": 7
+      },
+      {
+        "id": "alAzraq",
+        "distance": 8
+      },
+      {
+        "id": "rukban",
+        "distance": 8
       },
       {
         "id": "arifjan",
-        "distance": 5
-      },
-      {
-        "id": "jufair",
-        "distance": 5
+        "distance": 8
       }
     ],
     "loc_country_match": "jordan"
@@ -57,7 +59,7 @@
       "wave": "—",
       "force": "unknown",
       "source": "sepah",
-      "loc": null,
+      "loc": "princeHassan",
       "loc_raw_text": "پایگاه اردن",
       "target": "نامشخص",
       "weapon": "نامشخص",
@@ -68,12 +70,11 @@
       "code": "36354"
     },
     "errors": [
-      "loc is null",
       "invalid time field value: unknown"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-11T08:40:38.636Z",
+    "last_checked_at": "2026-08-11T15:31:26.234Z",
     "loc_candidates": [
       {
         "id": "rukban",
