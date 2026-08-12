@@ -4,13 +4,28 @@
     "link": "https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "wave": "alAzraq",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "اردن",
+      "target": "نامشخص",
+      "weapon": "missile",
+      "outcome": "complete destruction",
+      "time": "09:00",
+      "dateG": "2026-07-23",
+      "dateP": "۱ مرداد ۱۴۰۵",
+      "code": "36292"
+    },
     "errors": [
-      "extraction failed: Expected property name or '}' in JSON at position 1"
+      "wave contains disallowed characters: alAzraq",
+      "loc is null",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-12T09:47:16.701Z",
+    "last_checked_at": "2026-08-12T15:30:12.516Z",
     "loc_candidates": [
       {
         "id": "bandarAbbas",
@@ -41,29 +56,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "ground",
-      "force": "ground",
+      "wave": "—",
+      "force": "joint",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "دزفول",
-      "target": "ground",
-      "weapon": "aerospace",
-      "outcome": "تکریم د штаба و محرک répondu، شکستյ americana و سهمونین",
-      "time": "یکشنبه ۰۴ مرداد ۱۴۰۵",
+      "loc_raw_text": "نomainه مقاومت پاسدای دزفول",
+      "target": "commanders",
+      "weapon": "",
+      "outcome": "commemorated",
+      "time": "۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "wave contains disallowed characters: ground",
+      "missing/empty required field: weapon",
       "loc is null",
-      "invalid time field value: یکشنبه ۰۴ مرداد ۱۴۰۵",
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-12T09:48:14.469Z",
+    "last_checked_at": "2026-08-12T15:31:17.459Z",
     "loc_candidates": [
       {
         "id": "rukban",
