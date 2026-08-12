@@ -4,25 +4,13 @@
     "link": "https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
-    "raw_extraction": {
-      "wave": "نصر۲",
-      "force": "aerospace",
-      "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
-      "target": "پایگاه‌های آمریکایی در اردن (رادار تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات)",
-      "weapon": "حملات برق‌آسا",
-      "outcome": "انهدام رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، آتش گرفتن مخازن سوخت، تخریب انبار تجهیزات بالگردی و سوله تعمیرات",
-      "dateG": "2026-07-23",
-      "dateP": "۱ مرداد ۱۴۰۵",
-      "code": "36292"
-    },
+    "raw_extraction": null,
     "errors": [
-      "loc is null"
+      "extraction failed: Expected property name or '}' in JSON at position 1"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-12T05:20:09.214Z",
+    "last_checked_at": "2026-08-12T09:47:16.701Z",
     "loc_candidates": [
       {
         "id": "bandarAbbas",
@@ -53,25 +41,29 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "نصر ۵",
+      "wave": "ground",
       "force": "ground",
       "source": "sepah",
-      "loc": "batelco",
+      "loc": null,
       "loc_raw_text": "دزفول",
-      "target": "آمریکا و رژیم صهیونیستی",
-      "weapon": "مسیر موشکی با نقض آتش بس",
-      "outcome": "تهدید نظامی آمریکا",
-      "time": "۱۴۰۵/۰۴/۰۱ Saturday 23:10",
+      "target": "ground",
+      "weapon": "aerospace",
+      "outcome": "تکریم د штаба و محرک répondu، شکستյ americana و سهمونین",
+      "time": "یکشنبه ۰۴ مرداد ۱۴۰۵",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "invalid time field value: ۱۴۰۵/۰۴/۰۱ Saturday 23:10"
+      "wave contains disallowed characters: ground",
+      "loc is null",
+      "invalid time field value: یکشنبه ۰۴ مرداد ۱۴۰۵",
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-12T05:20:29.068Z",
+    "last_checked_at": "2026-08-12T09:48:14.469Z",
     "loc_candidates": [
       {
         "id": "rukban",
