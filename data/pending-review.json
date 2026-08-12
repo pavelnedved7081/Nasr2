@@ -5,27 +5,24 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36292/پیام-مهم-سپاه-به-مردم-اردن-حق-قانونی-و-شرعی-و-منطقی-ماست-که-پایگاه-آمریکایی-مبدا-تجاوز-به-کشورمان-را-هدف-قرار-دهیم",
     "pubDate": "23 Jul 2026 09:00:01 +0330",
     "raw_extraction": {
-      "wave": "نصر ۲",
+      "wave": "نصر۲",
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "صحبت امریکایی در اردن",
-      "target": "پarzyst معیبت آمریکایی به القلع",
-      "weapon": "رآدار ام retrans Cap Reactive Mooshki، Sistem Patrion، بالگرد، سوله Regulations",
-      "outcome": "منشطب ریلارismo، میزان سوخت پایگاه، انبار تجهیزات بالگرد و سولهSecondo تخریب شده",
-      "time": "پنجمسه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
+      "loc_raw_text": "پایگاه‌های آمریکا در خاک اردن",
+      "target": "پایگاه‌های آمریکایی در اردن (رادار تاد، سامانه پاتریوت، رادار C-ram، مخازن سوخت، انبار تجهیزات بالگردی و سوله تعمیرات)",
+      "weapon": "حملات برق‌آسا",
+      "outcome": "انهدام رادار سامانه پدافند موشکی تاد، سامانه پاتریوت، رادار C-ram، آتش گرفتن مخازن سوخت، تخریب انبار تجهیزات بالگردی و سوله تعمیرات",
       "dateG": "2026-07-23",
       "dateP": "۱ مرداد ۱۴۰۵",
       "code": "36292"
     },
     "errors": [
-      "loc is null",
-      "invalid time field value: پنجمسه ۰۱ مرداد ۱۴۰۵ - ۰۹:۰۰",
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
+      "loc is null"
     ],
     "added_at": "2026-07-23T07:46:35.050Z",
     "issue_number": 42,
-    "last_checked_at": "2026-08-11T15:30:52.039Z",
+    "last_checked_at": "2026-08-12T05:20:09.214Z",
     "loc_candidates": [
       {
         "id": "bandarAbbas",
@@ -56,25 +53,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "—",
-      "force": "unknown",
+      "wave": "نصر ۵",
+      "force": "ground",
       "source": "sepah",
-      "loc": "princeHassan",
-      "loc_raw_text": "پایگاه اردن",
-      "target": "نامشخص",
-      "weapon": "نامشخص",
-      "outcome": "نامشخص",
-      "time": "unknown",
+      "loc": "batelco",
+      "loc_raw_text": "دزفول",
+      "target": "آمریکا و رژیم صهیونیستی",
+      "weapon": "مسیر موشکی با نقض آتش بس",
+      "outcome": "تهدید نظامی آمریکا",
+      "time": "۱۴۰۵/۰۴/۰۱ Saturday 23:10",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "invalid time field value: unknown"
+      "invalid time field value: ۱۴۰۵/۰۴/۰۱ Saturday 23:10"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-11T15:31:26.234Z",
+    "last_checked_at": "2026-08-12T05:20:29.068Z",
     "loc_candidates": [
       {
         "id": "rukban",
