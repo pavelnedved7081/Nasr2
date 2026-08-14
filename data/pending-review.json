@@ -6,26 +6,26 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "unknown",
+      "force": "aerospace",
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "پایگاه اردن",
       "target": "US bases in Jordan",
-      "weapon": "unspecified (missiles/drones implied)",
-      "outcome": "more than 288 points destroyed in US bases; more than 11 US planes exploded in Jordan base recently, along with extensive facilities and UAVs",
-      "time": "1404/05/04 (article date)",
+      "weapon": "نامشخص",
+      "outcome": "destroyed 288 points and 11 aircraft",
+      "time": "unknown",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: 1404/05/04 (article date)",
+      "invalid time field value: unknown",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-14T15:07:21.147Z",
+    "last_checked_at": "2026-08-14T20:00:51.925Z",
     "loc_candidates": [
       {
         "id": "duqm",
