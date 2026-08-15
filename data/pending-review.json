@@ -5,27 +5,28 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "—",
+      "wave": "Tahmili",
       "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه اردن",
-      "target": "US bases in Jordan",
-      "weapon": "نامشخص",
-      "outcome": "destroyed 288 points and 11 aircraft",
-      "time": "unknown",
+      "loc_raw_text": "Jordan base",
+      "target": "US bases",
+      "weapon": "aircraft and drones",
+      "outcome": "destroyed",
+      "time": "Monday 04 Mordad 1405 - 23:10",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
+      "wave contains disallowed characters: Tahmili",
       "loc is null",
-      "invalid time field value: unknown",
+      "invalid time field value: Monday 04 Mordad 1405 - 23:10",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-14T20:00:51.925Z",
+    "last_checked_at": "2026-08-15T03:02:41.239Z",
     "loc_candidates": [
       {
         "id": "duqm",
