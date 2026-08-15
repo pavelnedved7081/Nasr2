@@ -5,28 +5,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "Tahmili",
-      "force": "aerospace",
+      "wave": "نصر ۲",
+      "force": "ground",
       "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "Jordan base",
-      "target": "US bases",
-      "weapon": "aircraft and drones",
-      "outcome": "destroyed",
-      "time": "Monday 04 Mordad 1405 - 23:10",
+      "loc": "rukban",
+      "loc_raw_text": "منطقه الرکبان",
+      "target": "زاده لاله آباد",
+      "weapon": "نارایề درباز",
+      "outcome": "استنفاد منابع دشمن",
+      "time": "04 مرداد ۱۴۰۵ - ۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "wave contains disallowed characters: Tahmili",
-      "loc is null",
-      "invalid time field value: Monday 04 Mordad 1405 - 23:10",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: 04 مرداد ۱۴۰۵ - ۲۳:۱۰"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-15T03:02:41.239Z",
+    "last_checked_at": "2026-08-15T07:18:26.299Z",
     "loc_candidates": [
       {
         "id": "duqm",
