@@ -4,13 +4,30 @@
     "link": "https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "wave": "—",
+      "force": null,
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "پایگاه اردن",
+      "target": null,
+      "weapon": null,
+      "outcome": null,
+      "time": null,
+      "dateG": "2026-07-26",
+      "dateP": "۴ مرداد ۱۴۰۵",
+      "code": "36354"
+    },
     "errors": [
-      "extraction failed: Unexpected token 'U', \"User Safet\"... is not valid JSON"
+      "missing/empty required field: force",
+      "missing/empty required field: target",
+      "missing/empty required field: weapon",
+      "missing/empty required field: outcome",
+      "loc is null"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-15T13:20:11.404Z",
+    "last_checked_at": "2026-08-15T19:01:04.743Z",
     "loc_candidates": [
       {
         "id": "duqm",
