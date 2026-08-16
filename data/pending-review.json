@@ -5,27 +5,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "aerospace",
+      "wave": "—",
       "force": "aerospace",
       "source": "sepah",
-      "loc": "alAzraq",
+      "loc": "aqaba",
       "loc_raw_text": "پایگاه اردن",
-      "target": "United States",
-      "weapon": "نامشخص",
-      "outcome": "success",
-      "time": "۹ اسفند",
+      "target": "pour bases aériennes américaines",
+      "weapon": "missiles",
+      "outcome": " destruction de plus de 11 avions, installations et drones",
+      "time": null,
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "wave contains disallowed characters: aerospace",
-      "invalid time field value: ۹ اسفند",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-16T07:20:56.828Z",
+    "last_checked_at": "2026-08-16T13:41:36.547Z",
     "loc_candidates": [
       {
         "id": "duqm",
