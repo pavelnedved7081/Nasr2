@@ -8,23 +8,22 @@
       "wave": "نصر ۲",
       "force": "aerospace",
       "source": "sepah",
-      "loc": null,
+      "loc": "aqaba",
       "loc_raw_text": "پایگاه اردن",
-      "target": "پایگاه آمریکایی در اردن",
-      "weapon": "موشک/پهپاد (مشخص نشده)",
-      "outcome": "بیش از ۱۱ هواپیما و تاسیسات گسترده منفجر شد",
-      "time": "1405/05/04",
+      "target": "پایگاه‌های آمریکایی در اردن",
+      "weapon": "موشک و یا سلاح‌های هوابستری",
+      "outcome": "انهدام بیش از ۱۱ هواپیمای آمریکایی و تأسیسات فراوان، از جمله پهپادها",
+      "time": "یکشنبه ۰۴ مرداد ۱۴۰۵",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "loc is null",
-      "invalid time field value: 1405/05/04"
+      "invalid time field value: یکشنبه ۰۴ مرداد ۱۴۰۵"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-17T13:56:22.871Z",
+    "last_checked_at": "2026-08-17T19:17:36.955Z",
     "loc_candidates": [
       {
         "id": "duqm",
