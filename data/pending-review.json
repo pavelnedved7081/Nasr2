@@ -6,24 +6,25 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "aerospace",
+      "force": "unknown",
       "source": "sepah",
-      "loc": "aqaba",
-      "loc_raw_text": "پایگاه اردن",
-      "target": "pour bases aériennes américaines",
-      "weapon": "missiles",
-      "outcome": " destruction de plus de 11 avions, installations et drones",
-      "time": null,
+      "loc": null,
+      "loc_raw_text": "پایگاه‌های اردن",
+      "target": "پایگاه‌های آمریکا",
+      "weapon": "هواپیما و پهپاد",
+      "outcome": "منهدم و منفجر شدند",
+      "time": "ناشناخته",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "loc is null",
+      "invalid time field value: ناشناخته"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-16T13:41:36.547Z",
+    "last_checked_at": "2026-08-17T03:15:40.470Z",
     "loc_candidates": [
       {
         "id": "duqm",
