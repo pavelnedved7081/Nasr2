@@ -5,47 +5,45 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "—",
-      "force": "unknown",
+      "wave": "عقب امنیت",
+      "force": "ground",
       "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "پایگاه‌های آمریکا در اردن",
-      "target": "United States",
-      "weapon": "aircraft, drones",
-      "outcome": "Destroyed US bases and aircraft",
-      "time": "1405-08-04 23:10",
+      "loc": "princeHassan",
+      "loc_raw_text": "پایگاه هوایی پرنس حسن (jordan)",
+      "target": "پایگاه‌های آمریکا در خلیج فارس",
+      "weapon": "مسموم و موشک‌ها",
+      "outcome": "منجمین موفق و شکست دشمن",
+      "time": "04_1405",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "loc is null",
-      "invalid time field value: 1405-08-04 23:10",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: 04_1405"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-18T07:58:29.077Z",
+    "last_checked_at": "2026-08-18T14:05:17.178Z",
     "loc_candidates": [
       {
-        "id": "duqm",
-        "distance": 3
+        "id": "princeHassan",
+        "distance": 18
       },
       {
-        "id": "rifa",
-        "distance": 4
+        "id": "northIndianOcean",
+        "distance": 22
       },
       {
-        "id": "tanf",
-        "distance": 4
+        "id": "arifjan",
+        "distance": 25
       },
       {
-        "id": "aqaba",
-        "distance": 5
+        "id": "kuwaitCity",
+        "distance": 25
       },
       {
-        "id": "rukban",
-        "distance": 5
+        "id": "udairi",
+        "distance": 25
       }
     ],
     "loc_country_match": "jordan"
