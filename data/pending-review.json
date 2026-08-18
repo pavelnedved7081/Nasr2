@@ -5,25 +5,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "عقب امنیت",
-      "force": "ground",
+      "wave": "—",
+      "force": "aerospace",
       "source": "sepah",
-      "loc": "princeHassan",
-      "loc_raw_text": "پایگاه هوایی پرنس حسن (jordan)",
-      "target": "پایگاه‌های آمریکا در خلیج فارس",
-      "weapon": "مسموم و موشک‌ها",
-      "outcome": "منجمین موفق و شکست دشمن",
-      "time": "04_1405",
+      "loc": null,
+      "loc_raw_text": "دزفول",
+      "target": "amirciian military bases",
+      "weapon": "missile/drone",
+      "outcome": "destruction of US military bases",
+      "time": "۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "invalid time field value: 04_1405"
+      "loc is null",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-18T14:05:17.178Z",
+    "last_checked_at": "2026-08-18T19:18:18.464Z",
     "loc_candidates": [
       {
         "id": "princeHassan",
