@@ -5,25 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "نصر ٢",
-      "force": "ground",
+      "wave": "—",
+      "force": "unknown",
       "source": "sepah",
-      "loc": "rukban",
-      "loc_raw_text": "نیکار که در انتخاب محافظت کرد و قرار بود همزمان با بمباران، این افراد وارد عمل شوند همانطور که در حوادث دی ماه خیابان آمدند و نتانیاهو بعد از این حوادث در سفر به آمریکا ترامپ را متقاعد کرد که شرایط برای حمله به ایران فراهم است.",
-      "target": "پایگاه‌های آمریکا",
-      "weapon": "موشک و تجهیزات نظامی",
-      "outcome": "پی പര péld با شکست دشمن اقتصادی و نظامی وارد شد",
-      "time": "۲۳:۱۰",
+      "loc": null,
+      "loc_raw_text": "پایگاه‌های آمریکا در اردن",
+      "target": "United States",
+      "weapon": "aircraft, drones",
+      "outcome": "Destroyed US bases and aircraft",
+      "time": "1405-08-04 23:10",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
+      "loc is null",
+      "invalid time field value: 1405-08-04 23:10",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-18T03:09:23.295Z",
+    "last_checked_at": "2026-08-18T07:58:29.077Z",
     "loc_candidates": [
       {
         "id": "duqm",
