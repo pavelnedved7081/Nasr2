@@ -9,11 +9,11 @@
       "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "ناحیه مقاومت بسیج دزفول",
-      "target": "weapon",
+      "loc_raw_text": "پایگاه اردن",
+      "target": "US bases in Jordan",
       "weapon": "outcome",
-      "outcome": "time",
-      "time": "۲۳:۱۰",
+      "outcome": "destroyed",
+      "time": "null",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
@@ -21,11 +21,12 @@
     "errors": [
       "wave contains disallowed characters: force",
       "loc is null",
+      "invalid time field value: null",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-19T14:06:18.369Z",
+    "last_checked_at": "2026-08-19T19:11:39.187Z",
     "loc_candidates": [
       {
         "id": "alAzraq",
