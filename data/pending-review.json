@@ -5,46 +5,47 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
-      "wave": "—",
+      "wave": "force",
       "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه اردن",
-      "target": "پایگاه‌های آمریکا",
-      "weapon": "هواپیما و پهپاد",
-      "outcome": "منفجر شد",
-      "time": "unknown",
+      "loc_raw_text": "ناحیه مقاومت بسیج دزفول",
+      "target": "weapon",
+      "weapon": "outcome",
+      "outcome": "time",
+      "time": "۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
+      "wave contains disallowed characters: force",
       "loc is null",
-      "invalid time field value: unknown"
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-19T07:57:42.297Z",
+    "last_checked_at": "2026-08-19T14:06:18.369Z",
     "loc_candidates": [
       {
-        "id": "princeHassan",
-        "distance": 18
+        "id": "alAzraq",
+        "distance": 10
       },
       {
-        "id": "northIndianOcean",
-        "distance": 22
-      },
-      {
-        "id": "arifjan",
-        "distance": 25
+        "id": "aliAlSalem",
+        "distance": 10
       },
       {
         "id": "kuwaitCity",
-        "distance": 25
+        "distance": 10
       },
       {
-        "id": "udairi",
-        "distance": 25
+        "id": "batelco",
+        "distance": 10
+      },
+      {
+        "id": "alUdeid",
+        "distance": 10
       }
     ],
     "loc_country_match": "jordan"
