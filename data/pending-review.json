@@ -6,25 +6,25 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "ground",
+      "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "ناحیهٔ مقاومت بسیج دزفول",
-      "target": "american bases",
-      "weapon": "missile",
-      "outcome": "success",
-      "time": "۲۳:۱۰",
+      "loc_raw_text": "پایگاه اردن",
+      "target": "پایگاه‌های آمریکا",
+      "weapon": "هواپیما و پهپاد",
+      "outcome": "منفجر شد",
+      "time": "unknown",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
       "loc is null",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: unknown"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-19T03:13:49.257Z",
+    "last_checked_at": "2026-08-19T07:57:42.297Z",
     "loc_candidates": [
       {
         "id": "princeHassan",
