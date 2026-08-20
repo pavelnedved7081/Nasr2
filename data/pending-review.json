@@ -6,26 +6,28 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "ground",
+      "force": null,
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "نchnittور مقاومت بسیج دزفول",
-      "target": "pagheyehalapdariye",
-      "weapon": "aerospace",
-      "outcome": "مهدود زدن نقاط USC و Caballero faveur در اردن",
-      "time": "2024-08-15 23:10",
+      "loc_raw_text": "پایگاه اردن",
+      "target": null,
+      "weapon": null,
+      "outcome": null,
+      "time": "۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "loc is null",
-      "invalid time field value: 2024-08-15 23:10",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "missing/empty required field: force",
+      "missing/empty required field: target",
+      "missing/empty required field: weapon",
+      "missing/empty required field: outcome",
+      "loc is null"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-20T08:03:53.084Z",
+    "last_checked_at": "2026-08-20T14:09:35.830Z",
     "loc_candidates": [
       {
         "id": "alAzraq",
