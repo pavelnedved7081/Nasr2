@@ -4,13 +4,28 @@
     "link": "https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "guid": "sepah:https://sepahnews.ir/fa/news/36354/آیین-مراسم-تکریم-فرماندهان-سابق-و-جدید-در-ناحیه-مقاومت-بسیج-دزفول-برگزار-گردید",
     "pubDate": "26 Jul 2026 23:10:35 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "wave": "—",
+      "force": "ground",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "نchnittور مقاومت بسیج دزفول",
+      "target": "pagheyehalapdariye",
+      "weapon": "aerospace",
+      "outcome": "مهدود زدن نقاط USC و Caballero faveur در اردن",
+      "time": "2024-08-15 23:10",
+      "dateG": "2026-07-26",
+      "dateP": "۴ مرداد ۱۴۰۵",
+      "code": "36354"
+    },
     "errors": [
-      "extraction failed: This operation was aborted"
+      "loc is null",
+      "invalid time field value: 2024-08-15 23:10",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-20T03:12:09.036Z",
+    "last_checked_at": "2026-08-20T08:03:53.084Z",
     "loc_candidates": [
       {
         "id": "alAzraq",
