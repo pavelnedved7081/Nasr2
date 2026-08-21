@@ -6,25 +6,25 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "unknown",
+      "force": "aerospace",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "دزفول",
-      "target": "نامشخص",
-      "weapon": "نامشخص",
-      "outcome": "نامشخص",
-      "time": "1405/04/04",
+      "loc_raw_text": "یک پایگاه هوایی در اردن",
+      "target": "آمریکا",
+      "weapon": "موشک‌ها/پهپادها",
+      "outcome": "نابود شد",
+      "time": "۰۴ مرداد ۱۴۰۵ - ۲۳:۱۰",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: 1405/04/04"
+      "invalid time field value: ۰۴ مرداد ۱۴۰۵ - ۲۳:۱۰"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-21T06:28:37.901Z",
+    "last_checked_at": "2026-08-21T12:24:24.336Z",
     "loc_candidates": [
       {
         "id": "alAzraq",
