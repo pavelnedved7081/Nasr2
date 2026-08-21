@@ -6,28 +6,25 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "aerospace",
+      "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "Jordan base",
-      "target": null,
-      "weapon": null,
-      "outcome": null,
-      "time": "04 مرداد ۱۴۰۵ - ۲۳:۱۰",
+      "loc_raw_text": "دزفول",
+      "target": "نامشخص",
+      "weapon": "نامشخص",
+      "outcome": "نامشخص",
+      "time": "1405/04/04",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
-      "missing/empty required field: target",
-      "missing/empty required field: weapon",
-      "missing/empty required field: outcome",
       "loc is null",
-      "invalid time field value: 04 مرداد ۱۴۰۵ - ۲۳:۱۰"
+      "invalid time field value: 1405/04/04"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-21T00:38:37.336Z",
+    "last_checked_at": "2026-08-21T06:28:37.901Z",
     "loc_candidates": [
       {
         "id": "alAzraq",
