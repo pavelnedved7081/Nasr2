@@ -6,25 +6,26 @@
     "pubDate": "26 Jul 2026 23:10:35 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "aerospace",
+      "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "یک پایگاه هوایی در اردن",
-      "target": "آمریکا",
-      "weapon": "موشک‌ها/پهپادها",
-      "outcome": "نابود شد",
-      "time": "۰۴ مرداد ۱۴۰۵ - ۲۳:۱۰",
+      "loc_raw_text": "نقهоне مقاومت_ATTRIB:|B مسج دزفول",
+      "target": "US military",
+      "weapon": "نامشخص",
+      "outcome": "military victory/defense success",
+      "time": "1398 zaję 04 Vendemia 1405",
       "dateG": "2026-07-26",
       "dateP": "۴ مرداد ۱۴۰۵",
       "code": "36354"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: ۰۴ مرداد ۱۴۰۵ - ۲۳:۱۰"
+      "invalid time field value: 1398 zaję 04 Vendemia 1405",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-07-26T21:14:49.492Z",
     "issue_number": 54,
-    "last_checked_at": "2026-08-21T12:24:24.336Z",
+    "last_checked_at": "2026-08-21T18:21:20.932Z",
     "loc_candidates": [
       {
         "id": "alAzraq",
