@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "title": "تجاوز دشمن تروریست در جزیره لارک همراه با تنبیه متجاوز پاسخ داده خواهد شد",
+    "link": "https://sepahnews.ir/fa/news/37135/تجاوز-دشمن-تروریست-در-جزیره-لارک-همراه-با-تنبیه-متجاوز-پاسخ-داده-خواهد-شد",
+    "guid": "sepah:https://sepahnews.ir/fa/news/37135/تجاوز-دشمن-تروریست-در-جزیره-لارک-همراه-با-تنبیه-متجاوز-پاسخ-داده-خواهد-شد",
+    "pubDate": "30 Aug 2026 23:28:01 +0330",
+    "raw_extraction": null,
+    "errors": [
+      "extraction failed: Unexpected token 'U', \"User Safet\"... is not valid JSON"
+    ],
+    "added_at": "2026-08-30T20:14:32.213Z",
+    "issue_number": 58
+  }
+]
