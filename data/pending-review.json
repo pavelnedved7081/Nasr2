@@ -8,24 +8,23 @@
       "force": "unknown",
       "loc": null,
       "loc_raw_text": "جزیره لارک",
-      "outcome": "Several of our fighters and fellow countrymen were martyred and wounded.",
+      "outcome": "Martyrs and injuries sustained",
       "source": "sepah",
       "target": "Lark Island",
       "time": "۲۳:۲۸",
-      "wave": "wave",
-      "weapon": "weapon",
+      "wave": "—",
+      "weapon": "نامشخص",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37135"
     },
     "errors": [
-      "wave contains disallowed characters: wave",
       "loc is null",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-08-30T20:14:32.213Z",
     "issue_number": 58,
-    "last_checked_at": "2026-09-01T15:45:11.293Z"
+    "last_checked_at": "2026-09-01T20:17:48.919Z"
   },
   {
     "title": "وحدت اسلامی نه یک تاکتیک مقطعی بلکه راهبردی دائمی و ضامن اقتدار امت اسلام است / شکست هیمنه پوشالی استکبار حاصل ایستادگی و یکپارچگی ملت ایران است",
@@ -34,25 +33,53 @@
     "pubDate": "31 Aug 2026 00:17:16 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "ground",
+      "force": null,
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "میدان فردوسی",
-      "target": "enemies",
-      "weapon": "نامشخص",
-      "outcome": "defeat of enemy plots",
-      "time": "09 شهريور 1405 - 00:17",
+      "loc_raw_text": null,
+      "target": null,
+      "weapon": null,
+      "outcome": null,
+      "time": "1405/06/09",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37141"
     },
     "errors": [
+      "missing/empty required field: force",
+      "missing/empty required field: target",
+      "missing/empty required field: weapon",
+      "missing/empty required field: outcome",
       "loc is null",
-      "invalid time field value: 09 شهريور 1405 - 00:17",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: 1405/06/09"
     ],
     "added_at": "2026-08-31T02:11:31.394Z",
     "issue_number": 60,
-    "last_checked_at": "2026-09-01T15:44:33.829Z"
+    "last_checked_at": "2026-09-01T20:17:21.835Z"
+  },
+  {
+    "title": "حملات از سر استیصال دشمن قفل تنگه هرمز را محکم‌تر می‌کند/ رزمندگان سپاه، پاسخ پشیمان‌کننده متجاوزان را آغاز کرده‌اند",
+    "link": "https://sepahnews.ir/fa/news/37179/حملات-از-سر-استیصال-دشمن-قفل-تنگه-هرمز-را-محکم-تر-می-کند-رزمندگان-سپاه-پاسخ-پشیمان-کننده-متجاوزان-را-آغاز-کرده-اند",
+    "guid": "sepah:https://sepahnews.ir/fa/news/37179/حملات-از-سر-استیصال-دشمن-قفل-تنگه-هرمز-را-محکم-تر-می-کند-رزمندگان-سپاه-پاسخ-پشیمان-کننده-متجاوزان-را-آغاز-کرده-اند",
+    "pubDate": "01 Sep 2026 22:43:50 +0330",
+    "raw_extraction": {
+      "force": "aerospace",
+      "loc": "hormuz",
+      "loc_raw_text": "تنگه هرمز",
+      "outcome": "shot down",
+      "source": "sepah",
+      "target": "US MQ-9 drone",
+      "time": "۲۲:۴۳",
+      "wave": "—",
+      "weapon": "new aerospace defense system",
+      "dateG": "2026-09-01",
+      "dateP": "۱۰ شهریور ۱۴۰۵",
+      "code": "37179"
+    },
+    "errors": [
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+    ],
+    "added_at": "2026-09-01T20:17:14.446Z",
+    "issue_number": 62
   }
 ]
