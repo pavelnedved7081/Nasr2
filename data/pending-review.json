@@ -5,54 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37135/تجاوز-دشمن-تروریست-در-جزیره-لارک-همراه-با-تنبیه-متجاوز-پاسخ-داده-خواهد-شد",
     "pubDate": "30 Aug 2026 23:28:01 +0330",
     "raw_extraction": {
-      "wave": "نصر ۲",
-      "force": "نظامی دریایی",
-      "source": "sepah",
+      "force": "unknown",
       "loc": null,
       "loc_raw_text": "جزیره لارک",
-      "target": "جزیره لارک",
-      "weapon": null,
-      "outcome": "شهادت و مجروحیت تعدادی از رزمندگان و هموطنان و تهدید به مجازات متجاوز",
-      "time": "۱۴۰۵-۰۹-۰۸ ۲۳:۲۸",
+      "outcome": "Several of our fighters and fellow countrymen were martyred and wounded.",
+      "source": "sepah",
+      "target": "Lark Island",
+      "time": "۲۳:۲۸",
+      "wave": "wave",
+      "weapon": "weapon",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37135"
     },
     "errors": [
-      "missing/empty required field: weapon",
-      "invalid force: نظامی دریایی",
+      "wave contains disallowed characters: wave",
       "loc is null",
-      "invalid time field value: ۱۴۰۵-۰۹-۰۸ ۲۳:۲۸"
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-08-30T20:14:32.213Z",
     "issue_number": 58,
-    "last_checked_at": "2026-09-01T10:44:02.547Z"
-  },
-  {
-    "title": "زیرساخت های فنی و تعمیراتی و محل استقرار جنگنده های دشمن در دو پایگاه هوایی آمریکایی ملک حسین و الازرق درهم کوبیده شد",
-    "link": "https://sepahnews.ir/fa/news/37155/زیرساخت-های-فنی-و-تعمیراتی-و-محل-استقرار-جنگنده-های-دشمن-در-دو-پایگاه-هوایی-آمریکایی-ملک-حسین-و-الازرق-درهم-کوبیده-شد",
-    "guid": "sepah:https://sepahnews.ir/fa/news/37155/زیرساخت-های-فنی-و-تعمیراتی-و-محل-استقرار-جنگنده-های-دشمن-در-دو-پایگاه-هوایی-آمریکایی-ملک-حسین-و-الازرق-درهم-کوبیده-شد",
-    "pubDate": "31 Aug 2026 02:19:23 +0330",
-    "raw_extraction": {
-      "wave": "صاعقه",
-      "force": "aerospace",
-      "source": "sepah",
-      "loc": "alAzraq",
-      "loc_raw_text": "پایگاه هوایی ملک حسین و الازرق در اردن",
-      "target": "زیرساخت های فنی و تعمیراتی و محل استقرار جنگنده های دشمن",
-      "weapon": "موشک بالستیک و پهپاد (عملیات ترکیبی موشکی پهپادی)",
-      "outcome": "در هم کوبیده شدن و وارد کردن خسارات سنگین",
-      "time": "دوشنبه ۰۹ شهریور ۱۴۰۵ - ۰۲:۱۹",
-      "dateG": "2026-08-30",
-      "dateP": "۸ شهریور ۱۴۰۵",
-      "code": "37155"
-    },
-    "errors": [
-      "time field's embedded date doesn't match this event's date (dateP=۸ شهریور ۱۴۰۵): دوشنبه ۰۹ شهریور ۱۴۰۵ - ۰۲:۱۹"
-    ],
-    "added_at": "2026-08-31T02:11:21.927Z",
-    "issue_number": 59,
-    "last_checked_at": "2026-09-01T10:43:45.946Z"
+    "last_checked_at": "2026-09-01T15:45:11.293Z"
   },
   {
     "title": "وحدت اسلامی نه یک تاکتیک مقطعی بلکه راهبردی دائمی و ضامن اقتدار امت اسلام است / شکست هیمنه پوشالی استکبار حاصل ایستادگی و یکپارچگی ملت ایران است",
@@ -61,27 +34,25 @@
     "pubDate": "31 Aug 2026 00:17:16 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": null,
+      "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": null,
-      "target": null,
-      "weapon": null,
-      "outcome": null,
-      "time": null,
+      "loc_raw_text": "میدان فردوسی",
+      "target": "enemies",
+      "weapon": "نامشخص",
+      "outcome": "defeat of enemy plots",
+      "time": "09 شهريور 1405 - 00:17",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37141"
     },
     "errors": [
-      "missing/empty required field: force",
-      "missing/empty required field: target",
-      "missing/empty required field: weapon",
-      "missing/empty required field: outcome",
-      "loc is null"
+      "loc is null",
+      "invalid time field value: 09 شهريور 1405 - 00:17",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-08-31T02:11:31.394Z",
     "issue_number": 60,
-    "last_checked_at": "2026-09-01T10:43:48.601Z"
+    "last_checked_at": "2026-09-01T15:44:33.829Z"
   }
 ]
