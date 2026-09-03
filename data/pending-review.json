@@ -4,28 +4,13 @@
     "link": "https://sepahnews.ir/fa/news/37135/تجاوز-دشمن-تروریست-در-جزیره-لارک-همراه-با-تنبیه-متجاوز-پاسخ-داده-خواهد-شد",
     "guid": "sepah:https://sepahnews.ir/fa/news/37135/تجاوز-دشمن-تروریست-در-جزیره-لارک-همراه-با-تنبیه-متجاوز-پاسخ-داده-خواهد-شد",
     "pubDate": "30 Aug 2026 23:28:01 +0330",
-    "raw_extraction": {
-      "wave": "—",
-      "force": "unknown",
-      "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "جزیره لARK",
-      "target": "جزیره لARK",
-      "weapon": "نامشخص",
-      "outcome": "martyrdom and injury",
-      "time": "۲۳:۲۸",
-      "dateG": "2026-08-30",
-      "dateP": "۸ شهریور ۱۴۰۵",
-      "code": "37135"
-    },
+    "raw_extraction": null,
     "errors": [
-      "loc is null",
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "extraction failed: Unexpected token 'U', \"User Safet\"... is not valid JSON"
     ],
     "added_at": "2026-08-30T20:14:32.213Z",
     "issue_number": 58,
-    "last_checked_at": "2026-09-03T02:04:15.050Z"
+    "last_checked_at": "2026-09-03T10:26:17.194Z"
   },
   {
     "title": "وحدت اسلامی نه یک تاکتیک مقطعی بلکه راهبردی دائمی و ضامن اقتدار امت اسلام است / شکست هیمنه پوشالی استکبار حاصل ایستادگی و یکپارچگی ملت ایران است",
@@ -33,29 +18,28 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37141/وحدت-اسلامی-نه-یک-تاکتیک-مقطعی-بلکه-راهبردی-دائمی-و-ضامن-اقتدار-امت-اسلام-است-شکست-هیمنه-پوشالی-استکبار-حاصل-ایستادگی-و-یکپارچگی-ملت-ایران-است",
     "pubDate": "31 Aug 2026 00:17:16 +0330",
     "raw_extraction": {
-      "wave": "—",
+      "wave": "operational_event",
       "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "کرمانشاه، میدان فردوسی",
-      "target": null,
-      "weapon": null,
-      "outcome": null,
-      "time": "1405-06-09T00:17",
+      "loc_raw_text": "استان کرمانشاه",
+      "target": "enemy_ideological",
+      "weapon": "نامشخص",
+      "outcome": "political_cohesion",
+      "time": "1405-09-09 00:17",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37141"
     },
     "errors": [
-      "missing/empty required field: target",
-      "missing/empty required field: weapon",
-      "missing/empty required field: outcome",
+      "wave contains disallowed characters: operational_event",
       "loc is null",
-      "invalid time field value: 1405-06-09T00:17"
+      "invalid time field value: 1405-09-09 00:17",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-08-31T02:11:31.394Z",
     "issue_number": 60,
-    "last_checked_at": "2026-09-03T02:01:08.816Z",
+    "last_checked_at": "2026-09-03T10:26:13.643Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -90,7 +74,7 @@
     ],
     "added_at": "2026-09-02T01:52:53.595Z",
     "issue_number": 63,
-    "last_checked_at": "2026-09-03T02:00:29.493Z"
+    "last_checked_at": "2026-09-03T10:21:45.674Z"
   },
   {
     "title": "حمله سنگین موشک‌های بالستیک به آشیانه‌ هواپیماهای بدون سرنشین دور پرواز آر کیو ۴ و ام کیو ۹ در پایگاه پرنس حسن/ تعدادی از پهپادها منهدم و تعدادی از خلبانان و خدمه فنی پروازی به هلاکت رسیدند",
@@ -98,25 +82,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37181/حمله-سنگین-موشک-های-بالستیک-به-آشیانه-هواپیماهای-بدون-سرنشین-دور-پرواز-آر-کیو-4-و-ام-کیو-9-در-پایگاه-پرنس-حسن-تعدادی-از-پهپادها-منهدم-و-تعدادی-از-خلبانان-و-خدمه-فنی-پروازی-به-هلاکت-رسیدند",
     "pubDate": "02 Sep 2026 02:24:41 +0330",
     "raw_extraction": {
-      "wave": "صاعقه",
+      "wave": "ballistic_missile_attack",
       "force": "aerospace",
       "source": "sepah",
       "loc": "princeHassan",
-      "loc_raw_text": "پایگاه هوایی آمریکا در اردن موسوم به پرنس حسن",
-      "target": "آشیانه‌های هواپیماهای بدون سرنشین دور پرواز RQ-4 و MQ-9",
-      "weapon": "موشک‌های بالستیک",
-      "outcome": "تعدادی از پهپادها منهدم، تعدادی از خلبانان و خدمه فنی پروازی به هلاکت رسیدند؛ چندین زیرساخت فنی به آتش کشیده شد",
-      "time": "چهارشنبه ۱۱ شهریور ۱۴۰۵ - ۰۲:۲۴",
+      "loc_raw_text": "پایه هوایی آمریکا در اردن موسوم به پرنس حسن",
+      "target": "drone",
+      "weapon": "ballistic_missile",
+      "outcome": "drone_and_personnel_losses",
+      "time": "۱۴۰۵-۱۰-۱۱ ۰۲:۲۴",
       "dateG": "2026-09-01",
       "dateP": "۱۰ شهریور ۱۴۰۵",
       "code": "37181"
     },
     "errors": [
-      "time field's embedded date doesn't match this event's date (dateP=۱۰ شهریور ۱۴۰۵): چهارشنبه ۱۱ شهریور ۱۴۰۵ - ۰۲:۲۴"
+      "wave contains disallowed characters: ballistic_missile_attack",
+      "invalid time field value: ۱۴۰۵-۱۰-۱۱ ۰۲:۲۴",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-09-02T01:53:20.785Z",
     "issue_number": 64,
-    "last_checked_at": "2026-09-03T02:00:34.088Z"
+    "last_checked_at": "2026-09-03T10:24:27.872Z"
   },
   {
     "title": "پادگان تفنگداران آمریکایی در اردن موسوم به کمپ تیتین هدف موشک های بالستیک قرار گرفت/ تعداد زیادی از نیروهای آمریکایی به درک واصل شدند",
@@ -124,28 +110,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37180/پادگان-تفنگداران-آمریکایی-در-اردن-موسوم-به-کمپ-تیتین-هدف-موشک-های-بالستیک-قرار-گرفت-تعداد-زیادی-از-نیروهای-آمریکایی-به-درک-واصل-شدند",
     "pubDate": "02 Sep 2026 00:05:04 +0330",
     "raw_extraction": {
-      "wave": "Second wave",
+      "wave": "دوم",
       "force": "aerospace",
       "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "Camp Titus, on the coast of the Gulf of Aqaba",
-      "target": "US marines base (Camp Titus)",
-      "weapon": "ballistic missiles",
-      "outcome": "multiple US forces killed",
-      "time": "1405-09-01 00:05",
+      "loc": "aqaba",
+      "loc_raw_text": "سواحل خلیج عقبه",
+      "target": "پادگان تفنگداران آمریکایی (کمپ تیتین)",
+      "weapon": "موشک بالستیک",
+      "outcome": "تعدیه و چندین نفر به درک واصل شدند، چند تاسیسات مهم و بالگردهای هجومی دشمن منهدم شد",
+      "time": "چهارشنبه ۱۱ شهريف ۱۴۰۵ - ۰۰:۰۵",
       "dateG": "2026-09-01",
       "dateP": "۱۰ شهریور ۱۴۰۵",
       "code": "37180"
     },
     "errors": [
-      "wave contains disallowed characters: Second wave",
-      "loc is null",
-      "invalid time field value: 1405-09-01 00:05",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: چهارشنبه ۱۱ شهريف ۱۴۰۵ - ۰۰:۰۵"
     ],
     "added_at": "2026-09-02T01:53:44.401Z",
     "issue_number": 65,
-    "last_checked_at": "2026-09-03T02:00:52.354Z",
+    "last_checked_at": "2026-09-03T10:24:45.114Z",
     "loc_candidates": [
       {
         "id": "minaAbdullah",
@@ -180,19 +163,19 @@
       "source": "sepah",
       "loc": "hormuz",
       "loc_raw_text": "تنگه هرمز",
-      "target": "two oil tankers (American-controlled, crews disembarked)",
-      "weapon": "mine",
-      "outcome": "exploded, stopped, and burning",
-      "time": "",
+      "target": "کشتی‌های نفتکش",
+      "weapon": "مین",
+      "outcome": "انفجار، توقف و آتش‌سوزی",
+      "time": "۱۱ شهريور ۱۴۰۵ - ۱۱:۴۱",
       "dateG": "2026-09-02",
       "dateP": "۱۱ شهریور ۱۴۰۵",
       "code": "37184"
     },
     "errors": [
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: ۱۱ شهريور ۱۴۰۵ - ۱۱:۴۱"
     ],
     "added_at": "2026-09-02T10:11:28.616Z",
     "issue_number": 66,
-    "last_checked_at": "2026-09-03T02:00:13.552Z"
+    "last_checked_at": "2026-09-03T10:21:42.742Z"
   }
 ]
