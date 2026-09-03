@@ -3040,5 +3040,31 @@
       "ar": ""
     },
     "code": "37183"
+  },
+  {
+    "id": 130,
+    "dateG": "2026-09-02",
+    "dateP": "۱۱ شهریور ۱۴۰۵",
+    "time": "۱۱:۴۱",
+    "wave": "—",
+    "force": "naval",
+    "source": "sepah",
+    "loc": "hormuz",
+    "target": {
+      "fa": "two oil tankers (دو فروند کشتی نفتکش)",
+      "en": "",
+      "ar": ""
+    },
+    "weapon": {
+      "fa": "mine (مین)",
+      "en": "",
+      "ar": ""
+    },
+    "outcome": {
+      "fa": "hit mines and caught fire (با رفتن روی مین منفجر و متوقف شدند و در آتش می‌سوزند)",
+      "en": "",
+      "ar": ""
+    },
+    "code": "37184"
   }
 ]
