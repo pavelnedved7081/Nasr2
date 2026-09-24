@@ -5,26 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37135/تجاوز-دشمن-تروریست-در-جزیره-لارک-همراه-با-تنبیه-متجاوز-پاسخ-داده-خواهد-شد",
     "pubDate": "30 Aug 2026 23:28:01 +0330",
     "raw_extraction": {
-      "wave": "—",
-      "force": "unknown",
+      "wave": "ground",
+      "force": "ground",
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "جزیره لارک",
-      "target": "جزیره لارک",
-      "weapon": "",
-      "outcome": "شهادت و مجروحیت تنی چند از رزمندگان و هموطنان",
+      "target": "american",
+      "weapon": "نامشخص",
+      "outcome": "casualties",
       "time": "۲۳:۲۸",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37135"
     },
     "errors": [
-      "missing/empty required field: weapon",
-      "loc is null"
+      "wave contains disallowed characters: ground",
+      "loc is null",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-08-30T20:14:32.213Z",
     "issue_number": 58,
-    "last_checked_at": "2026-09-23T20:48:50.873Z",
+    "last_checked_at": "2026-09-24T02:05:14.147Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -53,27 +54,13 @@
     "link": "https://sepahnews.ir/fa/news/37141/وحدت-اسلامی-نه-یک-تاکتیک-مقطعی-بلکه-راهبردی-دائمی-و-ضامن-اقتدار-امت-اسلام-است-شکست-هیمنه-پوشالی-استکبار-حاصل-ایستادگی-و-یکپارچگی-ملت-ایران-است",
     "guid": "sepah:https://sepahnews.ir/fa/news/37141/وحدت-اسلامی-نه-یک-تاکتیک-مقطعی-بلکه-راهبردی-دائمی-و-ضامن-اقتدار-امت-اسلام-است-شکست-هیمنه-پوشالی-استکبار-حاصل-ایستادگی-و-یکپارچگی-ملت-ایران-است",
     "pubDate": "31 Aug 2026 00:17:16 +0330",
-    "raw_extraction": {
-      "wave": "—",
-      "force": "unknown",
-      "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "استان کرمانشاه",
-      "target": "نامشخص",
-      "weapon": "نامشخص",
-      "outcome": "نامشخص",
-      "time": "دوشنبه ۰۹ شهریور ۱۴۰۵ - ۰۰:۱۷",
-      "dateG": "2026-08-30",
-      "dateP": "۸ شهریور ۱۴۰۵",
-      "code": "37141"
-    },
+    "raw_extraction": null,
     "errors": [
-      "loc is null",
-      "time field's embedded date doesn't match this event's date (dateP=۸ شهریور ۱۴۰۵): دوشنبه ۰۹ شهریور ۱۴۰۵ - ۰۰:۱۷"
+      "extraction failed: Unexpected token 'U', \"User Safety: safe\" is not valid JSON"
     ],
     "added_at": "2026-08-31T02:11:31.394Z",
     "issue_number": 60,
-    "last_checked_at": "2026-09-23T20:55:31.852Z",
+    "last_checked_at": "2026-09-24T02:05:17.146Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -102,13 +89,27 @@
     "link": "https://sepahnews.ir/fa/news/37182/مرکز-تعمیراتی-و-انبارهای-تجهیزات-فنی-ارتش-تروریست-آمریکا-در-اربیل-و-سامانه-هدایت-بالن-جاسوسی-آمریکا-در-پایگاه-منهدم-شد-مخازن-سوخت-این-پایگاه-به-آتش-کشیده-و-تعدادی-از-متجاوزان-به-هلاکت-رسیدند",
     "guid": "sepah:https://sepahnews.ir/fa/news/37182/مرکز-تعمیراتی-و-انبارهای-تجهیزات-فنی-ارتش-تروریست-آمریکا-در-اربیل-و-سامانه-هدایت-بالن-جاسوسی-آمریکا-در-پایگاه-منهدم-شد-مخازن-سوخت-این-پایگاه-به-آتش-کشیده-و-تعدادی-از-متجاوزان-به-هلاکت-رسیدند",
     "pubDate": "02 Sep 2026 03:23:26 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "force": "ground",
+      "loc": null,
+      "loc_raw_text": "پایگاه‌های آمریکایی در اربیل",
+      "outcome": "نابودی مرکز تعمیراتی و انبارهای تجهیزات فنی، انهدام سامانه هدایت بالن جاسوسی، به آتش کشیده‌شدن مخازن سوخت و هلاکت تعدادی از نیروهای آمریکایی",
+      "source": "sepah",
+      "target": "مرکز تعمیراتی و انبارهای تجهیزات فنی ارتش آمریکا، سامانه هدایت بالن جاسوسی و مخازن سوخت پایگاه",
+      "time": "شب گذشته",
+      "wave": "صاعقه",
+      "weapon": "حمله تلفیقی موشکی و پهپادی",
+      "dateG": "2026-09-01",
+      "dateP": "۱۰ شهریور ۱۴۰۵",
+      "code": "37182"
+    },
     "errors": [
-      "extraction failed: OpenRouter response had no message content"
+      "loc is null",
+      "invalid time field value: شب گذشته"
     ],
     "added_at": "2026-09-02T01:52:53.595Z",
     "issue_number": 63,
-    "last_checked_at": "2026-09-23T21:04:28.747Z",
+    "last_checked_at": "2026-09-24T02:06:28.437Z",
     "loc_candidates": [
       {
         "id": "batelco",
@@ -138,25 +139,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37181/حمله-سنگین-موشک-های-بالستیک-به-آشیانه-هواپیماهای-بدون-سرنشین-دور-پرواز-آر-کیو-4-و-ام-کیو-9-در-پایگاه-پرنس-حسن-تعدادی-از-پهپادها-منهدم-و-تعدادی-از-خلبانان-و-خدمه-فنی-پروازی-به-هلاکت-رسیدند",
     "pubDate": "02 Sep 2026 02:24:41 +0330",
     "raw_extraction": {
-      "wave": "حمله سنگین",
       "force": "aerospace",
-      "source": "sepah",
       "loc": "princeHassan",
       "loc_raw_text": "پایگاه هوایی آمریکا در اردن موسوم به پرنس حسن",
+      "outcome": "تعدادی از پهپادها منهدم و تعدادی از خلبانان و خدمه فنی پروازی به هلاکت رسیدند؛ چندین زیرساخت فنی آنها به آتش کشیده شد",
+      "source": "sepah",
       "target": "آشیانه‌های هواپیماهای بدون سرنشین دور پرواز آر کیو ۴ و ام کیو ۹",
+      "time": "چهارشنبه ۱۱ شهریور ۱۴۰۵ - ۰۲:۲۴",
+      "wave": "صاعقه",
       "weapon": "موشک‌های بالستیک",
-      "outcome": "تعدادی از پهپادها منهدم و تعدادی از خلبانان و خدمه فنی پروازی به هلاکت رسیدند",
-      "time": "چهارشنبه ۱۱ شهريور ۱۴۰۵ - ۰۲:۲۴",
       "dateG": "2026-09-01",
       "dateP": "۱۰ شهریور ۱۴۰۵",
       "code": "37181"
     },
     "errors": [
-      "time field's embedded date doesn't match this event's date (dateP=۱۰ شهریور ۱۴۰۵): چهارشنبه ۱۱ شهريور ۱۴۰۵ - ۰۲:۲۴"
+      "time field's embedded date doesn't match this event's date (dateP=۱۰ شهریور ۱۴۰۵): چهارشنبه ۱۱ شهریور ۱۴۰۵ - ۰۲:۲۴"
     ],
     "added_at": "2026-09-02T01:53:20.785Z",
     "issue_number": 64,
-    "last_checked_at": "2026-09-23T21:04:39.726Z",
+    "last_checked_at": "2026-09-24T02:09:54.141Z",
     "loc_candidates": [
       {
         "id": "arifjan",
@@ -186,26 +187,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37393/تصاویری-از-شلیک-انبوه-موشکهای-سوخت-جامد-و-مایع-به-پایگاه-های-شرارت-آمریکا-از-جمله-پایگاه-نظامی-الازرق-اردن",
     "pubDate": "09 Sep 2026 02:23:37 +0330",
     "raw_extraction": {
-      "wave": "شلیک انبوه موشک",
+      "wave": "massive missile wave",
       "force": "aerospace",
       "source": "sepah",
       "loc": "alAzraq",
       "loc_raw_text": "پایگاه نظامی الازرق اردن",
-      "target": "pâyگاه‌های شرارت آمریکا",
-      "weapon": "موشک‌های سوخت جامد و مایع",
-      "outcome": "انهدام پهپاد",
-      "time": "۱۸ شهريور ۱۴۰۵ - ۰۲:۲۳",
+      "target": "US bases",
+      "weapon": "missiles",
+      "outcome": "missile launch",
+      "time": "۱۸ شهریور ۱۴۰۵ - ۰۲:۲۳",
       "dateG": "2026-09-08",
       "dateP": "۱۷ شهریور ۱۴۰۵",
       "code": "37393"
     },
     "errors": [
-      "invalid time field value: ۱۸ شهريور ۱۴۰۵ - ۰۲:۲۳",
-      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
+      "wave contains disallowed characters: massive missile wave",
+      "invalid time field value: ۱۸ شهریور ۱۴۰۵ - ۰۲:۲۳",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-09-09T02:03:47.147Z",
     "issue_number": 68,
-    "last_checked_at": "2026-09-23T21:05:21.742Z",
+    "last_checked_at": "2026-09-24T02:10:39.546Z",
     "loc_candidates": [
       {
         "id": "aqaba",
@@ -235,25 +237,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37392/آشیانه-تعمیر-و-نگهداری-آماده-سازی-و-محل-استقرار-جنگنده-های-f-35-f-16-f-15-و-شلتر-جنگنده-ها-مورد-هدف-قرارگرفت",
     "pubDate": "09 Sep 2026 02:07:10 +0330",
     "raw_extraction": {
-      "wave": "یاحیدرکرار",
       "force": "aerospace",
-      "source": "sepah",
       "loc": "alAzraq",
       "loc_raw_text": "پایگاه آمریکایی الازرق اردن",
-      "target": "آشیانه تعمیر و نگهداری، آماده سازی و محل استقرار جنگنده های F-35، F-16، F-15 و شلتر جنگنده‌ها",
-      "weapon": "موشک بالستیک سوخت جامد و مایع",
-      "outcome": "خسارات سنگینی به دشمن وارد",
-      "time": "چهارشنبه ۱۸ شهریور ۱۴۰۵ - ۰۲:۰۷",
+      "outcome": "آشیانه‌ها و شلترهای جنگنده‌ها مورد اصابت قرار گرفتند و خسارات سنگینی وارد آمد",
+      "source": "sepah",
+      "target": "آشیانه تعمیر و نگهداری، آماده‌سازی و محل استقرار جنگنده‌های F-35، F-16، F-15 و شلتر جنگنده‌ها",
+      "time": "۱۸ شهریور ۱۴۰۵ - ۰۲:۰۷",
+      "wave": "یاحیدر کرار",
+      "weapon": "موشک‌های بالستیک سوخت جامد و سوخت مایع",
       "dateG": "2026-09-08",
       "dateP": "۱۷ شهریور ۱۴۰۵",
       "code": "37392"
     },
     "errors": [
-      "time field's embedded date doesn't match this event's date (dateP=۱۷ شهریور ۱۴۰۵): چهارشنبه ۱۸ شهریور ۱۴۰۵ - ۰۲:۰۷"
+      "invalid time field value: ۱۸ شهریور ۱۴۰۵ - ۰۲:۰۷"
     ],
     "added_at": "2026-09-09T02:04:27.708Z",
     "issue_number": 69,
-    "last_checked_at": "2026-09-23T21:05:55.783Z"
+    "last_checked_at": "2026-09-24T02:11:00.204Z"
   },
   {
     "title": "نفتکش متخلف ترند با پرچم کشور توگو مورد اصابت قرار گرفت و پس از بروز حریق متوقف شد",
@@ -261,26 +263,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37746/نفتکش-متخلف-ترند-با-پرچم-کشور-توگو-مورد-اصابت-قرار-گرفت-و-پس-از-بروز-حریق-متوقف-شد",
     "pubDate": "18 Sep 2026 03:11:52 +0330",
     "raw_extraction": {
-      "wave": "attack",
+      "wave": "—",
       "force": "naval",
       "source": "sepah",
       "loc": "hormuz",
-      "loc_raw_text": "تنگه هرمز",
-      "target": "نفتیکش متخلف ترند",
-      "weapon": "نامشخص",
-      "outcome": "stopped after fire",
-      "time": "جمعه ۲۷ شهريور ۱۴۰۵ - ۰۳:۱۱",
+      "loc_raw_text": null,
+      "target": "Trend",
+      "weapon": null,
+      "outcome": "stopped",
+      "time": "1405-09-27T03:11:00",
       "dateG": "2026-09-17",
       "dateP": "۲۶ شهریور ۱۴۰۵",
       "code": "37746"
     },
     "errors": [
-      "wave contains disallowed characters: attack",
-      "time field's embedded date doesn't match this event's date (dateP=۲۶ شهریور ۱۴۰۵): جمعه ۲۷ شهريور ۱۴۰۵ - ۰۳:۱۱"
+      "missing/empty required field: weapon",
+      "invalid time field value: 1405-09-27T03:11:00",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-09-18T02:15:21.581Z",
     "issue_number": 70,
-    "last_checked_at": "2026-09-23T21:06:17.290Z"
+    "last_checked_at": "2026-09-24T02:11:13.191Z"
   },
   {
     "title": "خون شهدا همچنان حیات‌بخش جامعه و عامل شکست نقشه‌های دشمن است",
@@ -290,24 +293,23 @@
     "raw_extraction": {
       "force": "unknown",
       "loc": null,
-      "loc_raw_text": null,
-      "outcome": "not_applicable",
+      "loc_raw_text": "نزدیکی محل استقرار رزمندگان",
+      "outcome": "موشک به نزدیکی محل استقرار رزمندگان اصابت کرد و تعدادی از نیروها برای کمک به مجروحان و جمع‌آوری نیروها وارد عمل شدند.",
       "source": "sepah",
-      "target": "not_applicable",
-      "time": "1405-09-01",
-      "wave": "—",
-      "weapon": "نامشخص",
+      "target": "رزمندگان",
+      "time": "جنگ اخیر",
+      "wave": "جنگ اخیر",
+      "weapon": "موشک",
       "dateG": "2026-09-22",
       "dateP": "۳۱ شهریور ۱۴۰۵",
       "code": "38105"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: 1405-09-01",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: جنگ اخیر"
     ],
     "added_at": "2026-09-23T02:29:30.905Z",
     "issue_number": 71,
-    "last_checked_at": "2026-09-23T21:07:12.638Z"
+    "last_checked_at": "2026-09-24T02:11:24.474Z"
   }
 ]
