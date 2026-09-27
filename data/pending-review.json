@@ -5,25 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37135/تجاوز-دشمن-تروریست-در-جزیره-لارک-همراه-با-تنبیه-متجاوز-پاسخ-داده-خواهد-شد",
     "pubDate": "30 Aug 2026 23:28:01 +0330",
     "raw_extraction": {
-      "wave": "—",
       "force": "unknown",
-      "source": "sepah",
       "loc": null,
       "loc_raw_text": "جزیره لارک",
-      "target": "نامشخص",
-      "weapon": "نامشخص",
       "outcome": "casualties",
+      "source": "sepah",
+      "target": "Iranian fighters and citizens",
       "time": "۲۳:۲۸",
+      "wave": "wave",
+      "weapon": "weapon",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37135"
     },
     "errors": [
-      "loc is null"
+      "wave contains disallowed characters: wave",
+      "loc is null",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-08-30T20:14:32.213Z",
     "issue_number": 58,
-    "last_checked_at": "2026-09-27T02:22:47.458Z",
+    "last_checked_at": "2026-09-27T11:00:09.515Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -54,11 +56,11 @@
     "pubDate": "31 Aug 2026 00:17:16 +0330",
     "raw_extraction": null,
     "errors": [
-      "extraction failed: OpenRouter response had no message content"
+      "extraction failed: Unexpected token 'U', \"User Safety: safe\" is not valid JSON"
     ],
     "added_at": "2026-08-31T02:11:31.394Z",
     "issue_number": 60,
-    "last_checked_at": "2026-09-27T02:25:01.816Z",
+    "last_checked_at": "2026-09-27T11:00:12.740Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -87,29 +89,13 @@
     "link": "https://sepahnews.ir/fa/news/37182/مرکز-تعمیراتی-و-انبارهای-تجهیزات-فنی-ارتش-تروریست-آمریکا-در-اربیل-و-سامانه-هدایت-بالن-جاسوسی-آمریکا-در-پایگاه-منهدم-شد-مخازن-سوخت-این-پایگاه-به-آتش-کشیده-و-تعدادی-از-متجاوزان-به-هلاکت-رسیدند",
     "guid": "sepah:https://sepahnews.ir/fa/news/37182/مرکز-تعمیراتی-و-انبارهای-تجهیزات-فنی-ارتش-تروریست-آمریکا-در-اربیل-و-سامانه-هدایت-بالن-جاسوسی-آمریکا-در-پایگاه-منهدم-شد-مخازن-سوخت-این-پایگاه-به-آتش-کشیده-و-تعدادی-از-متجاوزان-به-هلاکت-رسیدند",
     "pubDate": "02 Sep 2026 03:23:26 +0330",
-    "raw_extraction": {
-      "wave": "missile_drone_attack",
-      "force": "ground",
-      "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "اربيل",
-      "target": "us_base",
-      "weapon": "missile_drone",
-      "outcome": "destruction_and_casualties",
-      "time": "چهارشنبه ۱۱ شهریور ۱۴۰۵ - ۰۳:۲۳",
-      "dateG": "2026-09-01",
-      "dateP": "۱۰ شهریور ۱۴۰۵",
-      "code": "37182"
-    },
+    "raw_extraction": null,
     "errors": [
-      "wave contains disallowed characters: missile_drone_attack",
-      "loc is null",
-      "time field's embedded date doesn't match this event's date (dateP=۱۰ شهریور ۱۴۰۵): چهارشنبه ۱۱ شهریور ۱۴۰۵ - ۰۳:۲۳",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "extraction failed: OpenRouter response had no message content"
     ],
     "added_at": "2026-09-02T01:52:53.595Z",
     "issue_number": 63,
-    "last_checked_at": "2026-09-27T02:31:20.669Z",
+    "last_checked_at": "2026-09-27T11:04:51.222Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -138,27 +124,13 @@
     "link": "https://sepahnews.ir/fa/news/37393/تصاویری-از-شلیک-انبوه-موشکهای-سوخت-جامد-و-مایع-به-پایگاه-های-شرارت-آمریکا-از-جمله-پایگاه-نظامی-الازرق-اردن",
     "guid": "sepah:https://sepahnews.ir/fa/news/37393/تصاویری-از-شلیک-انبوه-موشکهای-سوخت-جامد-و-مایع-به-پایگاه-های-شرارت-آمریکا-از-جمله-پایگاه-نظامی-الازرق-اردن",
     "pubDate": "09 Sep 2026 02:23:37 +0330",
-    "raw_extraction": {
-      "wave": "—",
-      "force": "aerospace",
-      "source": "sepah",
-      "loc": "alAzraq",
-      "loc_raw_text": "پایگاه نظامی الازرق اردن",
-      "target": "American bases",
-      "weapon": "missile",
-      "outcome": "نامشخص",
-      "time": "۱۸ شهریور ۱۴۰۵ - ۰۲:۲۳",
-      "dateG": "2026-09-08",
-      "dateP": "۱۷ شهریور ۱۴۰۵",
-      "code": "37393"
-    },
+    "raw_extraction": null,
     "errors": [
-      "invalid time field value: ۱۸ شهریور ۱۴۰۵ - ۰۲:۲۳",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "extraction failed: OpenRouter response had no message content"
     ],
     "added_at": "2026-09-09T02:03:47.147Z",
     "issue_number": 68,
-    "last_checked_at": "2026-09-27T02:34:43.633Z",
+    "last_checked_at": "2026-09-27T11:05:03.468Z",
     "loc_candidates": [
       {
         "id": "aqaba",
@@ -188,27 +160,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37392/آشیانه-تعمیر-و-نگهداری-آماده-سازی-و-محل-استقرار-جنگنده-های-f-35-f-16-f-15-و-شلتر-جنگنده-ها-مورد-هدف-قرارگرفت",
     "pubDate": "09 Sep 2026 02:07:10 +0330",
     "raw_extraction": {
-      "wave": "aerospace",
+      "wave": "یاحیدر کرار",
       "force": "aerospace",
       "source": "sepah",
       "loc": "alAzraq",
       "loc_raw_text": "پایگاه آمریکایی الازرق اردن",
-      "target": "F-35, F-16, F-15 and Shaltr",
-      "weapon": "missile",
-      "outcome": "significant damage to enemy",
-      "time": "18 Shahrivar 1405 - 02:07",
+      "target": "آشیانه تعمیر و نگهداری، آماده‌سازی و محل استقرار جنگنده‌های F-35، F-16، F-15 و شلتر جنگنده‌ها",
+      "weapon": "موشک‌های بالستیک سوخت جامد و مایع",
+      "outcome": "خسارات سنگینی به دشمن عنود وارد آمده است",
+      "time": "۱۴۰۵/۰۶/۱۸ ۰۲:۰۷",
       "dateG": "2026-09-08",
       "dateP": "۱۷ شهریور ۱۴۰۵",
       "code": "37392"
     },
     "errors": [
-      "wave contains disallowed characters: aerospace",
-      "invalid time field value: 18 Shahrivar 1405 - 02:07",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: ۱۴۰۵/۰۶/۱۸ ۰۲:۰۷"
     ],
     "added_at": "2026-09-09T02:04:27.708Z",
     "issue_number": 69,
-    "last_checked_at": "2026-09-27T02:36:27.805Z"
+    "last_checked_at": "2026-09-27T11:05:12.603Z"
   },
   {
     "title": "خون شهدا همچنان حیات‌بخش جامعه و عامل شکست نقشه‌های دشمن است",
@@ -217,11 +187,11 @@
     "pubDate": "23 Sep 2026 02:17:45 +0330",
     "raw_extraction": null,
     "errors": [
-      "extraction failed: Unexpected token 'U', \"User Safety: safe\" is not valid JSON"
+      "extraction failed: OpenRouter response had no message content"
     ],
     "added_at": "2026-09-23T02:29:30.905Z",
     "issue_number": 71,
-    "last_checked_at": "2026-09-27T02:36:44.970Z",
+    "last_checked_at": "2026-09-27T11:05:14.977Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -251,26 +221,12 @@
     "link": "https://sepahnews.ir/fa/news/38357/فرهنگ-جهاد-و-شهادت-ملت-ایران-را-در-برابر-فشار-و-تهدید-دشمن-مقاوم-کرده-است",
     "guid": "sepah:https://sepahnews.ir/fa/news/38357/فرهنگ-جهاد-و-شهادت-ملت-ایران-را-در-برابر-فشار-و-تهدید-دشمن-مقاوم-کرده-است",
     "pubDate": "25 Sep 2026 19:47:43 +0330",
-    "raw_extraction": {
-      "wave": "فرهنگ جهاد و شهادت",
-      "force": "unknown",
-      "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "منطقه شمال پل",
-      "target": "نامشخص",
-      "weapon": "نامشخص",
-      "outcome": "رزمندگان و مردم در شرایط سخت آب‌وهوایی و حتی با وجود تهدیدهای امنیتی، در صحنه حضور داشتند و همین ایستادگی، سرمایه‌ای برای عزت و کرامت ملی است",
-      "time": "۱۴۰۵ - ۱۹:۴۷",
-      "dateG": "2026-09-25",
-      "dateP": "۳ مهر ۱۴۰۵",
-      "code": "38357"
-    },
+    "raw_extraction": null,
     "errors": [
-      "loc is null",
-      "invalid time field value: ۱۴۰۵ - ۱۹:۴۷"
+      "extraction failed: Unexpected token 'U', \"User Safety: safe\" is not valid JSON"
     ],
     "added_at": "2026-09-25T20:57:33.065Z",
     "issue_number": 72,
-    "last_checked_at": "2026-09-27T02:36:55.484Z"
+    "last_checked_at": "2026-09-27T11:05:17.240Z"
   }
 ]
