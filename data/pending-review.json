@@ -5,27 +5,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37135/تجاوز-دشمن-تروریست-در-جزیره-لارک-همراه-با-تنبیه-متجاوز-پاسخ-داده-خواهد-شد",
     "pubDate": "30 Aug 2026 23:28:01 +0330",
     "raw_extraction": {
-      "wave": "—",
-      "force": "naval",
-      "source": "sepah",
+      "force": "unknown",
       "loc": null,
       "loc_raw_text": "جزیره لارک",
-      "target": "جزیره لارک",
-      "weapon": null,
-      "outcome": "شهادت و مجروحیت تنی چند از رزمندگان و هموطنان؛ پاسخ و مجازات متجاوز در آینده",
-      "time": "۰۸ شهريور ۱۴۰۵ - ۲۳:۲۸",
+      "outcome": "شهادت و مجروحیت تنی چند از رزمندگان و هموطنان",
+      "source": "sepah",
+      "target": "ایران",
+      "time": "۲۳:۲۸",
+      "wave": "pulse",
+      "weapon": "نام مشخص",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37135"
     },
     "errors": [
-      "missing/empty required field: weapon",
-      "loc is null",
-      "invalid time field value: ۰۸ شهريور ۱۴۰۵ - ۲۳:۲۸"
+      "wave contains disallowed characters: pulse",
+      "loc is null"
     ],
     "added_at": "2026-08-30T20:14:32.213Z",
     "issue_number": 58,
-    "last_checked_at": "2026-10-01T02:58:36.318Z",
+    "last_checked_at": "2026-10-01T12:00:42.509Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -55,28 +54,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37141/وحدت-اسلامی-نه-یک-تاکتیک-مقطعی-بلکه-راهبردی-دائمی-و-ضامن-اقتدار-امت-اسلام-است-شکست-هیمنه-پوشالی-استکبار-حاصل-ایستادگی-و-یکپارچگی-ملت-ایران-است",
     "pubDate": "31 Aug 2026 00:17:16 +0330",
     "raw_extraction": {
-      "wave": "propaganda",
+      "wave": "—",
       "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "کرمانشاه",
-      "target": "استکبار جهانی به سرکردگی آمریکا",
-      "weapon": null,
-      "outcome": "شکست هیمنه پوشالی استکبار در برابر اقتدار نیروهای مسلح جمهوری اسلامی",
-      "time": "دوشنبه ۰۹ شهریور ۱۴۰۵ - ۰۰:۱۷",
+      "loc_raw_text": "میدان فردوسی",
+      "target": "دشمان",
+      "weapon": "نامشخص",
+      "outcome": "نامشخص",
+      "time": "09 Shahrivar 1405 00:17",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37141"
     },
     "errors": [
-      "wave contains disallowed characters: propaganda",
-      "missing/empty required field: weapon",
       "loc is null",
-      "time field's embedded date doesn't match this event's date (dateP=۸ شهریور ۱۴۰۵): دوشنبه ۰۹ شهریور ۱۴۰۵ - ۰۰:۱۷"
+      "invalid time field value: 09 Shahrivar 1405 00:17"
     ],
     "added_at": "2026-08-31T02:11:31.394Z",
     "issue_number": 60,
-    "last_checked_at": "2026-10-01T02:59:00.770Z",
+    "last_checked_at": "2026-10-01T12:01:37.340Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -107,11 +104,11 @@
     "pubDate": "02 Sep 2026 03:23:26 +0330",
     "raw_extraction": null,
     "errors": [
-      "extraction failed: Expected property name or '}' in JSON at position 1"
+      "extraction failed: Unexpected token 'U', \"User Safet\"... is not valid JSON"
     ],
     "added_at": "2026-09-02T01:52:53.595Z",
     "issue_number": 63,
-    "last_checked_at": "2026-10-01T03:02:38.254Z",
+    "last_checked_at": "2026-10-01T12:01:41.168Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -142,11 +139,11 @@
     "pubDate": "09 Sep 2026 02:23:37 +0330",
     "raw_extraction": null,
     "errors": [
-      "extraction failed: OpenRouter response had no message content"
+      "extraction failed: Unexpected token 'U', \"User Safet\"... is not valid JSON"
     ],
     "added_at": "2026-09-09T02:03:47.147Z",
     "issue_number": 68,
-    "last_checked_at": "2026-10-01T03:07:53.528Z",
+    "last_checked_at": "2026-10-01T12:01:43.859Z",
     "loc_candidates": [
       {
         "id": "aqaba",
@@ -176,26 +173,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37392/آشیانه-تعمیر-و-نگهداری-آماده-سازی-و-محل-استقرار-جنگنده-های-f-35-f-16-f-15-و-شلتر-جنگنده-ها-مورد-هدف-قرارگرفت",
     "pubDate": "09 Sep 2026 02:07:10 +0330",
     "raw_extraction": {
+      "wave": "retaliation",
       "force": "aerospace",
+      "source": "sepah",
       "loc": "alAzraq",
       "loc_raw_text": "پایگاه آمریکائی الازرق اردن",
-      "outcome": "hit and caused significant damage to the enemy",
-      "source": "sepah",
-      "target": "Maintenance nest, preparation site, and location of F-35, F-16, F-15 fighters and fighter shelters",
-      "time": "Wednesday, 18 Shahrivar 1405 - 02:07",
-      "wave": "—",
-      "weapon": "solid and liquid ballistic missiles",
+      "target": "جنگنده های F-35 ،F-16 ，F-15 و شلتر جنگنده ها",
+      "weapon": "موشک های بالستیک سوخت جامد و مایع",
+      "outcome": "نیروی هوافضای سپاه پاسداران انقلاب اسلامی در عملیات تنبیه متجاوز با رمز مبارک \"یاحیدر کرار\" پایگاه آمریکائی الازرق اردن را زیر ضربات سهمگین موشکی خود قرار دادند",
+      "time": "چهارشنبه ۱۸ شهريور ۱۴۰۵ - ۰۲:۰۷",
       "dateG": "2026-09-08",
       "dateP": "۱۷ شهریور ۱۴۰۵",
       "code": "37392"
     },
     "errors": [
-      "invalid time field value: Wednesday, 18 Shahrivar 1405 - 02:07",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "wave contains disallowed characters: retaliation",
+      "time field's embedded date doesn't match this event's date (dateP=۱۷ شهریور ۱۴۰۵): چهارشنبه ۱۸ شهريور ۱۴۰۵ - ۰۲:۰۷"
     ],
     "added_at": "2026-09-09T02:04:27.708Z",
     "issue_number": 69,
-    "last_checked_at": "2026-10-01T03:08:19.266Z"
+    "last_checked_at": "2026-10-01T12:02:33.966Z"
   },
   {
     "title": "خون شهدا همچنان حیات‌بخش جامعه و عامل شکست نقشه‌های دشمن است",
@@ -203,26 +200,28 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/38105/خون-شهدا-همچنان-حیات-بخش-جامعه-و-عامل-شکست-نقشه-های-دشمن-است",
     "pubDate": "23 Sep 2026 02:17:45 +0330",
     "raw_extraction": {
-      "wave": "—",
       "force": "unknown",
-      "source": "sepah",
       "loc": null,
-      "loc_raw_text": "منطقه‌ای از مازندران",
-      "target": "نیروهای دشمن",
-      "weapon": "موشک",
-      "outcome": "خون شهدا همچنان حیات‌بخش جامعه است و هر جا دشمن برای ضربه زدن به ملت ایران اقدام کرده، همین فرهنگ ایثار و شهادت موجب زنده شدن و انسجام بیشتر مردم شده است",
-      "time": "۱ مهر ۱۴۰۵ ۰۲:۱۷",
+      "loc_raw_text": null,
+      "outcome": "casualties",
+      "source": "sepah",
+      "target": "personnel",
+      "time": "wave",
+      "wave": "Walfajr 8",
+      "weapon": "mortar",
       "dateG": "2026-09-22",
       "dateP": "۳۱ شهریور ۱۴۰۵",
       "code": "38105"
     },
     "errors": [
+      "wave contains disallowed characters: Walfajr 8",
       "loc is null",
-      "invalid time field value: ۱ مهر ۱۴۰۵ ۰۲:۱۷"
+      "invalid time field value: wave",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-09-23T02:29:30.905Z",
     "issue_number": 71,
-    "last_checked_at": "2026-10-01T03:08:43.489Z",
+    "last_checked_at": "2026-10-01T12:03:49.392Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -253,27 +252,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/38357/فرهنگ-جهاد-و-شهادت-ملت-ایران-را-در-برابر-فشار-و-تهدید-دشمن-مقاوم-کرده-است",
     "pubDate": "25 Sep 2026 19:47:43 +0330",
     "raw_extraction": {
-      "wave": "ground",
-      "force": "ground",
+      "wave": "نصر ۲",
+      "force": "joint",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "منطقة شمال پل تجن ساری",
-      "target": "bridges",
-      "weapon": "bomb",
-      "outcome": "enemy plan unsuccessful",
+      "loc_raw_text": "منطقه شمال پل",
+      "target": "پل‌ها",
+      "weapon": "joint",
+      "outcome": "رزمندگان و مردم در شرایط سخت ایستادگی کردند",
       "time": "۱۹:۴۷",
       "dateG": "2026-09-25",
       "dateP": "۳ مهر ۱۴۰۵",
       "code": "38357"
     },
     "errors": [
-      "wave contains disallowed characters: ground",
-      "loc is null",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "loc is null"
     ],
     "added_at": "2026-09-25T20:57:33.065Z",
     "issue_number": 72,
-    "last_checked_at": "2026-10-01T03:10:11.896Z",
+    "last_checked_at": "2026-10-01T12:06:27.542Z",
     "loc_candidates": [
       {
         "id": "duqm",
