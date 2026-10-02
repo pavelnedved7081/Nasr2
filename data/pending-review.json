@@ -5,27 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37135/تجاوز-دشمن-تروریست-در-جزیره-لارک-همراه-با-تنبیه-متجاوز-پاسخ-داده-خواهد-شد",
     "pubDate": "30 Aug 2026 23:28:01 +0330",
     "raw_extraction": {
-      "wave": "response",
-      "force": "naval",
+      "wave": "—",
+      "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "جزیره لارک",
-      "target": "جزیره لارک",
+      "loc_raw_text": "جزیره لARK",
+      "target": "Lark Island",
       "weapon": "نامشخص",
-      "outcome": "پاسخ داده خواهد شد و تنبیه متجاوز",
-      "time": "2024-08-15T23:28",
+      "outcome": "martyrdom and injury",
+      "time": "23:28, 8 Mehr 1405",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37135"
     },
     "errors": [
-      "wave contains disallowed characters: response",
       "loc is null",
-      "invalid time field value: 2024-08-15T23:28"
+      "invalid time field value: 23:28, 8 Mehr 1405",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-08-30T20:14:32.213Z",
     "issue_number": 58,
-    "last_checked_at": "2026-10-02T11:32:37.776Z",
+    "last_checked_at": "2026-10-02T17:04:39.531Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -56,25 +56,29 @@
     "pubDate": "31 Aug 2026 00:17:16 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "naval",
+      "force": null,
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "میدان فردوسی",
-      "target": "نامشخص",
-      "weapon": "نامشخص",
-      "outcome": "نامشخص",
-      "time": "null",
+      "loc_raw_text": "کرمانشاه",
+      "target": null,
+      "weapon": null,
+      "outcome": null,
+      "time": "۰۹ شهریور ۱۴۰۵ - ۰۰:۱۷",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37141"
     },
     "errors": [
+      "missing/empty required field: force",
+      "missing/empty required field: target",
+      "missing/empty required field: weapon",
+      "missing/empty required field: outcome",
       "loc is null",
-      "invalid time field value: null"
+      "invalid time field value: ۰۹ شهریور ۱۴۰۵ - ۰۰:۱۷"
     ],
     "added_at": "2026-08-31T02:11:31.394Z",
     "issue_number": 60,
-    "last_checked_at": "2026-10-02T11:33:08.891Z",
+    "last_checked_at": "2026-10-02T17:04:47.251Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -104,27 +108,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37182/مرکز-تعمیراتی-و-انبارهای-تجهیزات-فنی-ارتش-تروریست-آمریکا-در-اربیل-و-سامانه-هدایت-بالن-جاسوسی-آمریکا-در-پایگاه-منهدم-شد-مخازن-سوخت-این-پایگاه-به-آتش-کشیده-و-تعدادی-از-متجاوزان-به-هلاکت-رسیدند",
     "pubDate": "02 Sep 2026 03:23:26 +0330",
     "raw_extraction": {
-      "wave": "combined",
+      "wave": "joint",
       "force": "ground",
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "اربیل",
-      "target": "مرکز تعمیراتی و انبارهای تجهیزات فنی ارتش تروریست آمریکا و سامانه هدایت بالن جاسوسی",
-      "weapon": "missile+drone",
-      "outcome": "destroyed",
-      "time": "چهارشنبه ۱۱ شهریور ۱۴۰۵ - ۰۳:۲۳",
+      "target": "پایگاههای آمریکایی در اربیل و سامانه هدایت بالن جاسوسی آمریکا",
+      "weapon": "حمله تلفیقی موشکی و پهپادی",
+      "outcome": "نابودی مرکز تعمیراتی و انبارهای تجهیزات فنی ارتش تروریست آمریکا، منهدم شدن سامانه هدایت بالن جاسوسی آمریکا، و کشتن تعدادی متجاوزان",
+      "time": "چهارشنبه ۱۱ شهريور ۱۴۰۵ - ۰۳:۲۳",
       "dateG": "2026-09-01",
       "dateP": "۱۰ شهریور ۱۴۰۵",
       "code": "37182"
     },
     "errors": [
-      "wave contains disallowed characters: combined",
+      "wave contains disallowed characters: joint",
       "loc is null",
-      "time field's embedded date doesn't match this event's date (dateP=۱۰ شهریور ۱۴۰۵): چهارشنبه ۱۱ شهریور ۱۴۰۵ - ۰۳:۲۳"
+      "time field's embedded date doesn't match this event's date (dateP=۱۰ شهریور ۱۴۰۵): چهارشنبه ۱۱ شهريور ۱۴۰۵ - ۰۳:۲۳"
     ],
     "added_at": "2026-09-02T01:52:53.595Z",
     "issue_number": 63,
-    "last_checked_at": "2026-10-02T11:33:33.880Z",
+    "last_checked_at": "2026-10-02T17:05:07.569Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -153,13 +157,28 @@
     "link": "https://sepahnews.ir/fa/news/37393/تصاویری-از-شلیک-انبوه-موشکهای-سوخت-جامد-و-مایع-به-پایگاه-های-شرارت-آمریکا-از-جمله-پایگاه-نظامی-الازرق-اردن",
     "guid": "sepah:https://sepahnews.ir/fa/news/37393/تصاویری-از-شلیک-انبوه-موشکهای-سوخت-جامد-و-مایع-به-پایگاه-های-شرارت-آمریکا-از-جمله-پایگاه-نظامی-الازرق-اردن",
     "pubDate": "09 Sep 2026 02:23:37 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "wave": "missile wave",
+      "force": "aerospace",
+      "source": "sepah",
+      "loc": "alAzraq",
+      "loc_raw_text": "پایگاه نظامی الازرق اردن",
+      "target": "US bases",
+      "weapon": "solid and liquid fuel missiles",
+      "outcome": "نامشخص",
+      "time": "۱۸ شهریور ۱۴۰۵ - ۰۲:۲۳",
+      "dateG": "2026-09-08",
+      "dateP": "۱۷ شهریور ۱۴۰۵",
+      "code": "37393"
+    },
     "errors": [
-      "extraction failed: Unexpected token 'U', \"User Safet\"... is not valid JSON"
+      "wave contains disallowed characters: missile wave",
+      "invalid time field value: ۱۸ شهریور ۱۴۰۵ - ۰۲:۲۳",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-09-09T02:03:47.147Z",
     "issue_number": 68,
-    "last_checked_at": "2026-10-02T11:33:37.208Z",
+    "last_checked_at": "2026-10-02T17:06:38.787Z",
     "loc_candidates": [
       {
         "id": "aqaba",
@@ -194,9 +213,9 @@
       "source": "sepah",
       "loc": "alAzraq",
       "loc_raw_text": "پایگاه آمریکائی الازرق اردن",
-      "target": "F-35، F-16، F-15 و شلتر جنگنده ها",
-      "weapon": "موشک بالستیک",
-      "outcome": "شکست خورده آمریکا",
+      "target": "جنگنده های F-35 ،F-16 ，F-15 و شلتر جنگنده ها",
+      "weapon": "موشک های بالستیک سوخت جامد و مایع آشیانه تعمیر و نگهداری",
+      "outcome": "مقاومت و اقتدار فرزندان رشید رزمنده شما در تنگه هرمز را کلافه و سردرگم کرده است",
       "time": "چهارشنبه ۱۸ شهريور ۱۴۰۵ - ۰۲:۰۷",
       "dateG": "2026-09-08",
       "dateP": "۱۷ شهریور ۱۴۰۵",
@@ -208,7 +227,29 @@
     ],
     "added_at": "2026-09-09T02:04:27.708Z",
     "issue_number": 69,
-    "last_checked_at": "2026-10-02T11:33:47.184Z"
+    "last_checked_at": "2026-10-02T17:07:10.407Z",
+    "loc_candidates": [
+      {
+        "id": "princeHassan",
+        "distance": 29
+      },
+      {
+        "id": "alAzraq",
+        "distance": 29
+      },
+      {
+        "id": "aqaba",
+        "distance": 29
+      },
+      {
+        "id": "rukban",
+        "distance": 29
+      },
+      {
+        "id": "arifjan",
+        "distance": 29
+      }
+    ]
   },
   {
     "title": "خون شهدا همچنان حیات‌بخش جامعه و عامل شکست نقشه‌های دشمن است",
@@ -217,28 +258,25 @@
     "pubDate": "23 Sep 2026 02:17:45 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": null,
+      "force": "naval",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "در منطقه‌ای از مازندران؛ در نزدیکی محل استقرار نیروهای رزمنده؛ حملات دشمن به مراکز نظامی، به ویژه مجموعه‌های موشکی و پهپادی",
-      "target": null,
-      "weapon": null,
-      "outcome": null,
-      "time": null,
+      "loc_raw_text": "مازندران",
+      "target": "نامشخص",
+      "weapon": "نامشخص",
+      "outcome": "نامشخص",
+      "time": "چهارشنبه ۰۱ مهر ۱۴۰۵ - ۰۲:۱۷",
       "dateG": "2026-09-22",
       "dateP": "۳۱ شهریور ۱۴۰۵",
       "code": "38105"
     },
     "errors": [
-      "missing/empty required field: force",
-      "missing/empty required field: target",
-      "missing/empty required field: weapon",
-      "missing/empty required field: outcome",
-      "loc is null"
+      "loc is null",
+      "time field's embedded date doesn't match this event's date (dateP=۳۱ شهریور ۱۴۰۵): چهارشنبه ۰۱ مهر ۱۴۰۵ - ۰۲:۱۷"
     ],
     "added_at": "2026-09-23T02:29:30.905Z",
     "issue_number": 71,
-    "last_checked_at": "2026-10-02T11:34:02.889Z",
+    "last_checked_at": "2026-10-02T17:09:38.329Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -269,26 +307,28 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/38357/فرهنگ-جهاد-و-شهادت-ملت-ایران-را-در-برابر-فشار-و-تهدید-دشمن-مقاوم-کرده-است",
     "pubDate": "25 Sep 2026 19:47:43 +0330",
     "raw_extraction": {
-      "wave": "force",
-      "force": "unknown",
+      "wave": "17-day operation",
+      "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "",
-      "target": "نامشخص",
+      "loc_raw_text": "منطقة شمال پل تجن ساری",
+      "target": "enemy",
       "weapon": "نامشخص",
-      "outcome": "نامشخص",
-      "time": "۱۹:۴۷",
+      "outcome": "steadfast",
+      "time": "03 Mehr 1405 - 19:47",
       "dateG": "2026-09-25",
       "dateP": "۳ مهر ۱۴۰۵",
       "code": "38357"
     },
     "errors": [
-      "wave contains disallowed characters: force",
-      "loc is null"
+      "wave contains disallowed characters: 17-day operation",
+      "loc is null",
+      "invalid time field value: 03 Mehr 1405 - 19:47",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-09-25T20:57:33.065Z",
     "issue_number": 72,
-    "last_checked_at": "2026-10-02T11:34:13.238Z",
+    "last_checked_at": "2026-10-02T17:12:48.037Z",
     "loc_candidates": [
       {
         "id": "duqm",
