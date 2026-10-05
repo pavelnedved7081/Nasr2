@@ -12,19 +12,19 @@
       "loc_raw_text": "جزیره لارک",
       "target": "جزیره لارک",
       "weapon": "نامشخص",
-      "outcome": "martyrdom and injuries",
-      "time": "۲۳:۲۸",
+      "outcome": "casualties",
+      "time": "۰۸ شهریور ۱۴۰۵ ۲۳:۲۸",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37135"
     },
     "errors": [
       "loc is null",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: ۰۸ شهریور ۱۴۰۵ ۲۳:۲۸"
     ],
     "added_at": "2026-08-30T20:14:32.213Z",
     "issue_number": 58,
-    "last_checked_at": "2026-10-05T12:56:46.378Z",
+    "last_checked_at": "2026-10-05T23:27:02.279Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -58,22 +58,22 @@
       "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "میدان فردوسی، کرمانشاه",
+      "loc_raw_text": "میدان فردوسی",
       "target": "نامشخص",
       "weapon": "نامشخص",
-      "outcome": "نامشخص",
-      "time": "unknown",
+      "outcome": "success",
+      "time": "09 Shahrivar 1405 - 00:17",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37141"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: unknown"
+      "invalid time field value: 09 Shahrivar 1405 - 00:17"
     ],
     "added_at": "2026-08-31T02:11:31.394Z",
     "issue_number": 60,
-    "last_checked_at": "2026-10-05T12:57:04.728Z",
+    "last_checked_at": "2026-10-05T23:29:34.814Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -104,11 +104,11 @@
     "pubDate": "02 Sep 2026 03:23:26 +0330",
     "raw_extraction": null,
     "errors": [
-      "extraction failed: OpenRouter response had no message content"
+      "extraction failed: Unexpected token 'U', \"User Safet\"... is not valid JSON"
     ],
     "added_at": "2026-09-02T01:52:53.595Z",
     "issue_number": 63,
-    "last_checked_at": "2026-10-05T13:03:16.753Z",
+    "last_checked_at": "2026-10-05T23:29:37.978Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -138,27 +138,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37393/تصاویری-از-شلیک-انبوه-موشکهای-سوخت-جامد-و-مایع-به-پایگاه-های-شرارت-آمریکا-از-جمله-پایگاه-نظامی-الازرق-اردن",
     "pubDate": "09 Sep 2026 02:23:37 +0330",
     "raw_extraction": {
-      "wave": "missile launch",
-      "force": "aerospace",
+      "wave": "missile_strike",
+      "force": "joint",
       "source": "sepah",
       "loc": "alAzraq",
       "loc_raw_text": "پایگاه نظامی الازرق اردن",
-      "target": "us bases",
-      "weapon": "solid and liquid fuel missiles",
-      "outcome": "launched",
-      "time": "18 Shahrivar 1405 02:23",
+      "target": "پایگاه نظامی الازرق اردن",
+      "weapon": "موشکهای سوخت جامد و مایع",
+      "outcome": "executed",
+      "time": "18 شهريور ۱۴۰۵ - ۰۲:۲۳",
       "dateG": "2026-09-08",
       "dateP": "۱۷ شهریور ۱۴۰۵",
       "code": "37393"
     },
     "errors": [
-      "wave contains disallowed characters: missile launch",
-      "invalid time field value: 18 Shahrivar 1405 02:23",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "wave contains disallowed characters: missile_strike",
+      "invalid time field value: 18 شهريور ۱۴۰۵ - ۰۲:۲۳"
     ],
     "added_at": "2026-09-09T02:03:47.147Z",
     "issue_number": 68,
-    "last_checked_at": "2026-10-05T13:06:44.578Z",
+    "last_checked_at": "2026-10-05T23:29:44.300Z",
     "loc_candidates": [
       {
         "id": "aqaba",
@@ -188,27 +187,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37392/آشیانه-تعمیر-و-نگهداری-آماده-سازی-و-محل-استقرار-جنگنده-های-f-35-f-16-f-15-و-شلتر-جنگنده-ها-مورد-هدف-قرارگرفت",
     "pubDate": "09 Sep 2026 02:07:10 +0330",
     "raw_extraction": {
-      "wave": "Operation Yahidr Karar",
-      "force": "aerospace",
+      "wave": "عملیات تنبیه متجاوز (یاحیدر کرار)",
+      "force": "هوافضا",
       "source": "sepah",
       "loc": "alAzraq",
-      "loc_raw_text": "پایه آمریکا الازرق اردن",
-      "target": "F-35, F-16, F-15 shelters and maintenance hangar",
-      "weapon": "ballistic missiles",
-      "outcome": "significant damages inflicted",
-      "time": "18 Shahrivar 1405 02:07",
+      "loc_raw_text": "پایگاه آمریکایی الازرق در اردن",
+      "target": "آشیانه تعمیر و نگهداری، محل آماده‌سازی و استقرار جنگنده‌های F‑35، F‑16، F‑15 و شلتر جنگنده‌ها",
+      "weapon": "موشک‌های بالستیک با سوخت جامد و مایع",
+      "outcome": "خسارات سنگین به دشمن عنود وارد شد",
+      "time": "۱ شهریور ۱۴۰۵ - ۰۲:۰۷",
       "dateG": "2026-09-08",
       "dateP": "۱۷ شهریور ۱۴۰۵",
       "code": "37392"
     },
     "errors": [
-      "wave contains disallowed characters: Operation Yahidr Karar",
-      "invalid time field value: 18 Shahrivar 1405 02:07",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid force: هوافضا",
+      "invalid time field value: ۱ شهریور ۱۴۰۵ - ۰۲:۰۷"
     ],
     "added_at": "2026-09-09T02:04:27.708Z",
     "issue_number": 69,
-    "last_checked_at": "2026-10-05T13:08:30.718Z",
+    "last_checked_at": "2026-10-05T23:29:55.520Z",
     "loc_candidates": [
       {
         "id": "princeHassan",
@@ -237,13 +235,27 @@
     "link": "https://sepahnews.ir/fa/news/38105/خون-شهدا-همچنان-حیات-بخش-جامعه-و-عامل-شکست-نقشه-های-دشمن-است",
     "guid": "sepah:https://sepahnews.ir/fa/news/38105/خون-شهدا-همچنان-حیات-بخش-جامعه-و-عامل-شکست-نقشه-های-دشمن-است",
     "pubDate": "23 Sep 2026 02:17:45 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "wave": "—",
+      "force": "ground",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "مازندران",
+      "target": "نامشخص",
+      "weapon": "نامشخص",
+      "outcome": "نامشخص",
+      "time": "۰۲:۱۷ چهارشنبه ۰۱ مهر ۱۴۰۵",
+      "dateG": "2026-09-22",
+      "dateP": "۳۱ شهریور ۱۴۰۵",
+      "code": "38105"
+    },
     "errors": [
-      "extraction failed: OpenRouter response had no message content"
+      "loc is null",
+      "invalid time field value: ۰۲:۱۷ چهارشنبه ۰۱ مهر ۱۴۰۵"
     ],
     "added_at": "2026-09-23T02:29:30.905Z",
     "issue_number": 71,
-    "last_checked_at": "2026-10-05T13:08:33.568Z",
+    "last_checked_at": "2026-10-05T23:30:23.465Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -274,30 +286,28 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/38357/فرهنگ-جهاد-و-شهادت-ملت-ایران-را-در-برابر-فشار-و-تهدید-دشمن-مقاوم-کرده-است",
     "pubDate": "25 Sep 2026 19:47:43 +0330",
     "raw_extraction": {
-      "wave": "—",
-      "force": null,
+      "wave": "17 days",
+      "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "north of Pol-e Tajen Sari",
-      "target": null,
-      "weapon": null,
-      "outcome": null,
-      "time": "۰۳ مهر ۱۴۰۵ - ۱۹:۴۷",
+      "loc_raw_text": "مناطق جنوبی",
+      "target": "enemy",
+      "weapon": "نامشخص",
+      "outcome": "resistance_maintained",
+      "time": "1405-03-03 19:47",
       "dateG": "2026-09-25",
       "dateP": "۳ مهر ۱۴۰۵",
       "code": "38357"
     },
     "errors": [
-      "missing/empty required field: force",
-      "missing/empty required field: target",
-      "missing/empty required field: weapon",
-      "missing/empty required field: outcome",
+      "wave contains disallowed characters: 17 days",
       "loc is null",
-      "invalid time field value: ۰۳ مهر ۱۴۰۵ - ۱۹:۴۷"
+      "invalid time field value: 1405-03-03 19:47",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-09-25T20:57:33.065Z",
     "issue_number": 72,
-    "last_checked_at": "2026-10-05T13:08:48.197Z",
+    "last_checked_at": "2026-10-05T23:32:05.704Z",
     "loc_candidates": [
       {
         "id": "duqm",
