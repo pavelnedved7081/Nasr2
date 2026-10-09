@@ -5,25 +5,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37135/تجاوز-دشمن-تروریست-در-جزیره-لارک-همراه-با-تنبیه-متجاوز-پاسخ-داده-خواهد-شد",
     "pubDate": "30 Aug 2026 23:28:01 +0330",
     "raw_extraction": {
-      "wave": "—",
-      "force": "unknown",
+      "wave": "ground",
+      "force": "ground",
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "جزیره لارک",
-      "target": "جزیره لارک",
+      "target": "United States",
       "weapon": "نامشخص",
-      "outcome": "شهادت و مجروحیت چند تن از رزمندگان و هموطنان؛ تهدید به پاسخ‌دهی",
-      "time": "۲۳:۲۸",
+      "outcome": "several soldiers killed and injured",
+      "time": "23:28",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37135"
     },
     "errors": [
-      "loc is null"
+      "wave contains disallowed characters: ground",
+      "loc is null",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-08-30T20:14:32.213Z",
     "issue_number": 58,
-    "last_checked_at": "2026-10-09T12:15:37.403Z",
+    "last_checked_at": "2026-10-09T21:59:12.312Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -52,28 +54,13 @@
     "link": "https://sepahnews.ir/fa/news/37141/وحدت-اسلامی-نه-یک-تاکتیک-مقطعی-بلکه-راهبردی-دائمی-و-ضامن-اقتدار-امت-اسلام-است-شکست-هیمنه-پوشالی-استکبار-حاصل-ایستادگی-و-یکپارچگی-ملت-ایران-است",
     "guid": "sepah:https://sepahnews.ir/fa/news/37141/وحدت-اسلامی-نه-یک-تاکتیک-مقطعی-بلکه-راهبردی-دائمی-و-ضامن-اقتدار-امت-اسلام-است-شکست-هیمنه-پوشالی-استکبار-حاصل-ایستادگی-و-یکپارچگی-ملت-ایران-است",
     "pubDate": "31 Aug 2026 00:17:16 +0330",
-    "raw_extraction": {
-      "force": "unknown",
-      "loc": null,
-      "loc_raw_text": "میدان فردوسی، کرمانشاه",
-      "outcome": "undefined",
-      "source": "sepah",
-      "target": "undefined",
-      "time": "دوشنبه ۰۹ شهريور ۱۴۰۵ - ۰۰:۱۷",
-      "wave": "—",
-      "weapon": "نامشخص",
-      "dateG": "2026-08-30",
-      "dateP": "۸ شهریور ۱۴۰۵",
-      "code": "37141"
-    },
+    "raw_extraction": null,
     "errors": [
-      "loc is null",
-      "time field's embedded date doesn't match this event's date (dateP=۸ شهریور ۱۴۰۵): دوشنبه ۰۹ شهريور ۱۴۰۵ - ۰۰:۱۷",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "extraction failed: OpenRouter response had no message content"
     ],
     "added_at": "2026-08-31T02:11:31.394Z",
     "issue_number": 60,
-    "last_checked_at": "2026-10-09T12:16:11.012Z",
+    "last_checked_at": "2026-10-09T22:05:51.172Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -102,13 +89,28 @@
     "link": "https://sepahnews.ir/fa/news/37182/مرکز-تعمیراتی-و-انبارهای-تجهیزات-فنی-ارتش-تروریست-آمریکا-در-اربیل-و-سامانه-هدایت-بالن-جاسوسی-آمریکا-در-پایگاه-منهدم-شد-مخازن-سوخت-این-پایگاه-به-آتش-کشیده-و-تعدادی-از-متجاوزان-به-هلاکت-رسیدند",
     "guid": "sepah:https://sepahnews.ir/fa/news/37182/مرکز-تعمیراتی-و-انبارهای-تجهیزات-فنی-ارتش-تروریست-آمریکا-در-اربیل-و-سامانه-هدایت-بالن-جاسوسی-آمریکا-در-پایگاه-منهدم-شد-مخازن-سوخت-این-پایگاه-به-آتش-کشیده-و-تعدادی-از-متجاوزان-به-هلاکت-رسیدند",
     "pubDate": "02 Sep 2026 03:23:26 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "wave": "ground",
+      "force": "ground",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "اربیل",
+      "target": "پایگاههای آمریکایی در اربیل",
+      "weapon": "aerospace",
+      "outcome": "تخریب پایگاه و نابودی سامانه هدایت بالن جاسوسی آمریکا",
+      "time": "چهارشنبه ۱۱ شهريور ۱۴۰۵ - ۰۳:۲۳",
+      "dateG": "2026-09-01",
+      "dateP": "۱۰ شهریور ۱۴۰۵",
+      "code": "37182"
+    },
     "errors": [
-      "extraction failed: Unexpected token 'U', \"User Safet\"... is not valid JSON"
+      "wave contains disallowed characters: ground",
+      "loc is null",
+      "time field's embedded date doesn't match this event's date (dateP=۱۰ شهریور ۱۴۰۵): چهارشنبه ۱۱ شهريور ۱۴۰۵ - ۰۳:۲۳"
     ],
     "added_at": "2026-09-02T01:52:53.595Z",
     "issue_number": 63,
-    "last_checked_at": "2026-10-09T12:16:15.256Z",
+    "last_checked_at": "2026-10-09T22:06:00.578Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -138,25 +140,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37393/تصاویری-از-شلیک-انبوه-موشکهای-سوخت-جامد-و-مایع-به-پایگاه-های-شرارت-آمریکا-از-جمله-پایگاه-نظامی-الازرق-اردن",
     "pubDate": "09 Sep 2026 02:23:37 +0330",
     "raw_extraction": {
+      "wave": "—",
       "force": "aerospace",
+      "source": "sepah",
       "loc": "alAzraq",
       "loc_raw_text": "پایگاه نظامی الازرق اردن",
+      "target": "US bases",
+      "weapon": "solid and liquid fuel missiles",
       "outcome": "نامشخص",
-      "source": "sepah",
-      "target": "پایگاه‌های شرارت آمریکا",
-      "time": "۱۸ شهريور ۱۴۰۵ - ۰۲:۲۳",
-      "wave": "—",
-      "weapon": "موشکهای سوخت جامد و مایع",
+      "time": "۱۸ شهریور ۱۴۰۵ - ۰۲:۲۳",
       "dateG": "2026-09-08",
       "dateP": "۱۷ شهریور ۱۴۰۵",
       "code": "37393"
     },
     "errors": [
-      "invalid time field value: ۱۸ شهريور ۱۴۰۵ - ۰۲:۲۳"
+      "invalid time field value: ۱۸ شهریور ۱۴۰۵ - ۰۲:۲۳",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-09-09T02:03:47.147Z",
     "issue_number": 68,
-    "last_checked_at": "2026-10-09T12:16:54.063Z",
+    "last_checked_at": "2026-10-09T22:06:10.511Z",
     "loc_candidates": [
       {
         "id": "aqaba",
@@ -186,26 +189,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37392/آشیانه-تعمیر-و-نگهداری-آماده-سازی-و-محل-استقرار-جنگنده-های-f-35-f-16-f-15-و-شلتر-جنگنده-ها-مورد-هدف-قرارگرفت",
     "pubDate": "09 Sep 2026 02:07:10 +0330",
     "raw_extraction": {
-      "wave": "attack",
+      "wave": "یاحیدر کرار",
       "force": "aerospace",
       "source": "sepah",
       "loc": "alAzraq",
-      "loc_raw_text": "پایگاه آمریکائی الازرق اردن",
-      "target": "نفتکش های ایرانی",
-      "weapon": "موشک های بالستیک سوخت جامد و مایع آشیانه تعمیر و نگهداری",
-      "outcome": "شکست خورده آمریکا",
-      "time": "چهارشنبه ۱۸ شهريور ۱۴۰۵ - ۰۲:۰۷",
+      "loc_raw_text": null,
+      "target": "maintenance hangar and fighter jet shelters",
+      "weapon": "ballistic missile (solid and liquid fuel)",
+      "outcome": "significant damage",
+      "time": "2026-09-08T02:07:00",
       "dateG": "2026-09-08",
       "dateP": "۱۷ شهریور ۱۴۰۵",
       "code": "37392"
     },
     "errors": [
-      "wave contains disallowed characters: attack",
-      "time field's embedded date doesn't match this event's date (dateP=۱۷ شهریور ۱۴۰۵): چهارشنبه ۱۸ شهريور ۱۴۰۵ - ۰۲:۰۷"
+      "invalid time field value: 2026-09-08T02:07:00",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-09-09T02:04:27.708Z",
     "issue_number": 69,
-    "last_checked_at": "2026-10-09T12:17:05.126Z",
+    "last_checked_at": "2026-10-09T22:06:19.866Z",
     "loc_candidates": [
       {
         "id": "princeHassan",
@@ -235,26 +238,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/38105/خون-شهدا-همچنان-حیات-بخش-جامعه-و-عامل-شکست-نقشه-های-دشمن-است",
     "pubDate": "23 Sep 2026 02:17:45 +0330",
     "raw_extraction": {
-      "wave": "—",
       "force": "unknown",
-      "source": "sepah",
       "loc": null,
-      "loc_raw_text": null,
-      "target": "جامعه و ملت ایران",
-      "weapon": null,
-      "outcome": "ایجاد انسجام و اراده ملی در برابر حملات دشمن",
-      "time": null,
+      "loc_raw_text": "منطقه‌ای از مازندران، عملیات والفجر ۸",
+      "outcome": "نامشخص",
+      "source": "sepah",
+      "target": "نامشخص",
+      "time": "unknown",
+      "wave": "—",
+      "weapon": "نامشخص",
       "dateG": "2026-09-22",
       "dateP": "۳۱ شهریور ۱۴۰۵",
       "code": "38105"
     },
     "errors": [
-      "missing/empty required field: weapon",
-      "loc is null"
+      "loc is null",
+      "invalid time field value: unknown"
     ],
     "added_at": "2026-09-23T02:29:30.905Z",
     "issue_number": 71,
-    "last_checked_at": "2026-10-09T12:17:10.857Z",
+    "last_checked_at": "2026-10-09T22:06:32.250Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -285,27 +288,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/38357/فرهنگ-جهاد-و-شهادت-ملت-ایران-را-در-برابر-فشار-و-تهدید-دشمن-مقاوم-کرده-است",
     "pubDate": "25 Sep 2026 19:47:43 +0330",
     "raw_extraction": {
-      "wave": "force",
+      "wave": "news",
       "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "منطقة شمال پل تجن ساری",
-      "target": "weapon",
-      "weapon": "outcome",
-      "outcome": "time",
+      "loc_raw_text": "منطقه شمال پل تجن ساری",
+      "target": "bridges",
+      "weapon": "نامشخص",
+      "outcome": "resistance maintained",
       "time": "۱۹:۴۷",
       "dateG": "2026-09-25",
       "dateP": "۳ مهر ۱۴۰۵",
       "code": "38357"
     },
     "errors": [
-      "wave contains disallowed characters: force",
+      "wave contains disallowed characters: news",
       "loc is null",
       "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-09-25T20:57:33.065Z",
     "issue_number": 72,
-    "last_checked_at": "2026-10-09T12:19:46.251Z",
+    "last_checked_at": "2026-10-09T22:06:52.690Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -328,5 +331,30 @@
         "distance": 5
       }
     ]
+  },
+  {
+    "title": "کشتی غول پیکر حامل گاز ال پی جی مورد اصابت قرار گرفت و دچار آتش سوزی شد/ مسئولیت تنش افزایی در حمل و نقل دریایی منطقه بر عهده ارتش متجاوز آمریکاست",
+    "link": "https://sepahnews.ir/fa/news/39284/کشتی-غول-پیکر-حامل-گاز-ال-پی-جی-مورد-اصابت-قرار-گرفت-و-دچار-آتش-سوزی-شد-مسئولیت-تنش-افزایی-در-حمل-و-نقل-دریایی-منطقه-بر-عهده-ارتش-متجاوز-آمریکاست",
+    "guid": "sepah:https://sepahnews.ir/fa/news/39284/کشتی-غول-پیکر-حامل-گاز-ال-پی-جی-مورد-اصابت-قرار-گرفت-و-دچار-آتش-سوزی-شد-مسئولیت-تنش-افزایی-در-حمل-و-نقل-دریایی-منطقه-بر-عهده-ارتش-متجاوز-آمریکاست",
+    "pubDate": "09 Oct 2026 15:57:48 +0330",
+    "raw_extraction": {
+      "wave": "—",
+      "force": "naval",
+      "source": "sepah",
+      "loc": "hormuz",
+      "loc_raw_text": "جنوب تنگه هرمز",
+      "target": "کشتی غول پیکر حامل گاز ال پی جی (INV Sunshine)",
+      "weapon": "نامشخص",
+      "outcome": "آتش سوزی و متوقف شدن",
+      "time": "۱۷ مهر ۱۴۰۵ ۱۵:۵۷",
+      "dateG": "2026-10-09",
+      "dateP": "۱۷ مهر ۱۴۰۵",
+      "code": "39284"
+    },
+    "errors": [
+      "invalid time field value: ۱۷ مهر ۱۴۰۵ ۱۵:۵۷"
+    ],
+    "added_at": "2026-10-09T22:07:02.498Z",
+    "issue_number": 73
   }
 ]
