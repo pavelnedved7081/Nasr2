@@ -5,27 +5,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37135/تجاوز-دشمن-تروریست-در-جزیره-لارک-همراه-با-تنبیه-متجاوز-پاسخ-داده-خواهد-شد",
     "pubDate": "30 Aug 2026 23:28:01 +0330",
     "raw_extraction": {
-      "wave": ": null, \"force\": \"unknown\", \"source\": \"sepah\", \"loc\": null, \"loc_raw_text\": \"جزیره لارک\", \"target\": \"دشمن آمریکایی - صهیونی\", \"weapon\": null, \"outcome\": \"شهادت و مجروحیت تنی چند از رزمندگان و هموطنان؛ تنبیه متجاوز\", \"time\": \"شنبه ۰۸ شهريور ۱۴۰۵ - ۲۳:۲۸\"} I need to fix JSON formatting. Let me output properly. Wait, I made a mistake: I wrote invalid JSON. Let me correct. I will output a valid JSON object with exactly those keys in order. The user wants exactly structure {wave, force, source, loc, loc_raw_text, target, weapon, outcome, time}. I should not add extra text. Let me produce valid JSON. I need to be careful with quotes and colons. Let me write it correctly. Since the assistant final should be just JSON. I'll do that.  Final answer: {",
+      "wave": "۳۷۱۳۵",
       "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "جزیره لارک",
-      "target": "دشمن آمریکا - صهیونیست",
-      "weapon": "",
-      "outcome": "شهادت و مجروحیت تنی چند",
-      "time": "23:28",
+      "loc_raw_text": "حمله به جزیره لارک",
+      "target": "جزیره لارک",
+      "weapon": "نامشخص",
+      "outcome": "منجر به شهادت و مجروحیت تنی چند از رزمندگان و هموطنانمان",
+      "time": "۲۳:۲۸",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37135"
     },
     "errors": [
-      "wave contains disallowed characters: : null, \"force\": \"unknown\", \"source\": \"sepah\", \"loc\": null, \"loc_raw_text\": \"جزیره لارک\", \"target\": \"دشمن آمریکایی - صهیونی\", \"weapon\": null, \"outcome\": \"شهادت و مجروحیت تنی چند از رزمندگان و هموطنان؛ تنبیه متجاوز\", \"time\": \"شنبه ۰۸ شهريور ۱۴۰۵ - ۲۳:۲۸\"} I need to fix JSON formatting. Let me output properly. Wait, I made a mistake: I wrote invalid JSON. Let me correct. I will output a valid JSON object with exactly those keys in order. The user wants exactly structure {wave, force, source, loc, loc_raw_text, target, weapon, outcome, time}. I should not add extra text. Let me produce valid JSON. I need to be careful with quotes and colons. Let me write it correctly. Since the assistant final should be just JSON. I'll do that.  Final answer: {",
-      "missing/empty required field: weapon",
       "loc is null"
     ],
     "added_at": "2026-08-30T20:14:32.213Z",
     "issue_number": 58,
-    "last_checked_at": "2026-11-09T03:32:49.543Z",
+    "last_checked_at": "2026-11-09T14:38:17.002Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -55,26 +53,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37141/وحدت-اسلامی-نه-یک-تاکتیک-مقطعی-بلکه-راهبردی-دائمی-و-ضامن-اقتدار-امت-اسلام-است-شکست-هیمنه-پوشالی-استکبار-حاصل-ایستادگی-و-یکپارچگی-ملت-ایران-است",
     "pubDate": "31 Aug 2026 00:17:16 +0330",
     "raw_extraction": {
-      "wave": "joint",
-      "force": "joint",
+      "wave": "—",
+      "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "میدان فردوسی",
-      "target": "دشمنان",
-      "weapon": "تسلیحات پیشرفته",
-      "outcome": "شکست هیمنه پوشالی",
-      "time": "۰۰:۱۷",
+      "loc_raw_text": "کرمانشاه",
+      "target": "اجتماع نحن‌المنتقمون و سخنرانی وحدت اسلامی",
+      "weapon": "سخنرانی/پیام ایدئولوژیک",
+      "outcome": "تبلیغ وحدت اسلامی و محکوم کردن استکبار",
+      "time": "1405/06/09",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37141"
     },
     "errors": [
-      "wave contains disallowed characters: joint",
-      "loc is null"
+      "loc is null",
+      "invalid time field value: 1405/06/09"
     ],
     "added_at": "2026-08-31T02:11:31.394Z",
     "issue_number": 60,
-    "last_checked_at": "2026-11-09T03:33:02.058Z",
+    "last_checked_at": "2026-11-09T14:38:52.367Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -104,26 +102,27 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37182/مرکز-تعمیراتی-و-انبارهای-تجهیزات-فنی-ارتش-تروریست-آمریکا-در-اربیل-و-سامانه-هدایت-بالن-جاسوسی-آمریکا-در-پایگاه-منهدم-شد-مخازن-سوخت-این-پایگاه-به-آتش-کشیده-و-تعدادی-از-متجاوزان-به-هلاکت-رسیدند",
     "pubDate": "02 Sep 2026 03:23:26 +0330",
     "raw_extraction": {
-      "wave": "—",
+      "wave": "نصر ۲",
       "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "Erbil",
-      "target": "پایگاه‌های آمریکایی در اربیل",
-      "weapon": "موشک و پهپاد",
-      "outcome": "نابودی مرکز تعمیراتی و انبارهای تجهیزات فنی، منهدمی سامانه هدایت بالن جاسوسی و نابودی مخازن سوخت؛ هلاکت متجاوزان",
-      "time": "چهارشنبه ۱۱ شهريور ۱۴۰۵ - ۰۳:۲۳",
+      "loc_raw_text": "اربیل",
+      "target": "samaneh hadait-e-najasousi amerika",
+      "weapon": "missile and helicopter",
+      "outcome": "destroyed and set on fire",
+      "time": "1405/03/11 shahrivar 11 0:23",
       "dateG": "2026-09-01",
       "dateP": "۱۰ شهریور ۱۴۰۵",
       "code": "37182"
     },
     "errors": [
       "loc is null",
-      "time field's embedded date doesn't match this event's date (dateP=۱۰ شهریور ۱۴۰۵): چهارشنبه ۱۱ شهريور ۱۴۰۵ - ۰۳:۲۳"
+      "invalid time field value: 1405/03/11 shahrivar 11 0:23",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-09-02T01:52:53.595Z",
     "issue_number": 63,
-    "last_checked_at": "2026-11-09T03:33:51.623Z",
+    "last_checked_at": "2026-11-09T14:39:27.878Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -153,15 +152,15 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37392/آشیانه-تعمیر-و-نگهداری-آماده-سازی-و-محل-استقرار-جنگنده-های-f-35-f-16-f-15-و-شلتر-جنگنده-ها-مورد-هدف-قرارگرفت",
     "pubDate": "09 Sep 2026 02:07:10 +0330",
     "raw_extraction": {
-      "wave": "تنبیه متجاوز",
       "force": "aerospace",
-      "source": "sepah",
       "loc": "alAzraq",
       "loc_raw_text": "پایگاه آمریکائی الازرق اردن",
-      "target": "نیروی هوافضای سپاه پاسداران انقلاب اسلامی",
-      "weapon": "موشک های بالستیک سوخت جامد و مایع آشیانه تعمیر و نگهداری",
-      "outcome": "شکست دشمن",
+      "outcome": "hits with significant damage",
+      "source": "sepah",
+      "target": "آشیانه تعمیر و نگهداری جنگنده ها",
       "time": "چهارشنبه ۱۸ شهريور ۱۴۰۵ - ۰۲:۰۷",
+      "wave": "یاحیدر کرار",
+      "weapon": "موشک های بالستیک سوخت جامد و مایع",
       "dateG": "2026-09-08",
       "dateP": "۱۷ شهریور ۱۴۰۵",
       "code": "37392"
@@ -171,7 +170,7 @@
     ],
     "added_at": "2026-09-09T02:04:27.708Z",
     "issue_number": 69,
-    "last_checked_at": "2026-11-09T03:33:58.099Z",
+    "last_checked_at": "2026-11-09T14:39:51.057Z",
     "loc_candidates": [
       {
         "id": "princeHassan",
@@ -202,25 +201,28 @@
     "pubDate": "23 Sep 2026 02:17:45 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "aerospace",
+      "force": null,
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "مراکز نظامی و به‌ویژه مجموعه‌های موشکی و پهپادی",
-      "target": "مجموعه‌های موشکی و پهپادی و مراکز نظامی",
-      "weapon": "موشک",
-      "outcome": "نیروها با وجود اصابت‌های متعدد، مسیر مأموریت را ادامه دادند و اجازه ندادند آتش دشمن اراده آنان را متوقف کند",
-      "time": "2024-09-22",
+      "loc_raw_text": "region of Mazandaran",
+      "target": null,
+      "weapon": null,
+      "outcome": null,
+      "time": null,
       "dateG": "2026-09-22",
       "dateP": "۳۱ شهریور ۱۴۰۵",
       "code": "38105"
     },
     "errors": [
-      "loc is null",
-      "invalid time field value: 2024-09-22"
+      "missing/empty required field: force",
+      "missing/empty required field: target",
+      "missing/empty required field: weapon",
+      "missing/empty required field: outcome",
+      "loc is null"
     ],
     "added_at": "2026-09-23T02:29:30.905Z",
     "issue_number": 71,
-    "last_checked_at": "2026-11-09T03:34:25.002Z",
+    "last_checked_at": "2026-11-09T14:39:58.461Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -251,22 +253,24 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/40277/انهدام-پنج-مهمات-عمل-نکرده-در-پاکدشت",
     "pubDate": "25 Oct 2026 22:27:15 +0330",
     "raw_extraction": {
-      "wave": "عملیات انهدام مهمات عمل‌نکرده",
+      "wave": "Wave 2",
       "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "شهرستان پاکدشت",
-      "target": "پنج مهمات عمل‌نکرده",
-      "weapon": "مهمات عمل‌نکرده",
-      "outcome": "انهدام شد",
-      "time": "یکشنبه، ۳ آبان ۱۴۰۵، ساعت ۱۱",
+      "loc_raw_text": "پاکدشت",
+      "target": "5 un-detonated munitions",
+      "weapon": "unknown (was an attempted US-Israeli attack)",
+      "outcome": "destruction confirmed, more may follow",
+      "time": "Nov 3, 2025 11:00",
       "dateG": "2026-10-25",
       "dateP": "۳ آبان ۱۴۰۵",
       "code": "40277"
     },
     "errors": [
+      "wave contains disallowed characters: Wave 2",
       "loc is null",
-      "invalid time field value: یکشنبه، ۳ آبان ۱۴۰۵، ساعت ۱۱"
+      "invalid time field value: Nov 3, 2025 11:00",
+      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
     ],
     "added_at": "2026-10-25T20:09:43.953Z",
     "issue_number": 76,
@@ -292,7 +296,7 @@
         "distance": 5
       }
     ],
-    "last_checked_at": "2026-11-09T03:34:57.768Z"
+    "last_checked_at": "2026-11-09T14:40:01.035Z"
   },
   {
     "title": "دشمن به سمتی حمله می کند که آزارش میدهد",
@@ -301,25 +305,28 @@
     "pubDate": "28 Oct 2026 10:53:29 +0330",
     "raw_extraction": {
       "wave": "—",
-      "force": "unknown",
+      "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "null",
-      "target": "Sepah",
-      "weapon": "نامشخص",
-      "outcome": "نامشخص",
-      "time": "null",
+      "loc_raw_text": "فیروزآباد",
+      "target": null,
+      "weapon": null,
+      "outcome": null,
+      "time": "۰۶ آبان ۱۴۰۵ - ۱۰:۵۳",
       "dateG": "2026-10-28",
       "dateP": "۶ آبان ۱۴۰۵",
       "code": "40474"
     },
     "errors": [
+      "missing/empty required field: target",
+      "missing/empty required field: weapon",
+      "missing/empty required field: outcome",
       "loc is null",
-      "invalid time field value: null"
+      "invalid time field value: ۰۶ آبان ۱۴۰۵ - ۱۰:۵۳"
     ],
     "added_at": "2026-10-28T11:49:36.308Z",
     "issue_number": 77,
-    "last_checked_at": "2026-11-09T03:35:52.733Z",
+    "last_checked_at": "2026-11-09T14:40:06.355Z",
     "loc_candidates": [
       {
         "id": "duqm",
