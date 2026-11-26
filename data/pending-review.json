@@ -10,9 +10,9 @@
       "source": "sepah",
       "loc": null,
       "loc_raw_text": "جزیره لارک",
-      "target": "جزیره لارک (حمله به آن با تلفات و مجروحین)",
+      "target": "جزیره لارک",
       "weapon": "نامشخص",
-      "outcome": "شهادت و مجروحیت تنی چند از رزمندگان و هموطنان در اثر حمله دشمن آمریکایی-صهیونی",
+      "outcome": "شهادت و مجروحیت تنی چند از رزمندگان و هموطنان",
       "time": "۲۳:۲۸",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
@@ -23,7 +23,7 @@
     ],
     "added_at": "2026-08-30T20:14:32.213Z",
     "issue_number": 58,
-    "last_checked_at": "2026-11-25T16:24:05.783Z",
+    "last_checked_at": "2026-11-26T01:16:59.066Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -53,26 +53,26 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37141/وحدت-اسلامی-نه-یک-تاکتیک-مقطعی-بلکه-راهبردی-دائمی-و-ضامن-اقتدار-امت-اسلام-است-شکست-هیمنه-پوشالی-استکبار-حاصل-ایستادگی-و-یکپارچگی-ملت-ایران-است",
     "pubDate": "31 Aug 2026 00:17:16 +0330",
     "raw_extraction": {
-      "wave": "—",
+      "wave": "نصر ۲ یا صاعقه",
       "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "کرمانشاه",
-      "target": "استکبار جهانی",
+      "loc_raw_text": null,
+      "target": "نامشخص",
       "weapon": "نامشخص",
-      "outcome": "failure",
-      "time": "دوشنبه ۰۹ شهريور ۱۴۰۵ - ۰۰:۱۷",
+      "outcome": "نامشخص",
+      "time": "دوشنبه ۰۹ شهریور ۱۴۰۵ - ۰۰:۱۷",
       "dateG": "2026-08-30",
       "dateP": "۸ شهریور ۱۴۰۵",
       "code": "37141"
     },
     "errors": [
       "loc is null",
-      "time field's embedded date doesn't match this event's date (dateP=۸ شهریور ۱۴۰۵): دوشنبه ۰۹ شهريور ۱۴۰۵ - ۰۰:۱۷"
+      "time field's embedded date doesn't match this event's date (dateP=۸ شهریور ۱۴۰۵): دوشنبه ۰۹ شهریور ۱۴۰۵ - ۰۰:۱۷"
     ],
     "added_at": "2026-08-31T02:11:31.394Z",
     "issue_number": 60,
-    "last_checked_at": "2026-11-25T16:26:57.413Z",
+    "last_checked_at": "2026-11-26T01:17:02.298Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -102,46 +102,47 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37182/مرکز-تعمیراتی-و-انبارهای-تجهیزات-فنی-ارتش-تروریست-آمریکا-در-اربیل-و-سامانه-هدایت-بالن-جاسوسی-آمریکا-در-پایگاه-منهدم-شد-مخازن-سوخت-این-پایگاه-به-آتش-کشیده-و-تعدادی-از-متجاوزان-به-هلاکت-رسیدند",
     "pubDate": "02 Sep 2026 03:23:26 +0330",
     "raw_extraction": {
-      "wave": "شماره ۶",
-      "force": "aerospace",
+      "wave": "—",
+      "force": "ground",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "پایگاه آمریکایی در اربیل",
-      "target": "سامانه هدایتالن جاسوسی آمریکا",
-      "weapon": "موشکی و پهپادی",
-      "outcome": "نابودی و آتش‌کشی",
-      "time": "۱۱ شهريور ۱۴۰۵ ۰۳:۲۳",
+      "loc_raw_text": "اربیل",
+      "target": "مرکز تعمیراتی و انبارهای تجهیزات فنی ارتش آمریکا، سامانه هدایت بالن جاسوسی، مخازن سوخت پایگاه",
+      "weapon": "حمله تلفیقی موشکی و پهپادی",
+      "outcome": "تخریب مرکز و انبارها، منهدم شدن سامانه هدایت بالن، آتشWSخت مخازن سوخت، هلاکت تعدادی متجاوز",
+      "time": "شب گذشته (چهارشنبه ۱۱ شهریور ۱۴۰۵ - ۰۳:۲۳)",
       "dateG": "2026-09-01",
       "dateP": "۱۰ شهریور ۱۴۰۵",
       "code": "37182"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: ۱۱ شهريور ۱۴۰۵ ۰۳:۲۳"
+      "invalid time field value: شب گذشته (چهارشنبه ۱۱ شهریور ۱۴۰۵ - ۰۳:۲۳)",
+      "target/weapon/outcome text looks corrupted/garbled (unexpected script mixing)"
     ],
     "added_at": "2026-09-02T01:52:53.595Z",
     "issue_number": 63,
-    "last_checked_at": "2026-11-25T16:27:30.421Z",
+    "last_checked_at": "2026-11-26T01:17:28.948Z",
     "loc_candidates": [
+      {
+        "id": "duqm",
+        "distance": 3
+      },
+      {
+        "id": "rifa",
+        "distance": 4
+      },
+      {
+        "id": "tanf",
+        "distance": 4
+      },
       {
         "id": "aqaba",
         "distance": 5
       },
       {
-        "id": "rifa",
-        "distance": 5
-      },
-      {
-        "id": "duqm",
-        "distance": 5
-      },
-      {
-        "id": "tanf",
-        "distance": 5
-      },
-      {
         "id": "rukban",
-        "distance": 6
+        "distance": 5
       }
     ]
   },
@@ -151,26 +152,25 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/37392/آشیانه-تعمیر-و-نگهداری-آماده-سازی-و-محل-استقرار-جنگنده-های-f-35-f-16-f-15-و-شلتر-جنگنده-ها-مورد-هدف-قرارگرفت",
     "pubDate": "09 Sep 2026 02:07:10 +0330",
     "raw_extraction": {
-      "wave": "Ya Haydar Karaar",
+      "wave": "—",
       "force": "aerospace",
       "source": "sepah",
       "loc": "alAzraq",
-      "loc_raw_text": "پایگاه американی الازرق اردن",
-      "target": "آشیانه تعمیر و نگهداری، آماده‌سازی و محل استقرار جنگنده‌های F-35، F-16، F-15 و شلتر جنگنده‌ها",
-      "weapon": "موشک‌های بالستیک سوخت جامد و مایع",
-      "outcome": "خسارات سنگینی به دشمن وارد شده",
-      "time": "۱۸ شهریور ۱۴۰۵ - ۰۲:۰۷",
+      "loc_raw_text": "پایگاه امریکاى الازرق اردن",
+      "target": "آشیانه تعمیر و نگهداری، آماده سازی و محل استقرار جنگنده های F-35، F-16، F-15 وشلتر جنگنده ها",
+      "weapon": "موشک بالستیک سوخت جامد و مایع",
+      "outcome": "هدف مورد اصابت قرار گرفت و خسارات سنگین به دشمن وارد شد",
+      "time": "چهارشنبه ۱۸ شهريور ۱۴۰۵ - ۰۲:۰۷",
       "dateG": "2026-09-08",
       "dateP": "۱۷ شهریور ۱۴۰۵",
       "code": "37392"
     },
     "errors": [
-      "wave contains disallowed characters: Ya Haydar Karaar",
-      "invalid time field value: ۱۸ شهریور ۱۴۰۵ - ۰۲:۰۷"
+      "time field's embedded date doesn't match this event's date (dateP=۱۷ شهریور ۱۴۰۵): چهارشنبه ۱۸ شهريور ۱۴۰۵ - ۰۲:۰۷"
     ],
     "added_at": "2026-09-09T02:04:27.708Z",
     "issue_number": 69,
-    "last_checked_at": "2026-11-25T16:28:01.746Z",
+    "last_checked_at": "2026-11-26T01:17:50.559Z",
     "loc_candidates": [
       {
         "id": "princeHassan",
@@ -199,26 +199,13 @@
     "link": "https://sepahnews.ir/fa/news/38105/خون-شهدا-همچنان-حیات-بخش-جامعه-و-عامل-شکست-نقشه-های-دشمن-است",
     "guid": "sepah:https://sepahnews.ir/fa/news/38105/خون-شهدا-همچنان-حیات-بخش-جامعه-و-عامل-شکست-نقشه-های-دشمن-است",
     "pubDate": "23 Sep 2026 02:17:45 +0330",
-    "raw_extraction": {
-      "wave": "—",
-      "force": "ground",
-      "source": "sepah",
-      "loc": null,
-      "loc_raw_text": "منطقة‌ای از مازندران",
-      "target": "نامشخص",
-      "weapon": "نامشخص",
-      "outcome": "نامشخص",
-      "time": "02:17",
-      "dateG": "2026-09-22",
-      "dateP": "۳۱ شهریور ۱۴۰۵",
-      "code": "38105"
-    },
+    "raw_extraction": null,
     "errors": [
-      "loc is null"
+      "extraction failed: OpenRouter response had no message content"
     ],
     "added_at": "2026-09-23T02:29:30.905Z",
     "issue_number": 71,
-    "last_checked_at": "2026-11-25T16:28:28.038Z",
+    "last_checked_at": "2026-11-26T01:23:08.979Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -248,9 +235,23 @@
     "link": "https://sepahnews.ir/fa/news/40277/انهدام-پنج-مهمات-عمل-نکرده-در-پاکدشت",
     "guid": "sepah:https://sepahnews.ir/fa/news/40277/انهدام-پنج-مهمات-عمل-نکرده-در-پاکدشت",
     "pubDate": "25 Oct 2026 22:27:15 +0330",
-    "raw_extraction": null,
+    "raw_extraction": {
+      "wave": "—",
+      "force": "unknown",
+      "source": "sepah",
+      "loc": null,
+      "loc_raw_text": "شهرستان پاکدشت",
+      "target": "نامشخص",
+      "weapon": "نامشخص",
+      "outcome": "انهدام پنج مهمات عمل‌نکرده",
+      "time": "یکشنبه ۳ آبان ۱۴۰۵ ساعت ۱۱",
+      "dateG": "2026-10-25",
+      "dateP": "۳ آبان ۱۴۰۵",
+      "code": "40277"
+    },
     "errors": [
-      "extraction failed: Unexpected end of JSON input"
+      "loc is null",
+      "invalid time field value: یکشنبه ۳ آبان ۱۴۰۵ ساعت ۱۱"
     ],
     "added_at": "2026-10-25T20:09:43.953Z",
     "issue_number": 76,
@@ -276,7 +277,7 @@
         "distance": 5
       }
     ],
-    "last_checked_at": "2026-11-25T16:29:01.816Z"
+    "last_checked_at": "2026-11-26T01:23:33.937Z"
   },
   {
     "title": "دشمن به سمتی حمله می کند که آزارش میدهد",
@@ -288,22 +289,22 @@
       "force": "unknown",
       "source": "sepah",
       "loc": null,
-      "loc_raw_text": "شهرستان فیروزآباد",
-      "target": "روحانیت و سپاه",
-      "weapon": "نامشخص",
-      "outcome": "مورد حمله قرار گرفته",
-      "time": "۱۴۰۵-۰۶ آبان ۱۰:۵۳",
+      "loc_raw_text": "پایگاه های شهرستان فیروزآباد",
+      "target": "سپاه",
+      "weapon": "فضای مجازی",
+      "outcome": "تحت حمله",
+      "time": "۰۶ آبان ۱۴۰۵ ۱۰:۵۳",
       "dateG": "2026-10-28",
       "dateP": "۶ آبان ۱۴۰۵",
       "code": "40474"
     },
     "errors": [
       "loc is null",
-      "invalid time field value: ۱۴۰۵-۰۶ آبان ۱۰:۵۳"
+      "invalid time field value: ۰۶ آبان ۱۴۰۵ ۱۰:۵۳"
     ],
     "added_at": "2026-10-28T11:49:36.308Z",
     "issue_number": 77,
-    "last_checked_at": "2026-11-25T16:29:18.485Z",
+    "last_checked_at": "2026-11-26T01:24:06.465Z",
     "loc_candidates": [
       {
         "id": "duqm",
@@ -334,26 +335,24 @@
     "guid": "sepah:https://sepahnews.ir/fa/news/41732/رادار-سایت-پدافندی-آمریکا-در-پایگاه-بالگردی-الرفاع-بحرین-با-شش-فروند-پهپادمورد-هدف-قرار-گرفت",
     "pubDate": "15 Nov 2026 07:45:59 +0330",
     "raw_extraction": {
-      "wave": "second stage",
+      "wave": "2",
       "force": "aerospace",
       "source": "sepah",
       "loc": "rifa",
-      "loc_raw_text": "پایتگاه بالگردی الرفاع بحرین",
-      "target": "US radar site",
-      "weapon": "drone",
-      "outcome": "successful hit",
-      "time": "Monday 24 Aban 1405 - 07:45",
+      "loc_raw_text": "پایگاه بالگردی الرفاع بحرین",
+      "target": "رادار سایت پدافندی آمریکا",
+      "weapon": "شش فروند پهپاد",
+      "outcome": "اصابت دقیق و موفق",
+      "time": "یکشنبه ۲۴ آبان ۱۴۰۵ - ۰۷:۴۵",
       "dateG": "2026-11-15",
       "dateP": "۲۴ آبان ۱۴۰۵",
       "code": "41732"
     },
     "errors": [
-      "wave contains disallowed characters: second stage",
-      "invalid time field value: Monday 24 Aban 1405 - 07:45",
-      "target/weapon/outcome text is majority Latin-script (likely untranslated/English output)"
+      "invalid time field value: یکشنبه ۲۴ آبان ۱۴۰۵ - ۰۷:۴۵"
     ],
     "added_at": "2026-11-15T13:11:28.199Z",
     "issue_number": 78,
-    "last_checked_at": "2026-11-25T16:29:41.129Z"
+    "last_checked_at": "2026-11-26T01:24:18.701Z"
   }
 ]
